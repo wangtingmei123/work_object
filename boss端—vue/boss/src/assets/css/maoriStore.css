@@ -1,0 +1,70 @@
+#maoriStore {
+  height: 100%;
+  background: #f5f5f5;
+}
+#maoriStore .num_circle {
+  margin-right: 10px;
+}
+a {
+  display: block;
+}
+.maori_sale>li {
+  padding: 0;
+}
+.maori_sale_title {
+  padding: 20px;
+}
+.maori_sale_title_right img {
+  width: 16px;
+  height: 30px;
+}
+.sale_money {
+  height: 70px;
+  line-height: 70px;
+  padding-left: 20px;
+}
+.sale_money p {
+  font-size: 26px;
+  color: #333;
+}
+.sale_money span {
+  color: rgb(232,95,13);
+  font-size: 28px;
+}
+.maori_sale_ctn_right {
+  text-align: left;
+}
+.maori_store_ctn {
+  width: 94%;
+  margin: 0px 20px 20px;
+  padding: 20px;
+  background: #f8f8f8;
+  box-sizing: border-box;
+  border-bottom: none;
+  font-size: 24px;
+}
+.maori_store_ctn {
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.maori_store_total {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.maori_store_total div {
+  text-align: center;
+}
+.maori_store_line {
+  width: 2px;
+  height: 60px;
+  background: #f5f5f5;
+}
+#maoriStore ul {
+  margin-bottom: 10px;
+}
+#maoriStore .van-tabs__line {
+  left: 10% !important;
+}

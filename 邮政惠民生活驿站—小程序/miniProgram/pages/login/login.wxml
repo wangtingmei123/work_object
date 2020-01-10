@@ -1,0 +1,10 @@
+<!--pages/order_status/order_status.wxml-->
+<view class='container'>
+
+<view class="login-box">
+    <image class="login-img" src="../img/index/logo.png"></image>
+    <button open-type="getUserInfo" class="login1"  bindgetuserinfo="bindGetUserInfo">授权微信用户信息</button>
+</view>
+
+</view>
+

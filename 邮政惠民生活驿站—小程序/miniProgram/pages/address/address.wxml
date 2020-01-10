@@ -1,0 +1,50 @@
+<!--pages/address/address.wxml-->
+<view class='container'>
+    <view class="zttip" >因各地区商品可能存在差异, 请选择准确收货地址</view>
+
+    <view class="tip_dizhi">我的收货地址</view>
+
+    <view class="no_address" wx:if="{{dataList3.length<=0}}">您还没有设置收货地址</view>
+
+
+      <view  class='itemntm' wx:if="{{dataList.length>0}}"  wx:for='{{dataList}}' bindtap='to_deafe' data-id='{{item.address_id}}'  data-info='{{item}}' data-index='{{index}}'>
+      <!-- <view class="statre {{item.is_default==1?'statres':''}}" >
+          <view wx:if="{{item.is_default==1}}" class="xuanzhong">✔</view>
+      </view> -->
+
+      <view class="itemntma" data-text='{{item}}'>
+        <view class='itemnt'>
+          <view class='itemntname'>{{item.receiver_name}}</view>
+          <view class='itemnttel'>{{item.phone}}</view>
+        </view>
+        <view class='itemntt_detail'>
+                   {{item.area_name}} {{item.detail}}
+        </view>
+      </view>
+      <view class='edittap' wx:if="{{item.is_default==1}}">
+          <image class="editimg" src="../img/index/moren1.png"></image>
+      </view>
+    </view>
+</view>
+<view class="zhankai" bindtap='zhankai'  wx:if="{{quanbu&&dataList3.length>3}}" >展开全部</view>
+
+<view class="fujin">附近地址</view>
+<view class="dizhifj">
+
+     <view class="dzfj"  wx:for="{{adress}}"  bindtap='to_index' data-info="{{item.title}}">{{item.title}} </view>
+
+     <view class="dingwei" bindtap='chongdw'><text>重新定位</text><image class="dwimg" src="../img/index/chundingwie.png"></image></view>
+
+</view>
+
+
+<view class="addadressaa"   bindtap='addadress'>添加收货地址</view>
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>

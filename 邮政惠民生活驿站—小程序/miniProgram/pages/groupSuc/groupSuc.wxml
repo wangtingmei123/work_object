@@ -1,0 +1,265 @@
+<!--pages/waitPay/waitPay.wxml-->
+<view class='container'>
+<!-- 顶部状态 start -->
+  <view class='wait_status'  wx:if='{{order.order_type==8121&&order.order_status==2&&order.pay_status==1}}'>
+   <view class='waitPayss '>
+           <view class='waitPay_img  waitPay_imgs'>
+              <image src='../img/index/payTrue.png'></image>
+            </view>
+            <view class='waitmm'>
+               <text class="waitPays">拼团成功</text>
+            </view>
+      </view>
+  </view>
+
+
+  <view class='wait_status'  wx:if='{{order.order_type==8121&&order.order_status==0&&order.pay_status==1}}'>
+    <view class='wait_status_left'>
+      <view class='waitPay_img'>
+        <image src='../img/index/payTrue.png'></image>
+      </view>
+      <text class="waitPay">等待拼团</text>
+    </view>
+    <view class='wait_status_right' wx:if="{{order.order_status==2}}">拼团完成后,请使用提货码到指定门店提货</view>
+  </view>
+
+    <view class='wait_status'  wx:if='{{order.order_type!=8121&&order.order_status==2&&order.shipping_type==1}}'>
+    <view class='wait_status_left'>
+      <view class='waitPay_img'>
+        <image src='../img/index/payTrue.png'></image>
+      </view>
+      <text class="waitPay">等待提货</text>
+    </view>
+    <view class='wait_status_right'>请带着提货码到指定门店提货</view>
+  </view>
+
+
+      <view class='wait_status'  wx:if='{{order.order_type!=8121&&order.order_status==2&&order.shipping_type==0}}'>
+    <view class='wait_status_left'>
+      <view class='waitPay_img'>
+        <image src='../img/index/payTrue.png'></image>
+      </view>
+      <text class="waitPay">等待发货</text>
+    </view>
+    <view class='wait_status_right'>订单已提交,等待商家配送</view>
+  </view>
+
+   <view class='wait_status'  wx:if='{{order.order_type!=8121&&order.order_status==6&&order.shipping_type==0}}'>
+    <view class='wait_status_left'>
+      <view class='waitPay_img'>
+        <image src='../img/index/payTrue.png'></image>
+      </view>
+      <text class="waitPay">正在配送</text>
+    </view>
+    <view class='wait_status_right'>商家配送中,请耐心等待</view>
+  </view>
+
+
+   <view class='wait_status'  wx:if='{{order.order_status==3&&order.pay_status==1}}'>
+      <view class='waitPayss '>
+           <view class='waitPay_img  waitPay_imgs'>
+              <image src='../img/index/payTrue.png'></image>
+            </view>
+            <view class='waitmm'>
+               <text class="waitPays">订单已完成</text>
+            </view>
+      </view>
+  </view>
+<!-- 顶部状态 end -->
+
+<!-- 进度开始 -->
+   <view class="fukuan" wx:if="{{order.shipping_type==1}}">
+      <view class="fktop">
+          <view class="fkitem">买家付款</view>
+          <view class="fkitem">等待提货</view>
+          <view class="fkitem">交易完成</view>
+          
+      </view>
+      <view class="fktop fkbottom">
+      <view class="fky">
+            <view class="fkyuan">
+                 <view  class="fkyuan1"></view>
+            </view>
+        </view>
+          <view class="fkysbox">
+                  <view class="fkys"></view> 
+          </view>  
+         <view class="fky">
+             <view class="fkyuan" wx:if='{{order.order_status>=2}}'>
+                 <view  class="fkyuan1"></view>
+            </view>
+        </view>
+         <view class="fkysbox">
+                  <view class="fkys"  wx:if='{{order.order_status>=3}}'></view> 
+                  <view class="fkys1" wx:else></view>
+        </view> 
+       <view class="fky">
+             <view class="fkyuan"  wx:if='{{order.order_status>=3}}'>
+                 <view  class="fkyuan1"></view>
+            </view>
+           <view class="fkyuans" wx:else>
+            </view>
+        </view>
+      </view>
+      
+       <view class="tihuoma" >
+            <view class="erweima"><canvas class='erimg' canvas-id='canvas' style="width:{{code_w}}px; height:{{code_w}}px;"></canvas>  </view>
+            <view class="tihuomas"  wx:if='{{order.order_status==2&&order.pay_status==1}}'>提货码</view>
+            <view class="tihuomas tihuomasmm" wx:if='{{order.order_status==3&&order.pay_status==1}}'>已提货</view>
+        </view>
+
+    
+   </view>
+<!-- 进度结束 -->
+<!-- 顶部详情 start -->
+  <view class='top_item_big' wx:if="{{order.shipping_type==1}}" style='margin-top:20rpx;'>
+    <!-- <view class='top_item'>提货人：<text>{{order.receiver_name}}</text></view> -->
+    <view class='top_item'>提货人手机：<text>{{order.receiver_mobile}}</text></view>
+    <view class='top_item'>提货方式：<text class='self'>自提</text></view>
+    <view class='top_item'>提货地址：<text>{{order.receiver_address_detail}}</text></view>
+    <view class='top_item'>提货时间：    <text>{{order.shippingTimeRange}}</text> <text wx:if="{{order.shippingTimeRange==''||order.shippingTimeRange==undefined||order.shippingTimeRange==null}}">{{order.receiverTime}}</text></view>
+  </view>
+
+    <view class='top_item_big' wx:if="{{order.shipping_type==0}}" style='margin-top:20rpx;'>
+    <view class='top_item'>联系人：<text>{{order.receiver_name}}</text></view>
+    <view class='top_item'>收货人手机：<text>{{order.receiver_mobile}}</text></view>
+    <view class='top_item'>提货方式：<text class='self'>配送</text></view>
+    <view class='top_item' bindtap="address">收货地址：<text>{{order.receiver_address_detail}}</text></view>
+        <view class='top_item'>配送时间：  <text>{{order.shippingTimeRange}}</text> </view>
+  </view>
+<!-- 顶部详情 end -->
+<!-- 商品详情 start -->
+  <view class='goods_big' >
+  <view class='godizhi'>
+    <image class='gotubiao' src="../img/index/address.png"></image>
+    <text class='godianming'>{{order.wname}}</text>
+  </view>
+  <view class='goods' wx:for='{{order.sku_list}}'>
+
+
+    <view class='goods_img_big'>
+      <image src="{{item.sku_image}}"></image>
+      <view class='tktip' wx:if='{{order.order_status==3&&order.pay_status==1&&item.refund_state==3}}' >已退款</view>
+    </view>
+    <view class='goods_right'>
+      <view class='goods_title_big goods_item'>
+        <view class='goods_title'>{{item.sku_name}}</view>
+        <view class='new_price' wx:if='{{order.order_type>8120}}'>￥{{order.order_money}}</view>
+         <view class='new_price' wx:if='{{order.order_type<8121}}'>￥{{item.actual_price}}</view>
+      </view>
+      <view class='goods_ctn_big goods_item'>
+        <view class='goods_ctn goods_color'>{{item.summary}}</view>
+        <view class='old_price goods_color' wx:if='{{order.order_type>8120&&item.actual_price!=item.origin_price}}'>￥{{order.order_money}}</view>
+        <view class='old_price goods_color' wx:if='{{order.order_type<8121&&item.actual_price!=item.origin_price}}'>￥{{item.origin_price}}</view>
+      </view>
+      <view class='goods_num_big goods_item'>
+        <view></view>
+        <view class=' goods_num goods_color' wx:if='{{order.order_type>8120}}'>x1</view>
+        <view class=' goods_num goods_color' wx:if='{{order.order_type<8121}}'>x{{item.sku_count}}</view>
+      </view>
+       <view class='list_item_right_hb_big clearfix'  wx:if="{{order.order_type<8121&&item.actual_price!=item.origin_price}}">
+            <text class='list_item_right_hb'>优惠券不可用</text>
+      </view>
+
+
+
+
+
+
+
+
+
+
+
+       <view class='tuikuan_right' data-info='{{item}}' wx:if='{{order.order_status==3&&order.pay_status==1&&item.refund_state==2}}'  data-index='{{index}}'   bindtap='view_refund'>
+            <text class=''  >查看退款</text>
+      </view>
+
+      <view class='tuikuan_right' data-info='{{item}}' wx:if='{{order.order_status==3&&order.pay_status==1&&item.refund_state==3}}'  data-index='{{index}}'   bindtap='view_refund'>
+            <text class=''  >查看退款</text>
+      </view>
+
+
+        <view class='tuikuan_right' data-info='{{item}}' wx:if='{{order.order_status==3&&order.pay_status==1&&item.refund_state==1}}'  data-index='{{index}}'   bindtap='to_refund'>
+            <text class='' >申请退款</text>
+      </view>
+
+
+        <view class='tuikuan_right' data-info='{{item}}' wx:if='{{order.order_status==3&&order.pay_status==1&&item.refund_state==0}}'  data-index='{{index}}'   bindtap='to_shnegq'>
+            <text class='shengq' >申请退款</text>
+      </view>
+
+
+
+
+
+
+
+
+
+
+    </view>
+
+  </view>
+<!-- 商品详情 end -->
+<!-- 商品详情 end -->
+<!-- 商品价格 start -->
+  <view class='status_price'>
+    <view class='distribution' id="distribution">实付金额：</view>
+    <view class='status_price_right'>
+      <text>￥{{order.order_money}}</text>
+    </view>
+  </view>
+  </view>
+<!-- 商品价格 end -->
+<!-- 订单信息 start -->
+
+  <view class='top_item_big top_item_big1'>
+    <view class='top_item top_item1'>订单编号：<text>{{order.order_id}}</text></view>
+    <view class='top_item top_item1'>支付方式：<text>微信支付</text></view>
+    <view class='top_item top_item1'>创建时间：<text>{{order.order_create_time}}</text></view>
+    <view class='top_item top_item1'>支付时间：<text>{{order.pay_time}}</text></view>
+    <view class='top_item top_item1'>联系商家：<text>{{order.seller_contact}}</text></view>
+  </view>
+<!-- 订单信息 end -->
+<!-- 按钮 start -->
+
+<view class="yaoqinbox" wx:if='{{order.order_type!=8121&&order.order_status==2}}' >
+       <view class="yqbox"  data-info='{{order}}'  bindtap='to_quxiao'>取消订单</view>
+</view>
+
+<!-- 按钮 end -->
+</view>
+
+
+
+
+<view class='shijian-box' wx:if="{{chuxian==1}}">
+  <view class="shijian">
+     <view class="sjtip">
+         <view class="sjtip1" bindtap='guanbi'>×</view>
+            请选择取消原因
+     </view>
+
+    <view class="sjbox">
+      
+            <scroll-view scroll-y  class="jinshi">             
+                <view wx:for='{{reasons}}' bindtap='shijian' data-text="{{item.id}}" data-index="{{index}}"  class="js {{state==item.id?'todayxs':''}}" >
+                  {{item.reason}}   
+                  <view class="biaoshi" wx:if="{{state==item.id}}">✔</view>  
+                </view>                 
+            </scroll-view>
+    </view>
+
+    <view class="queren" bindtap='queren'>确认</view>
+
+  </view>
+     
+</view>
+
+
+
+
+
+
+

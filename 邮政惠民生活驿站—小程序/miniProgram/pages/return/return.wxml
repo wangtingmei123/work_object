@@ -1,0 +1,66 @@
+<!--pages/return/return.wxml-->
+<view class='container'>
+<!-- 商品详情 start -->
+  <view class='goods_big'>
+  <view class='goods'>
+    <view class='goods_img_big'>
+      <image src="../img/index/pitaya.png"></image>
+    </view>
+    <view class='goods_right'>
+      <view class='goods_title_big goods_item'>
+        <view class='goods_title'>越南火龙果mini火龙果</view>
+        <view class='new_price'>￥16.9</view>
+      </view>
+      <view class='goods_ctn_big goods_item'>
+        <view class='goods_ctn goods_color'>一手能掌握的红心肉</view>
+        <view class='old_price goods_color'>￥6.9</view>
+      </view>
+      <view class='goods_num_big goods_item'>
+        <view></view>
+        <view class=' goods_num goods_color'>x2</view>
+      </view>
+    </view>
+  </view>
+  <!-- 商品价格 start -->
+  <view class='status_price'>
+    <view class='distribution' id="distribution">实付金额：</view>
+    <view class='status_price_right'>
+      <text>￥6.9</text>
+    </view>
+  </view>
+  </view>
+  <!-- 商品价格 end -->
+<!-- 商品详情 end -->
+<!-- 退款理由选项 start -->
+  <view class='reason'>
+    <view class='reason_select reason_item'>
+      <!-- 单选 start -->
+        <view class='reason_title'>退款理由：</view>
+        <view class='select_box'>
+            <view class='select' catchtap='selectTap'>
+                <text class='select_text'>{{selectData[index]}}</text>
+                <image class='select_img {{show&&"select_img_rotate"}}' src='../img/index/select_down.png'></image>         
+            </view>
+            <view class='option_box' style='height:{{show?(selectData.length>5?300:selectData.length*60):0}}rpx;'>
+                <text class='option' style='{{index==selectData.length-1&&"border:0;"}}' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+            </view>
+        </view>
+      <!-- 单选 end -->
+    </view>
+    <view class='reason_price reason_item'>
+      <view class='reason_title'>退款金额：</view>
+      <view class='reason_price_ctn'>￥6.9</view>
+    </view>
+    <view class='reason_img reason_item'>
+      <view class='reason_title'>上传凭证：</view>
+      <view class='reason_img_big'>
+        <image src='../img/index/noPic.png' class='reason_img_ctn'></image>
+      </view>
+    </view>
+    <view class='btn_big reason_item'>
+      <view class='kong'></view>
+      <view class='btn' bindtap='toPage'>提交</view>
+    </view>
+  </view>
+<!-- 退款理由选项 end -->
+</view>

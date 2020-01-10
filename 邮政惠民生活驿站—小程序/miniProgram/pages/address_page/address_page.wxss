@@ -1,0 +1,182 @@
+
+page{
+  height:30%;
+  width:90%;
+  margin:auto;
+    margin-top:25%;
+    z-index: 0;
+}
+.inputmap{
+  width:100%;
+  height:100rpx;
+  background: #ff6700;
+}
+
+.mapbox{
+  height:50%;
+}
+
+.address_list{
+  background: #fff;
+  width:90%;
+  height:50%;
+  padding:20rpx;
+  margin:auto;
+  margin-left:5%;
+  box-sizing: border-box;
+  position: absolute;
+  bottom:0;
+  left:0;
+  z-index: 9999;
+  border-radius: 10rpx;
+
+}
+
+.addressm_list{
+  width:90%;
+  height:85%;
+  background: #fff;
+  margin:auto;
+  box-sizing: border-box;
+  position: absolute;
+  top:15%;
+  left:5;
+  padding:20rpx;
+  z-index: 99;
+  border-radius: 10rpx;
+
+}
+
+.addressaa{
+  width:100%;
+  height:auto;
+  padding-top:30rpx;
+  padding-bottom:30rpx;
+    padding:20rpx;
+  border-bottom:1rpx solid #f5f5f5;
+  font-size: 28rpx;
+  font-weight: bold;
+
+}
+
+.address{
+  width:100%;
+  height:auto;
+padding-bottom:30rpx;
+  border-bottom:1rpx solid #f5f5f5;
+  overflow: hidden;
+
+}
+.addr-box{
+  display: block;
+  width:100%;
+  height:auto;
+  margin-top:30rpx;
+  overflow: hidden;
+
+}
+
+
+.address_icona{
+    display: block;
+  width: 22rpx;
+  height: 28rpx;
+    float: left;
+
+}
+
+.address_icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.addresscon{
+  width:550rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  height: auto;
+  margin-left:10rpx;
+    float: left;
+    line-height:36rpx;
+  
+}
+
+.title{
+  width:100%;
+  height:auto;
+  margin-top:14rpx;
+  font-size: 26rpx;
+  float: none;
+}
+
+.search{
+  width:100%;
+  height:80rpx;
+  border-radius: 80rpx;
+  border:1rpx solid #dfdfdf;
+  margin-top:20rpx;
+}
+
+.seachs{
+  width:100%;
+  height:100%;
+  
+}
+
+
+
+
+.section{
+  height: 80rpx;
+  width: 680rpx;
+  border-radius: 50rpx;
+  position: fixed;
+  top:50rpx;
+  background: #fff;
+  left:0;
+  right:0;
+  margin:auto;
+  box-shadow: 0rpx 2rpx 25rpx #efefef;
+  overflow: hidden;
+  
+}
+
+
+.section input{
+  width:510rpx;
+  margin:5rpx auto;
+  height:70rpx;
+  border-radius: 40rpx;
+  padding: 0 15rpx 0  25rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  float: left;
+}
+
+.sousuo{
+  width:120rpx;
+  height:100%;
+  background: #1BC412;
+float: right;
+
+}
+
+.sousuo>image{
+  display: block;
+  width:41rpx;
+  height:42rpx;
+  margin:auto;
+  margin-top:19rpx;
+
+}
+
+
+
+
+.text_box{
+  margin: 10rpx 25rpx;
+  border-bottom:1rpx solid #c3c3c3;
+  padding-bottom:10rpx
+}
+

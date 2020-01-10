@@ -1,0 +1,44 @@
+<!--pages/group_list/group_list.wxml-->
+<view class='container'  style="{{hasMask?'height:100%;overflow:hidden':''}}">
+    <!-- 拼团人数 start -->
+   <view  class='per_big'>
+    <view  class='per_top'>
+      <view  class='per_top_left'><text>{{groupList.length}}</text>人正在拼单,可直接参与</view>
+      <view  class='per_top_right'>
+      </view>
+    </view>
+    <view class='per' wx:for="{{groupList}}">
+      <view class='per_left'>
+        <image class='per_left_img' src='{{item.user.userImg}}'></image>
+        <view class='per_name'>{{item.user.userName}}</view>
+      </view>
+      <view class='per_right'>
+        <view class='per_right_ctn'>
+          <view>拼团还差<text class='per_color'>{{item.limitNum-item.userNum}}</text>人</view>
+          <view>剩余{{item.days}}天{{item.hours}}小时{{item.minutes}}分{{item.seconds}}秒</view>
+        </view>
+        <button class='butt' bindtap='show' data-info='{{item}}'>去参团</button>
+      </view>
+    </view>
+   </view>
+  <!-- 拼团人数 end -->
+</view>
+  <!-- 遮罩层 start -->
+  <view class='mask_big'  wx:if="{{hasMask}}">
+    <view class='mask'>
+      <view class='mask_title'>
+        <view class='space'></view>
+        <view class='mask_title_ctn'>等待成团</view>
+        <view class='mask_title_icon_big'><image src='../img/index/close.png' class='mask_title_icon' bindtap='hid'></image></view>
+      </view>
+      <view class='per_num'>
+        <view class='join_per' wx:for="{{tg_group}}">
+          <image src="{{item}}"></image>
+        </view>
+      </view>
+      <view class='mask_btn'>
+        <button class='buttt' bindtap='toOrderGroupConfirm' data-info='{{group_c}}'>去参团</button>
+      </view>
+    </view>
+  </view>
+  <!-- 遮罩层 end -->

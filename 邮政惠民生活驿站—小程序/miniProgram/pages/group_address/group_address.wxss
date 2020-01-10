@@ -1,0 +1,142 @@
+/* pages/group_address/group_address.wxss *//* pages/address/address.wxss */
+navigator {
+  display: inline;
+}
+.container {
+  padding: 0;
+  overflow: hidden;
+}
+/* 顶部 start */
+.top {
+  height: 80rpx;
+  width: 100%;
+  padding: 0 20rpx;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.top_icon {
+  width: 22rpx;
+  height: 28rpx;
+  margin-right: 20rpx;
+}
+text {
+  font-size: 28rpx;
+}
+/* 顶部 end */
+/* 选择门店 start */
+.choose {
+  width: 100%;
+  height: 70rpx;
+  display: flex;
+  align-items: center;
+  padding-left: 20rpx;
+  background: #f0f0f0;
+  box-sizing: border-box;
+}
+/* 选择门店 end */
+/* 列表 start */
+.ctn {
+  width: 100%;
+  height: auto;
+  padding: 0rpx 20rpx 20rpx 20rpx;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #f0f0f0;
+  box-sizing: border-box;
+  margin-top:20rpx;
+  padding-bottom:10px;
+}
+.ctn_left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 520rpx;
+}
+.ctn_left_content {
+  font-size: 26rpx;
+  margin-top: 10rpx;
+  color: #ababab;
+
+}
+.ctn_right {
+  display: flex;
+  align-items: center;
+}
+.ctn_icon {
+  width: 22rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
+}
+.miter {
+  color: #ababab;
+}
+/* 列表 end */
+
+
+
+
+.nonet-box{
+  width: 100%;
+  height:100vh;
+  font-size: 28rpx;
+  line-height:300rpx;
+  position: fixed;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  margin:auto;
+  text-align: center;
+  background: #fff;
+  z-index: 99999;
+
+}
+
+.nonet{
+    width: 100%;
+  height:600rpx;
+  font-size: 28rpx;
+  position: absolute;
+
+  right:0;
+  left:0;
+  margin:auto;
+    top:132rpx;
+
+  background: #fff;
+  
+}
+
+.nonet>image{
+  display: block;
+  width: 300rpx;
+  height:305rpx;
+  margin:auto;
+
+}
+
+.nontip{
+  width:100%;
+  height:28rpx;
+  margin:auto;
+  margin-top:60rpx;
+    text-align: center;
+      font-size: 28rpx;
+      color: #999999;
+      line-height: 28rpx;
+}
+
+.jiazai{
+width: 300rpx;
+height:78rpx;
+margin:auto;
+margin-top:130rpx;
+border:1rpx solid #dcdcdc;
+text-align: center;
+line-height: 78rpx;
+  font-size: 28rpx;
+}
+
+
+

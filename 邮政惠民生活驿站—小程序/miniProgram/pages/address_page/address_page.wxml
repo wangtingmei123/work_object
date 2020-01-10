@@ -1,0 +1,31 @@
+<view class="mapbox" hover-class="none" wx:if="{{pap_show}}" hover-stop-propagation="false" style="width: 100%; height: 100%;">
+
+    <map id="map" longitude="{{longitude}}" latitude=" {{latitude}}" markers="{{markers}}" scale="13" show-location style="width: 100%; height: 100%;"></map>
+    <!-- {{longitude}} -->
+
+</view>
+
+
+<view class="section">
+  <input bindinput="bindInput" placeholder="请输入您的地址"/>
+  <view class="sousuo"><image src="../img/index/sousuom.png"></image></view>
+</view>
+
+
+<scroll-view  scroll-y class="addressm_list"   wx:if="{{is_show==false}}">
+  <view class="addressaa"  bindtap="bindSearch"  data-keywords="{{i.title}}"   data-info="{{i.location}}" wx:for="{{tips}}" wx:for-item="i">
+    {{i.title}}
+  </view>
+
+</scroll-view>
+
+
+<scroll-view scroll-y class="address_list"  wx:if="{{is_show}}">
+    <view class="address" bindtap='editm' wx:for="{{adress}}" data-info="{{item.location}}"  data-text=" {{item.ad_info.city}} {{item.ad_info.district}}{{item.title}}">
+       <view class="addr-box">
+        <view class="address_icona"> <image class='address_icon' src='../img/index/dingwei.png'></image></view>
+        <view class="addresscon">  {{item.ad_info.city}} {{item.ad_info.district}}{{item.address}}</view>
+        </view>
+        <view class="title">{{item.title}}  </view>
+    </view>
+</scroll-view>

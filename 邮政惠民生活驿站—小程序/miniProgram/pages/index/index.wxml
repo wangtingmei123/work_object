@@ -1,0 +1,222 @@
+<!-- 首页 start  -->
+<view scroll-y class='container' bindscrolltolower="loadMore">
+  <view class="top">
+    <!-- 顶部搜索区域 start  -->
+    <view class="address_big">
+      <view class="address_left">
+       <navigator url="../address/address?shopName={{shopName}}&lat={{latitude}}&lnt={{longitude}}" hover-class='none' class="addrescenter">
+          <image class='address_icon' src='../img/index/dingwei1.png'></image>
+         
+          <!-- <text class='address_ctn' wx:if="{{shopName}}"> {{shopName}}</text> -->
+          <text class='address_ctn' >{{dw_title}}</text>
+                  </navigator>
+                    <image class='address_icon_down' src='../img/index/down.png'></image>
+          </view>
+
+      <view class='ser_big'>
+      <navigator url='../search/search?wid={{wids}}' class='input_search' hover-class='none'>
+        <input disabled='true' type='text' class='ser' placeholder='请输入商品名称' placeholder-class='placeholder'>
+        <view class='fangdajing'>
+          <image mode='aspectFit' class='fangdajing_img' src='../img/index/search.png'></image>
+        </view>
+        </input>
+        </navigator>
+      </view>
+    </view>
+    <!-- 轮播图区域 start  -->
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swip"    indicator-active-color="#fff" circular="true">
+      <block wx:for="{{imgUrls}}">
+        <swiper-item bindtap="toAd" data-info='{{item.url}}'>
+          <navigator  hover-class='none'>
+            <image src="{{item.pic_url}}" class="slide-image" width="355" height="150" />
+          </navigator>
+        </swiper-item>
+      </block>
+    </swiper>
+
+    
+    <!-- 分类区域 start  -->
+    <view class='category_big' >
+     <block wx:for="{{category}}">
+      <navigator class='category'  url='../group_category/group_category?cids={{item.cids}}&wid={{wids}}' hover-class='none'>
+          <image class='category_img' src="{{item.cateImgUrl}}"></image>
+          <text class='category_ctn'>{{item.cname}}</text>
+        </navigator>
+     </block>
+    </view>
+
+    
+  </view>
+
+<!-- 专题活动 -->
+ 
+<view class="subject_box">
+
+  <view data-info='{{objecturl1}}' class="subject subject1"  bindtap='toAdmm1' >
+  <image src="https://static.bf-fresh.com/img/index/object1.png"></image>
+   </view>
+
+    <view class="subject subject1"  data-info='{{objecturl2}}'  bindtap='toAdmm' >
+  <image src="https://static.bf-fresh.com/img/index/object2.png"></image>
+   </view>
+</view>
+
+
+  <!-- 今日热卖 -->
+  <view class='today_hot' data-info='{{objecturl3}}'  bindtap='toAdmm'>                                                                                         
+    <image class='today_hot_img' src='https://static.bf-fresh.com/img/index/bimai.jpg'></image>
+  </view>
+  <!-- 列表区域 start  -->
+  
+      <!-- <view class='list_item' wx:for="{{sj}}">
+        <navigator class='list_item_left' url="../detail/detail?sku_id={{item.sku_id}}" hover-class='none'>
+          <view class='list_item_img_big'>
+            <view class='promotion_big'>
+              <image class='promotion_bg' src='{{item.url}}'></image>
+            </view>
+            <image class='list_item_img' src='{{item.h_pic}}'></image>
+          </view>
+        </navigator>
+        <navigator class='list_item_right'  url="../detail/detail?sku_id={{item.sku_id}}" hover-class='none'>
+          <view class='list_item_right_title'>{{item.title}}</view>
+          <view class='list_item_right_ctn'>{{item.summary}}</view>
+          <view class='list_item_right_hb_big clearfix' wx:if='{{item.activeDiscount>0&&item.discount>0}}'>
+            <text class='list_item_right_hb'>优惠券不可用</text>
+          </view>
+          <view class='list_item_right_price'>
+           <block wx:if='{{item.activeDiscount==0}}'>
+            <text class='list_item_right_newPrice'>￥{{item.discount}}</text>
+            </block>
+           <block wx:if='{{item.activeDiscount>0}}'>
+            <text class='list_item_right_newPrice'>￥{{item.activeDiscount}}</text>
+            <text wx:if="{{item.discount>0}}" class='list_item_right_oldPrice'>￥{{item.discount}}</text>
+            </block>
+          </view>
+        </navigator>
+        <view class='cart' bindtap='cart'  data-info='{{item}}'>
+          <image class='cart_img' src='../img/index/cart_button.png'></image>
+        </view>
+        </view> -->
+      <!-- 加载更多 start -->
+
+
+
+
+<view class="fruit-box">
+   <view class="fruit" wx:for="{{sj}}">
+
+    <view class="product_num" wx:if='{{item.product_num<=0}}'>
+    <image src="../img/index/product.png"></image>
+    </view>
+    
+<!-- 角标 -->
+   <view class="fruitpic"><image src='{{item.url}}'></image></view>  
+
+     <navigator class='' url="../detail/detail?sku_id={{item.sku_id}}" hover-class='none'>
+        <view class="fruitimg"><image src="{{item.h_pic}}"></image></view>
+        <view class="fruittitle">{{item.title}}</view>
+        <view class="fruitcon">{{item.summary}}</view>
+    </navigator>
+      <view class="fruitprice-box">
+          <view class="fruitprice" wx:if='{{item.activeDiscount>0&&item.discount>0&&item.activeDiscount!=item.discount}}'>
+            <view class="fruitprice_new">￥{{item.activeDiscount}}</view>
+              <view class="fruitprice_old"  wx:if='{{item.discount>0}}'>￥{{item.discount}}</view>
+          </view>
+          <view class="fruitprice" wx:if='{{item.activeDiscount==0}}'>
+            <view class="fruitprice_new">￥{{item.discount}}</view>
+          </view>
+           <view class="jiagou"  bindtap='cart'  data-info='{{item}}'>
+           <image src="../img/index/jiagou.png"></image>
+
+           <view class="animation" animation="{{animationData}}" style=""></view>
+           </view>
+      </view>
+  
+    </view>
+
+      <!-- 加载更多 start -->
+           <view class='load' hidden='{{load}}' wx:if='{{sj.length>0}}'><image class="loimg" src='../img/index/loading.gif'></image></view>
+       <view class='over' hidden="{{over}}" style="margin-top:{{martop}}rpx"  wx:if='{{sj.length>0}}'><view class="chibang"></view>   <view class="dixian">我是有底线的</view>      <view class="chibang"></view>
+        </view>
+
+
+      <view class="good_box" hidden="{{hide_good_box}}"  style="left: {{bus_x}}px; top: {{bus_y}}px;">
+  </view>
+
+  </view>
+
+</view>
+
+
+
+
+<view class="address_tip" wx:if='{{come_within==2}}'>
+<view class="addtip_box">
+    <image class="addtip_img" src="../img/index/fanwei.jpg"></image>
+    <view class="addtip_box_top">
+       <text>您的位置不在服务范围内</text>
+       <text class="addbi">请下拉选择需要访问的门店</text>
+    </view>
+     <scroll-view scroll-y  class="addtip_box_center">
+          <view class="addtip_box_c"  wx:for='{{shops}}'>
+            <view class="addtip" bindtap='jump' data-info="{{item}}">邮政惠民生活驿站  ( {{item.wname}} )          </view>
+          </view>
+           <view class="addbot">其他店铺敬请期待</view> 
+     </scroll-view>
+</view>
+</view>
+
+
+
+
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>
+
+
+<!-- 优惠券 -->
+<view class='cououp-box'  wx:if='{{xiaoshi==true&&couponList.length>0}}'>
+  <view class="cououp">
+    <image class='coutou' src="https://static.bf-fresh.com/img/index/touxiang.png"></image>
+   <image src="../img/index/guanbi.png"  class='guanbi' bindtap='xiaoshi'></image>
+
+    <view class='coutip'>恭喜您获得   <text class="coutip1">￥</text><text class="coutip2">{{couponListnum}} </text>元优惠券</view>
+
+    <scroll-view scroll-y class='coubox'>
+      <view class="coubox-son"  wx:for='{{couponList}}'>
+       <image src='../img/index/youhui1.png'></image>
+        <view class='coubox-son1'>{{item.amount/100}}</view>
+        <view class='coubox-son2'>{{item.couponName}}</view>
+        <view class='coubox-son3'>{{item.endTime}}到期</view>
+    </view>
+
+    </scroll-view>
+
+    <view class="cgoumaitip" >
+          <image src='../img/index/youhui2.png'></image>
+          <view class='cgoumaitip2' bindtap='xiaoshi'>立即领取</view>
+    </view>
+  </view>
+</view>
+
+
+<view class="showFlag" wx:if="{{showFlag}}" >
+  <view class="showFg">
+    <view class="showg">您拒绝了地理位置授权,
+    </view>
+      <view class="showg">
+    需要重新设置</view>
+      <button class="showF" open-type="openSetting" bindopensetting="handler">去设置</button>
+    </view>
+</view>
+
+
+
+

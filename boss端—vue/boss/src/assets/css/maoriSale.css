@@ -1,0 +1,104 @@
+.top {
+  font-size: 28px;
+  padding: 26px;
+  background: none;
+  margin-bottom: 0;
+}
+#maoriSale .num_circle {
+  margin: 0 10px 0 0;
+}
+/*列表 start*/
+.maori_sale {
+  border-radius: 0;
+  margin-bottom: 80px;
+}
+.maori_sale>li {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  height: auto;
+  margin-bottom: 20px;
+}
+ul>li:nth-child(even) {
+  background: #fff;
+}
+.maori_sale_title_left {
+  color: #333;
+  display: flex;
+  align-items: center;
+  flex: 2;
+}
+
+.maori_sale_title_left img {
+  width: 60px;
+  height: 42px;
+  margin-right: 10px;
+}
+.maori_sale_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28px;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+
+.maori_sale_title_right {
+  text-align: right;
+  flex: 1;
+}
+
+.maori_sale_title_left_icon {
+  width: 80px;
+  height: 40px;
+  border-radius: 25px;
+  font-size: 24px;
+  line-height: 40px;
+  text-align: center;
+  background: linear-gradient(to right, #fe863e, #e85f0d);
+  color: #fff;
+  margin-left: 10px;
+}
+.maori_sale_ctn {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26px;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+.maori_sale_ctn p {
+  margin-top: 6px;
+}
+.maori_sale_ctn_left {
+  text-align:left;
+}
+.maori_sale_ctn_right {
+  text-align: right;
+}
+.maori_sale_ctn span {
+  color: #333;
+}
+.maori_sale_ctn .sale_color {
+  color: rgb(232,95,13);
+  font-size: 28px;
+}
+.maori_sale_bottom{
+  padding: 20px 0;
+  color: rgb(153,153,153);
+}
+.maori_sale_bottom span {
+  color: rgb(153,153,153);
+  font-size: 26px;
+}
+.maoriSale_item2 {
+  padding: 20px;
+}
+.maoriSale_item2 .maori_sale_ctn_right {
+  text-align: right;
+}
+.maoriSale_item3 {
+  padding: 20px;
+}
+
+/*列表 end*/

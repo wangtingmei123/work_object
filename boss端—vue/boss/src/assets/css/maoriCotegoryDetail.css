@@ -1,0 +1,12 @@
+#maoriCotegoryDetail .search_icon {
+  width: 34px;
+  height: 34px;
+}
+#maoriCotegoryDetail .time {
+  font-size: 34px;
+}
+/*选项卡*/
+#maoriCotegoryDetailChoose .van-tabs__line {
+  width: 80px !important;
+  left: 18% !important;
+}

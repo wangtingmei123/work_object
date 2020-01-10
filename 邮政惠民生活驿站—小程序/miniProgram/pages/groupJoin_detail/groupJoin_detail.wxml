@@ -1,0 +1,17 @@
+<!--pages/groupJoin_detail/groupJoin_detail.wxml-->
+<view class='container'>
+  <image class='img' src='../img/index/pingtuanwanf.png'></image>
+  <view class='ctn'>
+      <view class="ct1tit">什么是多人拼团？</view>
+      <view class="ctititsp">
+      多人拼团（以下简称：拼团）是指由多热一起频道购买的团购活动，通过拼图卖家可以享受比一般网购更低的折扣。
+      </view>
+      <view class="ct1tit">怎样算拼团成功？  </view>
+      <view class="ctititsp"> 在拼团有效期内找到满足人数的好友参加拼团，即可算拼团成功。</view>
+      <view class="ct1tit">拼团失败，怎样退款？</view>
+      <view class="ctititsp">若拼团有效期内没有凑齐拼团人数，即算作拼团失败，系统会自动将所支付的货款原路退回，具体到账时间各银行时间为准。</view>
+    
+</view>
+
+
+</view>

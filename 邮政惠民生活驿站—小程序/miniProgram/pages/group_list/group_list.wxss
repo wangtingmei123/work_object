@@ -1,0 +1,169 @@
+/* pages/group_list/group_list.wxss */
+page {
+  background: #f8f8f8;
+  height: 100%;
+}
+.container {
+  width: 100%;
+  background: #fff;
+  padding: 0;
+}
+/* 拼团人数 start */
+.per_big {
+  width: 100%;
+  background: #fff;
+}
+.per_top {
+  border-bottom: 1rpx solid #f8f8f8;
+  padding: 25rpx 20rpx;
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+}
+.per {
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #f8f8f8;
+}
+.per_left {
+  display: flex;
+  align-items: center;
+}
+.per_left_img {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  background: #ace;
+}
+.per_name {
+  margin-left: 20rpx;
+  font-size: 28rpx;
+  width:100rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+
+}
+.per_right {
+  height: 90rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.per_right_ctn {
+  padding: 10rpx 0;
+  line-height: 36rpx;
+  font-size: 24rpx;
+  color: e43636;
+}
+.butt {
+  width: 130rpx;
+  height: 50rpx;
+  font-size: 24rpx;
+  border-radius: 25rpx;
+  background: linear-gradient(to right,#ffb92e,#fc9029) ;
+  line-height: 50rpx;
+  color: #fff;
+  margin-left: 20rpx;
+}
+.butt:after {
+  border: none;
+}
+.per_color {
+  color: #d22842;
+}
+/* 拼团人数 end */
+/* 遮罩层 start */
+.mask_big {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.4);
+}
+.mask {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 640rpx;
+  padding: 30rpx 20rpx;
+  background: #fff;
+  z-index: 11;
+}
+.mask_title {
+  display: flex;
+  justify-content: space-between;
+}
+.space {
+  width: 40rpx;
+  height: 40rpx;
+}
+.mask_title_ctn {
+  font-size: 28rpx;
+  color: #000;
+}
+.mask_title_icon_big {
+  width: 40rpx;
+  height: 40rpx;
+}
+.mask_title_icon_big image {
+  width: 100%;
+  height: 100%;
+}
+.per_num {
+  width: 100%;
+  padding: 30rpx 0 15rpx;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 10rpx;
+}
+.join_per {
+  width: 90rpx;
+  height: 90rpx;
+  margin: 0 30rpx 15rpx;
+  border-radius: 50%;
+  background: #edd;
+  overflow: hidden;
+}
+.join_per image {
+  width: 100%;
+  height: 100%;
+}
+.mask_btn {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+.buttt {
+  width: 130rpx;
+  height: 50rpx;
+  font-size: 24rpx;
+  border-radius: 25rpx;
+  background: linear-gradient(to right,#ffb92e,#fc9029) ;
+  color: #fff;
+  line-height: 50rpx;
+}
+.buttt:after {
+  border: none;
+}
+
+.bottom_wks{
+  width: 614rpx;
+  height: 69rpx;
+  text-align: center;
+  line-height:69rpx;
+  color: #fff;
+  background: #f0f0f0;
+   text-shadow: 1rpx 1rpx 5rpx #dfdfdf;
+   border-radius: 69rpx;
+   margin-left:16rpx;
+   font-size: 26rpx;
+
+}
+
+/* 遮罩层 end */

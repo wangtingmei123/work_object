@@ -1,0 +1,13 @@
+<!--pages/chang_userinfo/chang_userinfo.wxml-->
+<view class='container'>
+  <view class='user_list'>
+    <view class='user_item'>
+      <view class='user'>手机号</view>
+      <view class='user_ctn'>13122667788</view>
+    </view>
+    <view class='user_item'>
+      <view class='user'>微信昵称</view>
+      <view class='user_ctn'>小不懂</view>
+    </view>
+  </view>
+</view>

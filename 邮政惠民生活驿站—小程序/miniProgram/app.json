@@ -1,0 +1,98 @@
+{
+  "pages": [
+    "pages/index/index",
+        "pages/binding/binding",
+        "pages/ps_list/ps_list",
+        "pages/ps_login/ps_login",
+    "pages/to_refund/to_refund",
+     
+    
+      "pages/index1/index1",
+    "pages/me/me",
+
+
+
+    "pages/address/address",
+    "pages/address_page/address_page",
+    "pages/imgroup/imgroup",
+    "pages/newzx/newzx",
+    "pages/view_refund/view_refund",
+
+    "pages/order_status/order_status",
+    "pages/group_address/group_address",
+    "pages/order_confirm/order_confirm",
+    "pages/phone/phone",
+    "pages/Address_list/Address_list",
+    "pages/Address_list_me/Address_list_me",
+    "pages/add_address/add_address",
+    "pages/object/object",
+    "pages/action/action",
+    "pages/order_group_confirm/order_group_confirm",
+    "pages/login/login",
+    "pages/waitPay/waitPay",
+    "pages/seccess/seccess",
+    "pages/return/return",
+    "pages/help/help",
+    "pages/cart/cart",
+    "pages/search/search",
+    "pages/detail/detail",
+    "pages/chang_userinfo/chang_userinfo",
+    "pages/group_category/group_category",
+    "pages/coupon/coupon",
+    "pages/coupontwo/coupontwo",
+    "pages/code/code",
+    "pages/group_list/group_list",
+    "pages/groupJoin_detail/groupJoin_detail",
+    "pages/group_detail/group_detail",
+    "pages/group/group",
+    "pages/banner_detail/banner_detail",
+    "pages/search_list/search_list",
+    "pages/logs/logs",
+    "pages/groupSuc/groupSuc",
+    "pages/waitGroup/waitGroup"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于该小程序收货地址信息展示"
+    }
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "邮政惠民生活驿站",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": 100
+  },
+  "tabBar": {
+    "selectedColor": "#66B111",
+    "color": "#999",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "pages/img/index/index.png",
+        "selectedIconPath": "pages/img/index/index_select.png"
+      },
+      {
+        "pagePath": "pages/group/group",
+        "text": "拼团",
+        "iconPath": "pages/img/index/group.png",
+        "selectedIconPath": "pages/img/index/group_select.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车",
+        "iconPath": "pages/img/index/cart.png",
+        "selectedIconPath": "pages/img/index/cart_select.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "pages/img/index/me.png",
+        "selectedIconPath": "pages/img/index/me_select.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

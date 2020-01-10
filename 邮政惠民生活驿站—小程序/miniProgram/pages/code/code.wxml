@@ -1,0 +1,9 @@
+<!--pages/code/code.wxml-->
+<view class='container'>
+  <view class='code_big'>
+    <view class='ctn'>您的专属会员码，结算时出示立享优惠</view>
+    <view class='my_code'>
+      <image src="" class='code'></image>
+    </view>
+  </view>
+</view>

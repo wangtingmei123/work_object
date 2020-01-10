@@ -1,0 +1,147 @@
+<view class='container'>
+<!-- 顶部 start -->
+  <scroll-view scroll-x="true"  class='top'>
+    <view  data-num="0" class="list-menu list-menu1 {{_num == 0 || showAll == true?'active':''}}" bindtap="menuClick">全部</view>
+    <view  data-num="1" class="list-menu list-menu2 {{_num==1?'active':''}}" bindtap="menuClick">待付款</view>
+    <!-- <view  data-num="3" class="list-menu list-menu3 {{_num==3?'active':''}}" bindtap="menuClick">待自提</view> -->
+    <view  data-num="4" class="list-menu list-menu4 {{_num==4?'active':''}}" bindtap="menuClick">待发货</view>
+    <view  data-num="6" class="list-menu list-menu6 {{_num==6?'active':''}}" bindtap="menuClick">配送中</view>
+    <view  data-num="2" class="list-menu list-menu2 {{_num==2?'active':''}}" bindtap="menuClick">待成团</view>
+    <view  data-num="5" class="list-menu list-menu5 {{_num==5?'active':''}}" bindtap="menuClick">已完成</view>
+  </scroll-view>
+
+  <view class='diandi'></view>
+<!-- 没有订单start -->
+<view class="noorder" wx:if="{{notext}}">
+   <image class="noimg" src="../img/index/ordernone.jpg"></image>
+   <view class="notext">暂无可查询的订单哦~</view>
+</view>
+<view class='ul' wx:if="{{orderall!=null&&orderall.length>0}}">
+<view class='li' wx:for="{{orderall}}" >
+    <view >
+    <!-- 订单号区域 start -->
+      <view class='order_status' bindtap="orderDetail" data-info='{{item}}'>
+        <view class='order_num'>订单编号：{{item.order_id}}</view>
+        <view class='status' wx:if="{{item.pay_status==0&&item.order_status==0}}">待付款</view>
+         <view class='status' wx:if="{{item.order_status==4}}">已取消</view>
+        <!-- <view class='status' wx:if="{{item.pay_status==4&&item.order_status==4}}">已退款</view> -->
+        <view class='status' wx:if='{{item.order_type==8121&&item.pay_status==1&&item.order_status==0}}'>待成团</view>
+         <view class='status'wx:if="{{item.pay_status==1&&item.order_status==2&&item.shipping_type==1}}">待自提</view>
+
+           <view class='status'wx:if="{{item.pay_status==1&&item.order_status==2&&item.shipping_type==0}}">待发货</view>
+          <!-- <view class='status wait_pay'wx:if="{{item.pay_status==1&&item.order_status==2&&item.order_type!=8121}}">待自提</view> -->
+         <view class='status'wx:if="{{item.pay_status==1&&item.order_status==3}}">已完成</view>
+         <view class='status'wx:if="{{item.pay_status==1&&item.order_status==6&&item.shipping_type==0}}">配送中</view>
+
+      </view>
+
+    <!-- 订单号区域 end -->
+    <!-- 中间内容 start -->
+      <view class='goods' bindtap="orderDetail" data-info='{{item}}'>
+      <scroll-view scroll-x="true" class="goodlistn" style="width: auto;overflow:hidden;">
+         
+     
+          <view class='goods_img_big' wx:for='{{item.sku_list}}' bindtap="switchNav" >
+            <image class='goimga' src="{{item.sku_image}}"></image>
+          </view>
+        </scroll-view>
+
+        <view class='goods_right' wx:if="{{item.sku_list.length==1}}" >
+        <block wx:for="{{item.sku_list}}">
+          <view class='goods_title_big goods_item'>
+
+             <view class='goods_title'>{{item.sku_name}}</view>
+            <view class='new_price'>￥{{item.actual_price}}</view>
+          
+          </view>
+          <view class='goods_ctn_big goods_item'>
+            <view class='goods_ctn goods_color'>{{item.summary}}</view>
+            <view class='old_price goods_color' wx:if="{{item.actual_price!=item.origin_price}}">￥{{item.origin_price}}</view>
+            
+          </view>
+          <view class='goods_num_big goods_item'>
+            <view></view>
+            <view class=' goods_num goods_color'>x{{item.sku_count}}</view>
+          </view>
+          <view class='list_item_right_hb_big clearfix' wx:if="{{item.actual_price!=item.origin_price}}">
+            <text class='list_item_right_hb'>优惠券不可用</text>
+          </view>
+
+          </block>
+
+        </view>
+      </view>
+      <view class='status_price'>
+        <view class='distribution' wx:if="{{item.shipping_type==1}}">自提</view>
+        <view class='distribution' wx:if="{{item.shipping_type==0}}">配送</view>
+        <view class='status_price_right'>
+          <view>共{{item.sku_list.length}}件商品</view>
+          <view>实付款：<text>￥{{item.order_money}}</text></view>
+        </view>
+      </view>
+
+
+      <view class='btn_big' wx:if="{{item.pay_status==0&&item.order_status==0}}">
+        <view class='btn' hover-class='none'  bindtap="orderDetail" data-info='{{item}}' >立即付款</view>
+      </view>
+
+
+      <view class='btn_big'  wx:if='{{item.order_type==8121&&item.pay_status==1&&item.order_status==0}}'>
+          <button class='btn btn_wait_pay btn_wait_group'  open-type="share" hover-class='none' data-info='{{item}}' >邀请好友参团</button>
+      </view>
+
+       <!-- <view class='btn_big'  wx:if="{{item.pay_status==1&&item.order_status==2&&item.shipping_type==1}}">
+        <view  class='btn btn_wait_pay'   bindtap="receiving"  data-info='{{item}}' hover-class='none'  data-index="{{index}}"  data-info="{{item}}">确认提货</view>
+        </view> -->
+
+        <view class='btn_big'  wx:if="{{item.pay_status==1&&item.order_status==6&&item.shipping_type==0}}">
+        <view  class='btn btn_wait_pay'   bindtap="receiving"  data-info='{{item}}' hover-class='none'  data-index="{{index}}"  data-info="{{item}}"   >确认收货</view>
+        </view>
+
+
+      <view class='btn_big'  wx:if="{{item.pay_status==1&&item.order_type!=8121&&item.order_status==3}}">
+         <view class='btn btn_wait_pay' hover-class='none' bindtap="paytoo" data-info='{{item}}' >再来一单</view>
+         <view class='btn btn_wait_pay dafen' hover-class='none' bindtap="score" data-info='{{item}}'  wx:if="{{item.comment_star==0}}"  data-index='{{index}}'>打个分</view>
+      </view>
+
+ <view class='btn_big'  wx:if="{{item.pay_status==1&&item.order_type==8121&&item.order_status==3}}">
+      <view class='btn btn_wait_pay dafen dafenpt' hover-class='none' bindtap="score"  data-index='{{index}}'  data-info='{{item}}' wx:if="{{item.comment_star==0}}">打个分</view>
+        </view>
+
+      </view>
+    </view>
+<!-- 内容 end -->
+</view>
+</view>
+<!-- 加载更多 start -->
+    <!-- 加载更多 start -->
+       <view class='load' hidden='{{load}}'><image class="loimg" src='../img/index/loading.gif'></image></view>
+       <view class='over' hidden="{{over}}" style="margin-top:{{martop}}rpx"  wx:if='{{orderall.length>0}}'><view class="chibang"></view>   <view class="dixian">我是有底线的</view>      <view class="chibang"></view>
+        </view>
+
+
+
+
+
+<view class="nonet-box" wx:if="{{nonet}}" >
+        
+         <view class="nonet">当前网络不可用，请检查您的网络 {{netWorkType}}</view>
+ 
+</view>
+
+
+<view class='score-box' wx:if='{{score_see==true}}'  bindtap='outbtn'>
+   <view class='score' catchtap='inbtn'>
+        <view class='scroe-top'  >给配送员打个分吧</view>
+        <view class='scroe-center' >
+              <view class='scrxin'>
+                      <image  wx:for="{{stars}}" class="star-image"  src="{{key > item ?selectedSrc: normalSrc}}">
+                              <view class="item"  data-key="{{item+1}}" bindtap="selectRight"></view>
+                      </image>
+            </view>
+        </view>
+        <view class='scroebottomsss' bindtap="dianjistate" >确 定</view>
+   </view>
+
+</view>
+

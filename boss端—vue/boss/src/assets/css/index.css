@@ -1,0 +1,332 @@
+html {
+  background: #f5f5f5 !important;
+}
+a {
+  color: #333;
+}
+
+.van-col, .van-row {
+  text-align: center;
+}
+
+/*顶部 start*/
+.title {
+  width: 100%;
+  font-size: 24px;
+  padding: 30px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title h3 {
+  font-size: 32px;
+  color: rgb(50, 50, 50);
+  line-height: 1;
+  font-weight: 600;
+}
+
+.time {
+  font-size: 28px;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  line-height: 1;
+}
+
+.time > img {
+  margin-left: 20px;
+  width: 20px;
+  height: 12px;
+}
+
+.dateShow {
+  position: absolute;
+  left: 0;
+  top: 100px;
+  width: 100%;
+  height: 320px;
+  background: #fff;
+  z-index: 1;
+}
+
+.date_big {
+  width: 375px;
+  margin: 0 auto;
+}
+.date_big p {
+  font-size: 24px;
+  color: #999;
+}
+.from_date, .to_date {
+  display: flex;
+  align-items: center;
+}
+
+.to_date {
+  margin-top: 20px;
+}
+
+.date_input {
+  width: 700px;
+  height: 70px;
+  line-height: 1.09375rem;
+  text-align: center;
+  border: 0;
+  background: rgba(245,245,245,1);
+  box-sizing: border-box;
+}
+
+input::-webkit-input-placeholder {
+  /* placeholder颜色  */
+  color: #333;
+  /* placeholder字体大小  */
+  font-size: 22px;
+  /* placeholder位置  */
+  text-align: center;
+}
+.search_btn {
+  margin-top: 20px;
+  width: 375px;
+  height: 66px;
+  border-radius: 33px;
+  background: #3321b4;
+  color: #fff;
+  font-size: 22px;
+}
+/*顶部 end*/
+/*金额 start*/
+.money {
+  height: 226px;
+  background: url("../static/img/bg_index.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.money_top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 112px;
+  border-bottom: 1px solid #ace;
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+
+.money_bottom {
+  position: relative;
+  height: 112px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.money_top_num {
+  font-size: 40px;
+  color: rgb(221, 182, 116);
+  font-weight: 600;
+}
+
+.money_top_ctn {
+  font-size: 22px;
+  color: #fff;
+}
+
+.money_bottom_num {
+  font-size: 34px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.money_bottom_ctn {
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+}
+
+.column_line {
+  width: 1px;
+  height: 50px;
+  color: #f0f0f0;
+  position: absolute;
+  right: 50%;
+  bottom: 20%;
+  z-index: 1;
+}
+
+/*金额 end*/
+/*图表 start*/
+.echart_title {
+  padding-top: 40px;
+}
+
+.today, .tomorrow {
+  padding-left: 30px;
+  box-sizing: border-box;
+  text-align: left;
+  display: flex;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.fang {
+  width: 23px;
+  height: 23px;
+  background: rgb(255, 183, 13);
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.fang2 {
+  background: rgb(51, 33, 180);
+}
+
+.tomorrow {
+  padding-top: 20px;
+}
+
+.myChart, .echart_title, .title {
+  background: #fff;
+}
+
+/*图表 end*/
+/*选项 start*/
+.nowImg {
+  width: 43px;
+  height: 30px;
+}
+
+.historyImg {
+  width: 32px;
+  height: 41px;
+}
+
+.nh {
+  display: flex;
+  width: 200px;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.nh_big {
+  margin-top: 20px;
+  background: #fff;
+}
+
+.nh_ctn {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rightImg {
+  width: 12px;
+  height: 20px;
+}
+
+.nh_ctn {
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 30px;
+}
+
+.nh_ctn p {
+  width: 120px;
+  font-size: 26px;
+}
+
+.ch_img {
+  width: 50px;
+}
+
+.bor {
+  border-bottom: 1px solid rgb(245, 245, 245);
+}
+.van-col {
+  float: none;
+  line-height: 1.5;
+}
+.index_dateShow {
+  top: 88px;
+  right: 0;
+  box-shadow: 0px 5px 10px #f5f5f5;
+}
+#index ul {
+  border-radius: 0;
+}
+#index ul>li {
+  text-align: center;
+}
+#app #box .van-tabs__line {
+  width: 16% !important;
+}
+/*选项 end*/
+.no-data {
+  font-size: 20px;
+}
+/*点击区域start*/
+.click {
+  position: relative;
+  overflow: hidden;
+}
+.click:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background:rgba(0,0,0,0);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transition: background .3s;
+}
+.click.click:active:after {
+  background: rgba(0,0,0,.3);
+  transition: background .3s;
+}
+/*点击区域end*/
+/*水波纹start*/
+.ripper {
+  position: relative;
+  overflow: hidden;
+}
+.ripper:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #333 18%, transparent 10%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform .5s, opacity .5s;
+}
+.ripper:active:after {
+  transform: scale(0, 0);
+  opacity: .3;
+  transition: 0s;
+}
+/*水波纹end*/
+/*暂无数据start*/
+.nodata {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 26px;
+}
+/*暂无数据end*/
+

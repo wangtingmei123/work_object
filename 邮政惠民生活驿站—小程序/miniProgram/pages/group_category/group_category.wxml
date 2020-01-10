@@ -1,0 +1,137 @@
+<!--pages/group_category/group_category.wxml-->
+<view class="container">
+    <!-- tab导航栏 start -->
+    <!-- scroll-left属性可以控制滚动条位置 -->
+    <!-- scroll-with-animation滚动添加动画过渡 -->
+
+
+    <!-- <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
+        <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
+          <view class="nav-item {{currentTab == idx ?'active':''}}"  data-current="{{idx}}" bindtap="switchNav" data-info='{{navItem}}'>{{navItem.name}}</view>
+        </block>        
+    </scroll-view> -->
+
+
+
+
+
+
+    <!-- tab导航栏 end -->
+    <!-- 页面内容 start -->
+    <!-- 轮播图区域 start  -->
+    <!-- <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swip"   indicator-active-color="#fff" circular="true">
+      <block wx:for="{{imgUrls}}">
+        <swiper-item>
+          <navigator url='../banner_detail/banner_detail?banner_url=https://www.baidu.com/?tn=93288332_hao_pg' hover-class='none'>
+            <image src="{{item}}" class="slide-image" width="355" height="150" />
+          </navigator>
+        </swiper-item>
+      </block>
+    </swiper> -->
+    <!-- 轮播图区域 end  -->
+
+
+    <!-- <view class='item_big'wx:if='{{goods!=null&&goods.length>0}}'>
+        <view class='item'>
+          <view class='list_item' wx:for="{{goods}}">
+            <view class='list_item_left' bindtap='detail' data-info='{{item}}'>
+              <view class='list_item_img_big'>
+                <view class='promotion_big'>
+                  <image class='promotion_bg' src='{{item.url}}'></image>
+                
+                </view>
+                <image class='list_item_img' src='{{item.h_pic}}'></image>
+              </view>
+            </view>
+            <view class='list_item_right' bindtap='detail' data-info='{{item}}'>
+              <view class='list_item_right_title'>{{item.title}}</view>
+                  <view class='list_item_right_ctn'>{{item.summary}}</view>
+                  <view class='list_item_right_hb_big clearfix'  wx:if='{{item.activeDiscount>0&&item.discounts>0}}'>
+                    <text class='list_item_right_hb'>优惠券不可用</text>
+                  </view>
+                       <block wx:if='{{item.activeDiscount==null}}'>
+                             <view class="list_item_right_Price">
+                    <text class='list_item_right_newPrice'>￥{{item.discounts}}</text>
+                   </view>
+                    </block>
+                  <block wx:if='{{item.activeDiscount>0}}'>
+                   <view class="list_item_right_Price">
+                      <text class='list_item_right_newPrice'>￥{{item.activeDiscount}}</text>
+                      <text wx:if="{{item.discounts>0}}" class='list_item_right_oldPrice'>￥{{item.discounts}}                            </text>
+                    </view>
+                    </block>
+              </view>
+              <view class='cart' bindtap='cart' data-info='{{item}}'><image class='cart_but' src='../img/index/cart_button.png'></image></view>
+            </view>
+        </view>
+    </view> -->
+
+    
+
+
+
+<view class="fruit-box" wx:if='{{goods!=null&&goods.length>0}}'>
+   <view class="fruit" wx:for="{{goods}}">
+    <view class="product_num" wx:if='{{item.product_num<=0}}'>
+    <image src="../img/index/product.png"></image>
+    
+    </view>
+   <view class="fruitpic"><image src='{{item.url}}'></image></view>  
+     <navigator class='' url="../detail/detail?sku_id={{item.sku_id}}" hover-class='none'>
+        <view class="fruitimg"><image src="{{item.h_pic}}"></image></view>
+        <view class="fruittitle">{{item.title}}</view>
+        <view class="fruitcon">{{item.summary}}</view>
+    </navigator>
+      <view class="fruitprice-box">
+          <view class="fruitprice" wx:if='{{item.activeDiscount>0&&item.activeDiscount!=item.discounts}}'>
+            <view class="fruitprice_new">￥{{item.activeDiscount}}</view>
+              <view class="fruitprice_old"  wx:if='{{item.discount>0}}'>￥{{item.discounts}}</view>
+          </view>
+          <view class="fruitprice" wx:if='{{item.activeDiscount==null}}'>
+            <view class="fruitprice_new">￥{{item.discounts}}</view>
+          </view>
+           <view class="jiagou"  bindtap='cart'  data-info='{{item}}'>
+           <image src="../img/index/jiagou.png"></image>
+
+           <view class="animation" animation="{{animationData}}" style=""></view>
+           </view>
+      </view>
+    </view>
+
+    </view>
+
+  <!-- 加载更多 start -->
+       <view class='load' wx:if='{{load==false}}' ><image class="loimg" src='../img/index/loading.gif'></image></view>
+       <view class='over' hidden="{{over}}" style="margin-top:{{martop}}rpx"  wx:if='{{goods.length>0}}'><view class="chibang"></view>   <view class="dixian">我是有底线的</view>      <view class="chibang"></view>
+        </view>
+
+
+
+
+     <view class='noorder' wx:if='{{(goods==null&&sjLength==true)||(goods.length==0&&sjLength==true)}}'>
+        <image class="noimg" src="../img/index/gouwunone.png"></image>
+        <view class="notext">此分类没有商品~</view>
+    </view>
+
+    <!-- 页面内容 end -->
+</view>
+<view class='cart_fixed' bindtap='toCart'>
+      <image src='../img/index/cart.png'></image>
+      <view class='cart_absolute' wx:if="{{carnum}}">{{carnum}}</view>
+</view>
+
+
+
+
+
+
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>

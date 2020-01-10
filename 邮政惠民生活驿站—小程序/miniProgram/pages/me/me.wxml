@@ -1,0 +1,177 @@
+<!--pages/me/me.wxml-->
+<view class='container'>
+<!-- 用户 start -->
+  <view class='user' wx:if="{{user!=null}}">
+    <view class='user_left'>
+      <view class='user_img_big'>
+        <image src="{{user.avatarUrl}}"></image>
+      </view>
+      <view class='user_name'>{{user.nickName}}</view>
+    </view>
+    <!-- <view class='user_right' bindtap='toCode'>
+      <view class='code_ctn'>会员专属优惠码</view>
+      <view class='code'>
+        <image src="../img/index/code.png"></image>
+      </view>
+    </view> -->
+
+       <view class="bangding-box" bindtap='to_bing' wx:if="{{bindStatus==0}}">
+          <image class="bangding" src='../img/index/gonghao.png'></image>
+          <view class="bgtext">绑定工号</view>
+       </view>
+  </view>
+<!-- 用户 end -->
+
+
+<!-- 登录start -->
+  <view class='user'wx:if="{{user==null}}" bindtap='toLogin'>
+    <view class='user_left'>
+      <view class='user_name user_log'>登录/注册</view>
+    </view>
+    <view class='user_right'>
+      <view class='uphoto'>
+           <view class='uptop'></view>
+           <view class='upbot'></view>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 登录end -->
+
+
+<!-- 我的订单 start -->
+  <view class='order'>
+    <view class='order_title'  bindtap='toOrder' data-info='0'>
+      <view class='my_order'>我的订单</view>
+      <view class='all_order_big'>
+      <view class='all_order'>查看所有订单</view>
+        <view class='all_order_icon'>
+          <image src='../img/index/more_gray.png'></image>
+        </view>
+      </view>
+    </view>
+
+
+
+    <scroll-view scroll-x="true" class='order_item_big'>
+
+
+      <view class='order_item'  bindtap='toOrder' data-info='1'>
+        <view class='order_item_icon'>
+          <image src="../img/index/state1.png"></image>
+        </view>
+        <view class='order_item_ctn'>待付款</view>
+      </view>
+
+       <!-- <view class='order_item'  bindtap='toOrder' data-info='3'>
+        <view class='order_item_icon'>
+          <image src="../img/index/state2.png"></image>
+        </view>
+        <view class='order_item_ctn'>待自提</view>
+      </view> -->
+
+      <view class='order_item'  bindtap='toOrder' data-info='4'>
+        <view class='order_item_icon'>
+          <image src="../img/index/state3.png"></image>
+        </view>
+        <view class='order_item_ctn'>待发货</view>
+      </view>
+
+        <view class='order_item'  bindtap='toOrder' data-info='6'>
+        <view class='order_item_icon'>
+          <image src="../img/index/state4.png"></image>
+        </view>
+        <view class='order_item_ctn'>配送中</view>
+      </view>
+
+      <view class='order_item'   bindtap='toOrder' data-info='2'>
+        <view class='order_item_icon'>
+          <image src="../img/index/state5.png"></image>
+        </view>
+        <view class='order_item_ctn'>待拼团</view>
+      </view>
+
+      <view class='order_item'  bindtap='toOrder' data-info='5'>
+        <view class='order_item_icon'>
+          <image src="../img/index/state6.png"></image>
+        </view>
+        <view class='order_item_ctn'>已完成</view>
+      </view>
+    </scroll-view>
+
+
+  </view>
+<!-- 我的订单 end -->
+<!-- 分类 start -->
+  <view class='me_cate'>
+    <view class='me_item'>
+      <view class='item' bindtap='toCoupon'>
+        <view class='coupon'>优惠券</view>
+        <view class='right_icon'>
+          <image src="../img/index/more_black.png"></image>
+        </view>
+      </view>
+      <!-- <view class='item' bindtap='toChangeUserinfo'>
+        <view class='coupon'>账户与安全</view>
+        <view class='right_icon'>
+          <image src="../img/index/more_black.png"></image>
+        </view>
+      </view> -->
+      <view class='item' bindtap='toHelp'>
+        <view class='coupon'>客服与帮助</view>
+        <view class='right_icon'>
+          <image src="../img/index/more_black.png"></image>
+        </view>
+      </view>
+
+       <view class='item' bindtap='toAddlist'>
+        <view class='coupon'>收货地址管理</view>
+        <view class='right_icon'>
+          <image src="../img/index/more_black.png"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+<!-- 分类 end -->
+
+</view>
+
+<view class="zhichi">由彪峰科技提供技术支持</view>
+
+
+
+
+
+
+
+
+<!-- 不在配送范围内时 -->
+<view class="address_tip" wx:if='{{wstate==33}}'>
+<view class="addtip_box">
+    <image class="addtip_img" src="../img/index/fanwei.jpg"></image>
+    <view class="addtip_box_top">
+       <text>您的位置不在服务范围内</text>
+       <text class="addbi">请下拉选择需要访问的门店</text>
+    </view>
+     <scroll-view scroll-y  class="addtip_box_center">
+          <view class="addtip_box_c"  wx:for='{{shops}}'>
+            <view class="addtip" bindtap='jump' data-info="{{item}}">邮政惠民生活驿站  ( {{item.wname}} )          </view>
+         
+          </view>
+           <view class="addbot">其他店铺敬请期待</view> 
+     </scroll-view>
+</view>
+</view>
+
+
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>

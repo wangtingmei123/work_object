@@ -1,0 +1,157 @@
+
+.titile_img {
+  width: 16px;
+  height: 28px;
+}
+.title {
+  position: relative;
+  border-bottom: 1px solid #f8f8f8;
+}
+.title h3 {
+  font-size: 24px;
+}
+.index h3 {
+  font-size: 32px;
+}
+/*地址列表 start*/
+.address_list {
+  position: absolute;
+  left: 0;
+  top: 100px;
+  z-index: 106;
+}
+.van-cell__title {
+  text-align: center;
+  line-height: 3.6;
+  font-size: 26px;
+}
+.van-cell {
+  height: 100px;
+  line-height: 100px;
+}
+.van-cell:first-child {
+  border-top: 1px solid #f8f8f8;
+}
+/*地址列表 end*/
+/*列表 start*/
+.van-collapse-item__wrapper {
+  border-top: 1px solid #ddd;
+}
+.van-cell:first-child {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+}
+.van-cell__right-icon {
+  font-size: 28px;
+}
+.van-cell__value {
+  line-height: 1;
+}
+.list_item_title {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.van-collapse-item__content {
+  padding: 0 !important;
+}
+.list_num {
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+}
+.van-cell__right-icon {
+  font-size: 24px !important;
+}
+ul {
+  border-radius: 0;
+}
+ul>li {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 30px;
+}
+ul>li>div:nth-child(2) {
+  text-align: right;
+}
+ul>li:nth-child(even) {
+  background: #f5f5f5;
+}
+ul>li>div {
+  font-size: 22px;
+  color: rgb(102,102,102);
+}
+ul>li>div>span {
+  color: rgb(50,50,50);
+  font-size: 26px;
+}
+.list_num_null {
+  width: 48px;
+  height: 48px;
+  border-radius:24px;
+  background: #f0f0f0;
+  text-align: center;
+  line-height: 48px;
+  color: rgb(102,102,102);
+  font-size: 30px;
+}
+.everyReport_ul>li:nth-child(odd) {
+  background: #f5f5f5;
+}
+.echart_title .today,.echart_title .tomorrow {
+  line-height: 1;
+}
+#index .van-col {
+  float: none;
+}
+.money_top {
+  height: 130px;
+  position: relative;
+  border-bottom: none;
+}
+.index_heng {
+  position: absolute;
+  width: 90%;
+  height: 1px;
+  left: 5%;
+  bottom: -1px;
+  background: #4e3dbe;
+}
+.money_bottom {
+  position: relative;
+  height: 120px;
+}
+.money {
+  height: 250px;
+}
+.index_shu {
+  position: absolute;
+  width: 1px;
+  height: 50px;
+  background: #4e3dbe;
+  left: 50%;
+  top: 30%;
+}
+/*列表 end*/
+/*日期 start*/
+#app .every_date_icon {
+  margin-left: 20px;
+  width: 100px;
+  height: 44px;
+}
+#app .every_stock_bottom {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  height: auto;
+}
+.every_num {
+  height: 40px;
+}
+.eve_num_circle {
+  margin:0 10px 0 0;
+}
+/*日期 end*/
+

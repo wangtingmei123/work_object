@@ -1,0 +1,11 @@
+<!--pages/seccess/seccess.wxml-->
+<view class='container'>
+  <view class='img_big'>
+    <image src='../img/index/sbmitTrue.png' class='img'></image>
+  </view>
+  <view class='ctn'>
+    <view>申请成功</view>
+    <view>退款将原路返回账户，1个工作日内完成</view>
+  </view>
+  <view class='btn' bindtap='toIndex'>返回首页</view>
+</view>

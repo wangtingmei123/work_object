@@ -1,0 +1,1 @@
+<button bindtap="map">定位</button>

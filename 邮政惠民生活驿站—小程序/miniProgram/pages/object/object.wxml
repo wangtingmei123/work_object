@@ -1,0 +1,38 @@
+<!--pages/object/object.wxml-->
+
+
+<view class="object-box">
+  <image src="http://api.test.bf-fresh.com/wechatSource/img/zhongqiubg.png" ></image>
+  <view class="object">
+      <view class="object1">
+           <navigator class='objectimg' url="../detail/detail?sku_id=10521" hover-class='none'>
+          <image class="objectimg" src='http://api.test.bf-fresh.com/wechatSource/img/zhongjiu1.png'></image>
+            </navigator>
+          <view class="objm1">
+                <navigator class='objtop' url="../detail/detail?sku_id=10521" hover-class='none'>
+                 <view class="objtop" >承德北大荒杏核宝240ml*20罐</view>
+                </navigator>
+                 <view class="objbot">
+                      <view class="objbleft">￥76</view>
+                      <view class="objbright" bindtap='togoumai' data-info="10521">立即购买</view>
+                 </view>
+          </view>
+
+      </view>  
+      <view class="object1 object2">
+            <navigator class='objectimg' url="../detail/detail?sku_id=10521" hover-class='none'>
+            <image class='objectimg'  src='http://api.test.bf-fresh.com/wechatSource/img/zhongqiu2.png'></image>
+              </navigator>
+                <view class="objm1">
+                  <navigator class='objtop' url="../detail/detail?sku_id=10521" hover-class='none'>
+                     <view class="objtop">承德北辽河源天然饮用水330ml*1</view>
+                 </navigator>
+                <view class="objbot">
+                      <view class="objbleft">￥1 <text>原价￥3</text></view>
+                      <view class="objbright" bindtap='togoumai' data-info="10522">立即购买</view>
+                </view>
+             </view>
+      </view>  
+
+  </view>
+</view>

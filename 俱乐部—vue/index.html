@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v2.0&ak=7FmBTb8X2NelWLDNGQC6NLbvHqsjzsOe"></script>-->
+    <!--<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=BAEBZ-CUFCF-MM7JO-N3AFN-ATS2F-5GB4T"></script>-->
+    <!--<script src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js"></script>-->
+
+    <script>
+
+        //判断是否Safari浏览器
+        var userAgent = navigator.userAgent;
+        if (userAgent.indexOf("Safari") > -1) {
+            // 禁止苹果手机或ipad在放大缩小
+            window.οnlοad=function () {
+                document.addEventListener('touchstart',function (event) {
+                    if(event.touches.length>1){
+                        event.preventDefault();  //阻止元素的默认行为
+                    }
+                })
+                var lastTouchEnd=0;
+                document.addEventListener('touchend',function (event) {
+                    var now=(new Date()).getTime();
+                    if(now-lastTouchEnd<=300){
+                        event.preventDefault();
+                    }
+                    lastTouchEnd=now;  //当前为最后一次触摸
+                },false)
+            }
+            document.addEventListener('gesturestart', function(event) {
+                event.preventDefault();
+            });
+        }
+
+    </script>
+
+    <meta charset="utf-8">
+    <!--<link href="favicon.ico" rel="shortcut icon">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>俱乐部</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

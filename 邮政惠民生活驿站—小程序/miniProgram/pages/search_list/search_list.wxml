@@ -1,0 +1,113 @@
+<!-- 首页 start  -->
+<view scroll-y class='container' bindscrolltolower="loadMore">
+ 
+ 
+ 
+  <!-- 列表区域 start  -->
+  <!-- <view class="list_top">
+    <view class='list'>
+      <view class='list_item' wx:for="{{sj}}">
+        <navigator class='list_item_left' url="../detail/detail?sku_id={{item.sku_id}}&wid={{wids}}" hover-class='none'>
+          <view class='list_item_img_big'>
+            <view class='promotion_big'>
+              <image class='promotion_bg' src='{{item.url}}'></image>
+            </view>
+            <image class='list_item_img' src='{{item.h_pic}}'></image>
+          </view>
+        </navigator>
+        <navigator class='list_item_right'  url="../detail/detail?sku_id={{item.sku_id}}&wid={{wids}}" hover-class='none'>
+          <view class='list_item_right_title'>{{item.title}}</view>
+          <view class='list_item_right_ctn'>{{item.summary}}</view>
+
+          <view class='list_item_right_hb_big clearfix' wx:if='{{item.activeDiscount>0&&item.discount>0}}'>
+            <text class='list_item_right_hb'>优惠券不可用</text>
+          </view>
+
+          <view class="xsjiage" wx:if='{{item.activeDiscount==0}}'>
+              <text class='list_item_right_newPrice'>￥{{item.discount}}</text>
+              <text wx:if="{{item.price>0}}" class='list_item_right_oldPrice'></text>
+            </view>
+           <view class="xsjiage" wx:if='{{item.activeDiscount>0}}'>
+              <text class='list_item_right_newPrice'>￥{{item.activeDiscount}}</text>
+              <text wx:if="{{item.discount>0}}" class='list_item_right_oldPrice'>￥{{item.discount}}</text>
+            </view>
+        </navigator>
+        <view class='cart' bindtap='cart'  data-info='{{item}}'>
+          <image class='cart_img' src='../img/index/cart_button.png'></image>
+        </view>
+        </view>
+
+    </view>
+  </view> -->
+
+
+
+  <view class="fruit-box">
+   <view class="fruit" wx:for="{{sj}}">
+    <view class="product_num" wx:if='{{item.product_num<=0}}'>
+    <image src="../img/index/product.png"></image>
+    
+    </view>
+   <view class="fruitpic"><image src='{{item.url}}'></image></view>  
+     <navigator class='' url="../detail/detail?sku_id={{item.sku_id}}" hover-class='none'>
+        <view class="fruitimg"><image src="{{item.h_pic}}"></image></view>
+        <view class="fruittitle">{{item.title}}</view>
+        <view class="fruitcon">{{item.summary}}</view>
+    </navigator>
+      <view class="fruitprice-box">
+          <view class="fruitprice" wx:if='{{item.activeDiscount>0&&item.activeDiscount!=item.discount}}'>
+            <view class="fruitprice_new">￥{{item.activeDiscount}}</view>
+              <view class="fruitprice_old"  wx:if='{{item.discount>0}}'>￥{{item.discount}}</view>
+          </view>
+          <view class="fruitprice" wx:if='{{item.activeDiscount==0}}'>
+            <view class="fruitprice_new">￥{{item.discount}}</view>
+          </view>
+           <view class="jiagou"  bindtap='cart'  data-info='{{item}}'>
+           <image src="../img/index/jiagou.png"></image>
+
+           <view class="animation" animation="{{animationData}}" style=""></view>
+           </view>
+      </view>
+    </view>
+
+ 
+
+      <!-- 加载更多 start -->
+       <view class='load' wx:if='{{load==false}}' ><image class="loimg" src='../img/index/loading.gif'></image></view>
+       <view class='over' hidden="{{over}}" style="margin-top:{{martop}}rpx"  wx:if='{{sj.length>0}}'><view class="chibang"></view>   <view class="dixian">我是有底线的</view>      <view class="chibang"></view>
+        </view>
+
+
+        <!-- 没有商品start -->
+<view class="noorder" wx:if='{{(sj==null&&sjLength==true)||(sj.length==0&&sjLength==true)}}'>
+   <image class="noimg" src="../img/index/gouwunone.png"></image>
+   <view class="notext">~暂无此商品~</view>
+</view>
+<!--没有商品end  -->
+
+
+   </view>
+
+
+
+  <!-- 底部固定 start -->
+<view class='cart_fixed' bindtap='toCart'>
+      <image src='../img/index/cart.png'></image>
+      <view class='cart_absolute' wx:if="{{carnum}}">{{carnum}}</view>
+</view>
+  <!-- 底部固定 end -->
+
+
+
+</view>
+
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>

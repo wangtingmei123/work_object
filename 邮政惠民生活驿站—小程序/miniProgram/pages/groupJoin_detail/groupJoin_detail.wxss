@@ -1,0 +1,45 @@
+/* pages/groupJoin_detail/groupJoin_detail.wxss */
+page {
+  background: #f8f8f8;
+}
+.container {
+  width:100%;
+  background: #fff;
+    padding:0;
+
+
+}
+.img {
+
+  width:100%;
+  height: 270rpx;
+
+
+}
+.ctn {
+  width: 100%;
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  color: #000;
+  padding-left:20rpx;
+    padding-right:20rpx;
+  box-sizing: border-box;
+  padding-bottom:30rpx;
+}
+
+.ct1tit{
+  width:100%;
+  height:auto;
+  font-size: 28rpx;
+  margin-top:10rpx;
+  color: #333;
+
+}
+
+.ctititsp{
+  width:100%;
+  height:auto;
+  font-size: 26rpx;
+  line-height:35rpx;
+  color: #999;
+}

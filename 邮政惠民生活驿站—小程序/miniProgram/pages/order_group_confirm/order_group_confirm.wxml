@@ -1,0 +1,259 @@
+<!--pages/order_confirm/order_confirm.wxml-->
+<view class='container'>
+<!-- 订单确认也顶部 start -->
+
+    <!-- <view class="btptype">
+        <view class="btptypes">
+          <view class="btptypesa {{btptype33}}"  bindtap="switchNav3" data-info='{{pgtype}}'>外卖配送</view>
+                    <view class="{{btptype3}}"></view>
+         </view>
+
+        <view class="btptypes btptypesams">
+                  <view class="btptypesa {{btptype22}}"  bindtap="switchNav2" data-info='{{pgtype}}'>到店自取</view>
+                        <view class="{{btptype2}}"></view>
+        </view>
+    </view>   -->
+
+
+<!-- <view class="zttip">超值的优惠商品目前只可以自提</view> -->
+<view class="zttip" >实付满20元可达到起送 , 实付满38元包邮</view>
+
+  <view class='top'  wx:if="{{fashion}}" >
+  
+    <view class='item' bindtap='mendian'>
+      <view class='item_tiele'>提货地址：</view>
+      <!-- <view class='item_address'>{{order.address}}</view> -->
+      <view class='item_address'>{{wname}}</view>
+      <view class='adresmmp'><image src='../img/index/jiaotoumm.png'></image></view>
+    </view>
+
+  <!-- <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+      <view class="item">
+  <view class="item-title item-titlem">提货时间：</view>
+    <view class="item_time item_timem" bindtap='time' wx:if="{{type == 1}}">请选择提货时间</view>
+    
+    <view class="item_time item_timem" bindtap='time' wx:if="{{type == 2}}">{{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}</view>
+    </view>
+  </picker> -->
+
+        <view class=" item" wx:if="{{fashion==true}}" bindtap='tihuo'>
+
+            <view class='item_tiele'>自提时间：</view>
+            <view class='item_address adrexz' wx:if="{{tihuot==3}}">请选择自提时间</view>
+            <view class='item_address adrexz1' wx:if="{{tihuot==4}}">{{shijiant}}</view>
+
+  </view>
+
+  <view class='item'>
+      <view class='item_tiele item_tieless'>提货人手机号：</view>
+      <view class='item_address'>
+      <input class='mephone' type='number'   name="phone" placeholder="请输入手机号"  bindinput ="phoneInput" />
+      </view>
+    </view>
+  </view>
+
+<view class='top' wx:if="{{fashion==false}}">
+
+
+      <view class="itemntma"   bindtap="Collect" wx:if="{{itemPage}}">
+      <view class="itemntt_box">
+          <view class='itemntt'>
+                    {{itemPage.area_name}}
+          </view>
+           <view class='itemnmm' wx:if="{{itemPage.tag==1}}">家 </view>
+            <view class='itemnmm' wx:if="{{itemPage.tag==2}}">公司 </view>
+            <view class='itemnmm' wx:if="{{itemPage.tag==3}}">学校 </view>
+            <view class='itemnmm' wx:if="{{itemPage.tag==4}}">其他 </view>
+        </view>
+
+        <view class='itemntt_detail'>
+           {{itemPage.detail}}
+        </view>
+
+          <view class='itemnt'>
+          <view class='itemntname'>{{itemPage.receiver_name}}</view>
+          <view class='itemnttel'>{{itemPage.phone}}</view>
+        </view>
+      </view>
+
+
+     <view class="addadress"   bindtap="Collect" wx:if="{{fashion==false&&itemPage==''}}">
+       <view class="adresright1"><image src="../img/index/weizhimm.png"></image></view> 
+     <view class="adresleft">添加收货地址</view>  
+     <view class="adresright"><image src="../img/index/jiaotoumm.png"></image></view> 
+  </view>
+
+</view>
+
+
+
+
+  <view class="tihuo" wx:if="{{fashion==false}}" bindtap='tihuo'>
+       <view class="adresleft1" wx:if="{{tihuo==1}}">配送时间：　 <text>请选择配送时间</text>    </view>  
+       <view class="adresleft2" wx:if="{{tihuo==2}}">配送时间：　 <text>{{shijian}}</text></view>  
+
+  </view>
+
+
+
+
+
+<!-- 配送时间段 -->
+
+<view class='shijian-box' wx:if="{{chuxian==1}}">
+  <view class="shijian">
+     <view class="sjtip">
+          <view class="sjtip1" bindtap='guanbi'>×</view>
+            选择送达时间
+     </view>
+
+    <view class="sjbox">
+          <view class="jintian">
+              <view class="jt {{todayxs==true?'todayxs':''}}" bindtap='today'>今天</view>
+              <view class="jt {{todayxs==false?'todayxs':''}}" bindtap='tomorrow'>明天</view>
+          </view>
+
+            <scroll-view scroll-y  class="jinshi" wx:if="{{todayxs==true}}">             
+                <view wx:for='{{today}}' bindtap='shijian' data-text="{{item.timeRange}}" data-index="{{index}}"  class="js {{item.state==1?'todayxs':''}} {{item.state==0?'todaya':''}}" >
+                  {{item.timeRange}}   
+                  <view class="biaoshi" wx:if="{{item.state==1}}">✔</view>  
+                </view>                 
+            </scroll-view>
+
+            <scroll-view scroll-y  class="jinshi" wx:if="{{todayxs==false}}">             
+                <view  wx:for='{{tomorrow}}' bindtap='shijian' data-text="{{item.timeRange}}" data-index="{{index}}"  class="js {{item.state==1?'todayxs':''}} {{item.state==0?'todaya':''}}">
+                  {{item.timeRange}}     
+                <view class="biaoshi" wx:if="{{item.state==1}}">✔</view>  
+                </view>                 
+            </scroll-view>
+    
+    </view>
+
+    <view class="queren" bindtap='queren'>确认</view>
+
+  </view>
+     
+</view>
+
+
+
+
+<!-- 自提时间段 -->
+<view class='shijian-box' wx:if="{{chuxian==2}}">
+  <view class="shijian shijianzt">
+     <view class="sjtip">
+      <view class="sjtip1" bindtap='guanbi'>×</view>
+            选择自提时间
+     </view>
+
+    <view class="sjbox sjboxzt">
+          <view class="jintian">
+              <view class="jt {{todayxs==true?'todayxs':''}}" bindtap='today'>今天</view>
+              <view class="jt {{todayxs==false?'todayxs':''}}" bindtap='tomorrow'>明天</view>
+          </view>
+
+            <scroll-view scroll-y  class="jinshi" wx:if="{{todayxs==true}}">             
+                <view wx:for='{{today}}' bindtap='shijian' data-text="{{item.timeRange}}" data-index="{{index}}"  class="js {{item.state==1?'todayxs':''}} {{item.state==0?'todaya':''}}" >
+                  {{item.timeRange}}   
+                  <view class="biaoshi" wx:if="{{item.state==1}}">✔</view>  
+                </view>                 
+            </scroll-view>
+
+            <scroll-view scroll-y  class="jinshi" wx:if="{{todayxs==false}}">             
+                <view  wx:for='{{tomorrow}}' bindtap='shijian' data-text="{{item.timeRange}}" data-index="{{index}}"  class="js {{item.state==1?'todayxs':''}} {{item.state==0?'todaya':''}}">
+                  {{item.timeRange}}     
+                <view class="biaoshi" wx:if="{{item.state==1}}">✔</view>  
+                </view>                 
+            </scroll-view>
+    
+    </view>
+
+    <view class="queren" bindtap='queren'>确认</view>
+
+  </view>
+     
+</view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 订单确认也顶部 end -->
+<!-- 商品 start -->
+  <view class='goods_big'>
+   <view class='goods'>
+      <view class='goods_img_big'>
+        <image src="{{order.groupBuySkus.imgData}}"></image>
+      </view>
+      <view class='goods_right'>
+        <view class='goods_title_big goods_item'>
+          <view class='goods_title'>{{order.groupBuySkus.sku_title}}</view>
+          <view class='new_price'  wx:if='{{t==0}}'>￥{{order.groupBuySkus.group_buys}}</view>
+           <view class='new_price' wx:if='{{t==1}}'>￥{{order.groupBuySkus.single_prices}}</view>
+        </view>
+        <view class='goods_ctn_big goods_item'>
+          <view class='goods_ctn goods_color'>{{order.groupBuySkus.summary}}</view>
+          <!-- <view class='old_price goods_color'  wx:if='{{t==0}}'>￥{{order.groupBuySkus.single_prices}}</view> -->
+        </view>
+        <view class='goods_num_big goods_item'>
+          <view></view>
+          <view class=' goods_num goods_color'>x1</view>
+        </view>
+      </view>
+    </view>
+  </view>
+<!-- 商品 end -->
+<!-- 清单确认页底部 start -->
+  <view class='bottom'>
+    <view class='bottom_item'>
+      <view class='bottom_ctn_left'>
+        <view class='bottom_title'>商品总额</view>
+      </view>
+      <view class='bottom_ctn_right'>
+        <view class='bottom_title_price'>￥{{t==1?order.groupBuySkus.single_prices:order.groupBuySkus.group_buys}}</view>
+        <!-- <view class='bottom_title_ctn'>其中￥6.9不可使用红包</view> -->
+      </view>
+    </view>
+
+
+
+    <!-- <view class='bottom_item' wx:if="{{fashion==false}}"> 
+      <view class='bottom_ctn_left'>
+        <view class='bottom_title'>配送费</view>
+      </view>
+      <view class='bottom_ctn_right'>
+        <view class='bottom_title_price bottom_money'>￥{{order.shipping_fee}}</view>
+      </view>
+    </view> -->
+
+    <view class='bottom_item'>
+      <view class='bottom_ctn_left'>
+        <view class='bottom_title'>实付金额</view>
+      </view>
+      <view class='bottom_ctn_right'>
+        <view class='bottom_title_price bottom_money'>￥{{t==1?order.groupBuySkus.single_prices:order.groupBuySkus.group_buys}}</view>
+      </view>
+    </view>
+  </view>
+<!-- 清单确认页底部 end -->
+<!-- 定单页固定 start -->
+  <view class='order_fixed'>
+    <view class='order_fixed_left'>合计：<text>￥{{t==1?order.groupBuySkus.single_prices:order.groupBuySkus.group_buys}}</text></view>
+    <button class='order_fixed_right' hover-class='none' bindtap='payOrder'>去支付</button>
+  </view>
+<!-- 定单页固定 end -->
+</view>

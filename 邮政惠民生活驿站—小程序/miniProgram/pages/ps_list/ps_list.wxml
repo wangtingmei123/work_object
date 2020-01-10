@@ -1,0 +1,60 @@
+<!--pages/ps_list/ps_list.wxml-->
+
+<view class='ps_list_box'>
+    <view class='ps_list_title'>
+         <view class="ps_title  {{_state==1?'active_title':''}} "  data-num="1"  bindtap='chage_state'>  
+                <text>待接单</text>  <view   wx:if="{{_state==1}}"    class="title_tip"></view>       
+           </view>
+         <view class="ps_title  {{_state==2?'active_title':''}} "   data-num="2"  bindtap='chage_state'>   
+                 <text>待分拣</text>  <view wx:if="{{_state==2}}" class="title_tip"></view>     
+          </view>
+         <view class="ps_title  {{_state==3?'active_title':''}} "   data-num="3"  bindtap='chage_state'>
+                 <text>待发货</text>  <view wx:if="{{_state==3}}" class="title_tip"></view> 
+          </view>
+         <view class="ps_title  {{_state==4?'active_title':''}} "   data-num="4"  bindtap='chage_state'>
+                <text>已取消</text>  <view wx:if="{{_state==4}}" class="title_tip"></view>
+         </view>
+
+    </view>
+
+
+<view class="ps_list" wx:for="{{ps_listInfo.listInfo}}">
+    <view class="list_con_title">
+        <!-- <view class="con_tit1">2#</view> -->
+        <view class="con_tit2">{{item.sname}}</view>
+        <view class="con_tit3">订单号: <text decode="{{true}}" space="{{true}}"> &nbsp;</text>{{item.oid}}<text decode="{{true}}" space="{{true}}">  &nbsp;</text>></view>
+        <view class="con_tit4"></view>
+    </view>
+
+
+    <view class="list_con_address">
+       <view class="con_address">
+
+           <image class="address_icon" src="../img/index/ps_weizhi.png"></image>
+           <view class="address_con">{{item.uaddress}}</view>
+           <view class="address_pho"> <text>{{item.uname}}</text>  <text>{{item.uphone}}</text>   </view>
+
+       </view>
+    </view>
+
+    <view  class="list_con_center">
+         <view class="con_center_title">商品信息</view>
+         <view class="con_center">
+
+                <view class="center"  wx:for="{{item.skuList}}" >
+                    <view class="center1">{{item.goodsName}}*{{item.num}}</view>
+                    <view class="center2">{{item.actualFee}}</view>
+              </view>
+
+              <view  class="genduo"  data-info="{{item.skuList}}"   wx:if="{{item.skuList.length>3}}" bindtap="gengduo"> <image class="genduo_tip" src="../img/index/xiayibu.png"></image> 查看更多</view>
+        
+        </view>
+        
+    </view>
+
+
+</view>
+
+
+
+</view>

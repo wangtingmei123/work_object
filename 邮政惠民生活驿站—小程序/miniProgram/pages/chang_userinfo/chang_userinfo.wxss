@@ -1,0 +1,27 @@
+/* pages/chang_userinfo/chang_userinfo.wxss */
+page {
+  background: #f8f8f8;
+}
+.container {
+  width: 100%;
+  padding: 0;
+}
+.user_list {
+  margin-top: 20rpx;
+  width: 100%;
+  background: #fff;
+}
+.user_item {
+  width: 100%;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #f8f8f8;
+  height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28rpx;
+}
+.user_ctn {
+  color: #ababab;
+}

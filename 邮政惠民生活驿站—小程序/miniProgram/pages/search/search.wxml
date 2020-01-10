@@ -1,0 +1,26 @@
+<!--pages/search/search.wxml-->
+<scroll-view scroll-x="false" class='search_big'>
+<view class='search_b'>
+  <input class='search' placeholder='' placeholder-class='placeholder' confirm-type='done'   bindblur="search" auto-focus />
+
+  <view class='ser_img_big'>
+    <image src='../img/index/search.png'  bindtap='toDetail'></image>
+  </view>
+</view>
+<!-- <view class='hot_title'>热门搜索</view>
+<view class='hot'>
+  <view class='hot_item'>西瓜</view>
+</view> -->
+<view class="hottip" wx:if='{{group.length>0}}' >
+    <view class='hot_title'>历史记录</view>
+    <button class='del-hot'  bindtap="change">清空历史记录</button>
+</view>
+<view class="hot" wx:if='{{group!=null}}' >
+  <block wx:for="{{group}}">
+  <view class='hot_item' bindtap='toDetail' data-info='{{item}}'>{{item}}</view>
+  </block>
+</view>
+<view class='line'></view>
+
+</scroll-view>
+<!-- 搜索商品未上架end -->

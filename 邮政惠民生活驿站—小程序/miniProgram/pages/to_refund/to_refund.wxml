@@ -1,0 +1,119 @@
+<!--pages/waitPay/waitPay.wxml-->
+<view class='container'>
+
+<!-- 商品详情 start -->
+  <view class='goods_big' >
+  <!-- <view class='godizhi'>
+    <image class='gotubiao' src="../img/index/address.png"></image>
+     <text class='godianming'>{{order.wname}}</text> 
+  </view> -->
+  <view class='goods'>
+    <view class='goods_img_big'>
+      <image src="{{orderm.sku_image}}"></image>
+    </view>
+    <view class='goods_right'>
+      <view class='goods_title_big goods_item'>
+        <view class='goods_title'>{{orderm.sku_name}}</view>
+        <view class='new_price' wx:if='{{order.order_type>8120}}'>￥{{order.order_money}}</view>
+         <view class='new_price' wx:if='{{order.order_type<8121}}'>￥{{orderm.actual_price}}</view>
+      </view>
+      <view class='goods_ctn_big goods_item'>
+        <view class='goods_ctn goods_color'>{{orderm.summary}}</view>
+        <view class='old_price goods_color' wx:if='{{order.order_type>8120&&item.actual_price!=item.origin_price}}'>￥{{orderm.order_money}}</view>
+        <view class='old_price goods_color' wx:if='{{order.order_type<8121&&item.actual_price!=item.origin_price}}'>￥{{orderm.origin_price}}</view>
+      </view>
+      <view class='goods_num_big goods_item'>
+        <view></view>
+        <view class=' goods_num goods_color' wx:if='{{order.order_type>8120}}'>x1</view>
+        <view class=' goods_num goods_color' wx:if='{{order.order_type<8121}}'>x{{orderm.sku_count}}</view>
+      </view>
+       <view class='list_item_right_hb_big clearfix'  wx:if="{{order.order_type<8121&&item.actual_price!=item.origin_price}}">
+            <!-- <text class='list_item_right_hb'>优惠券不可用</text> -->
+      </view>
+    </view>
+  </view>
+
+
+<!-- 商品详情 end -->
+
+<view class='shipay'>
+    <view class='shipay_box'>
+        <view class='spleft'>实际支付金额</view>
+         <view class='spright' >￥{{actual_price}}</view>
+    </view>
+
+    <view class='shipay_box'>
+        <view class='spleft'>实际退款金额</view>
+        <view class='spright'>￥{{tuikuan}}</view>
+    </view>
+</view>
+
+
+<view class='torefund'>
+
+      <view class='torefund_box'>
+          <view class='tfleft'>退货原因:</view>
+          <view class='tfright' wx:for='{{reasons}}'>
+
+
+
+              <view   data-text="{{item.flag}}"  data-num="{{item.id}}"   class="tfrbox {{item.flag?'reason':''}}" bindtap='reason' >{{item.reason}}</view>
+             
+
+
+          </view>  
+
+      </view>
+
+      <view class='tuiliyou'>
+      <textarea class='tly' bindblur='describe' placeholder='请简要描述商品的问题'></textarea>
+      </view>
+
+      <view class='torefund_box2'>
+            <view class='tfleft2'>上传凭证:</view>
+            <view class='tfright2'>
+                  <view class="tfrboxsc"  wx:for="{{tempFilePaths}}" data-index="{{index}}">
+                       <image class="tfrboxscimg" src="{{item}}"></image>
+                  </view>
+                  <view class="tfrboxsc tfrboxsca" wx:if="{{tempFilePaths.length<=2}}"  bindtap='chooseimg' >
+                       <image class="tfrboxscimga" src="../img/index/zhangxiang.png"></image>
+                       <view class='tfrboxword'>上传凭证</view>
+                       <view class='tfrboxword tfrboxword1'>(最多3张)</view>
+                  </view>
+                  
+            </view>
+      </view>
+</view>
+
+
+<view class='torefund_box torefund_boxc' style='padding-bottom:30rpx;'>
+
+      <view class='tfleft tfleftc'> 问题商品占比  <text>(请按实际情况来选择)</text></view>
+
+      
+        <view class='tfrighthd'>
+            <view class="tfrs"></view>
+            <view class="tfrss" style='width:{{widths}}rpx'></view>
+
+
+                  <view class="tfrd" style='left:{{widths}}rpx'  data-info='{{actual_price}}'  bindtouchmove="viewTouchMove">
+
+
+   
+              <view class='bili'>{{bili}}%</view>
+               <image src="../img/index/anniu2.png"></image>
+            </view>
+
+        </view>
+
+         <view class='shipay_boxss '>
+            <view class='spleftc'>0%</view>
+            <view class='sprightc'>100%</view>
+        </view>
+</view>
+
+<!-- 按钮 start -->
+       <view class="yqbox"  bindtap='to_refund' data-info='{{order}}'>提 交</view>
+</view>
+<!-- 按钮 end -->
+</view>

@@ -1,0 +1,108 @@
+/* pages/ps_login/ps_login.wxss */
+
+.ps_login_box{
+  width:618rpx;
+  height:auto;
+  margin:auto;
+ overflow: hidden;
+ position: relative;
+}
+
+
+.log_title{
+  font-size: 46rpx;
+  color: #6576a0;
+  margin-top:214rpx;
+
+}
+
+.log_phone{
+  width:100%;
+  height:80rpx;
+  border-bottom:1rpx solid #d6d6d6;
+  color: #000;
+  font-size: 24rpx;
+  line-height:80rpx;
+  margin-top:112rpx;
+}
+
+.phone{
+    width:80%;
+    height:100%;
+    float: left;
+
+}
+.pho_icon{
+    width:40rpx;
+    height:40rpx;
+    float: right;
+        margin-top:20rpx;
+}
+
+
+.log_mima{
+  width:100%;
+  height:80rpx;
+  border-bottom:1rpx solid #d6d6d6;
+  color: #000;
+  font-size: 24rpx;
+  line-height:80rpx;
+  margin-top:42rpx;
+}
+
+
+.mima{
+    width:80%;
+    height:100%;
+    float: left;
+}
+.min_icon{
+    width:36rpx;
+    height:16rpx;
+    float: right;
+    margin-top:32rpx;
+}
+
+
+
+
+
+.log_but{
+  width:100%;
+  height:86rpx;
+  background: #64779b;
+  color: #fff;
+  text-align: center;
+  line-height:86rpx;
+  font-size: 30rpx;
+  margin-top:134rpx;
+  border-radius: 86rpx;
+
+}
+
+.tip_fail{
+  width:auto;
+  height:80rpx;
+  font-size: 20rpx;
+  color: #d1a86f;
+  line-height:80rpx;
+  position: absolute;
+  left:0;
+  top:590rpx;
+
+}
+
+.tip_image{
+  width:18rpx;
+  height:18rpx;
+  float: left;
+  margin-top:31rpx;
+}
+
+.tip_text{
+    width:auto;
+  height:100%;
+  float: left;
+  margin-left:12rpx;
+    line-height:78rpx;
+}

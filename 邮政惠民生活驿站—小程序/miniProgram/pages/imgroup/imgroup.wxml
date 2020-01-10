@@ -1,0 +1,58 @@
+<!--pages/waitPay/waitPay.wxml-->
+<view class='container'>
+
+<view class='pintuan-box'>
+     <view class='pinbox'>
+       <view class='pinleft'><image class='pintopimg' src='{{detail.ycGroupBuySkus.imgData}}'></image></view> 
+       <view class='pinright'>
+           <view class='pinrt1'>{{detail.ycGroupBuySkus.sku_title}}</view>
+            <view class='pinrt2'>{{detail.ycGroupBuySkus.title}}<text></text>  <text class='jinlun'>{{detail.ycGoodsSku.gpackage}}</text></view>
+            <view class='pinrt3'><text>¥{{detail.ycGroupBuySkus.group_buys}}</text><text class='jiage'>¥{{detail.ycGroupBuySkus.single_prices}}</text></view>
+       </view>
+     </view>  
+     <view class='pinbot'>
+
+        <view class='pinbtt ' wx:if='{{detail.status==0}}'>仅剩 <text> {{detail.limitNum-detail.ycGroupBuyUserList.length}} </text>个名额， <text> {{time}}</text>结束</view>
+
+        <view class='pinbtt ' wx:if='{{detail.status==1}}'>拼单已完成了,开个团当团长吧</view>
+        <view class='pinbtt ' wx:if='{{detail.status==2}}'>活动已结束,去看看别的团吧</view>
+
+          <view class='pinbtm ' >
+              <view class='pinbtm1 pinbtm1a' wx:for='{{detail.ycGroupBuyUserList}}'>
+              <image class='pinimg' src="{{item.img}}"></image>
+                <view wx:if='{{item.uid==detail.uid}}' class="tuanzhang">团长</view>
+              </view>
+              <!-- <view class='pinbtm1 pinbtm1b'>
+              <image class='pinimg' src="../img/index/pingtuanss.jpg"></image>
+              </view> -->
+              <view class='pinbtm1 pinbtm1c'  wx:for='{{grouplenm}}'>
+              <image class='pinimg' src="../img/index/wenhao_03.png"></image>
+              </view>
+          </view>
+     </view>
+
+       <view bindtap='groupList' class='pinbutt' data-info='{{detail.ycGroupBuySkus}}'   wx:if='{{detail.status!=0}}'>查看更多</view> 
+
+         <view class="pinbuttmm"  wx:if='{{detail.status==0}}'>
+              <button class='pinbuttend pinbuttend1' bindtap='Lpt'>立即拼团</button> 
+              <button class='pinbuttend' bindtap='groupList' data-info='{{detail.ycGroupBuySkus}}'>查看更多                 </button> 
+         </view>
+     </view>
+
+   
+     
+</view>
+
+
+
+
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <!-- <view bindtap='jiazai' class="jiazai">重新加载</view> -->
+         </view>
+ 
+</view>

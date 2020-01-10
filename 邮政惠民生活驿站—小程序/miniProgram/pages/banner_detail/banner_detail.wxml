@@ -1,0 +1,13 @@
+<view class="container">
+  <web-view src="{{banner_url}}?uid={{uid}}&wid={{wid}}&carnum={{carnum}}"></web-view>
+</view>
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>

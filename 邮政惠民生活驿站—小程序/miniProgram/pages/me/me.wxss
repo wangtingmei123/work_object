@@ -1,0 +1,414 @@
+/* pages/me/me.wxss */
+page {
+  background: #f8f8f8;
+}
+image {
+  width: 100%;
+  height: 100%;
+}
+.container {
+  padding: 0;
+  width: 100%;
+}
+/* 用户 start */
+.user {
+  width: 100%;
+  background: #fff;
+  border-top: 1rpx solid #f8f8f8;
+  height: 199rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user_left {
+  display: flex;
+  justify-content: row;
+  align-items: center;
+}
+.user_img_big {
+  width: 90rpx;
+  height: 90rpx;
+  background: #ace;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.user_name {
+  font-size: 28rpx;
+  margin-left: 15rpx;
+}
+
+.user_log{
+    font-size: 46rpx;
+    margin-left:10rpx;
+}
+.user_right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.code_ctn {
+  font-size: 26rpx;
+  color: #f5972b;
+  margin-right: 20rpx;
+}
+.code {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+
+.uphoto{
+  width:106rpx;
+  height:106rpx;
+  background: #efefef;
+  border-radius: 50%;
+}
+
+.uptop{
+  width: 32rpx;
+  height:38rpx;
+    border-radius: 44%;
+    border:4rpx solid #dfdfdf;
+    margin:auto;
+    margin-top:24rpx;
+
+}
+
+
+.upbot{
+  width:42rpx;
+  height:4rpx;
+  background: #dfdfdf;
+  margin:auto;
+  margin-top:10rpx;
+}
+
+
+
+
+
+/* 用户 end */
+/* 我的订单 start */
+.order {
+  width: 100%;
+  background: #fff;
+  margin-top: 20rpx;
+}
+.order_title {
+  width: 100%;
+   border-bottom: 1rpx solid #f8f8f8;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 0 20rpx;
+   height: 80rpx;
+   box-sizing:border-box;
+}
+.my_order {
+  font-size: 28rpx;
+}
+.all_order_big {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.all_order {
+  font-size: 26rpx;
+  color: #ababab;
+}
+.all_order_icon {
+  width: 13rpx;
+  height: 24rpx;
+  margin-left: 15rpx;
+  line-height: 0.6;
+}
+.all_order_icon image {
+  
+}
+.order_item_big {
+  width: 100%;
+    white-space: nowrap;
+  border-top: 2rpx solid #f8f8f8;
+  height:130rpx;
+
+}
+
+
+::-webkit-scrollbar  
+{  
+    width: 0;  
+    height: 0; 
+    color: transparent;  
+} 
+
+
+.order_item {
+  width: 20%;
+  padding: 15rpx 0;
+     display: inline-block;
+}
+
+
+
+.order_item_icon {
+  width: 45rpx;
+  height: 45rpx;
+  margin:auto;
+}
+.order_item_ctn {
+
+  font-size: 28rpx;
+  margin:auto;
+    margin-top: 15rpx;
+    text-align: center;
+}
+/* 我的订单 end */
+/* 分类 start */
+.me_cate {
+  width: 100%;
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #000;
+  background: #fff;
+}
+.me_item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.item {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 79rpx;
+  border-bottom: 1rpx solid #f8f8f8;
+  padding: 0 20rpx;
+}
+.right_icon {
+  width: 13rpx;
+  height: 24rpx;
+  margin-left: 15rpx;
+  line-height: 0.6;
+}
+
+
+.zhichi{
+  width:100%;
+  height:24rpx;
+  font-size: 24rpx;
+  color: #ababab;
+  line-height:24rpx;
+  text-align: center;
+  position: fixed;
+  left:0;
+  bottom:20rpx;
+}
+/* 分类 end */
+
+
+
+
+
+
+
+
+
+
+
+
+.address_tip{
+  width: 100%;
+  height:100vh;
+  position: fixed;
+  top:0;
+  left:0;
+  /* background: rgba(189,189,188,0.8); */
+  background: #bdbdbc;
+  z-index: 99999;
+
+}
+
+.addtip_box{
+  width:684rpx;
+
+  max-height:700rpx;
+  height:auto;
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  margin:auto;
+  background: #fff;
+  border-radius: 10rpx;
+  overflow: hidden;
+
+}
+
+.addtip_img{
+  display: block;
+  width: 100%;
+  height:292rpx;
+}
+
+.addtip_box_top{
+  position: absolute;
+color: #fff;
+  left:0;
+  right:0;
+  margin:auto;
+  top:75rpx;
+  width:100%;
+  height:145rpx;
+  overflow: hidden;
+}
+
+.addtip_box_top>text{
+  display: block;
+  width:100%;
+  height:28rpx;
+  margin-top:40rpx;
+  text-align: center;
+  line-height:28rpx;
+  font-size: 28rpx;
+
+
+}
+.addtip_box_top>.addbi{
+/* margin-top:14rpx; */
+}
+
+.addtip_box_center{
+
+  width:625rpx;
+  height:394rpx;
+  margin:auto;
+
+}
+
+.addtip_box_c{
+  width:100%;
+  height:auto;
+   /* padding-top:10rpx;
+   padding-bottom:10rpx; */
+}
+.addtip{
+    width:100%;
+  height:96rpx;
+  border-bottom:1rpx solid #f3f3f3;
+  text-align: center;
+  line-height:96rpx;
+    font-size: 28rpx;
+    color: #77c214;
+
+
+}
+.addbot{
+  width:100%;
+  height:98rpx;
+    text-align: center;
+  line-height:98rpx;
+    font-size: 28rpx;
+    color: #bdbdbc;
+  
+}
+
+
+
+
+
+
+.nonet-box{
+  width: 100%;
+  height:100vh;
+  font-size: 28rpx;
+  line-height:300rpx;
+  position: fixed;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  margin:auto;
+  text-align: center;
+  background: #fff;
+  z-index: 99999999;
+
+}
+
+.nonet{
+    width: 100%;
+  height:600rpx;
+  font-size: 28rpx;
+  position: absolute;
+
+  right:0;
+  left:0;
+  margin:auto;
+    top:132rpx;
+
+  background: #fff;
+
+}
+
+.nonet>image{
+  display: block;
+  width: 300rpx;
+  height:305rpx;
+  margin:auto;
+
+}
+
+.nontip{
+  width:100%;
+  height:28rpx;
+  margin:auto;
+  margin-top:60rpx;
+    text-align: center;
+      font-size: 28rpx;
+      color: #999999;
+      line-height: 28rpx;
+}
+
+.jiazai{
+width: 300rpx;
+height:78rpx;
+margin:auto;
+margin-top:130rpx;
+border:1rpx solid #dcdcdc;
+text-align: center;
+line-height: 78rpx;
+  font-size: 28rpx;
+}
+
+.bangding-box{
+  width:204rpx;
+  height:58rpx;
+  position: relative;
+  right:-20rpx;
+ 
+
+}
+
+.bangding-box .bangding{
+  display: block;
+  width:100%;
+  height:100%;
+
+}
+
+.bgtext{
+position: absolute;
+  width:auto;
+  height:24rpx;
+  font-size: 24rpx;
+  line-height:24rpx;
+  color: #fff;
+  top:0;
+  bottom:0;
+  margin:auto;
+  left:58rpx;
+}

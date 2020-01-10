@@ -1,0 +1,107 @@
+<!--pages/group/group.wxml-->
+
+    <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="banner-box"    indicator-active-color="#fff" circular="true">
+      <block wx:for="{{imgUrls}}">
+        <swiper-item>
+     
+            <image src="https://static.bf-fresh.com/img/index/groupimg.png?{{rand}}"  class="bannerm" width="355" height="150" />
+       
+        </swiper-item>
+      </block>
+    </swiper>
+    
+
+<!-- <view class='line'></view> -->
+<view class="container">
+  <!-- 顶部 start -->
+  <!-- <view class='top'>
+    <view  data-num="1" class="list-menu list-menu1 {{_num==1?'active':''}}" bindtap="menuClick">多人拼团</view>
+    <view  data-num="2" class="list-menu list-menu2 {{_num==2?'active':''}}" bindtap="menuClick">今日团购</view>
+  </view> -->
+  <!-- 顶部 end -->
+  <!-- 列表区域 start  -->
+
+  <view class="list_top">
+    <view class='list'>
+      <view class='list_item'  wx:for="{{items}}" >
+        <view class='list_item_left' bindtap='toGroupDetail' data-info='{{item}}'>
+          <view class='list_item_img_big'>
+
+          <view class='top_icon_big' wx:if="{{item.isLastSale == 1}}">
+              <image class='top_icon'  src='../img/index/yushu.png'></image>
+          </view>
+
+          <view class='top_icon_big' wx:if="{{item.isLastSale == 0&&item.countdown<=0}}">
+              <image class='top_icon'  src='../img/index/jieshum.png'></image>
+          </view>
+
+            <image class='list_item_img' src="{{item.imgData}}"></image>
+          </view>
+        </view>
+        <view class='list_item_right' bindtap='toGroupDetail' data-info='{{item}}'>
+          <view class='list_item_right_title'>{{item.title}}</view>
+          <view class='list_item_right_ctn'>{{item.sku_title}}</view>
+          <!-- <view class='list_item_right_hb_big clearfix'>
+            <text class='list_item_right_hb'>红包不可用</text>
+          </view> -->
+          <view class='list_item_right_price'>
+            <text class='list_item_right_newPrice'>￥{{item.group_buys}}</text>
+            <text class='list_item_right_oldPrice'>￥{{item.single_prices}}</text>
+          </view>
+        </view>
+        <view class='cart' bindtap='toGroupDetail' data-info='{{item}}'>
+          <view class='cart_but'>{{item.limit_num}}人拼团</view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+   
+
+     <!-- 加载更多 start -->
+       <view class='load' hidden='{{load}}' ><image class="loimg" src='../img/index/loading.gif'></image></view>
+       <!-- <view class='over' hidden="{{over}}" style="margin-top:{{martop}}rpx"  wx:if='{{items.length>0}}'><view class="chibang"></view>   <view class="dixian">我是有底线的</view>      <view class="chibang"></view>
+        </view> -->
+
+    <!-- 没有商品start -->
+    <view class="noorder" wx:if='{{(items==null&&sjLength==true)||(items.length==0&&sjLength==true)}}'>
+      <image class="noimg" src="../img/index/gouwunone.png"></image>
+      <view class="notext">~暂无拼团商品~</view>
+    </view>
+    <!--没有商品end  -->
+
+  <!-- 列表区域 end  -->
+</view>
+
+
+
+<!-- 不在配送范围内时 -->
+<view class="address_tip" wx:if="{{wstate==1&&wstates==33}}">
+<view class="addtip_box">
+    <image class="addtip_img" src="../img/index/fanwei.jpg"></image>
+    <view class="addtip_box_top">
+       <text>您的位置不在服务范围内</text>
+       <text class="addbi">请下拉选择需要访问的门店</text>
+    </view>
+     <scroll-view scroll-y  class="addtip_box_center">
+          <view class="addtip_box_c"  wx:for='{{shops}}'>
+            <view class="addtip" bindtap='jump' data-info="{{item}}">邮政惠民生活驿站  ( {{item.wname}} )          </view>
+         
+          </view>
+           <view class="addbot">其他店铺敬请期待</view> 
+     </scroll-view>
+</view>
+</view>
+
+
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>

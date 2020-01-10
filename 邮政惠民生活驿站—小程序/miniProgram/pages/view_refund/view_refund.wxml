@@ -1,0 +1,76 @@
+<!--pages/view_refund/view_refund.wxml-->
+
+
+<view class='tuikuan_box'>
+
+  <view class='tuikuan' >
+
+        <view class='tuikuan_top'>
+            <image class='tktop_img' wx:if='{{status.status==0}}' src='../img/index/jiazai.png'> </image> 
+            <view class='tktop_img tktop_img1' wx:if='{{status.status==1}}' > ✔</view> 
+            <image class='tktop_img' wx:if='{{!(status.status==1||status.status==0)}}'  src='../img/index/shibai.png'> </image> 
+
+            <view class='tkstate'>{{status.statusStr}}</view>
+            <view class='tkshijian'>退款时间 : {{status.statusDate}}</view>
+      </view> 
+
+      <view class='tuikuan_center'>
+             <view class='tkcenter'>
+                  <view class='tkcon tktitle'>申请详情</view>
+                  <view class='tkcon tkmiaoshu'>
+                      <image class='tkimg' src='{{status.img}}'></image>
+                      <view class='tkms'>
+                            <view class='mstit'>{{status.skuTitle}}</view>
+                            <view class='msshuliang'>数量: {{sku_count}}</view>
+                            <view class='msjiage'>￥{{status.actualPrice}}</view>
+                      </view>
+                  
+                  </view>
+                  <view class='tkcon'>
+                      <view class='tkimg'>实际退款金额</view>
+                      <view class='tkms'>￥{{status.checkMoney}}</view>
+                  </view>
+                   <view class='tkcon tkcon1 tkcon2'>
+                      <view class='tkimg'>问题类型</view>
+
+                        <view class='tkms tkms2' >
+                            <view class='wenti' wx:for="{{status.reasonTypeStr}}">{{item}}</view>
+                          
+                      </view>
+
+                  </view>
+
+                   <view class='tkcon'>
+                      <view class='tkimg'>问题商品比例</view>
+                      <view class='tkms'>{{status.claimPercent}}</view>
+                  </view>
+
+                  <view class='tkcon tktupian '  wx:if="{{status.claimImgs.length>0}}">
+                      <view class='tkimg'>商品图片</view>
+                      <view class='tkms  tkmstp' wx:for='{{status.claimImgs}}'>
+                             <image src='{{item}}'></image>
+
+                      </view>
+                  </view>
+
+
+                  <view class='tkcon tkcon1'>
+                      <view class='tkimg'>问题描述</view>
+                      <view class='tkms tkms1' >
+                            <view class='tkmsson' wx:for="{{status.claimReasons}}">{{item}}</view>
+                          
+                      </view>
+                  </view>
+
+                  <view class='xiangq' wx:if="{{status.claimDesc!=''}}">{{status.claimDesc}}</view>
+
+             </view>
+      </view>
+
+  </view>
+
+
+
+
+</view>
+

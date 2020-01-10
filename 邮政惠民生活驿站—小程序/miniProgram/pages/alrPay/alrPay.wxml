@@ -1,0 +1,123 @@
+<!--pages/waitPay/waitPay.wxml-->
+<view class='container'>
+<!-- 顶部状态 start -->
+  <view class='wait_status'>
+    <view class='wait_status_left'>
+      <view class='waitPay_img'>
+        <image src='../img/index/waitPay.png'></image>
+      </view>
+      <text class="waitPay">付款成功</text>
+    </view>
+    <view class='wait_status_right'>拼团订单需要在05小时29分钟内邀请两位好友参团</view>
+  </view>
+<!-- 顶部状态 end -->
+
+<!-- 进度开始 -->
+   <view class="fukuan">
+      <view class="fktop">
+          <view class="fkitem">买家付款</view>
+          <view class="fkitem">等待提货</view>
+          <view class="fkitem">交易完成</view>
+      </view>
+
+
+      <view class="fktop fkbottom">
+      <view class="fky">
+            <view class="fkyuan" wx:if='{{jindu}}'>
+                 <view  class="fkyuan1"></view>
+            </view>
+             <view class="fkyuans" wx:else>
+            </view>
+        </view>
+
+
+           <view class="fkysbox">
+                  <view class="fkys"  wx:if='{{jindu1}}'></view> 
+                  <view class="fkys1" wx:else></view>
+          </view>  
+
+
+         <view class="fky">
+             <view class="fkyuan"  wx:if='{{jindu2}}'>
+                 <view  class="fkyuan1"></view>
+            </view>
+            <view class="fkyuans"  wx:else>
+            </view> 
+        </view>
+
+
+           <view class="fkysbox">
+                  <view class="fkys"  wx:if='{{jindu3}}'></view> 
+                  <view class="fkys1" wx:else></view>
+          </view>  
+
+       <view class="fky">
+             <view class="fkyuan"  wx:if='{{jindu4}}'>
+                 <view  class="fkyuan1"></view>
+            </view>
+           <view class="fkyuans" wx:else>
+            </view>
+        </view>
+      </view>
+   </view>
+<!-- 进度结束 -->
+
+<!-- 顶部详情 start -->
+  <view class='top_item_big'>
+    <view class='top_item'>提货人：<text>小不懂</text></view>
+    <view class='top_item'>提货方式：<text class='self'>自提</text></view>
+    <view class='top_item'>提货地址：<text>丰台区天宁寺邮政惠民</text></view>
+    <view class='top_item'>提货时间：<text>2018-05-21 17:30</text></view>
+  </view>
+<!-- 顶部详情 end -->
+<!-- 商品详情 start -->
+  <view class='goods_big'>
+     <view class='godizhi'>
+    <image class='gotubiao' src="../img/index/address.png"></image>
+    <text class='godianming'>镇国巳店</text>
+  </view>
+  <view class='goods'>
+    <view class='goods_img_big'>
+      <image class="goobigbox" src="../img/index/pitaya.png"></image>
+    </view>
+    <view class='goods_right'>
+      <view class='goods_title_big goods_item'>
+        <view class='goods_title'>越南火龙果mini火龙果</view>
+        <view class='new_price'>￥16.9</view>
+      </view>
+      <view class='goods_ctn_big goods_item'>
+        <view class='goods_ctn goods_color'>一手能掌握的红心肉</view>
+        <view class='old_price goods_color'>￥6.9</view>
+      </view>
+      <view class='goods_num_big goods_item'>
+        <view></view>
+        <view class=' goods_num goods_color'>x2</view>
+      </view>
+    </view>
+  </view>
+<!-- 商品详情 end -->
+<!-- 商品价格 start -->
+  <view class='status_price'>
+    <view class='distribution' id="distribution">实付金额：</view>
+    <view class='status_price_right'>
+      <text>￥6.9</text>
+    </view>
+  </view>
+  </view>
+<!-- 商品价格 end -->
+<!-- 订单信息 start -->
+  <view class='top_item_big top_item_big1'>
+    <view class='top_item top_item1'>订单编号：<text>12323232323</text></view>
+    <view class='top_item top_item1'>支付方式：<text>微信支付</text></view>
+    <view class='top_item top_item1'>创建时间：<text>2018-05-21 17:30</text></view>
+    <view class='top_item top_item1'>支付时间：<text>2018-05-21 17:30</text></view>
+  </view>
+<!-- 订单信息 end -->
+<!-- 按钮 start -->
+
+<view class="yaoqinbox">
+   <view class="yqbox">邀请好友参团</view>
+</view>
+
+<!-- 按钮 end -->
+</view>

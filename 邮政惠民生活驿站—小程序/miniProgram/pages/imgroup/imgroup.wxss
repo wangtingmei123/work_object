@@ -1,0 +1,271 @@
+page {
+  background: #f8f8f8;
+  
+}
+.container {
+  padding: 0;
+
+}
+
+.pinbuttend{
+  
+}
+
+
+image {
+  width: 100%;
+  height: 100%;
+}
+
+.pintuan-box{
+   width:100%;
+   height:auto;
+   background: #fff;
+   padding-bottom: 40rpx;
+
+}
+
+.pinbox{
+  width:100%;
+  height:200rpx;
+  border-bottom:#f8f8f8;
+  margin-top:20rpx;
+
+}
+
+.pinleft{
+  width:160rpx;
+  height:160rpx;
+  border-radius: 8rpx;
+  /* border:1rpx solid #fc8b21; */
+  float: left;
+  margin-left:20rpx;
+  overflow: hidden;
+  
+}
+
+
+
+
+
+.pinright{
+   width:526rpx;
+   height:160rpx;
+   float: right;
+   margin-right:20rpx;
+
+}
+
+.pinrt1{
+  width:100%;
+  font-size: 28rpx;
+  color: #000;
+}
+
+.pinrt2{
+  width:100%;
+  font-size: 28rpx;
+  color: #ababab;
+  margin-top:18rpx;
+
+}
+
+.jinlun{
+  margin-left:10rpx;
+}
+
+.pinrt3{
+  width:100%;
+  font-size: 28rpx;
+  color: #f46565;
+  margin-top:42rpx;
+}
+
+.jiage{
+  color: #ababab;
+  margin-left:20rpx;
+  text-decoration: line-through;
+  font-size: 26rpx;
+  
+}
+.pinbot{
+  width:100%;
+  height:auto;
+  border-top:1rpx solid #f8f8f8;
+
+}
+
+.pinbtt{
+  font-size: 26rpx;
+  text-align: center;
+  width:100%;
+  height:80rpx;
+  line-height:80rpx;
+  color: #644331;
+
+}
+
+
+.pinbtt>text{
+  color: #df382c;
+}
+
+
+.pinbtm{
+  width:100%;
+  height:auto;
+  display: flex;
+  justify-content: center;
+  margin:auto;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.pinbtm1{
+  width:78rpx;
+  height:78rpx;
+  border-radius: 50%;
+  margin-left:30rpx;
+    background: #ace;
+
+
+}
+
+.pinbtm1a{
+  border:1rpx solid #fc8b21;
+  position: relative;
+}
+
+
+.tuanzhang{
+    position: absolute;
+    top:0;
+    left:-20rpx;
+    width:68rpx;
+    height:32rpx;
+    border-radius: 32rpx;
+    background: #ffb635;
+    font-size: 20rpx;
+    text-align: center;
+    line-height:32rpx;
+    color: #fff;
+}
+
+
+
+.pinbutt{
+  width:708rpx;
+  height:88rpx;
+    background: repeating-radial-gradient(#6ab614,#9cc912);
+  border-radius: 6rpx;
+  color: #fff;
+  font-size: 28rpx;
+  line-height:88rpx;
+    margin:auto;
+  margin-top:30rpx;
+  text-align: center;
+  font-weight: bold;
+
+  
+}
+
+.pinbuttmm{
+    width:708rpx;
+  height:88rpx;
+  color: #fff;
+  font-size: 28rpx;
+    margin:auto;
+  margin-top:30rpx;
+  display: flex;
+  justify-content: space-around;
+}
+
+.pinbuttend{
+    width:300rpx;
+    height:70rpx;
+    background: repeating-radial-gradient(#6ab614,#9cc912);
+    color: #fff;
+    font-size: 28rpx;
+    text-align: center;
+    line-height:70rpx;
+    border-radius: 70rpx;
+
+}
+
+.pinbuttend1{
+      background: #ff6700;
+}
+
+.pinimg{
+  width:100%;
+  height:100%;
+  border-radius: 50%;
+}
+
+
+
+
+.nonet-box{
+  width: 100%;
+  height:100vh;
+  font-size: 28rpx;
+  line-height:300rpx;
+  position: fixed;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  margin:auto;
+  text-align: center;
+  background: #fff;
+  z-index: 99999;
+
+}
+
+.nonet{
+    width: 100%;
+  height:600rpx;
+  font-size: 28rpx;
+  position: absolute;
+
+  right:0;
+  left:0;
+  margin:auto;
+    top:132rpx;
+
+  background: #fff;
+  
+}
+
+.nonet>image{
+  display: block;
+  width: 300rpx;
+  height:305rpx;
+  margin:auto;
+
+}
+
+.nontip{
+  width:100%;
+  height:28rpx;
+  margin:auto;
+  margin-top:60rpx;
+    text-align: center;
+      font-size: 28rpx;
+      color: #999999;
+      line-height: 28rpx;
+}
+
+.jiazai{
+width: 300rpx;
+height:78rpx;
+margin:auto;
+margin-top:130rpx;
+border:1rpx solid #dcdcdc;
+text-align: center;
+line-height: 78rpx;
+  font-size: 28rpx;
+}
+
+
+

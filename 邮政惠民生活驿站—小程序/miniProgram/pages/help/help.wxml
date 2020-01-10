@@ -1,0 +1,68 @@
+<view class='container'>
+  <view class="img-box">
+    <view class="font">您可能想问？</view>
+  </view>
+  <!-- 1 start -->
+    <view class="req req1">
+      <view class="req_title">1. 退换货服务</view>
+      <view class="req_content">
+        <view>感谢您的惠顾我们的满满诚意是：
+无理由退换货，不满意就退款！</view>
+
+                <view class='yiwu'>存在以下情形之一的邮政惠民不承担换货义务</view>
+                <view  class='yiwu1'>1）、任何非购自邮政惠民的商品</view>
+               <view>2）、任何因客户使用或保管不当导致出现包装破损或质量问题的商品</view>
+                <view>3）、任何因客户原因导致超过保质期的商品</view>
+      
+      </view>
+    </view> 
+  <!-- 1 end -->
+  <!-- 2 start -->
+    <view class="req req1">
+      <view class="req_title">2.  外卖配送是否免费</view>
+      <view class="req_content">
+        <view>邮政惠民生活驿站目前配送范围是各门店直径3公里以内，配送额是每单满20元起送，配送费3元/单，每单满38元可享受免费配送。</view>
+      </view>
+    </view> 
+  <!-- 2 end -->
+  <!-- 3 start -->
+    <view class="req req1">
+      <view class="req_title">3.  在电商平台购买邮政惠民商品后什么时候可以自提</view>
+      <view class="req_content">
+        <view>在邮政惠民线上购买商品，您可以根据自己的时间到您购买的邮政惠民店自提，如果有特殊情况没能按时到门店自提水果，店员也会为您保留一段时间。</view>
+      </view>
+    </view> 
+  <!-- 3 end -->
+  <!-- 4 start -->
+    <view class="req req1">
+      <view class="req_title">4. 下单时选择配送，多久能够送达</view>
+      <view class="req_content">
+        <view>邮政惠民对门店周边3公里范围内的订单提供预约配送服务，在您下订单时可以预约配送时间也可以跟客服预约配送服务时间，不预约时间默认一小时内配送到达。</view>
+      </view>
+    </view> 
+  <!-- 4 end -->
+
+    <!-- 4 start -->
+    <view class="req req1">
+      <view class="req_title">5. 如何开发票</view>
+      <view class="req_content">
+        <view>请您直接到店联系店长进行发票预约</view>
+      </view>
+    </view> 
+  <!-- 4 end -->
+
+  <!-- 5 start -->
+    <view class="req req1">
+      <view class="req_title">6. 门店营业时间</view>
+      <view class="req_content">
+        <view>门店营业时间: 早上 7:00——22:00</view>
+           <view>配送时间: 早上 9:00——21:00</view>
+        <button open-type="contact"  class="tel">联系客服
+         <image src="../img/index/kefum.png" class="teling"> </image>
+        </button>
+
+      
+      </view>
+    </view> 
+  <!-- 5 end -->
+</view>

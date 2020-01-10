@@ -1,0 +1,170 @@
+<!--pages/group_detail/group_detail.wxml-->
+<view class='container'  style="{{hasMask?'height:100%;overflow:hidden':''}}">
+  <!-- 顶部轮播图 start -->
+  <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-dots="{{indicatorDots}}"  class="swip top_big" indicator-active-color="#fff" circular="true">
+      <block wx:for="{{imgUrls}}" class="img">
+        <swiper-item class="img_big">
+          <image src="{{item}}" class="slide-image" mode="widthFix" />
+          
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class='backTime'>
+        <text wx:if='{{tg.isLastSale == 1}}'>活动倒计时：</text>
+        <text wx:if='{{tg.isLastSale == 0}}'>活动剩余时间：</text>
+        <text class='fontColor'>{{countDownDay}}</text><text>天</text>
+        <text class='fontColor'>{{countDownHour}}</text><text>小时</text><text class='fontColor'>{{countDownMinute}}</text><text>分</text><text class='fontColor'>{{countDownSecond}}</text><text>秒</text>
+      </view>
+      <view class='top_icon_big' wx:if='{{tg.isLastSale==1}}'>
+        <image class='top_icon' src='../img/index/pink.png'></image>
+        <view class='top_icon_ctn'>预售</view>
+      </view>
+  <!-- 顶部轮播图 end -->
+  <!-- 中部标题 start -->
+  <view class='middle_big'>
+    <view class='middle'>
+      <view class='middle_tittle'>{{tg.title}}</view>
+      <view class='middle_ctn'>{{tg.summary}}</view>
+      <view class='price_big'><view class='group'>{{tg.limit_num}}人拼团价</view><text class='new_price'>￥{{tg.group_buys}}</text><text class='old_price'>￥{{tg.single_prices}}</text>
+      </view>
+
+      <!-- <view class='detail_big'>
+      <view  class='detail'>
+        <view class='detail_left'>支付成功邀请{{tg.limit_num-1}}人参团,人数不足自动退款</view>
+        <view class='detail_right' bindtap='groupJoinDetail'>详情介绍<image src=''  class='detail_right_icon'>></image></view>
+      </view>
+    </view> -->
+
+     <view class='pintuan_big'>
+        <view class='pintuan1'>
+            <view class='pt1'></view>
+            <view class='pt2'>拼团玩法</view>
+            <view class='pt1'></view>
+        </view>
+        <view class='pintuan2'>
+
+          <view class='pt21'>
+             <image src='../img/index/pint1.png'></image>
+             <view class='pt21a'>
+               <view class='pa1'>选择商品</view>
+                <view class='pa2'>完成下单</view>            
+             </view>
+          </view>
+           <view class='pt21'>
+             <image src='../img/index/pint2.png'></image>
+             <view class='pt21a'>
+               <view class='pa1'>支付开团</view>
+                <view class='pa2'>或参团</view>            
+             </view>
+          </view>
+         <view class='pt21'>
+             <image src='../img/index/pint3.png'></image>
+             <view class='pt21a'>
+               <view class='pa1'>邀请好友</view>
+                <view class='pa2'>参团支付</view>            
+             </view>
+          </view>
+         <view class='pt21'>
+             <image src='../img/index/pint4.png'></image>
+             <view class='pt21a'>
+               <view class='pa1'>人满开团</view>
+                <view class='pa2'>失败退款</view>            
+             </view>
+          </view>
+
+        </view>
+   
+    </view>
+
+
+    </view>
+  </view>
+  <!-- 中部标题 end -->
+
+  <!-- 拼团人数 start -->
+   <view  class='per_big' wx:if="{{groupshow}}">
+    <view  class='per_top'>
+      <view  class='per_top_left'><text>{{tg.groupList.count}}</text>人正在拼单,可直接参与</view>
+      <view  class='per_top_right' bindtap='groupList' data-info='{{tg}}'>查看更多
+      </view>
+    </view>
+    <swiper class='per_for' autoplay="{{autoplay}}" interval="{{interval}}" vertical="true" duration="{{duration}}" bindchange="swiperChange" >
+    <swiper-item class='per' wx:for="{{group}}">
+      <view class='per_left'>
+        <image class='per_left_img' src="{{item.userImg}}"></image>
+        <view class='per_name'>{{item.userName}}</view>
+      </view>
+      <view class='per_right'>
+        <view class='per_right_ctn'>
+          <view>拼团还差{{item.lackUser}}人</view>
+          <view>剩余{{item.remainTime}}</view>
+        </view>
+        <button class='butt'  bindtap='show' data-info='{{item}}'>去参团</button>
+      </view>
+      </swiper-item>
+    </swiper>
+   </view>
+  <!-- 拼团人数 end -->
+
+  <!-- 商品详情 start -->
+  <view class='goods_ctn'>
+    <view class='goods_title'>商品详情</view>
+    <view>品牌:{{tg.ycGoodsSku.brand==''?"暂无品牌":tg.ycGoodsSku.brand}}</view>
+    <view>规格:{{tg.ycGoodsSku.gpackage==''?"暂无规格":tg.ycGoodsSku.gpackage}}</view>  
+    <!-- <view>保质期:{{tg.ycGoodsSku.expiration==0?5:tg.ycGoodsSku.expiration}}天</view> -->
+    <image src='' class='goods_img' src="{{tg.ycGoodsSku.content}}"  mode="widthFix"></image>
+  </view>
+  <!-- 商品详情 end -->
+  <!-- 底部固定 start -->
+  <view class='bottom'>
+    <view class='bottom_icon' bindtap='Toindex'>
+      <image src="../img/index/index_select.png" class='bottom_icon_img'></image>
+      <!-- <view class='index'>首页</view> -->
+    </view>
+
+    <!--活动已开始start  -->
+    <view class='bottom_btn' wx:if="{{tg.isLastSale==0&&activeend==true&&actasend==true}}">
+      <button class='per_buy'  bindtap='toOrderConfirm' data-info='{{tg}}' data-type='1'>￥{{tg.single_prices}}单买</button>
+      <button class='group_buy' bindtap='toOrderConfirm' data-info='{{tg}}' data-type='0'>￥{{tg.group_buys}} 开团</button>
+    </view>
+     <!--活动已开始end  -->
+
+
+      <!-- 活动未开始start -->
+          <view class="bottom_wks" wx:if="{{tg.isLastSale==1}}">活动即将开始</view>
+             <view class="bottom_wks" wx:if="{{tg.isLastSale==0&&activeend==false&&actasend==true}}">活动已结束</view>
+      <!-- 活动未开始end-->
+
+
+  </view>
+  <!-- 底部固定 end -->
+</view>
+<!-- 遮罩层 start -->
+  <view class='mask_big'  wx:if="{{hasMask}}">
+    <view class='mask'>
+      <view class='mask_title'>
+        <view class='space'></view>
+        <view class='mask_title_ctn'>等待成团</view>
+        <view class='mask_title_icon_big'><image src='../img/index/close.png' class='mask_title_icon' bindtap='hid'></image></view>
+      </view>
+      <view class='per_num'>
+        <view class='join_per' wx:for="{{tg_group}}">
+          <image src="{{item}}"></image>
+        </view>
+      </view>
+      <view class='mask_btn'>
+        <button class='buttt' bindtap='toOrderGroupConfirm' data-info='{{group_c}}'>去参团</button>
+      </view>
+    </view>
+  </view>
+<!-- 遮罩层 end -->
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>

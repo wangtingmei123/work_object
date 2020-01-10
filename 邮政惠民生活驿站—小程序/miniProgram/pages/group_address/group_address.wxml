@@ -1,0 +1,37 @@
+<!--pages/address/address.wxml-->
+<view class='container'>
+<!-- 顶部 start -->
+<view class='top'>
+  <image src='../img/index/dingwei.png' class='top_icon'></image>
+  <text wx:if='{{shopName}}'>{{shopName}}</text>
+   <text wx:else>亚运村店</text>
+</view>
+<!-- 顶部 start -->
+<!-- 选择门店 start -->
+<view class='choose'>
+  <text>选择服务门店</text>
+</view>
+<!-- 选择门店 end -->
+<!-- 列表 start -->
+<view class='ctn' wx:for="{{shops}}" >
+    <view class='ctn_left' bindtap='jump' data-info="{{item}}">
+      <text>{{item.wname}}({{item.ycMerchant.name}})</text>
+      <view class='ctn_left_content'>{{item.address}}</view>
+    </view>
+    <view class='ctn_right' bindtap='jump' data-info="{{item}}">
+      <image src='../img/index/address.png' class='ctn_icon'></image>
+      <text class='miter'>{{item.distance}}km</text>
+    </view>
+  </view>
+<!-- 列表 end -->
+</view>
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>

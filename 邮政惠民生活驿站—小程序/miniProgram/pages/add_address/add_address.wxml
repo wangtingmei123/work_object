@@ -1,0 +1,64 @@
+    
+    <view class='top'>
+    <view class="tipadd">因各地区商品可能存在差异，请输入正确的收货地址。</view>
+
+      <view class='item'>
+        <view class='item_tiele'>联系人:  </view>
+        <view class='item_address'>
+        <input class='mephone'  type='text'   name="name" placeholder="请输入收货人"  bindinput ="phoneInput1" value='{{receiver_name}}' />
+        </view>
+      </view>
+
+     <view class='item'>
+        <view class='item_tiele '>手机号:  </view>
+        <view class='item_address'>
+        <input class='mephone'  type='number'   name="phone" placeholder="请输入手机号"  bindinput ="phoneInput2"  value='{{phone}}'/>
+        </view>
+      </view>
+
+     <view class='item'>
+        <view class='item_tiele '>地<text>　</text>址:  </view>
+        <view class='item_address'  bindtap='toAddre'>
+
+        <view  class='mephone mephone1'  wx:if="{{dizhi}}">{{dizhi}}</view>
+        <view  class='mephone mephone2'  wx:if="{{dizhi==''}}">点击选择</view>
+
+        <!-- <input class='mephone'  type='text'   name="address" placeholder="点击选择" value='{{dizhi}}'  bindinput ="phoneInput3" /> -->
+
+            <!-- <input class='mephone' type='text'   name="addxiangxi" placeholder="请输入收货地址"  bindinput ="phoneInput3"  value='{{dizhi}}' /> -->
+        </view>
+
+        <view class="weizhipp"   bindtap='toAddre'> <image src='../img/index/weizhipp.png'></image></view>
+      </view>
+       <view class='item'>
+        <view class='item_tiele '>门牌号:  </view>
+        <view class='item_address'>
+        <input class='mephone' type='text'   name="addxiangxi" placeholder="请输入详细地址"  bindinput ="phoneInput4"  value='{{detail}}' />
+        </view>
+      </view>
+
+        <!-- <view class='item'>
+        <view class='item_tiele '>标签: </view>
+        <view class='item_address'>
+        <input class='metype'  type='radio'   name="type" value='家'  bindinput ="phoneInput" />
+        <input class='metype'  type='radio'   name="type" value='公司'  bindinput ="phoneInput" />
+        <input class='metype'  type='radio'   name="jtypeia" value='学校'  bindinput ="phoneInput" />
+        <input class='metype'  type='radio'   name="type" value='其他'  bindinput ="phoneInput" />
+        </view>
+      </view> -->
+  <view class='item'>
+      <view class='item_tiele'>标　签:  </view>
+      <view class='item_address'>
+        <block wx:for="{{parameter}}" wx:key="parameter">
+        <text class='parameter-info text-over {{item.checked?"checked_parameter":""}}' data-id='{{item.id}}'  data-text="{{item.name}}" bindtap='parameterTap'>{{item.name}}</text>
+        </block>
+      </view>
+    </view>
+
+
+    <view wx:if="{{address_id}}">
+     <view class="addadress addadressm" bindtap='delres'>删除</view>
+      <view class="addadress" bindtap='addadresscun'>保存</view>
+    </view>
+     <view wx:else class="addadress addadressmmm" bindtap='addadresscun'>保存收货地址</view>
+    </view>

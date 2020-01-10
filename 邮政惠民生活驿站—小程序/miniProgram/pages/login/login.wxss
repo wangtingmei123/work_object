@@ -1,0 +1,44 @@
+.container {
+  padding: 0;
+  width: 100%;
+}
+/* pages/code/code.wxss */
+.login-box{
+  width:100%;
+  height:auto;
+}
+
+.login-img{
+  display: block;
+  width:228rpx;
+  height:228rpx;
+  margin:auto;
+  margin-top:160rpx;
+
+}
+
+.login1{
+  width:660rpx;
+  height:88rpx;
+  background: #ff6700;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: center;
+  line-height:88rpx;
+  margin:auto;
+  border-radius: 10rpx;
+  margin-top:202rpx;
+  
+}
+
+.login2{
+  width:660rpx;
+  height:88rpx;
+  color: #6c6e94;
+  font-size: 28rpx;
+  text-align: center;
+  line-height:88rpx;
+    margin:auto;
+    margin-top:4rpx;
+  
+}

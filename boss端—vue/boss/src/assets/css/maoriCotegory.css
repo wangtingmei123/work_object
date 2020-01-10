@@ -1,0 +1,10 @@
+.maori_category_ctn {
+  padding: 20px;
+}
+.maori_category_ctn .maori_cotegory_ctn_left {
+  flex: 3;
+}
+.maori_category_ctn .maori_cotegory_ctn_right {
+  text-align: right;
+  flex: 1.7;
+}

@@ -1,0 +1,76 @@
+.realTimeCotegoryDetail_top_tittle {
+  text-align: center;
+  font-size: 36px;
+}
+.table_big {
+  width: 96%;
+  margin: 20px auto 0;
+  background: url('../static/img/1.png') no-repeat;
+  background-size: 100% 100%;
+}
+.table_item {
+  display: flex;
+  font-size: 26px;
+}
+.table_item div {
+  text-align: center;
+  border: 1px solid #f5f5f5;
+  height: 63px;
+  line-height: 63px;
+}
+.table_item1 {
+  color: #999;
+}
+.table_item2 {
+  font-size: 28px;
+}
+.table_item_tittle {
+  font-size: 26px;
+  padding: 20px;
+}
+/*echarts start*/
+.biaoshi {
+  width: 60%;
+  height: 28px;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+}
+.biaoshi1 {
+  width: auto;
+  height: 100%;
+}
+.biaoshi1 > .bss {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: block;
+  float: left;
+}
+.bss1 {
+  background: #3321b4;
+}
+.bss2 {
+  background: #ffb70d;
+}
+.bss3 {
+  background: #e85f0d;
+}
+.biaoshi1 > span {
+  display: block;
+  width: auto;
+  font-size: 28px;
+  color: #000;
+  margin-left: 10px;
+  line-height: 26px;
+  float: left;
+}
+.realTimeCotegoryDetail_biaoshi {
+  background: #fff;
+  width: 100%;
+}
+.gap {
+  height: 50px;
+  background: #fff;
+}
+/*echarts edn*/

@@ -1,0 +1,36 @@
+.title h3 {
+  font-size: 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.titile_img {
+  width: 16px;
+  height: 32px;
+  margin-right: 10px;
+}
+.history_list_item_left_icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+}
+.history_list_item_left {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.histoty_list>li>a {
+  padding: 0 30px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #f3f4f4;
+  height: 99px;
+  font-size: 28px;
+}
+.histoty_list li {
+  padding: 0;
+  height: auto;
+}

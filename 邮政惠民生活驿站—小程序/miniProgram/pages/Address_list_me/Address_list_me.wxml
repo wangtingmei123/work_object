@@ -1,0 +1,65 @@
+<!--pages/Address_list_me/Address_list_me.wxml-->
+<view class='container'>
+    <view class="noorder" wx:if='{{dataList.length==0}}'>
+      <image class="noimg" src="../img/index/noaddress.png"></image>
+      <view class="notext">呜~还没有添加过地址呢~</view>
+    </view>
+
+
+      <view  class='itemntm' wx:for='{{dataList}}'>
+      <view class="statre {{item.is_default==1?'statres':''}}" bindtap='to_deafe' data-id='{{item.address_id}}'  data-info='{{item}}' data-index='{{index}}'>
+          <view wx:if="{{item.is_default==1}}" class="xuanzhong">✔</view>
+      </view>
+
+      <view class="itemntma" data-text='{{item}}'>
+      <view class="itemntt_box">
+          <view class='itemntt'>
+                {{item.area_name}}
+          </view>
+           <view class='itemnmm itemnmms' wx:if="{{item.is_default==1}}">默认 </view>
+
+           <view class='itemnmm' wx:if="{{item.tag==1}}">家 </view>
+            <view class='itemnmm' wx:if="{{item.tag==2}}">公司 </view>
+            <view class='itemnmm' wx:if="{{item.tag==3}}">学校 </view>
+            <view class='itemnmm' wx:if="{{item.tag==4}}">其他 </view>
+        </view>
+
+
+        <view class='itemntt_detail'>
+              {{item.detail}}
+        </view>
+
+          <view class='itemnt'>
+          <view class='itemntname'>{{item.receiver_name}}</view>
+          <view class='itemnttel'>{{item.phone}}</view>
+        </view>
+
+      </view>
+
+      <view class='edittap'>
+           <view class="edit" bindtap='editres' data-id='{{item.address_id}}' data-text='{{item}}'><image class="editimg" src="../img/index/bianjimm.png"></image></view>
+           <!-- <view class="del" bindtap='delres' data-id='{{item.address_id}}' data-index="{{index}}" >删除</view> -->
+      </view>
+
+    </view>
+
+    <view class="addadressaa"  wx:if='{{dataList.length==0}}'  bindtap='addadress'>添加收货地址</view>
+  <view class="addadress" wx:else  bindtap='addadress'>
+       <view class="adresright1"><image src="../img/index/weizhimm.png"></image></view> 
+     <view class="adresleft">添加收货地址</view>  
+     <view class="adresright"><image src="../img/index/jiaotoumm.png"></image></view> 
+  </view>
+
+</view>
+
+
+
+<view class="nonet-box" wx:if='{{nonet}}'>        
+         <view class="nonet">
+             <image src="../img/index/duanwang.png"></image>  
+             <view class="nontip">网络出事了，请检查一下网络设置~</view>  
+             <view bindtap='jiazai' class="jiazai">重新加载</view>
+         </view>
+ 
+</view>
+

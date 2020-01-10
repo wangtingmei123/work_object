@@ -1,0 +1,22 @@
+<!--pages/ps_login/ps_login.wxml-->
+<view class="ps_login_box">
+     <view class="ps_login">
+
+         <view class="log_title">登录</view>
+          <view  class="log_phone">
+          <input type='number' class="phone" value='{{phone}}'  bindinput='btn_phone'   placeholder='请输入您的手机号'></input>
+          <image class="pho_icon" src="../img/index/shanchu.png" bindtap='shanchu' wx:if="{{shanchu&&phone!=''}}"></image> 
+          </view>
+
+             <view  class="log_mima"
+             ><input type='{{pass}}' class="mima" value='{{mima}}'  bindinput='btn_mima'     placeholder='请输入登录密码'></input>
+             <image class="min_icon" src="../img/index/yingcang.png" bindtap='yingcang' wx:if="{{pass=='password'}}"></image>
+             <image class="min_icon" src="" bindtap='xianshi'  wx:if="{{pass=='text'}}"></image>
+             </view>
+             <view class="tip_fail" wx:if="{{tip_show}}"><image class="tip_image" src="../img/index/tip_cuow.png"></image><view class="tip_text">{{tip_fail}}</view></view>
+             
+         <view class="log_but" bindtap='ps_login'>登 录</view>
+     
+     </view>
+
+</view>

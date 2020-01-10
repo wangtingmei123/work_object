@@ -1,0 +1,11 @@
+{
+  "window": {
+    
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "彪峰鲜生",
+    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 100
+  }
+}

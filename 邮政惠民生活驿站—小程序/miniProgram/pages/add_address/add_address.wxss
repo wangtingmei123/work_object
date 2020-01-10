@@ -1,0 +1,171 @@
+page{
+  background: #F6F8F8;
+}
+.top {
+  width: 100%;
+  border-top: 1rpx solid #f8f8f8;
+  margin-top:20rpx;
+}
+.item {
+  width: 680rpx;
+  height:auto;
+  padding:20rpx;
+  padding-left: 35rpx;
+    padding-right: 35rpx;
+  border-top: 1rpx solid #f8f8f8;
+  display: flex;
+  flex-direction: row;
+  font-size: 26rpx;
+  background: #fff;
+  /* line-height:88rpx; */
+}
+
+.itemam{
+  padding-bottom:26rpx;
+}
+
+.weizhipp{
+  width:40rpx;
+  height:40rpx;
+  margin-top:6rpx;
+
+}
+
+.weizhipp>image{
+  display: block;
+  width:100%;
+  height:100%;
+}
+
+
+.item_ctn {
+  width: 90rpx;
+  height: 40rpx;
+  border-radius: 10rpx;
+  line-height: 40rpx;
+  text-align: center;
+  background: #de3a2c;
+  color: #fff;
+  margin-left: 10rpx;
+}
+.item_address {
+  width:auto;
+  margin-left:100rpx;
+  height:auto;
+  line-height:40rpx;
+
+}
+
+
+.mephone{
+  width:470rpx;
+  line-height:38rpx;
+  
+}
+
+ .mephone1{
+  margin-top:6rpx;
+    width:410rpx;
+
+} 
+
+
+.mephone2{
+  margin-top:6rpx;
+    width:410rpx;
+    color: #888E95;
+} 
+
+.item_time {
+  margin-left: 10rpx;
+  color: #888;
+}
+
+
+.item-titlem{
+  width:20%;
+}
+
+.item_timem{
+  width:80%;
+  height:100%;
+}
+
+.item_tieless{
+  width:200rpx;
+  margin-top:6rpx;
+
+}
+
+.item_tiele{
+  width:auto;
+  height:auto;
+    font-weight: bold;
+    line-height:40rpx;
+    margin-top:4rpx;
+
+}
+
+.metype{
+  display: inline-block
+}
+
+.metype{
+
+}
+
+.parameter-info{
+  display: block;
+  width:84rpx;
+  height:35rpx;
+
+  margin-left:20rpx;
+  float: left;
+  border-radius: 35rpx;
+  border:1rpx solid #F1EFEF;
+  color: #000;
+  font-size: 26rpx;
+  line-height: 35rpx;
+  text-align: center;
+  margin-top:4rpx;
+
+}
+
+.parameter-info:nth-child(1){
+  margin-left:0;
+}
+
+.checked_parameter{
+  border:1rpx solid #67D761;
+  color: #67D761;
+}
+
+.addadress{
+  width:80%;
+  height:78rpx;
+  text-align: center;
+  line-height:78rpx;
+  color: #fff;
+  background: #1BC412;
+  margin:auto;
+  margin-top:30rpx;
+  border-radius: 78rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.addadressm{
+  margin-top:50rpx;
+  background: #d2d2d2
+}
+
+
+
+
+.tipadd{
+  width:100%;
+  height:auto;
+  font-size: 26rpx;
+  text-align: center;
+  padding-bottom:20rpx;
+  color: #1BC412;
+}

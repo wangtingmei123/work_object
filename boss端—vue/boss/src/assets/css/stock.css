@@ -1,0 +1,214 @@
+#app {
+  background: none;
+}
+.titile_img {
+  width: 18px;
+  height: 32px;
+}
+.title {
+  position: relative;
+  border-bottom: 1px solid #f8f8f8;
+}
+/*地址列表 start*/
+.address_list {
+  position: absolute;
+  left: 0;
+  top: 100px;
+  z-index: 106;
+}
+.van-cell__title {
+  text-align: center;
+  line-height: 3.6;
+  font-size: 26px;
+}
+.van-cell {
+  height: 100px;
+  line-height: 100px;
+}
+.van-cell:first-child {
+  border-top: 1px solid #f8f8f8;
+}
+/*地址列表 end*/
+/*选项卡 2*/
+.van-tabs--line .van-tabs__wrap {
+  height: 80px !important;
+
+}
+.van-tabs--line {
+  padding-top: 80px !important;
+
+}
+.van-tabs__nav {
+  align-items: center;
+
+}
+.van-tab--active {
+  color: #000 !important;
+  font-weight: 600;
+}
+.van-tabs__line {
+  width: 100px !important;
+  height: 6px !important;
+  border-radius:3px !important;
+  background: #3320b4 !important;
+  left: 16.5% !important;
+  bottom: 27% !important;
+
+}
+.van-tab span {
+  font-size: 28px;
+}
+/*总价start*/
+.total_big {
+  width: 100%;
+  height: 180px;
+  padding: 0 10px;
+  background: #fff;
+}
+.total {
+  width: 100%;
+  height: 100%;
+  background: url('../../assets/static/img/bg.png') no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.total h1 {
+  font-size: 40px;
+  color: rgb(221,182,116);
+}
+.total p {
+  font-size: 34px;
+  color: #fff;
+}
+/*总价end*/
+.van-tab--active {
+  color: #000 !important;
+  font-weight: 600;
+}
+.van-tabs__line {
+  width: 60px !important;
+  height: 6px !important;
+  border-radius:3px !important;
+  background: #3320b4 !important;
+  left: 12% !important;
+  bottom: 27% !important;
+}
+/*列表 start*/
+ul {
+  width: 100%;
+  border-radius: 66px;
+  overflow: hidden;
+  padding:20px 10px;
+  box-sizing: border-box;
+}
+ul>li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 86px;
+  padding: 30px 20px;
+}
+ul>li:nth-child(odd) {
+   background: #fff;
+}
+.line {
+  width: 2px;
+  height: 50px;
+  background: #999;
+}
+.stock_status {
+  color: rgb(50,50,50);
+  font-size: 22px;
+  text-align: center;
+}
+.stock_status span {
+  color: #333;
+}
+.stock_status_left {
+  text-align: left;
+}
+.stock_status_right {
+  text-align: right;
+}
+#real_time_sale_tab .van-tabs__line {
+  width: 140px !important;
+  left: 14% !important;
+}
+.stock_ul>li:nth-child(odd) {
+  background: #fff;
+}
+.stock_ul>li:nth-child(even) {
+  background: #fcfcfc;
+}
+/*列表 end*/
+#stock {
+  position: absolute;
+  height: 100%;
+  background: #f5f5f5;
+}
+.date_icon {
+  width: 28px;
+  height: 26px;
+}
+.van_date {
+  display: flex;
+  align-items: center;
+}
+.van-tabs__line {
+  width: 30px !important;
+  left: 10% !important;
+}
+/*日期 start*/
+.stock_date {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  width: 100%;
+  height: 60px;
+  background: #fff;
+}
+.stock_date>p {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  background: #f5f5f5;
+  border-radius:30px;
+  font-size: 26px;
+  padding: 10px;
+  color: #999;
+}
+.stock_date>p>span {
+  color: #000;
+}
+.van-picker__columns li{
+  display: flex;
+  justify-content: center;
+}
+.van-picker__toolbar {
+  height: auto !important;
+}
+.van-picker__cancel, .van-picker__confirm {
+  text-align: center;
+  padding: 20px !important;
+}
+.van-picker {
+  font-size: 28px;
+}
+.van-picker-column {
+  font-size: 26px !important;
+}
+.slide-enter-active,.slide-leave-active {
+  transition: all 0.3s;
+}
+.slide-enter{
+  transform: translate3d(100%, 0, 0);
+}
+.slide-leave-to {
+  transform: translate3d(-100%, 0, 0);
+}
+
+/*日期 end*/
+

@@ -1,0 +1,145 @@
+<!--pages/binding/binding.wxml-->
+<!-- <text>pages/binding/binding.wxml</text> -->
+
+
+<view class="binding-box">
+
+
+<!-- 选择分公司 -->
+<view class="fengs-box" style='margin-top:80rpx'>
+       <view class="fengs" bindtap='bing_fen_gs'>
+            <view class="fengs_left" wx:if="{{fen_item_name==''}}">选择分公司</view>
+            <view class="fengs_left fengs_left1" wx:if="{{fen_item_name!=''}}">{{fen_item_name}}</view>
+            <image wx:if="{{fen_gs_show}}" src="../img/index/bingbottom.png"></image>
+            <image wx:if="{{fen_gs_show==false}}" src="../img/index/bingtop.png"></image>
+       </view>
+
+       <view class="fengslist" wx:if="{{fen_gs_show}}">
+              <view class='fengslist_sousuo'>
+                  <input class='fengslist_left' bindinput ="seachInput">搜索分公司</input>
+                 <image src="../img/index/bingseacher.png"></image>
+              </view>
+
+              <view class='fen_li' wx:for="{{fen_gs2}}" data-info="{{item}}" bindtap='bind_fen_item'>{{item.name}}</view>
+
+       </view>
+</view>
+
+
+
+<!-- 选择支局 -->
+
+<view class="fengs-box"  bindtap='bing_fen_zj'>
+       <view class="fengs" >
+            <view class="fengs_left" wx:if="{{zj_item_name==''}}">选择支局</view>
+            <view class="fengs_left fengs_left1" wx:if="{{zj_item_name!=''}}">{{zj_item_name}}</view>
+            <image wx:if="{{fen_zj_show}}" src="../img/index/bingbottom.png"></image>
+            <image wx:if="{{fen_zj_show==false}}" src="../img/index/bingtop.png"></image>
+       </view>
+       <view class="fengslist"  wx:if="{{fen_zj_show&&fen_zj.length>0}}">
+<!-- 
+              <view class='fengslist_sousuo'>
+                  <view class='fengslist_left'>搜索分公司</view>
+                 <image src="../img/index/bingseacher.png"></image>
+              </view> -->
+              
+              <view class='fen_li' wx:for="{{fen_zj}}" data-info="{{item}}" bindtap='bind_zj_item'>{{item.name}}</view>
+       </view>
+</view>
+
+<!-- 选择班组 -->
+<view class="fengs-box"  bindtap='bing_fen_bz'>
+       <view class="fengs" >
+            <view class="fengs_left" wx:if="{{bz_item_name==''}}">选择班组</view>
+            <view class="fengs_left fengs_left1" wx:if="{{bz_item_name!=''}}">{{bz_item_name}}</view>
+            <image wx:if="{{fen_bz_show}}" src="../img/index/bingbottom.png"></image>
+            <image wx:if="{{fen_bz_show==false}}" src="../img/index/bingtop.png"></image>
+       </view>
+       <view class="fengslist"  wx:if="{{fen_bz_show==true}}">
+
+              <!-- <view class='fengslist_sousuo'>
+                  <view class='fengslist_left'>搜索分公司</view>
+                 <image src="../img/index/bingseacher.png"></image>
+              </view> -->
+              
+              <view class='fen_li' wx:for="{{fen_bz}}" data-info="{{item}}" bindtap='bind_bz_item'>{{item.name}}</view>
+       </view>
+</view>
+
+
+<!-- 手机号 -->
+<view class="fengs-box"  >
+       <view class="fengs" >
+               <view class="fengs_left fengs_left1" ><view class="fenphone">手机号: </view>  <input class="fenphone2" name="phone" type='number' bindinput ="phoneInput"></input></view>
+       </view>
+</view>
+
+<!-- 工号编码 -->
+<view class="fengs-box"  >
+       <view class="fengs" >
+            <view class="fengs_left fengs_left1" ><view class="fenphone">工号编码: </view>  <input class="fenphone2"  name="bianma" bindinput ="userInput"></input></view>
+       </view>
+</view>
+
+
+
+
+   <!-- <input class="bing"  placeholder='输入您的邮政编码工号' bindinput ="userInput"></input> -->
+   
+</view>
+
+
+<view class="chaxun" bindtap='chaxun'>绑 定</view>
+
+
+
+<view class='score-box' wx:if='{{tip_see}}' bindtap='outbtn'>
+
+   <view class='score' wx:if='{{tip_con==2}}' catchtap='inbtn'>
+        <view class='scroe-top'>提示</view>
+        <view class='scroe-center'>
+              <view class='scrxin'>
+                  编号不存在, 请检查后再试...
+            </view>
+        </view>
+        <view class='scroe-bottom' bindtap='queding'>确 定</view>
+   </view>
+
+   <view class='score' wx:if='{{tip_con==1}}' catchtap='inbtn'>
+        <view class='scroe-top'>提示</view>
+        <view class='scroe-center'>
+              <view class='scrxin'>
+                  编号{{userInput}}, 确定提交绑定?
+            </view>
+        </view>
+        <view class='scroe-bottom'>
+              <view class="quxiao"  bindtap='quxiao'>取 消</view>
+              <view class="qued" bindtap='qued'>确 定</view>
+        </view>
+   </view>
+
+
+   
+   <view class='score' wx:if='{{tip_con2==2}}'  catchtap='inbtn'>
+        <view class='success'>
+           <image src="../img/index/bingfail.png"></image>
+           <view class='sucword'>{{message}}</view>
+        </view>
+   </view>
+
+   <view class='score' wx:if='{{tip_con2==1}}'  catchtap='inbtn'>
+        <view class='success'>
+           <image src="../img/index/bingsuccess.png"></image>
+           <view class='sucword'>绑定成功!</view>
+        </view>
+   </view>
+
+
+</view>
+
+
+
+
+
+
+

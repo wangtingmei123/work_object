@@ -1,0 +1,39 @@
+<!--pages/coupon/coupon.wxml-->
+<view class='container'>
+<block wx:for="{{couponList}}">
+  <view class='item'>
+
+   <view wx:if="{{item.status==2}}" class='item_img'>
+        <image src="../img/index/coupon_done.png"></image>
+      </view>
+
+      <view wx:if="{{item.isExpire==0}}" class='item_img'>
+        <image src="../img/index/guoqi.png"></image>
+      </view>
+
+
+    <view class='item_left'>
+      <view class='item_left_big'>
+        <view class='item_title'>{{item.clusterName}}</view>
+        <view class='item_time'>{{item.end_time}} 到期</view>
+      </view>
+      <view class='item_rule'>{{item.limit_amout_title}}</view>
+    </view>
+    <view class='item_right'>
+      <view class='item_price'>￥<text>{{item.amount}}</text></view>
+      <!-- <view class='reduce'>{{item.clusterName}}</view> -->
+      <button class='btn' hover-class='none' bindtap='useCoupon' data-info='{{item}}' >立即使用</button>
+
+    </view>
+  </view>
+  </block>
+
+  <!-- 没有商品start -->
+<view class="noorder" wx:if='{{(couponList==null&&nocoupon==true)||(couponList.length==0&&nocoupon==true)}}'>
+   <image class="noimg" src="../img/index/gouwunone.png"></image>
+   <view class="notext">暂无可用的优惠券~</view>
+</view>
+<!--没有商品end  -->
+</view>
+
+
