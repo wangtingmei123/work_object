@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html lang="zh-cmn-Hans" xmlns:ng="http://angularjs.org" ng-app="app">
+<head>
+  <meta charset="utf-8" />
+
+  <title>福利商城</title>
+  <!-- <meta http-equiv="pragma" content="no-cache" />-->
+  <!-- <meta http-equiv="cache-control" content="no-cache" />-->
+  <!-- <meta http-equiv="expires" content="0" />-->
+  <meta name="description" content="福利商城" />
+  <meta name="keywords" content="福利商城" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta content="telephone=no,email=no" name="format-detection">
+
+  <!--<link rel="apple-touch-icon-precomposed" href="image/apple-touch-icon.png">-->
+  <!--<link rel="apple-touch-icon" href="image/apple-touch-icon.png">-->
+  <!--<link rel="apple-touch-icon" sizes="57x57" href="image/icon/apple-icon-57x57.png">-->
+  <!--<link rel="apple-touch-icon" sizes="60x60" href="image/icon/apple-icon-60x60.png">-->
+  <!--<link rel="apple-touch-icon" sizes="72x72" href="image/icon/apple-icon-72x72.png">-->
+  <!--<link rel="apple-touch-icon" sizes="76x76" href="image/icon/apple-icon-76x76.png">-->
+  <!--<link rel="apple-touch-icon" sizes="114x114" href="image/icon/apple-icon-114x114.png">-->
+  <!--<link rel="apple-touch-icon" sizes="120x120" href="image/icon/apple-icon-120x120.png">-->
+  <!--<link rel="apple-touch-icon" sizes="144x144" href="image/icon/apple-icon-144x144.png">-->
+  <!--<link rel="apple-touch-icon" sizes="152x152" href="image/icon/apple-icon-152x152.png">-->
+  <!--<link rel="apple-touch-icon" sizes="180x180" href="image/icon/apple-icon-180x180.png">-->
+  <!--<link rel="icon" type="image/png" sizes="192x192"  href="image/icon/android-icon-192x192.png">-->
+  <!--<link rel="icon" type="image/png" sizes="32x32" href="image/icon/favicon-32x32.png">-->
+  <!--<link rel="icon" type="image/png" sizes="96x96" href="image/icon/favicon-96x96.png">-->
+  <!--<link rel="icon" type="image/png" sizes="16x16" href="image/icon/favicon-16x16.png">-->
+  <link rel="manifest" href="image/icon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- build:css css/app.base.css -->
+  <link rel="stylesheet" href="css/reset.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="libs/assets/animate.css/animate.css" type="text/css" /> -->
+  <link rel="stylesheet" href="libs/swiper/css/swiper.css" type="text/css" />
+  <link rel="stylesheet" href="libs/angular/angular-loading-bar/loading-bar.css" type="text/css" />
+  <!--<link rel="stylesheet" href="libs/angular/anim-in-out/anim-in-out.css" type="text/css" />-->
+  <!--<link rel="stylesheet" href="libs/angular/ngToast/ngToast.css" type="text/css" />-->
+  <!--<link rel="stylesheet" href="libs/angular/ngToast/ngToast-animations.css" type="text/css" />-->
+  <!-- endbuild -->
+
+  <!-- build:css css/app.main.css -->
+  <link rel="stylesheet" href="css/app.css?v=12" type="text/css" />
+  <link rel="stylesheet" href="css/style.css?v=12" type="text/css" />
+  <!-- endbuild -->
+  <link rel="stylesheet" href="css/default-skin.css">
+  <link rel="stylesheet" href="css/photoswipe.css">
+
+
+</head>
+
+<body id="ng-app"
+      ng-controller="AppController"
+      ng-class="{'is-ie': app.useragent.isIE, 'is-weixin': app.useragent.isWeixin, 'is-mobile': app.useragent.isMobile, 'is-browser': app.useragent.isBrowser}">
+
+  <div class="app" id="app" ui-view>
+  </div>
+
+  <div class="splash" id="splash">
+    <div class="inner">
+      <img src="image/loading.png"/>
+    </div>
+  </div>
+  <script type="text/javascript">
+      var GLOBAL_CONFIG = {};
+  </script>
+  <script src="config/config.app.js?v=11"></script>
+  <!-- build:js js/app.libs.js -->
+  <script src="libs/security/core.js?v=11"></script>
+  <script src="libs/security/md5.js?v=11"></script>
+  <script src="libs/security/sha256.js?v=11"></script>
+  <script src="libs/security/hmac.js?v=11"></script>
+  <script src="libs/security/xxtea.js?v=11"></script>
+  <script src="libs/jquery/js/jquery.js?v=11"></script>
+  <script src="libs/jquery/js/swiper.min.js?v=11"></script>
+  <script src="libs/angular/angular/angular.js?v=11"></script>
+  <script src="libs/angular/angular-animate/angular-animate.js?v=11"></script>
+  <script src="libs/angular/angular-aria/angular-aria.js?v=11"></script>
+  <script src="libs/angular/angular-cookies/angular-cookies.js?v=11"></script>
+  <script src="libs/angular/angular-messages/angular-messages.js?v=11"></script>
+  <script src="libs/angular/angular-resource/angular-resource.js?v=11"></script>
+  <script src="libs/angular/angular-sanitize/angular-sanitize.js?v=11"></script>
+  <script src="libs/angular/angular-ui-router/angular-ui-router.js?v=11"></script>
+  <script src="libs/angular/angular-lazy-img/angular-lazy-img.js?v=11"></script>
+  <script src="libs/angular/angular-cache/angular-cache.js?v=11"></script>
+  <script src="libs/angular/angular-loading-bar/loading-bar.js?v=11"></script>
+  <!-- <script src="libs/angular/anim-in-out/anim-in-out.js"></script> -->
+  <script src="libs/angular/ngStorage/ngStorage.js?v=11"></script>
+  <script src="libs/angular/ngInfiniteScroll/ng-infinite-scroll.js?v=11"></script>
+  <script src="libs/swiper/js/swiper.js?v=11"></script>
+  <!-- <script src="libs/fastclick/fastclick.js"></script> -->
+  <!-- <script src="libs/wechat/jweixin-1.0.0.js?v=11"></script> -->
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <script src="libs/angular/ngToast/ngToast.js?v=11"></script>
+  <!-- endbuild -->
+
+  <!-- build:js js/app.base.js -->
+  <!-- app -->
+  <script src="app/app.js?v=11"></script>
+  <script src="app/app.main.js?v=11"></script>
+  <script src="app/app.router.js?v=11"></script>
+  <script src="app/app.constants.js?v=11"></script>
+  <!-- service -->
+  <script src="app/app.authentication.js?v=11"></script>
+  <script src="app/app.network.js?v=11"></script>
+  <!-- api -->
+  <script src="app/network/API/api.access.service.js?v=11"></script>
+  <script src="app/network/API/api.areacode.service.js?v=11"></script>
+  <script src="app/network/API/api.article.service.js?v=11"></script>
+  <script src="app/network/API/api.auth-base.service.js?v=3"></script>
+  <script src="app/network/API/api.auth-default.service.js?v=11"></script>
+  <script src="app/network/API/api.auth-mobile.service.js?v=11"></script>
+  <script src="app/network/API/api.auth-social.service.js?v=11"></script>
+  <script src="app/network/API/api.auth-web.service.js?v=11"></script>
+  <script src="app/network/API/api.banner.service.js?v=11"></script>
+  <script src="app/network/API/api.brand.service.js?v=11"></script>
+  <script src="app/network/API/api.cardpage.service.js?v=11"></script>
+  <script src="app/network/API/api.cart.service.js?v=11"></script>
+  <script src="app/network/API/api.cashgift.service.js?v=11"></script>
+  <script src="app/network/API/api.category.service.js?v=11"></script>
+  <script src="app/network/API/api.config.service.js?v=11"></script>
+  <script src="app/network/API/api.consignee.service.js?v=11"></script>
+  <script src="app/network/API/api.coupon.service.js?v=11"></script>
+  <script src="app/network/API/api.invoice.service.js?v=11"></script>
+  <script src="app/network/API/api.message.service.js?v=11"></script>
+  <script src="app/network/API/api.notice.service.js?v=11"></script>
+  <script src="app/network/API/api.order.service.js?v=11"></script>
+  <script src="app/network/API/api.payment.service.js?v=11"></script>
+  <script src="app/network/API/api.product.service.js?v=11"></script>
+  <script src="app/network/API/api.push.service.js?v=11"></script>
+  <script src="app/network/API/api.recommend.service.js?v=11"></script>
+  <script src="app/network/API/api.region.service.js?v=11"></script>
+  <script src="app/network/API/api.review.service.js?v=11"></script>
+  <script src="app/network/API/api.score.service.js?v=11"></script>
+  <script src="app/network/API/api.search.service.js?v=11"></script>
+  <script src="app/network/API/api.shipping.service.js?v=11"></script>
+  <script src="app/network/API/api.shop.service.js?v=11"></script>
+  <script src="app/network/API/api.site.service.js?v=11"></script>
+  <script src="app/network/API/api.splash.service.js?v=11"></script>
+  <script src="app/network/API/api.theme.service.js?v=11"></script>
+  <script src="app/network/API/api.user.service.js?v=11"></script>
+  <script src="app/network/API/api.version.service.js?v=11"></script>
+  <script src="app/network/API/api.bonus.service.js?v=11"></script>
+  <script src="app/network/API/api.balance.service.js?v=11"></script>
+  <script src="app/network/API/api.withdraw.service.js?v=11"></script>
+  <script src="app/network/API/api.account.service.js?v=11"></script>
+  <script src="app/network/API/api.activity.service.js?v=11"></script>
+  <script src="app/network/api.service.js?v=12"></script>
+  <!-- services -->
+  <script src="app/services/config.service.js?v=11"></script>
+  <script src="app/services/weixin.service.js?v=11"></script>
+  <!-- filters -->
+  <script src="app/filters/formatNickname.js?v=11"></script>
+  <script src="app/filters/localTime.js?v=11"></script>
+  <script src="app/filters/trustHtml.js?v=11"></script>
+  <!-- directives -->
+  <script src="app/directives/ui-back.js?v=11"></script>
+  <script src="app/directives/ui-butterbar.js?v=11"></script>
+  <script src="app/directives/ui-focus.js?v=11"></script>
+  <script src="app/directives/ui-scroll.js?v=11"></script>
+  <script src="app/directives/ui-toggleclass.js?v=11"></script>
+  <script src="app/directives/ui-valid-input.js?v=11"></script>
+  <script src="app/directives/ui-valid-link.js?v=11"></script>
+  <!-- endbuild -->
+
+  <!-- build:js js/app.main.js -->
+
+
+
+  <!-- modules -->
+  <script src="modules/signin/signin.controller.js?v=110"></script>
+  <script src="modules/signin/signin.js?v=110"></script>
+  <script src="modules/codesignin/codesignin.controller.js?v=110"></script>
+  <script src="modules/codesignin/codesignin.js?v=111"></script>
+  <script src="modules/signup/signup.controller.js?v=11"></script>
+  <script src="modules/signup/signup.js?v=11"></script>
+  <script src="modules/forget/forget.controller.js?v=11"></script>
+  <script src="modules/forget/forget.js?v=11"></script>
+  <script type="text/javascript">
+    document.write("<script type='text/javascript' src='modules/home/home.controller.js?v=" + Math.random() + "'><\/script>")
+  </script>
+
+  <script type="text/javascript">
+    document.write("<script type='text/javascript' src='modules/home/home.js?v=" + Math.random() + "'><\/script>")
+  </script>
+
+  <!--<script src="modules/home/home.js?v=20"></script>-->
+  <script src="modules/category/category.controller.js?v=11"></script>
+  <script src="modules/category/category.js?v=11"></script>
+  <script src="modules/cart/cart.model.js?v=11"></script>
+  <script src="modules/cart/cart.controller.js?v=11"></script>
+  <script src="modules/cart/cart.js?v=11"></script>
+  <script src="modules/cart-select/cart-select.js?v=11"></script>
+  <script src="modules/profile/profile.controller.js?v=2"></script>
+  <script src="modules/profile/profile.js?v=2"></script>
+  <script src="modules/search/search.service.js?v=11"></script>
+  <script src="modules/search/search.controller.js?v=11"></script>
+  <script src="modules/search/search.js?v=11"></script>
+  <script src="modules/search-result/search-result.controller.js?v=11"></script>
+  <script src="modules/search-result/search-result.js?v=11"></script>
+  <script src="modules/brand-all/brand-all.controller.js?v=11"></script>
+  <script src="modules/brand-all/brand-all.js?v=11"></script>
+  <script src="modules/product/product.controller.js?v=11"></script>
+  <script src="modules/product/product.js?v=11"></script>
+  <script src="modules/comment/comment.controller.js?v=11"></script>
+  <script src="modules/comment/comment.js?v=11"></script>
+  <script src="modules/confirm-cart/confirm-cart.service.js?v=12"></script>
+  <script src="modules/confirm-cart/confirm-cart.controller.js?v=12"></script>
+  <script src="modules/confirm-cart/confirm-cart.js?v=12"></script>
+  <script src="modules/confirm-product/confirm-product.service.js?v=15"></script>
+  <script src="modules/confirm-product/confirm-product.controller.js?v=15"></script>
+  <script src="modules/confirm-product/confirm-product.js?v=15"></script>
+  <script src="modules/payment/payment.model.js?v=11"></script>
+  <script src="modules/payment/payment.controller.js?v=11"></script>
+  <script src="modules/payment/payment.js?v=11"></script>
+  <script src="modules/payment-success/payment-success.controller.js?v=11"></script>
+  <script src="modules/payment-success/payment-success.js?v=11"></script>
+  <script src="modules/payment-failed/payment-failed.controller.js?v=11"></script>
+  <script src="modules/payment-failed/payment-failed.js?v=11"></script>
+  <script src="modules/invoice-select/invoice-select.service.js?v=11"></script>
+  <script src="modules/invoice-select/invoice-select.controller.js?v=11"></script>
+  <script src="modules/invoice-select/invoice-select.js?v=11"></script>
+  <script src="modules/express-select/express-select.service.js?v=11"></script>
+  <script src="modules/express-select/express-select.controller.js?v=11"></script>
+  <script src="modules/express-select/express-select.js?v=11"></script>
+  <script src="modules/cashgift-select/cashgift-select.model.js?v=11"></script>
+  <script src="modules/cashgift-select/cashgift-select.controller.js?v=11"></script>
+  <script src="modules/cashgift-select/cashgift-select.js?v=11"></script>
+  <script src="modules/address-select/address-select.model.js?v=11"></script>
+  <script src="modules/address-select/address-select.controller.js?v=11"></script>
+  <script src="modules/address-select/address-select.js?v=11"></script>
+  <script src="modules/address-edit/address-edit.model.js?v=11"></script>
+  <script src="modules/address-edit/address-edit.controller.js?v=11"></script>
+  <script src="modules/address-edit/address-edit.js?v=11"></script>
+  <script src="modules/my-order/my-order.model.js?v=11"></script>
+  <script src="modules/my-order/my-order.controller.js?v=11"></script>
+  <script src="modules/my-order/my-order.js?v=11"></script>
+  <script src="modules/order-detail/order-detail.controller.js?v=13"></script>
+  <script src="modules/order-detail/order-detail.js?v=13"></script>
+  <script src="modules/order-review/order-review.controller.js?v=11"></script>
+  <script src="modules/order-review/order-review.js?v=11"></script>
+  <script src="modules/order-express/order-express.model.js?v=11"></script>
+  <script src="modules/order-express/order-express.controller.js?v=11"></script>
+  <script src="modules/order-express/order-express.js?v=11"></script>
+  <script src="modules/wechat-auth/wechat-auth.controller.js?v=11"></script>
+  <script src="modules/wechat-auth/wechat-auth.js?v=11"></script>
+  <script src="modules/wechat-pay/wechat-pay.controller.js?v=11"></script>
+  <script src="modules/wechat-pay/wechat-pay.js?v=11"></script>
+  <script src="modules/wechat-authbase/wechat-authbase.controller.js?v=11"></script>
+  <script src="modules/wechat-authbase/wechat-authbase.js?v=11"></script>
+  <script src="modules/alipay-wap/alipay-wap.controller.js?v=11"></script>
+  <script src="modules/alipay-wap/alipay-wap.js?v=11"></script>
+  <script src="modules/my-address/my-address.model.js?v=11"></script>
+  <script src="modules/my-address/my-address.controller.js?v=11"></script>
+  <script src="modules/my-address/my-address.js?v=11"></script>
+  <script src="modules/my-favorite/my-favorite.model.js?v=11"></script>
+  <script src="modules/my-favorite/my-favorite.controller.js?v=11"></script>
+  <script src="modules/my-favorite/my-favorite.js?v=11"></script>
+  <script src="modules/my-cashgift/my-cashgift.model.js?v=11"></script>
+  <script src="modules/my-cashgift/my-cashgift.controller.js?v=11"></script>
+  <script src="modules/my-cashgift/my-cashgift.js?v=11"></script>
+  <script src="modules/my-score/my-score.model.js?v=11"></script>
+  <script src="modules/my-score/my-score.controller.js?v=11"></script>
+  <script src="modules/my-score/my-score.js?v=11"></script>
+  <script src="modules/article/article.controller.js?v=11"></script>
+  <script src="modules/article/article.js?v=11"></script>
+  <script src="modules/review-success/review-success.controller.js?v=11"></script>
+  <script src="modules/review-success/review-success.js?v=11"></script>
+  <script src="modules/confirm-delivery/confirm-delivery.controller.js?v=11"></script>
+  <script src="modules/confirm-delivery/confirm-delivery.js?v=11"></script>
+  <script src="modules/change-password/change-password.controller.js?v=11"></script>
+  <script src="modules/change-password/change-password.js?v=11"></script>
+  <script src="modules/teegon/teegon.controller.js?v=11"></script>
+  <script src="modules/teegon/teegon.js?v=11"></script>
+  <script src="modules/qq-auth/qq-auth.controller.js?v=11"></script>
+  <script src="modules/qq-auth/qq-auth.js?v=11"></script>
+  <script src="modules/bonus/bonus.controller.js?v=11"></script>
+  <script src="modules/bonus/bonus.js?v=11"></script>
+  <script src="modules/bonus/bonus.model.js?v=11"></script>
+  <script src="modules/my-balance/my-balance.controller.js?v=11"></script>
+  <script src="modules/my-balance/my-balance.js?v=11"></script>
+  <script src="modules/my-balance/balance.model.js?v=11"></script>
+  <script src="modules/my-account/my-account.controller.js?v=11"></script>
+  <script src="modules/my-account/my-account.js?v=11"></script>
+  <script src="modules/my-account/my-account.model.js?v=11"></script>
+  <script src="modules/activity/activity.controller.js?v=11"></script>
+  <script src="modules/activity/activity.js?v=11"></script>
+  <script src="modules/activity/activity.model.js?v=11"></script>
+  <script src="modules/balance-history/balance-history.controller.js?v=11"></script>
+  <script src="modules/balance-history/balance-history.js?v=11"></script>
+  <script src="modules/withdraw-history/withdraw-history.controller.js?v=11"></script>
+  <script src="modules/withdraw-history/withdraw-history.js?v=11"></script>
+  <script src="modules/withdraw-history/withdraw-history.model.js?v=11"></script>
+  <script src="modules/my-recommend/my-recommend.controller.js?v=11"></script>
+  <script src="modules/my-recommend/my-recommend.js?v=11"></script>
+  <script src="modules/my-recommend/recommend.model.js?v=11"></script>
+  <script src="modules/withdraw-success/withdraw-success.controller.js?v=11"></script>
+  <script src="modules/withdraw-success/withdraw-success.js?v=11"></script>
+  <script src="modules/bonus-rule/bonus-rule.controller.js?v=11"></script>
+  <script src="modules/bonus-rule/bonus-rule.js?v=11"></script>
+  <script src="modules/order-refund/order-refund.controller.js?v=3"></script>
+  <script src="modules/order-refund/order-refund.js?v=3"></script>
+  <script src="modules/refund-shipping/refund-shipping.controller.js?v=1"></script>
+  <script src="modules/refund-shipping/refund-shipping.js?v=1"></script>
+  <script src="modules/refund-info/refund-info.controller.js?v=1"></script>
+  <script src="modules/refund-info/refund-info.js?v=1"></script>
+  <script src="modules/shoplist/shoplist.controller.js?v=11"></script>
+  <script src="modules/shoplist/shoplist.js?v=11"></script>
+  <script src="modules/knowall/knowall.controller.js?v=11"></script>
+  <script src="modules/knowall/knowall.js?v=11"></script>
+  <script src="modules/logistics/logistics.controller.js?v=11"></script>
+  <script src="modules/logistics/logistics.js?v=11"></script>
+  <script src="libs/angular/ng-file-upload/ng-file-upload.min.js"></script>
+  <script src="libs/angular/ng-file-upload/ng-file-upload-shim.js"></script>
+  <script src="modules/grade-detail/grade-detail.controller.js?v=1"></script>
+  <script src="modules/grade-detail/grade-detail.js?v=1"></script>
+  <script src="modules/coupons/coupons.controller.js?v=11"></script>
+  <script src="modules/coupons/coupons.js?v=11"></script>
+  <script src="modules/zx-list/zx-list.controller.js?v=11"></script>
+  <script src="modules/zx-list/zx-list.js?v=11"></script>
+
+
+
+  <!--引入图片压缩工具 -->
+  <script src="libs/localResizeIMG/lrz.bundle.js"></script>
+  <script src="libs/rem.js"></script>
+  <script src="libs/photoswipe.js"></script>
+  <script src="libs/photoswipe-ui-default.min.js"></script>
+  <!-- endbuild -->
+
+  <script src="libs/crypto-js/crypto-js.js"></script>
+  <script type="text/javascript">
+    $(window).load(function(){
+      var el = $('#splash');
+      el.fadeOut(500, function(){
+        el.remove();
+      });
+    })
+
+
+    /* 检查新退货 退款的时间间隔 */
+    var PAY_ORDER_INTERVAL = 120000;
+
+    /* *
+     * 开始检查未付款订单；
+     */
+    // function startCheckOrder()
+    // {
+    //   checkOrder()
+    //   window.setInterval("checkOrder()", PAY_ORDER_INTERVAL);
+    // }
+
+
+    /*
+     * 检查订单
+     */
+    function checkOrder()
+    {
+
+      var lastCheckOrderPay = new Date(getCookie('ECS_LastCheckOrderPay'));
+      var today = new Date();
+
+      if (lastCheckOrderPay == null || today-lastCheckOrderPay >= PAY_ORDER_INTERVAL)
+      {
+        setCookie('ECS_LastCheckOrderPay', today.toGMTString());
+
+        $.ajax({url:"../api/cancelorder.php",async:false});
+
+      }
+    }
+
+    //startCheckOrder()
+
+
+    //设置cookie
+    function setCookie(NameOfCookie, value, expiredays)
+    {
+      //@参数:三个变量用来设置新的cookie:
+      //cookie的名称,存储的Cookie值,
+      // 以及Cookie过期的时间.
+      // 这几行是把天数转换为合法的日期
+
+      var ExpireDate = new Date ();
+      ExpireDate.setTime(ExpireDate.getTime() + (expiredays * 24 * 3600 * 1000));
+
+      // 下面这行是用来存储cookie的,只需简单的为"document.cookie"赋值即可.
+      // 注意日期通过toGMTstring()函数被转换成了GMT时间。
+
+      document.cookie = NameOfCookie + "=" + escape(value) +
+              ((expiredays == null) ? "" : "; expires=" + ExpireDate.toGMTString());
+    }
+
+    //获取cookie值
+    function getCookie(NameOfCookie)
+    {
+
+      // 首先我们检查下cookie是否存在.
+      // 如果不存在则document.cookie的长度为0
+
+      if (document.cookie.length > 0)
+      {
+
+        // 接着我们检查下cookie的名字是否存在于document.cookie
+        // 因为不止一个cookie值存储,所以即使document.cookie的长度不为0也不能保证我们想要的名字的cookie存在
+        //所以我们需要这一步看看是否有我们想要的cookie
+        //如果begin的变量值得到的是-1那么说明不存在
+
+        begin = document.cookie.indexOf(NameOfCookie+"=");
+        if (begin != -1)
+        {
+
+          // 说明存在我们的cookie.
+
+          begin += NameOfCookie.length+1;//cookie值的初始位置
+          end = document.cookie.indexOf(";", begin);//结束位置
+          if (end == -1) end = document.cookie.length;//没有;则end为字符串结束位置
+          return unescape(document.cookie.substring(begin, end)); }
+      }
+
+      return null;
+
+      // cookie不存在返回null
+    }
+  </script>
+
+
+
+</body>
+</html>

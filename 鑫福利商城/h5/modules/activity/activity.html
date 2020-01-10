@@ -1,0 +1,230 @@
+<div ng-controller="ActivityController" >
+    <div class="probanner">
+         <img ng-src="image/default-photo.png" lazy-img="{{activity_detail.act_desc_img}}">
+        <span class="back" ng-click="goBack()"></span>
+    </div>
+    <div class="activityTit" ng-if="activity_detail">
+        <span>{{activity_detail.goods_count}}件活动商品</span>
+    </div>
+    <div class="activityWord">
+        <p>{{activity_detail.act_desc}}</p>
+    </div>
+    <div class="slidearrow"></div>
+    <!--<ul class="sort sort2">-->
+        <!--<li class="sortT1 active">人气</li>-->
+        <!--<li class="sortT2">折扣</li>-->
+        <!--<li class="sortT3">价格<span class="arrow up"></span><span class="arrow down"></span></li>-->
+        <!--<li class="sortT2">筛选</li>-->
+    <!--</ul>-->
+    <ul class="proList" ng-if="activity_detail && activity_detail.goods_list.length" style="overflow:hidden;background: #f5f5f5;padding-top:0.2rem;">
+        <li ng-repeat="goods in activity_detail.goods_list track by $index" style="position: relative">
+            <div class="img" ng-click="touchProduct(goods)">
+                <img ng-src="image/default-photo.png" lazy-img="{{goods.original_photo.large}}">
+                <!--<div class="tag"><p>额外</p><p>4.5折</p></div>-->
+            </div>
+            <!--<div class="tags">新季 | 欧洲专柜直采 | 专柜直供</div>-->
+            <!--<p>BURBERRY</p>-->
+            <p>{{goods.name}}</p>
+            <!--精品专区-->
+            <div class="dikou_new" ng-if="goods.is_show_discount>0" style="width:auto"><div class="dikou_son">福利卡最高抵扣{{goods.is_show_discount}}元</div></div>
+            <div class="price">
+                <span>{{goods.current_price| currency:"￥"}}</span>
+                <span>{{goods.price| currency:"￥"}}</span>
+            </div>
+            <!--精品专区-->
+            <img class="flex_top" ng-if="goods.is_bested==1" ng-src="image/jinpingact2.png" alt="">
+
+        </li>
+    </ul>
+    <!--<div class="searchLayer">-->
+        <!--<div class="searchLayerBox">-->
+            <!--<div class="searchLayerBoxCont">-->
+                <!--<div class="cont">-->
+                    <!--<div class="tit">-->
+                        <!--<span class="all">全部</span>-->
+                        <!--官网-->
+                    <!--</div>-->
+                    <!--<ul class="checkboxGroup">-->
+                        <!--<li class="active">骆驼（CAMEL）</li>-->
+                        <!--<li>卡帝乐鳄鱼（CARTELO）</li>-->
+                        <!--<li>阿迪达斯（adidas）</li>-->
+                        <!--<li>FILA斐乐旗舰店</li>-->
+                    <!--</ul>-->
+                    <!--<div class="tit">-->
+                        <!--<span class="all">全部</span>-->
+                        <!--价格-->
+                    <!--</div>-->
+                    <!--<ul class="price">-->
+                        <!--<li>金额<input type="text" placeholder="最低价" class="minPrice">元</li>-->
+                        <!--<li>金额<input type="text" placeholder="最高价" class="maxPrice">元</li>-->
+                    <!--</ul>-->
+                    <!--<ul class="checkboxGroup">-->
+                        <!--<li class="active">200以下</li>-->
+                        <!--<li>200-499</li>-->
+                        <!--<li>500-999</li>-->
+                        <!--<li>1000-1999</li>-->
+                        <!--<li>2000以上</li>-->
+                    <!--</ul>-->
+                    <!--<div class="tit">-->
+                        <!--<span class="all">全部</span>-->
+                        <!--尺码（中国码/欧码）-->
+                    <!--</div>-->
+                    <!--<ul class="checkboxGroup">-->
+                        <!--<li class="active">36</li><li>36.5</li>-->
+                        <!--<li>37</li><li>37.5</li>-->
+                        <!--<li>38</li><li>38.5</li>-->
+                        <!--<li>39</li><li>39.5</li>-->
+                        <!--<li>40</li><li>40.5</li>-->
+                    <!--</ul>-->
+                    <!--<div class="tit">-->
+                        <!--<span class="all">全部</span>-->
+                        <!--层尺码（美码）-->
+                    <!--</div>-->
+                    <!--<ul class="checkboxGroup">-->
+                        <!--<li class="active">36</li><li>36.5</li>-->
+                        <!--<li>37</li><li>37.5</li>-->
+                        <!--<li>38</li><li>38.5</li>-->
+                        <!--<li>39</li><li>39.5</li>-->
+                        <!--<li>40</li><li>40.5</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="handler">-->
+                <!--<span class="reset">重置</span>-->
+                <!--<span class="sure">确定</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="to_top"><img ng-src="image/to_top.png" alt=""></div>
+
+</div>
+<!--<script>-->
+    <!--var swiper = new Swiper('.swiper-container', {-->
+        <!--slidesPerView: 3,-->
+        <!--spaceBetween: 15,-->
+    <!--});-->
+    <!--$(".sortT2").click(function(){-->
+        <!--$(".searchLayer").addClass("searchLayerAni");-->
+    <!--})-->
+    <!--$(".reset").click(function(){-->
+        <!--$("checkboxGroup .active").removeClass(".active");-->
+        <!--$(".minPrice").val("");-->
+        <!--$(".maxPrice").val("");-->
+    <!--})-->
+    <!--$(".sure").click(function(){-->
+        <!--$(".searchLayer").removeClass("searchLayerAni");-->
+    <!--})-->
+    <!--$(".sort li").click(function(){-->
+        <!--$(this).addClass("active").siblings().removeClass("active")-->
+    <!--})-->
+
+<!--</script>-->
+
+<style>
+
+    .to_top{
+        width:0.8rem;
+        height:0.8rem;
+        border-radius: 0.8rem;
+        background: #fff;
+        position: fixed;
+        bottom:0.6rem;
+        right:0.3rem;
+        display: none;
+        border:1px solid #f0f0f0;
+        overflow: hidden;
+
+    }
+    .to_top>img{
+        display: block;
+        width:60%;
+        height:60%;
+        margin:auto;
+        margin-top:20%;
+
+    }
+
+    .probanner:after{
+        border-bottom: 8px solid #fff;
+    }
+
+
+    .proList li{
+        height:5.9rem;
+        background: #fff;
+        border:none;
+        border-radius: 0.2rem;
+    }
+
+    .proList li .img{
+        height:4.2rem;
+
+    }
+    .proList li .img>img{
+        margin-top:0.1rem;
+    }
+    .proList p{
+        font-size:0.26rem;
+        line-height: 0.36rem;
+    }
+
+    .proList .price span:nth-child(1){
+        font-size:0.3rem;
+    }
+    .proList .price span:nth-child(2){
+        font-size:0.24rem;
+    }
+    .proList>li>.dikou_new{
+        display: block;
+        width: 200px;
+        height:0.35rem;
+        margin-top:0.06rem;
+        margin-left:0.2rem;
+
+    }
+
+    .dikou_son{
+        background: #c90a29;
+        width:2.5rem;
+        height:0.35rem;
+        text-align: center;
+        font-size:0.2rem;
+        line-height:0.35rem;
+        color: #fff;
+        border-radius: 0.08rem;
+    }
+
+    .flex_top{
+        display: block;
+        width:1rem;
+        height:auto;
+        position: absolute;
+        top:0.2rem;
+        right:0.2rem;
+    }
+</style>
+<script>
+
+    $(window).scroll(function() {       //页面滚动显示元素。
+    if($(window).scrollTop()>=1000){
+        $(".to_top").css('display','block');
+    }else{
+        $(".to_top").css('display','none');
+    }
+    });
+
+    $(".to_top").click(function(){
+        $('html,body').animate({scrollTop:0},'500');
+    })
+
+
+    $(".slidearrow").click(function(){
+        if($(this).hasClass("slidearrowActive")){
+            $(this).removeClass("slidearrowActive");
+            $(".activityWord").removeClass("activityWordActive");
+        }else{
+            $(this).addClass("slidearrowActive");
+            $(".activityWord").addClass("activityWordActive");
+        }
+    })
+</script>

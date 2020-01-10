@@ -1,0 +1,1061 @@
+<!--<link rel="stylesheet" href="libs/angular/anim-in-out/anim-in-out.css" type="text/css" />-->
+<!--<link rel="stylesheet" href="libs/angular/ngToast/ngToast.css" type="text/css" />-->
+<!--<link rel="stylesheet" href="libs/angular/ngToast/ngToast-animations.css" type="text/css" />-->
+<div class="bg" ng-controller="ConfirmController" style="min-height:100vh;">
+  <style>
+      .shopList li .others .price{
+          color: #da0000;
+      }
+      .priceInfo .p3 span{
+          color: #da0000;
+      }
+      .shopBusFoot .orderPrice{
+          color: #da0000;
+      }
+
+      .orderInput .address{
+          padding: 11px 22px 16px 12px;
+      }
+        .bg .orderInput .address:after{
+            background: url(image/jiantou_03.png) right center no-repeat;
+            background-size: 0.16rem 0.28rem;
+            width:  0.16rem;
+            height:0.28rem;
+            margin-top: -0.1rem;
+        }
+
+        .orderInput .address .name{
+            font-size: 0.28rem;
+        }
+
+        .orderInput .address .place{
+            font-size: 0.28rem;
+            margin-top: 0.1rem;
+        }
+
+        .sanjiao{
+            width: 0;
+            height: 0;
+            border-width: 0.08rem;
+            border-style: solid;
+            border-color: #c0c0c0 transparent  transparent transparent;
+            float: right;
+            margin-top:0.22rem;
+        }
+        input::-webkit-input-placeholder { /* WebKit browsers */
+            color:#c0c0c0;
+        }
+
+        .orderInput .item .link{
+            font-size: 0.28rem;
+            font-weight: normal;
+        }
+
+        .float_choos{
+            position: absolute;
+            right:0.1rem;
+            top:0.5rem;
+            width:3.7rem;
+            height:auto;
+            padding:0.2rem 0;
+            border-radius: 0.1rem;
+            box-shadow: 0 0 8px #ccc;
+            z-index: 9;
+            background: #fff;
+            display: none;
+        }
+
+        .float_choos>.choos{
+            width:1.2rem;
+            height:0.7rem;
+            font-size: 0.26rem;
+            text-align: center;
+            line-height: 0.7rem;
+            float: left;
+
+        }
+        .float_choos_date{
+            width:2.4rem;
+        }
+
+        .float_choos_date>.choos{
+            float: none;
+            width:auto;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .orderPro .msg{
+            /*border:1px solid #ccc;*/
+            box-sizing: border-box;
+            padding-left: 0.1rem;
+            font-size: 0.28rem;
+            height:0.46rem;
+            margin-top:0.02rem;
+            margin-right:0.1rem;
+            width:3.7rem;
+            line-height:0.46rem;
+            text-align: right;
+            outline: none;
+        }
+
+
+
+        .orderPro select{
+            border-right:1px solid #ccc;
+
+        }
+
+        .orderPro .msgsd{
+            width:1.54rem;
+            display: inline-block;
+            line-height:0.46rem;
+
+        }
+
+        .orderPro .msgsda{
+            padding-left:0;
+            text-align: center;
+            line-height:0.46rem;
+            width:auto;
+            margin-left:0.02rem;
+            /*margin-top:-0.02rem;*/
+        }
+
+        .orderPro .msgsda1 span{
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-width: 0.08rem;
+            border-style: solid;
+            border-color: #c0c0c0 transparent  transparent transparent;
+            float: right;
+            margin-top:0.22rem;
+            margin-left:0.1rem;
+            border-radius: 0.02rem;
+        }
+
+        .orderPro .msgsda1{
+            color: #c0c0c0;
+        }
+
+
+
+        .orderPro .msgsdb1{
+            color: #c0c0c0;
+            float: right;
+        }
+
+        .orderPro .msgsdb1 span{
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-width: 0.08rem;
+            border-style: solid;
+            border-color: #c0c0c0 transparent  transparent transparent;
+            float: right;
+            margin-top:0.22rem;
+            margin-left:0.1rem;
+            border-radius: 0.02rem;
+        }
+
+        .orderPro .msgsda2{
+            display: none;
+        }
+
+        .orderPro .msgsda2 span{
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-width: 0.08rem;
+            border-style: solid;
+            border-color: #c0c0c0 transparent  transparent transparent;
+            float: right;
+            margin-top:0.22rem;
+            margin-left:0.1rem;
+            border-radius: 0.02rem;
+        }
+
+        .orderPro .msgsdb2{
+            display: none;
+            float: right;
+        }
+        .orderPro .msgsdb2 span{
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-width: 0.08rem;
+            border-style: solid;
+            border-color: #c0c0c0 transparent  transparent transparent;
+            float: right;
+            margin-top:0.22rem;
+            margin-left:0.1rem;
+            border-radius: 0.02rem;
+        }
+
+        .orderPro .msgsd option:nth-child(1){
+            display: none;
+        }
+
+        .shopBusFoot{
+            position: fixed;
+            bottom:0;
+            left:0;
+            z-index: 99;
+        }
+
+        .shopBusFoot .shopBusFootFixed{
+            height:53px;
+        }
+
+
+        .shopBusFoot .shopBusFootBox .sure1{
+            background: #ccc;
+            color: #fff;
+        }
+
+        .shopBusFoot .shopBusFootBox .yuen{
+            overflow: hidden;
+            line-height: 54px;
+            float: right;
+            width: auto;
+            height: 100%;
+            color: #999;
+            font-size: 15px;
+            margin-right:5px;
+        }
+
+        .orderPro .item .itemBox{
+            margin-top:0;
+            height:0.5rem;
+            line-height:0.5rem;
+            font-size: 0.28rem;
+
+        }
+
+        .orderInput .item .itemBox{
+
+        }
+
+        .orderPro .item .itemBox p{
+            font-size: 0.28rem;
+            color: #000;
+            font-weight: normal;
+
+
+        }
+        body{
+            background: #f4f4f4;
+        }
+
+        .orderInput{
+            margin-bottom: 49px;
+        }
+        .orderInput .address{
+            border-radius: 0.2rem;
+            overflow: hidden;
+        }
+
+        .orderInput .item{
+            border-radius: 0.2rem;
+            overflow: hidden;
+            margin-top:0.2rem;
+        }
+        .orderPro{
+            border-radius: 0.2rem;
+            margin-top:0.1rem;
+            /*padding-top:0.15rem;*/
+        }
+        .orderInput .item .label{
+            color: #4d4d4d;
+            font-size: 0.28rem;
+        }
+
+        .shopList li h5{
+            margin-top:0.22rem;
+            font-size: 0.28rem;
+            color: #000;
+        }
+
+        .priceInfo{
+            border-radius: 0.2rem;
+            overflow: hidden;
+            margin-top:0.1rem;
+            padding:0.1rem 12px;
+        }
+        .priceInfo p{
+            margin:0.2rem 0;
+            color: #4d4d4d;
+            font-size: 0.28rem;
+        }
+
+        .shopBusFoot .sure{
+            width:32%;
+            border-radius:36px;
+            overflow: hidden;
+            height:36px;
+            margin-top:8px;
+            line-height:36px;
+            margin-right:10px;
+            background: #ea1616;
+        }
+
+
+
+
+
+
+
+        .refundTip-box{
+            width:100%;
+            height:100%;
+            background: rgba(0,0,0,0.6);
+            position: fixed;
+            top:0;
+            left:0;
+        }
+        .refundTip{
+            width:70%;
+            height:3rem;
+            background: #fff;
+            border-radius: 0.08rem;
+            box-shadow: 0 0 0.04rem 0.01rem #ccc;
+            position: absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            margin:auto;
+        }
+        .refundTipa{
+            height:2rem;
+        }
+
+        .refundcon{
+            width:80%;
+            height:2rem;
+            margin:auto;
+            color: #000;
+            font-size:0.26rem;
+            text-align: center;
+            line-height:0.4rem;
+            padding-top:0.5rem;
+            box-sizing: border-box;
+        }
+
+
+        .refundcona{
+            height:1rem;
+            padding-top:0.34rem;
+        }
+        .refundbtn{
+            width: 100%;
+            height:1rem;
+            text-align: center;
+            line-height: 1rem;
+            font-weight:bold;
+            color: #0085d0;
+            border-top:1px solid #f0f0f0;
+
+        }
+        .refundbtn_left{
+            width: 100%;
+            height:100%;
+            text-align: center;
+            line-height: 1rem;
+            font-weight:bold;
+            color: #0085d0;
+
+        }
+
+
+
+
+        .cardList .shoplist{
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+            padding:0;
+            margin:0 20px;
+        }
+
+
+        .cardList .money p{
+            width:auto;
+            float: left;
+            border-bottom:none;
+        }
+
+        .cardList .shoplist p span{
+            font-size:0.7rem;
+        }
+
+        .shoplist>.to_shoplist{
+            width:auto;
+            padding-left: 0.2rem;
+            padding-right: 0.2rem;
+            height:0.4rem;
+            background: #f2f2f2;
+            color: #000;
+            border-radius: 0.08rem;
+            text-align: center;
+            line-height:0.4rem;
+            font-size:0.24rem;
+            float: left;
+            margin-top:38px;
+            margin-left:0.2rem;
+
+        }
+
+        .shoplist1 .to_shoplist{
+            float: right;
+            margin-right:0.3rem;
+        }
+
+      .coupons_big{
+          width:100%;
+          height:100vh;
+          background: rgba(0,0,0,0.5);
+          position: fixed;
+          top:0;
+          left:0;
+          z-index: 99999;
+          display: none;
+
+
+      }
+
+      .couponsb{
+          width:100%;
+          height:8rem;
+          background: #fff;
+          position: absolute;
+          bottom:-8rem;
+          left:0;
+          overflow: scroll;
+
+      }
+
+
+      .coupons_con{
+          width:100%;
+          height:5.1rem;
+          overflow: scroll;
+          padding-bottom:0.1rem;
+      }
+      .coupons_con1{
+          width:100%;
+          height:5.1rem;
+          overflow: scroll;
+          display: none;
+          padding-bottom:0.1rem;
+      }
+
+      .coupons{
+          width:7.1rem;
+          height:1.6rem;
+          background: #fff;
+          border-radius: 0.1rem;
+          margin:auto;
+          margin-top:0.15rem;
+          display: flex;
+          justify-content: space-between;
+          overflow: hidden;
+          box-shadow: 0 0 0.08rem #ccc;
+          position: relative;
+      }
+
+      .coupons_nos{
+          background: #d7d7d7;
+      }
+
+
+      .coupons>.conpons_left{
+          width:2.2rem;
+          height:1.6rem;
+          background: #ec808d;
+      }
+
+      .coupons_nos>.conpons_left{
+          background: #aaaaaa;
+      }
+      .coupons>.conpons_left>.conpons_jine1{
+          width:100%;
+          height:0.6rem;
+          margin-top:0.3rem;
+          font-size: 0.28rem;
+          line-height:0.6rem;
+          text-align: center;
+          color: #fff;
+      }
+      .coupons>.conpons_left>.conpons_jine1>span{
+          font-size: 0.5rem;
+          color: #fff;
+          font-weight:bold;
+      }
+      .coupons>.conpons_left>.conpons_jine2{
+          width:100%;
+          height:0.26rem;
+          margin-top:0.2rem;
+          font-size: 0.26rem;
+          line-height:0.26rem;
+          text-align: center;
+          color: #fff;
+      }
+
+
+      .coupons>.conpons_right{
+          width:4.7rem;
+          height:100%;
+      }
+
+      .coupons>.conpons_right>.conpons_right1{
+          width:100%;
+          height:0.3rem;
+          font-size:0.3rem;
+          line-height: 0.3rem;
+          margin-top:0.3rem;
+      }
+
+      .coupons>.conpons_right>.conpons_right2{
+          width:100%;
+          height:0.26rem;
+          font-size:0.24rem;
+          line-height: 0.26rem;
+          margin-top:0.5rem;
+          color: #989898;
+      }
+      .coupons_nos>.conpons_right{
+          color: #fff;
+      }
+
+      .coupons_nos>.conpons_right>.conpons_right2{
+          color: #fff;
+      }
+
+      .closea{
+          width:7.1rem;
+          margin:auto;
+          height:0.8rem;
+          text-align: right;
+          line-height: 0.8rem;
+          font-size: 0.6rem;
+          /*font-weight: bold;*/
+
+      }
+
+      .closea>span{
+          font-size: 0.6rem;
+      }
+      .tap_box{
+          width:100%;
+          height:0.8rem;
+          font-size: 0.28rem;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          border-bottom:1px solid #f0f0f0;
+      }
+
+      .tap_box>.tap_box1, .tap_box>.tap_box2{
+          font-size: 0.28rem;
+      }
+
+      .tap_box1_select{
+          font-weight: bold;
+      }
+
+      .yes_coupons{
+          width:100%;
+          height:1rem;
+          border-top:1px solid #f0f0f0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: fixed;
+          bottom:0;
+          left:0;
+          color: #fff;
+
+
+      }
+      .yes_coupons>.yes_cou{
+          width:70%;
+          height:0.64rem;
+          text-align: center;
+          line-height:0.64rem;
+          font-size:0.3rem;
+          background:linear-gradient(128deg, #fe7b86 0%, #ce0022 100%);
+          border-radius: 0.64rem;
+
+      }
+
+      .select_box{
+          width:0.4rem;
+          height: 0.4rem;
+          border-radius: 0.4rem;
+          border:0.02rem solid #999;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top:0;
+          bottom:0;
+          margin:auto;
+          right:0.2rem;
+
+      }
+      .select_box>.select_but{
+          width:0.18rem;
+          height:0.18rem;
+          border-radius: 0.18rem;
+          background: #ce0022;
+          display: none;
+      }
+
+
+      .coupons_active .select_box>.select_but{
+          display: block;
+      }
+      .layerCard{
+          height:10rem;
+      }
+
+      .layerCard .handle{
+          position: fixed;bottom:0;
+          left:0;
+          width:100%;
+          border-top:1px solid #f0f0f0;
+          background: #fff;
+      }
+
+      .layerCard .cardType .active i{
+          font-weight: bold;
+          border:none;
+      }
+      .layerCard .cardType i{
+          font-weight: normal;
+          font-size: 0.28rem;
+      }
+
+      .layerCard .cardType{
+          height:0.8rem;
+          border-bottom: 1px solid #f0f0f0;
+          line-height:0.8rem;
+      }
+      .layerCard .close:before, .layerCard .close:after{
+          border-top: 2px solid #1a1a1a;
+      }
+
+      .layerCard .cardtit{
+          height:0.8rem;
+      }
+      .layerCard .cardList{
+          height:7.2rem;
+          overflow: scroll;
+          flex:none;
+          -webkit-flex:none;
+
+      }
+
+      .cardList li{
+          margin-top:0.2rem;
+      }
+      .cardList .word .name{
+          width: 4rem;
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+          font-size: 0.3rem;
+      }
+
+  </style>
+  <header class="head">
+      <div class="headFixed" >
+          <div class="headBox">
+              <a href="javascript:void(0);" ng-click="goBack()" class="back"></a>
+              <p>确认订单</p>
+          </div>
+      </div>
+  </header>
+  <div class="orderInput" style="-webkit-overflow-scrolling:touch;">
+
+      <div class="address" ng-if="isReal" ng-click="touchAddress()">
+          <div class="name" ng-if="consignee" style="font-size: 0.28rem;"><span style="font-size: 0.28rem;">{{consignee.name}}</span>{{consignee.mobile}}</div>
+          <div ng-if="consignee" style="font-size: 0.28rem;">
+              <div class="place" ng-repeat="value in consignee.regions track by $index" style="display:inline;font-size: 0.28rem;">
+                    {{value.name}}
+              </div>{{consignee.address}}
+          </div>
+          <div class="place" ng-if="!consignee">
+              <span>请填写地址</span>
+          </div>
+      </div>
+      <div class="item" style="margin-top:0.1rem">
+          <div class="itemBox" style=" background: url(image/jiantou_03.png) right center no-repeat;background-size: 0.16rem 0.28rem">
+              <span class="label">支付方式</span>
+              <div class="cont">
+                  <a href="javascript:void(0);" class="link">在线支付</a>
+              </div>
+          </div>
+      </div>
+
+      <!--商品-->
+        <div class="orderPro" ng-if = "selectedGoods.length > 0">
+            <!--<div class="tit">英特运动户外专营店</div>-->
+            <ul class="shopList" >
+                <li ng-repeat="card_good in selectedGoods track by $index"
+                    ng-click="touchProduct(card_good)">
+                    <div class="listItem">
+                        <div class="img"><img ng-src="image/default-photo.png" lazy-img="{{card_good.product.default_photo.large}}"></div>
+                        <div class="info">
+                            <h5 class="name">{{card_good.product.name}}</h5>
+                            <p>{{card_good.property}}</p>
+                            <div class="others">
+                                <span class="number">x{{card_good.amount}}</span>
+                                <span class="price" style="float: left;">{{card_good.price| currency:"￥"}}</span>
+                                <span ng-if="!isReal && is_yd && hj_cg==1" style="float: left;font-size: 0.22rem;margin-left:0.3rem;margin-top:0.06rem ">黄金时段</span>
+                                <span ng-if="!isReal && is_yd && hj_cg==0" style="float: left;font-size: 0.22rem;margin-left:0.3rem;margin-top:0.06rem ">非黄金时段</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="item" ng-if="isReal">
+                <div class="itemBox" style="padding:0;margin-top:0">
+                    <span class="label">配送</span>
+                    <div class="cont" style="font-size: 14px;">
+                        <!--<p>在线支付</p>-->
+                        <p>工作日、双休日与节假日均可送货</p>
+                    </div>
+                </div>
+            </div>
+
+    <!--场馆预定上线之前放开-->
+            <div class="item" ng-if="!isReal && is_yd">
+                <div class="itemBox" style="padding:0;margin-top:0">
+                    <span class="label">预定人姓名</span>
+                    <div class="cont" style="float:right;">
+                        <input type="text" class="msg" placeholder="请输入预定人姓名" ng-model="input.name"  ng-change="refreshName()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="item" ng-if="!isReal && is_yd" style="overflow: unset;">
+                <div class="itemBox" style="padding:0;margin-top:0;overflow: unset;">
+                    <span class="label">预定日期</span>
+                    <div class="cont" style="float:right;position: relative;overflow: unset">
+                        <div class="msg msgsdb msgsdb1" ng-click="show_choos_date()">请选择预定日期 <span></span></div>
+                        <div class="msg msgsdb msgsdb2" ng-click="show_choos_date()">{{selectedName}} <span></span></div>
+
+                        <div class="float_choos float_choos_date">
+                            <div class="choos" ng-repeat="x in names track by $index"  ng-click="refreshDate(x.date)">{{x.date}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" ng-if="!isReal && is_yd && is_yd_h" style="overflow: unset;">
+                <div class="itemBox" style="padding:0;margin-top:0;overflow: unset;">
+                    <span class="label">预定时段</span>
+                    <div class="cont" style="float:right;display: flex;position: relative;overflow: unset">
+                        <div class="msg msgsd msgsda msgsda1" ng-click="show_choos()">请选择时段 <span></span></div>
+                        <div class="msg msgsd msgsda msgsda2" ng-click="show_choos()">{{time}} <span></span></div>
+                        <span style="margin-left:0.04rem;font-size: 0.32rem;color: #c0c0c0;">—</span>
+                        <div class="msg msgsd msgsda msgsda1"  style="margin-left:0.17rem" ng-click="show_choos()">请选择时段 <span></span></div>
+                        <div class="msg msgsd msgsda msgsda2"  style="margin-left:0.17rem" ng-click="show_choos()">{{time2}} <span></span></div>
+                        <!--<div class="msg msgsd msgsda" style="margin-left:0.15rem"> {{time2}}</div>-->
+                        <div class="float_choos float_choos_time">
+                            <div class="choos" ng-repeat="r in time1 track by $index"  ng-click="refreshtime1(r.con)">{{r.con}}</div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="item" ng-if="!isReal && is_yd && is_yd_h">
+                <div class="itemBox" style="padding:0;margin-top:0">
+                    <span class="label">下场人数</span>
+                    <div class="cont" style="float:right;">
+                        <input type="number" class="msg" placeholder="请输入下场人数" ng-model="input.num"  ng-change="refreshNum()">
+                    </div>
+                </div>
+            </div>
+            <div class="item" ng-if="!isReal && is_yd && is_yd_h">
+                <div class="itemBox" style="padding:0;margin-top:0">
+                    <span class="label">预定片数</span>
+                    <div class="cont" style="float:right;">
+                        <input type="number" class="msg" value="1" disabled>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+      <div  class="orderPro"  style="background: #fff;padding-top:0.04rem">
+          <div class="item" >
+              <div class="itemBox" style="padding:0;margin-top:0">
+                  <span class="label">留言</span>
+                  <div class="cont" style="float:right;">
+                      <input type="text" class="msg" placeholder="建议留言前先与客服沟通确认" ng-model="input.comment"  ng-change="refreshComment()">
+                  </div>
+              </div>
+          </div>
+          <div class="item" ng-if="!isReal && is_yd" >
+              <div class="item-title" style="width:auto;float:left;font-size: 0.28rem;color: #4d4d4d">接收短信手机:</div>
+              <div class="item-contnet" style="width:auto;float:right;font-size: 0.28rem;color: #000;">   {{telphone}}</div>
+          </div>
+      </div>
+        <div class="item" style="margin-top:0.1rem">
+            <div class="itemBox" style=" background: url(image/jiantou_03.png) right center no-repeat;background-size: 0.16rem 0.28rem">
+                <span ng-if="user.company.id!=47" class="label">福利卡</span>
+                <span ng-if="user.company.id==47" class="label">余额</span>
+                <div class="cont">
+                    <a href="javascript:void(0);" class="link cardselect" ng-if="cpu_len_lod" ng-click="show_cpu()">
+                        有{{accountInfo.available.length > 0 ? accountInfo.available.length : 0}}张可用
+                    </a>
+                    <a href="javascript:void(0);" class="link cardselect1" ng-if="cpu_len_show" ng-click="show_cpu()">
+                        已选择{{cpu_len_mun}}张福利卡
+                    </a>
+                </div>
+            </div>
+        </div>
+
+      <div class="item" style="margin-top:0.1rem">
+          <div class="itemBox" style=" background: url(image/jiantou_03.png) right center no-repeat;background-size: 0.16rem 0.28rem">
+              <span class="label">优惠券</span>
+              <div class="cont">
+                  <a href="javascript:void(0);" class="link"  ng-click="show_coupons()">
+                      - {{priceInfo.coupon_discount_price | currency:"￥"}}
+                  </a>
+              </div>
+          </div>
+      </div>
+        <div class="priceInfo">
+            <p><span>+ {{priceInfo.product_price| currency:"￥"}}</span>商品金额</p>
+            <p><span>+ {{(priceInfo.shipping_price | currency:"￥")||( express.fee | currency:"￥")}}</span>运费</p>
+            <p class="p3"><span>- {{priceInfo.use_balance | currency:"￥"}}</span>抵扣金额</p>
+            <p class="p3"><span>- {{priceInfo.coupon_discount_price | currency:"￥"}}</span>优惠券</p>
+        </div>
+    </div>
+    <div class="shopBusFoot">
+        <div class="shopBusFootFixed">
+            <div class="shopBusFootBox">
+                <span ng-if="buzu==true" class="sure sure1" >提交订单</span>
+                <span ng-if="buzu==true" class="yuen">余额不足</span>
+                <span class="sure" ng-if="buzu==false" ng-class="{active: canPurchase}" ng-click="touchSubmit()">提交订单</span>
+                <div class="orderPrice">{{priceInfo.total_price| currency:"￥"}}<span></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="layer">
+        <div class="layerBox layerCard">
+            <div class="layerCardBox">
+                <div class="cardtit">
+                    <span class="close"></span>
+                    <!--<span class="link">绑定卡</span>-->
+                </div>
+                <div class="cardType">
+                    <span class="active"><i>可用卡({{accountInfo.available.length >0 ? accountInfo.available.length : 0}})</i></span>
+                    <span><i>不可用卡({{accountInfo.unavailable.length >0 ? accountInfo.unavailable.length : 0}})</i></span>
+                </div>
+                <ul class="cardList cardListUsed" style="display:block" ng-if = "accountInfo.available.length > 0">
+                    <li data="{{account.account_no}}" ng-repeat="account in accountInfo.available track by $index">
+                        <div class="tit">
+                            <div class="datetime">{{account.use_end_time| localDate}} 到期</div>
+                            <div class="info">
+                                <!--<div class="img"></div>-->
+                                <div class="word">
+                                    <div class="name">{{account.account_name}}</div>
+                                    <div class="value">面值：{{account.amount/100}} 元</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="money shoplist">
+                            <p>余额 ￥ <span>{{account.balance/100}}</span>.00</p>
+                            <div class="to_shoplist" ng-click="toshoplist(account)" >查看可用商品</div>
+                        </div>
+                        <div class="subject">请您根据企业卡券适用范围进行消费，如有疑问请拨打400-670-0690</div>
+                    </li>
+
+                </ul>
+                <ul class="cardList" ng-if = "accountInfo.unavailable.length > 0">
+                    <li class="gray" ng-repeat="unaccount in accountInfo.unavailable track by $index">
+                        <div class="tit">
+                            <div class="datetime">{{unaccount.use_end_time| localDate}} 到期</div>
+                            <div class="info">
+                                <div class="img"></div>
+                                <div class="word">
+                                    <div class="name">{{unaccount.account_name}}</div>
+                                    <div class="value">层面值：{{unaccount.amount/100}} 元</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="money shoplist shoplist1">
+                            <p>余额 ￥ <span>{{unaccount.balance/100}}</span>.00</p>
+                            <div class="to_shoplist" ng-click="toshoplist(unaccount)" >查看可用商品</div>
+
+                        </div>
+                        <div class="subject">请您根据企业卡券适用范围进行消费，如有疑问请拨打400-670-0690</div>
+                    </li>
+                </ul>
+                <div class="handle" ng-click="useCard()"><span class="sure">确定</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="coupons_big">
+        <div class="couponsb">
+            <div class="closea" > <span ng-click="hidecoupon()">×</span> </div>
+
+            <div class="tap_box">
+                <div class="tap_box1 tap_box1_select">可用优惠券（{{availables.length}}）</div>
+                <div class="tap_box2">不可用优惠券（{{unavailables.length}}）</div>
+            </div>
+            <div class="coupons_con">
+                <div class="coupons" data="{{available.id}}" ng-class="{coupons_active:available.checkted==1}" ng-repeat="available in availables track by $index">
+                    <div class="conpons_left">
+                        <div class="conpons_jine1">￥<span>{{available.full_reduction_amount}}</span></div>
+                        <div class="conpons_jine2">满{{available.rule_amount}}可用</div>
+                    </div>
+                    <div class="conpons_right">
+                        <div class="conpons_right1">满{{available.rule_amount}}减{{available.full_reduction_amount}}</div>
+                        <div class="conpons_right2">有效期：{{available.use_start_time}} - {{available.use_end_time}}</div>
+                    </div>
+                    <div class="select_box">
+                        <div class="select_but"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="coupons_con1">
+                <div class="coupons coupons_nos" ng-repeat="unavailable in unavailables track by $index">
+                    <div class="conpons_left">
+                        <div class="conpons_jine1">￥<span>{{unavailable.full_reduction_amount}}</span></div>
+                        <div class="conpons_jine2">满{{unavailable.rule_amount}}可用</div>
+                    </div>
+                    <div class="conpons_right">
+                        <div class="conpons_right1">满{{unavailable.rule_amount}}减{{unavailable.full_reduction_amount}}</div>
+                        <div class="conpons_right2">有效期：{{unavailable.use_start_time}} - {{unavailable.use_end_time}}</div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="yes_coupons">
+                <div class="yes_cou" ng-click="yes_coupons()">确定</div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!--姓名判断-->
+    <div class="refundTip-box" ng-if="nameTipshow">
+        <div class="refundTip">
+            <div class="refundcon">根据物流收发货要求，收货人姓名必须填写真实姓名，不得包含先生、女士、小姐等字样。
+            </div>
+
+            <div class="refundbtn">
+                <div class="refundbtn_left" ng-click="torefundTip($event)">确定</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="refundTip-box" ng-if="nameTipshowa">
+        <div class="refundTip refundTipa">
+            <div class="refundcon refundcona">{{tip_a}}
+            </div>
+            <div class="refundbtn">
+                <div class="refundbtn_left" ng-click="torefundTipa($event)">确定</div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+    
+    $(".coupons_big").on('click','.coupons_con>.coupons',function () {
+        if($(this).hasClass("coupons_active")){
+            $(this).removeClass("coupons_active")
+        }else{
+            $(".coupons_con>.coupons").removeClass("coupons_active");
+            $(this).addClass("coupons_active")
+        }
+
+    })
+
+    $(".coupons_big").on('click','.tap_box>.tap_box1',function(){
+        $(this).addClass("tap_box1_select")
+        $(".tap_box>.tap_box2").removeClass("tap_box1_select")
+        $(".coupons_con").css("display","block")
+        $(".coupons_con1").css("display","none")
+    })
+
+
+    $(".coupons_big").on('click','.tap_box>.tap_box2',function(){
+        $(this).addClass("tap_box1_select")
+        $(".tap_box>.tap_box1").removeClass("tap_box1_select")
+        $(".coupons_con1").css("display","block")
+        $(".coupons_con").css("display","none")
+    })
+
+    // $(".msgsda1").click(function(){
+    //     $(".float_choos").css("display","block")
+    // })
+    // $(".msgsda2").click(function(){
+    //     $(".float_choos").css("display","block")
+    // })
+
+    function customizeInputBack() {
+        var customizeInputTop = $(window).scrollTop()+1;
+        $(window).scrollTop(customizeInputTop);
+    }
+
+    $(document).on('blur','input',function(){
+        customizeInputBack();
+    });
+
+
+
+    $(".cardType span").click(function(){
+        var index = $(this).index();
+        $(this).addClass("active").siblings().removeClass("active");
+        $(".cardList").hide();
+        $(".cardList").eq(index).show();
+    })
+
+    $(".layerCard").on("click",".cardList:eq(0) li",function(){
+        if($(this).hasClass("active")){
+            $(this).removeClass("active");
+        }else{
+            $(this).addClass("active");
+        }
+    })
+
+    $(".handle .sure,.layerCard .close").click(function(){
+        $(".layer").hide();
+        customizeInputBack();
+        $(".layer").removeClass("layerActive");
+    })
+    $(".cardselect").click(function(){
+        $(".layer").show();
+        $(".layer").addClass("layerActive")
+    })
+    $(".cardselect1").click(function(){
+        $(".layer").show();
+        $(".layer").addClass("layerActive")
+    })
+    $(".layer").click(function(e){
+        if($(this).hasClass("layer")){
+            $(".layer").hide();
+            $(".layer").removeClass("layerActive");
+        }
+    })
+    $(".layer .layerBox").click(function(e){
+        e.stopPropagation();
+    })
+</script>

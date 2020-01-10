@@ -1,0 +1,119 @@
+<div class="bg" ng-controller="MyAccountController">
+
+    <header class="head">
+        <div class="headFixed">
+            <div class="headBox">
+                <span class="txt">帮助说明</span>
+                <a href="javascript:;" class="back" ng-click="goBack()"></a>
+                <!--<p>余额</p>-->
+            </div>
+        </div>
+    </header>
+    <ul class="cardList" ng-if="myAccountModel.account.available && myAccountModel.account.available.length">
+        <li ng-repeat="account in myAccountModel.account.available track by $index">
+            <div class="tit">
+                <div class="datetime">{{account.use_end_time | localDate}} 到期</div>
+                <div class="info">
+                    <div class="img"></div>
+                    <div class="word">
+                        <div class="name">{{account.account_name}}</div>
+                        <div class="value">面值：{{account.amount/100}} 元</div>
+                    </div>
+                </div>
+            </div>
+            <div class="money shoplist shoplist1">
+                <p>余额 ￥ <span>{{account.balance/100}}</span>.00</p>
+                <div class="to_shoplist" ng-click="toshoplist(account)" >查看可用商品</div>
+
+            </div>
+            <div class="subject">请您根据企业卡券适用范围进行消费，如有疑问请拨打400-670-0690</div>
+        </li>
+
+    </ul>
+    <div class="nocard" style="display:block" ng-if="!myAccountModel.account.available">
+        <p>暂无余额</p>
+    </div>
+    <div class="item cardTit">
+        <div class="itemBox">
+            <span class="arrow"></span>
+            <span class="label">已用完/已过期的余额</span>
+        </div>
+    </div>
+    <ul class="cardList" ng-if="myAccountModel.account.unavailable && myAccountModel.account.unavailable.length">
+        <li class="gray" ng-repeat="account in myAccountModel.account.unavailable track by $index">
+            <div>
+                <div class="tit">
+                    <div class="datetime">{{account.use_end_time | localDate}} 到期</div>
+                    <div class="info">
+                        <div class="img"></div>
+                        <div class="word">
+                            <div class="name">{{account.account_name}}</div>
+                            <div class="value">面值：{{account.amount/100}} 元</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="money shoplist shoplist1">
+                    <p>余额 ￥ <span>{{account.balance/100}}</span>.00</p>
+                    <div class="to_shoplist" ng-click="toshoplist(account)" >查看可用商品</div>
+
+                </div>
+                <div class="subject">请您根据企业卡券适用范围进行消费，如有疑问请拨打400-670-0690</div>
+            </div>
+        </li>
+    </ul>
+    <div class="nocard" style="display:block" ng-if="!myAccountModel.account.unavailable">
+        <p>暂无余额</p>
+    </div>
+    <!--<div class="shopBusFoot cardHandle">-->
+        <!--<div class="shopBusFootFixed">-->
+            <!--<div class="shopBusFootBox">-->
+                <!--<span class="buycard"><i></i>购买新卡</span>-->
+                <!--<span class="bindcard"><i></i>绑定新卡</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+</div>
+
+<style>
+    .cardList .shoplist{
+        overflow: hidden;
+        border-bottom: 1px solid #ccc;
+        padding:0;
+        margin:0 20px;
+    }
+
+
+    .cardList .money p{
+        width:auto;
+        float: left;
+        border-bottom:none;
+    }
+
+    .cardList .shoplist p span{
+        font-size:0.7rem;
+    }
+
+    .shoplist>.to_shoplist{
+        width:auto;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+        height:0.4rem;
+        background: #f2f2f2;
+        color: #000;
+        border-radius: 0.08rem;
+        text-align: center;
+        line-height:0.4rem;
+        font-size:0.24rem;
+        float: left;
+        margin-top:38px;
+        margin-left:0.2rem;
+
+    }
+
+    .shoplist1 .to_shoplist{
+        float: right;
+        margin-right:0.3rem;
+    }
+</style>
+

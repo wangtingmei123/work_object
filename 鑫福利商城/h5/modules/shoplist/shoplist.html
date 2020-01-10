@@ -1,0 +1,61 @@
+<div ng-controller="ShoplistController">
+
+    <header class="head headBorder0">
+        <div class="headBox">
+            <a href="javascript:;" class="back" ng-click="goBack()"></a>
+            <p></p>
+        </div>
+    </header>
+
+    <div class="shoplist" ng-repeat="cat_name_items in cat_name track by $index">
+        <p class="shop_tit" ng-if="$index == 0">该张福利卡可购买的实体商品分类：</p>
+        <p class="shop_tit" ng-if="$index == 1">该张福利卡可购买的线下场馆预订：</p>
+        <p class="shop_tit" ng-if="$index == 2">该张福利卡可购买的线下生活服务：</p>
+
+        <p class="shop_con">
+            {{cat_name_items}}；
+        </p>
+    </div>
+
+
+</div>
+
+<style>
+
+    .shoplist{
+        width: 7.4rem;
+        height:auto;
+        margin: auto;
+        padding-bottom:0.3rem;
+        border-bottom:1px solid #f0f0f0;
+    }
+
+    .shop_tit{
+        width:7rem;
+        height:auto;
+        margin:auto;
+        line-height:0.34rem;
+        font-size:0.26rem;
+        font-weight:bold;
+        margin-top:0.3rem;
+        letter-spacing:0.02rem;
+    }
+
+    .shop_con{
+        width:7rem;
+        height:auto;
+        margin:auto;
+        font-size:0.26rem;
+        margin-top:0.3rem;
+        letter-spacing:0.02rem;
+    }
+
+    .shop_con span{
+        font-size:0.26rem;
+    }
+</style>
+
+
+
+
+

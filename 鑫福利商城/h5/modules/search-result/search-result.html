@@ -1,0 +1,816 @@
+<style>
+    html,body{
+        -webkit-overflow-scrolling:touch
+    }
+    html,body{height:initial;}
+    .app{height:initial}
+    .loading-more{padding-bottom:40px;overflow:auto;font-size:0.26rem;width:100%;clear:both}
+</style>
+
+<style>
+
+    .sort li{
+        outline: none;
+    }
+
+    .pages_box{
+        width:0.8rem;
+        height:0.8rem;
+        border-radius: 0.8rem;
+        background: #fff;
+        position: fixed;
+        bottom:0.6rem;
+        right:0.3rem;
+        border:1px solid #f0f0f0;
+        overflow: hidden;
+    }
+
+    .pages_box>.pages{
+        width:80%;
+        height:0.4rem;
+        margin:auto;
+        text-align: center;
+        line-height: 0.4rem;
+        font-size: 0.24rem;
+        color: #333;
+        border-bottom:1px solid #f0f0f0;
+        font-weight: bold;
+        /*position: absolute;*/
+        /*left:0;*/
+        /*top:-0.4rem;*/
+        /*-webkit-transform:translateY(0.4rem); !* Safari and Chrome *!*/
+        /*-webkit-transition:all 600ms ease;*/
+
+    }
+    .pages_box>.pages_all{
+        width:100%;
+        height:0.4rem;
+        margin:auto;
+        text-align: center;
+        line-height: 0.4rem;
+        font-size: 0.24rem;
+        color: #333;
+        /*margin-top:0.4rem;*/
+
+    }
+
+
+    .head .headBox .search{
+        height: 34px;
+        background-size: 16px 16px;
+        outline: none;
+    }
+
+    .head .headBox .search2{
+        background: url(image/newicon/gouwuc.png)center center no-repeat;
+        right: 44px;
+        background-size: 24px 24px;
+
+    }
+
+    .to_top{
+        width:0.8rem;
+        height:0.8rem;
+        border-radius: 0.8rem;
+        background: #fff;
+        position: fixed;
+        bottom:1.6rem;
+        right:0.3rem;
+        display: none;
+        border:1px solid #f0f0f0;
+        overflow: hidden;
+
+    }
+    .to_top>img{
+        display: block;
+        width:60%;
+        height:60%;
+        margin:auto;
+        margin-top:20%;
+
+    }
+
+    .sort2{
+        position: fixed;
+        width:100%;
+        top:0;
+        left:0;
+        z-index: 9;
+        /*display: flex;*/
+        /*justify-content: space-around;*/
+    }
+    .sort2>li{
+        width:33.33%;
+    }
+
+
+    .sortitem{
+
+        background: #f5f5f5;
+        margin-top:0.2rem;
+    }
+    .sort{
+        background: #fafafa;
+    }
+    .headBox{
+        background: #fafafa;
+    }
+
+
+    .contit{
+        width:100%;
+        height:auto;
+
+    }
+    .contit_box{
+        width:100%;
+        height:auto;
+        margin-top:0.4rem;
+        padding-bottom:0.2rem;
+
+    }
+
+
+
+    .contit_box .tit{
+        font-size:0.26rem;
+        height:0.5rem;
+        font-weight:bold;
+        margin-left:0.15rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+
+    }
+
+    .contit_box .tit span{
+        font-size:0.26rem;
+        font-weight:bold;
+    }
+
+    .contit_box .tit img{
+        display: block;
+        width:0.3rem;
+        height:auto;
+    }
+
+    .contit_box .ctips{
+        font-size:0.26rem;
+        height:0.5rem;
+        background: #f2f2f2;
+        color: #a1a1a1;
+        line-height:0.5rem;
+        padding-left: 0.2rem;
+        padding-right:0.2rem;
+        width:1.7rem;
+        margin-left:0.15rem;
+        border-radius: 0.5rem;
+        border:none;
+        margin-top:0.3rem;
+        float: none;
+        text-align: center;
+
+    }
+    .contit2_box{
+        margin-top:0.1rem;
+    }
+
+    .contit2_box .tit{
+        font-size:0.24rem;
+        height:0.5rem;
+        /*font-weight:bold;*/
+        margin-left:0.15rem;
+
+    }
+    .contit2_box .checkboxGroup2{
+        overflow: hidden;
+        margin-top:0.3rem;
+        padding:0;
+    }
+    .contit_box{
+        padding-bottom:0.15rem;
+    }
+    .contit_box .active{
+        background:#df283a;
+        color: #fff;
+    }
+    .contit2_box .checkboxGroup2 li{
+        font-size:0.24rem;
+        height:0.5rem;
+        background: #f2f2f2;
+        line-height:0.5rem;
+        padding-left: 0.3rem;
+        padding-right:0.3rem;
+        width:auto;
+        float: left;
+        margin-left:0.15rem;
+        border-radius: 0.5rem;
+        list-style: none;
+        border:none;
+        margin-top:0.2rem;
+        color:#999
+
+    }
+    .contit2_box .checkboxGroup2 .active{
+        background:#df283a;
+        color: #fff;
+    }
+
+    .contit2_box .checkboxGroup1{
+        overflow: hidden;
+        /*margin-top:0.3rem;*/
+        padding:0;
+    }
+    .contit2_box .checkboxGroup1 li{
+        font-size:0.24rem;
+        height:0.5rem;
+        background: #f2f2f2;
+        color: #a1a1a1;
+        line-height:0.5rem;
+        padding-left: 0.3rem;
+        padding-right:0.3rem;
+        width:auto;
+        float: left;
+        margin-left:0.15rem;
+        border-radius: 0.5rem;
+        list-style: none;
+        border:none;
+        margin-top:0.2rem;
+
+    }
+    .contit2_box .checkboxGroup1 .active{
+        background:#df283a;
+        color: #fff;
+    }
+
+    .contit2_box .price div{
+        width:2rem;
+        height:0.5rem;
+        border: 1px solid #f2f2f2;
+        float: left;
+        margin-left:0.15rem;
+        margin-top:0.3rem;
+        border-radius: 0.5rem;
+        padding-left:0.2rem;
+        padding-right:0.2rem;
+    }
+
+    .contit2_box .price div input{
+        border:none;
+        width:100%;
+        height:100%;
+
+    }
+
+    .contit2_box .price{
+        padding-bottom:0.7rem;
+    }
+
+
+    .proList li{
+        height:6.1rem;
+        border:none;
+        border-radius: 0.2rem;
+        background: #fff;
+    }
+
+    .proList li .img{
+        height:4.4rem;
+        overflow: hidden;
+        position: unset;
+    }
+    .proList li .img>img{
+        /*display: block;*/
+        /*!*margin-left:-0.37rem;*!*/
+        /*position: unset;*/
+        /*top:0;*/
+        /*width:100%;*/
+        /*height:100%;*/
+        /*transform: none;*/
+        /*object-fit: cover;*/
+        /*object-position: center;*/
+        margin-top:0.1rem;
+
+    }
+    .proList p{
+        font-size:0.26rem;
+        line-height: 0.36rem;
+        /*margin-top: 0.2rem;*/
+    }
+
+    .proList .price span:nth-child(1){
+        font-size:0.3rem;
+    }
+    .proList .price span:nth-child(2){
+        font-size:0.24rem;
+    }
+    .dikou_new{
+        display: block;
+        width: 200px;
+        height:0.35rem;
+        margin-top:0.06rem;
+        margin-left:0.2rem;
+
+    }
+
+    .dikou_son{
+        background: #c90a29;
+        width:2.5rem;
+        height:0.35rem;
+        text-align: center;
+        font-size:0.2rem;
+        line-height:0.35rem;
+        color: #fff;
+        border-radius: 0.08rem;
+    }
+
+    .flex_top{
+        display: block;
+        width:1rem;
+        height:auto;
+        position: absolute;
+        top:0.2rem;
+        right:0.2rem;
+    }
+
+    .tipp_box{
+        width:100%;
+        height:100vh;
+        background: rgba(0,0,0,0);
+        position: fixed;
+        top:0;left:0;
+        display: none;
+        z-index: 99999999;
+    }
+
+    .tipp{
+        display: block;
+        width:3.7rem;
+        height:0.8rem;
+        font-size:0.28rem;
+        line-height: 0.8rem;
+        background: rgba(0,0,0,0.7);
+        position: absolute;
+        text-align: center;
+        top:0;bottom:0;left:0;right:0;margin:auto;
+        border-radius: 0.1rem;
+        color: #fff;
+    }
+    .app{
+        overflow:auto;
+
+    }
+    .trandTag .logo{
+        position: relative;
+        background: #fff;
+    }
+    .trandTag .logo img{
+        display: block;
+        width:90%;
+        height:auto;
+        position: absolute;
+        top:0;bottom:0;left:0;right:0;margin:auto;
+    }
+
+    .tipprice{
+        color: #c90a29;
+        font-size:0.26rem;
+        margin-top:0.15rem;
+        margin-left:0.15rem;
+
+    }
+</style>
+<div ng-controller="SearchResultController" style="min-height: 100vh">
+
+
+    <header class="head" ng-if="!brandItem" style="height:50px;">
+        <div class="headFixed" style="height:50px;">
+            <div class="headBox" ng-if="navStyle == 'search'">
+                 <a href="javascript:;" class="back" ng-click="goHome()" style="margin-top:2px"></a>
+                <form ng-submit="touchSearch()" style="display:block;height:44px;overflow:hidden;padding-right:10px;width:90%;float: right;">
+                    <div class="searchForm"><input class="search-text" placeholder="请输入您要搜索的商品" ng-model="list.ServiceMobile">
+                    </div>
+                </form>
+            </div>
+
+            <div class="headBox" ng-if="navStyle == 'default'">
+                <span class="search" ng-click="touchSearchbabk()"></span>
+                <span class="search search2" ng-click="goCart()"></span>
+                <a href="javascript:;" class="back" ng-click="goBack()"></a>
+                <p>{{navTitle || '搜索结果'}}</p>
+            </div>
+        </div>
+    </header>
+    <div class="slidearrow_agin">
+        <div ng-if="brandItem" style="overflow: hidden">
+            <div class="probanner">
+                 <img ng-src="image/default-photo.png" lazy-img="{{brandItem.banner.large}}">
+                <span class="back" ng-click="goBack()"></span>
+            </div>
+            <div class="trandTag">
+                <div class="logo"><img ng-src="image/default-photo.png" lazy-img="{{brandItem.logo.thumb}}"></div>
+                <div class="name">
+                    <h3>{{brandItem.name}}</h3>
+                    <p>在售商品</p>
+                </div>
+                <div class="word">
+                    {{brandItem.desc}}
+                </div>
+                <div class="slidearrow"></div>
+            </div>
+        </div>
+    </div>
+
+<div class="sortitem" style="height:auto;overflow: hidden;margin-top:0">
+    <div class="sortFixed" ng-if="!brandItem" style="height:35px">
+        <div class="sortFixedBox" ng-if="!brandItem" style="height:35px;position: unset">
+            <ul class="sort" infinite-scroll='loadMore()'>
+                <li class="sortT1 active"  ng-click="touchSortDefault()">综合</li>
+                <li class="sortT3"  ng-click="touchSortPrice()">
+                    价格
+                    <span class="arrow up"></span>
+                    <span class="arrow down"></span>
+                </li>
+                <li class="sortT2" ng-click="touchChoos()">筛选</li>
+            </ul>
+        </div>
+    </div>
+
+    <ul class="sort sort2" ng-if="brandItem" style="height:45px;display: none;">
+        <li class="sortT1 active"  ng-click="touchSortDefault()">综合</li>
+        <li class="sortT3">
+            价格
+            <!--<span class="arrow up" ng-class="{up : currentSortKey == ENUM.SORT_KEY.PRICE && (currentSortValue == ENUM.SORT_VALUE.DEFAULT || currentSortValue == ENUM.SORT_VALUE.ASC)}"></span>-->
+            <!--<span class="arrow down" ng-class="{down : currentSortKey == ENUM.SORT_KEY.PRICE && (currentSortValue == ENUM.SORT_VALUE.DEFAULT || currentSortValue == ENUM.SORT_VALUE.ASC)}"></span>-->
+            <span class="arrow up"></span>
+            <span class="arrow down"></span>
+        </li>
+        <li class="sortT2" ng-click="touchChoos()">筛选</li>
+    </ul>
+
+    <div infinite-scroll='loadMore()' style="height:auto;margin-top:0.2rem">
+        <ul class="sort" ng-if="brandItem" style="height:45px">
+            <li class="sortT1 active"  ng-click="touchSortDefault()">综合</li>
+            <li class="sortT3"  ng-click="touchSortPrice()">
+                价格
+                <!--<span class="arrow up" ng-class="{up : currentSortKey == ENUM.SORT_KEY.PRICE && (currentSortValue == ENUM.SORT_VALUE.DEFAULT || currentSortValue == ENUM.SORT_VALUE.ASC)}"></span>-->
+                <!--<span class="arrow down" ng-class="{down : currentSortKey == ENUM.SORT_KEY.PRICE && (currentSortValue == ENUM.SORT_VALUE.DEFAULT || currentSortValue == ENUM.SORT_VALUE.ASC)}"></span>-->
+                <span class="arrow up"></span>
+                <span class="arrow down"></span>
+            </li>
+            <li class="sortT2" >筛选</li>
+        </ul>
+        <ul class="proList" ng-if="products && products.length" style="overflow:hidden;padding-top:0.2rem;margin-top:0">
+            <li ng-repeat="product in products track by $index" ng-click="touchProduct(product)" style="position: relative">
+                <a style="display: block;">
+                <div class="img"><img ng-src="image/default-photo.png" lazy-img="{{product.original_photo.large}}"></div>
+                <!--<div class="tags">新季 | 欧洲专柜直采 | 专柜直供</div>-->
+                <!--<p>BURBERRY</p>-->
+                <p>{{product.name}}</p>
+
+                    <div class="dikou_new" style="width:auto" ng-if="product.is_show_discount>0"><div class="dikou_son">福利卡最高抵扣{{product.is_show_discount}}元</div></div>
+                    <div class="price">
+                        <span ng-if="product.current_price!=''&&product.current_price!='0.00'">{{product.current_price| currency:"￥"}}</span>
+                        <span ng-if="product.current_price==''&&product.current_price=='0.00'">{{product.gold_shop| currency:"￥"}}</span>
+                        <span>{{product.price| currency:"￥"}}</span>
+                    </div>
+                </a>
+                <!--精品专区-->
+                <img class="flex_top" ng-if="product.is_bested==1" ng-src="image/jinpingact2.png" alt="">
+            </li>
+        </ul>
+
+
+        <div class="empty" ng-if="isEmpty">
+            <div class="empty-item">
+                <img class="item-logo" ng-src="image/logo-product-empty.png"/>
+                <div class="item-text">暂无任何商品</div>
+            </div>
+        </div>
+
+        <div class="loading-more" ng-if="isLoaded && isLoading && !isEmpty" >
+            正在加载...
+        </div>
+        <div class="loading-more" ng-if="isLoaded && isLastPage">
+            全部加载完毕
+        </div>
+
+    </div>
+</div>
+
+
+
+
+    <div class="searchLayer">
+     <div class="searchLayerBox" style="overflow:scroll;">
+        <div class="searchLayerBoxCont">
+            <div class="cont">
+                <div class="fenp_box">
+                   <div class="contit contit1" ng-show="categories.length>0">
+                       <div class="contit_box contit_box1">
+                           <div class="tit">
+                               <span>商品分类</span>
+                               <img class="img1" style="display: none;" ng-src="image/select_a.png" alt="">
+                               <img class="img2"  ng-src="image/select_b.png" alt="">
+                           </div>
+                           <div class="ctips ctips1 active" style="display: block">全部分类</div>
+                       </div>
+                       <div class="contit2"  style="display: block" >
+                           <div class="contit2_box" ng-repeat="cates in categories track by $index">
+                               <div class="tit">
+                                   {{cates.name}}
+                               </div>
+                               <ul class="checkboxGroup1 brand ">
+                                   <li  data="{{item.cat_id}}" ng-repeat="item in cates.three_categories track by $index">{{item.cat_name}}</li>
+                               </ul>
+                           </div>
+                       </div>
+
+                   </div>
+
+                    <div class="contit contit2" ng-show="brand.length>0">
+                        <div class="contit_box contit_box2">
+                            <div class="tit">
+                                <span>品牌</span>
+                                <img class="img1" style="display: none;" ng-src="image/select_a.png" alt="">
+                                <img class="img2"  ng-src="image/select_b.png" alt="">
+                            </div>
+                            <div class="ctips ctips2 active" style="display: block">全部品牌</div>
+                        </div>
+                        <div class="contit2"  style="display: block" >
+                            <div class="contit2_box">
+                                <ul class="checkboxGroup1 brand" style="margin-top:0.1rem">
+                                    <li data="{{item.id}}" ng-repeat="item in brand track by $index">{{item.name}}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contit contit3">
+                    <div class="contit_box">
+                        <div class="tit">
+                            <span>价格</span>
+                        </div>
+                    </div>
+                    <div class="contit2" >
+                        <div class="contit2_box" style="margin-top:0">
+                            <ul class="checkboxGroup2 brand" style="margin-top:0">
+                                <li data="0-200">200以下</li>
+                                <li data="200-499">200-499</li>
+                                <li data="500-999">500-999</li>
+                                <li data="1000-1999">1000-1999</li>
+                                <li data="2000-1000000">2000以上</li>
+                            </ul>
+                            <div class="price  brand">
+                                <div><input type="text" id="input_min_price" placeholder="最低价" class="minPrice"></div>
+                                <div><input type="text" id="input_max_price" placeholder="最高价" class="maxPrice"></div>
+                                <div class="tipprice" ng-show="tipprice">{{tippriceshoe}}</div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="handler">
+        <span class="reset">重置</span>
+        <span class="sure" ng-click="touchScreen()">确定</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tipp_box">
+        <div class="tipp">
+            共计{{tatle}}件商品
+        </div>
+    </div>
+
+    <div class="to_top"><img ng-src="image/to_top.png" alt=""></div>
+    <div class="pages_box" ng-if="page_index>0 && page_all>0">
+        <div class="pages">{{page_index}}</div>
+        <div class="pages_all">{{page_all}}</div>
+    </div>
+
+</div>
+
+<script>
+
+    //页面滚动
+
+    $(window).scroll(function() {       //页面滚动显示元素。
+
+        if($(window).scrollTop()>=400){
+            $(".sort2").css('display','block');
+        }else{
+            $(".sort2").css('display','none');
+        }
+
+        if($(window).scrollTop()>=1000){
+            $(".to_top").css('display','block');
+        }else{
+            $(".to_top").css('display','none');
+        }
+    });
+
+    $(".to_top").click(function(){
+        $('html,body').animate({scrollTop:0},'500');
+    })
+
+
+
+
+
+
+
+    //分类
+    var contit_falg1=false
+    $(".contit_box1>.tit").click(function(){
+        if(contit_falg1==true){
+            contit_falg1=false
+            $(this).parent(".contit_box").find(".ctips").css("display","block")
+            $(this).parent(".contit_box").next(".contit2").css("display","block")
+            $(this).find(".img2").css("display","block")
+            $(this).find(".img1").css("display","none")
+        }else{
+            contit_falg1=true
+            $(this).parent(".contit_box").find(".ctips").css("display","none")
+            $(this).parent(".contit_box").next(".contit2").css("display","none")
+            $(this).find(".img1").css("display","block")
+            $(this).find(".img2").css("display","none")
+        }
+    })
+
+
+    var contit_falg2=false
+    $(".contit_box2>.tit").click(function(){
+        if(contit_falg2==true){
+            contit_falg2=false
+            $(this).parent(".contit_box").find(".ctips").css("display","block")
+            $(this).parent(".contit_box").next(".contit2").css("display","block")
+            $(this).find(".img2").css("display","block")
+            $(this).find(".img1").css("display","none")
+        }else{
+            contit_falg2=true
+            $(this).parent(".contit_box").find(".ctips").css("display","none")
+            $(this).parent(".contit_box").next(".contit2").css("display","none")
+            $(this).find(".img1").css("display","block")
+            $(this).find(".img2").css("display","none")
+        }
+
+    })
+
+
+
+    $('.fenp_box').on('click','li',function(){
+        if(!$(this).hasClass("active")){
+            $(this).addClass("active");
+
+        }else{
+            $(this).removeClass("active");
+        }
+       var contit1= $(".contit1").find(".contit2 .active")
+
+        if(contit1.length==0){
+            $(".cont .ctips1").addClass("active");
+        }else{
+            $(".cont .ctips1").removeClass("active");
+        }
+
+        var contit2= $(".contit2").find(".contit2 .active")
+
+        if(contit2.length==0){
+            $(".cont .ctips2").addClass("active");
+        }else{
+            $(".cont .ctips2").removeClass("active");
+        }
+    })
+
+    $(".ctips1").click(function(){
+        $(this).addClass("active");
+        $(".contit1").find(".contit2 .active").removeClass("active");
+    })
+
+    $(".ctips2").click(function(){
+        $(this).addClass("active");
+        $(".contit2").find(".contit2 .active").removeClass("active");
+    })
+
+
+    $(".checkboxGroup2").on("click","li",function(){
+                if(!$(this).hasClass("active")){
+                    $(this).parent().find("li").removeClass("active");
+                    $(this).addClass("active");
+                }else{
+                    $(this).removeClass("active");
+                }
+      })
+
+
+
+
+
+    $(".searchLayer").click(function(e){
+        if($(this).hasClass("searchLayer")){
+            $(".searchLayer").removeClass("searchLayerAni");
+        }
+    })
+    $(".searchLayerBox").click(function(e){
+        e.stopPropagation()
+    })
+    $(".sortitem").on("click",".sortT2",function(){
+        $(".searchLayer").addClass("searchLayerAni");
+    })
+    $(".reset").click(function(){
+        $(".cont li").removeClass("active");
+        $(".cont .ctips1").addClass("active");
+        $(".cont .ctips2").addClass("active");
+        $(".minPrice").val("");
+        $(".maxPrice").val("");
+    })
+
+
+
+
+    $(".slidearrow_agin").on('click','.slidearrow',function(){
+        if($(this).hasClass("slidearrowActive")){
+            $(this).removeClass("slidearrowActive");
+            $(".trandTag .wordActive").addClass("word");
+            $(".trandTag .wordActive").removeClass("wordActive");
+        }else{
+            $(this).addClass("slidearrowActive");
+            $(".trandTag .word").addClass("wordActive");
+            $(".trandTag .word").removeClass("word");
+        }
+    })
+
+
+
+    let priceFlag = true;
+    $(".minPrice,.maxPrice").focus(function(){
+        let minPrice = $(".minPrice").val();
+        let maxPrice = $(".maxPrice").val();
+        if(minPrice!="" || maxPrice!=""){
+//            $(".priceSelect li").removeClass("active");
+            priceFlag = false;
+        }else{
+            priceFlag = true
+        }
+    })
+    $(".minPrice,.maxPrice").keyup(function(){
+        let minPrice = $(".minPrice").val();
+        let maxPrice = $(".maxPrice").val();
+        if(minPrice!="" || maxPrice!=""){
+//            $(".priceSelect li").removeClass("active");
+            priceFlag = false;
+        }else{
+            priceFlag = true
+        }
+    })
+
+//    $(".checkboxGroup2").on("click","li",function(){
+//        if($(this).parent().hasClass("priceSelect")){
+//            if(priceFlag){
+//                if(!$(this).hasClass("active")){
+//                    $(this).parent().find("li").removeClass("active");
+//                    $(this).addClass("active");
+//                }else{
+//                    $(this).removeClass("active");
+//                }
+//            }else{
+//                $(".priceSelect li").removeClass("active");
+//            }
+//        }else{
+//            if(!$(this).hasClass("active")){
+//                $(this).parent().find("li").removeClass("active");
+//                $(this).addClass("active")
+//            }else{
+//                $(this).removeClass("active");
+//            }
+//
+//        }
+//    })
+
+
+
+
+    $(".sort li").click(function(){
+        $(this).addClass("active").siblings().removeClass("active")
+    })
+    $(".sort .arrow").click(function(){
+        if($(this).hasClass("up")){
+            $(this).removeClass("up")
+            $(this).addClass("down")
+        }else{
+            $(this).removeClass("down")
+            $(this).addClass("up")
+        }
+    })
+</script>

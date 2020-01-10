@@ -1,0 +1,176 @@
+<div ng-controller="WuliusController">
+
+    <div class="navbar fixed-top">
+        <div class="navbar-left hide-weixin" ng-click="goBack()">
+            <img class="button-icon" ng-src="image/nav-left.png"/>
+            <div class="button-text">返回</div>
+        </div>
+        <div class="navbar-title">
+            物流信息
+        </div>
+    </div>
+
+    <div class="logistics_box">
+        <div class="logistics_title">{{logistic.shipping_name}}：{{logistic.shipping_sn}}</div>
+        <div class="logistics_center">
+            <div class="istic_center">
+                <div class="xian"></div>
+                <div class="istic_shou">
+                    <div class="istic_shou2">【收货地址】 {{order.region}}{{order.address}}</div>
+                    <div class="istic_shou1">收</div>
+                </div>
+                <div class="istic" ng-repeat="item in logistic.Traces track by $index">
+                    <div class="sitic_time">
+                        <div class="sitic_time1" ng-if="$index!=0">{{item.AcceptTime}}</div>
+                        <div class="sitic_time1 sitic_time2" ng-if="$index==0">{{item.AcceptTime}}</div>
+                    </div>
+                    <div class="sitic_dian"></div>
+                    <div class="sitic_con"  ng-if="$index!=0">{{item.AcceptStation}}</div>
+                    <div class="sitic_con sitic_con2" ng-if="$index==0">{{item.AcceptStation}}</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+<style>
+    body{
+        background: #f7f7f7;
+    }
+    *{
+        padding:0;
+        margin:0;
+    }
+    .logistics_box{
+        width:100%;
+        height:auto;
+        background: #f7f7f7;
+        font-size:0.26rem;
+        overflow: hidden;
+        padding-bottom:0.4rem;
+    }
+
+    .logistics_title{
+        width:7rem;
+        height:1rem;
+        border-radius: 0.1rem;
+        background: #fff;
+        margin:auto;
+        margin-top:1.4rem;
+        line-height: 1rem;
+        padding-left:0.4rem;
+        box-sizing: border-box;
+    }
+
+    .logistics_center{
+        width:7rem;
+        height:auto;
+        background: #fff;
+        border-radius: 0.1rem;
+        margin:auto;
+        margin-top:0.4rem;
+        overflow: hidden;
+        position: relative;
+
+    }
+
+
+    .xian{
+        position: absolute;
+        width:1px;
+        height: calc(100% - 2rem);
+        left:1.96rem;
+        top:1rem;
+        background: #ccc;
+    }
+    .istic_center{
+        width:6.5rem;
+        height:auto;
+        padding-top:0.4rem;
+        padding-bottom:0.4rem;
+        margin:auto;
+
+    }
+
+    .istic_shou{
+        width:100%;
+        height:auto;
+        overflow: hidden;
+
+    }
+
+    .istic_shou>.istic_shou2{
+        width:4.4rem;
+        height:auto;
+        float: right;
+        font-size:0.28rem;
+        margin-left:0.1rem;
+        color: #ccc;
+    }
+
+    .istic_shou>.istic_shou1{
+        width:0.6rem;
+        height:0.6rem;
+        border-radius: 0.6rem;
+        background: #ccc;
+        font-size:0.3rem;
+        font-weight:bold;
+        text-align: center;
+        line-height:0.6rem;
+        float: right;
+        color: #fff;
+
+
+    }
+    .istic{
+        overflow: hidden;
+        margin-top:0.4rem;
+    }
+    .istic>.sitic_time{
+        width:0.8rem;
+        height:auto;
+        float: left;
+        text-align: center;
+    }
+
+    .istic>.sitic_time>.sitic_time1{
+        width:1.5rem;
+        height:auto;
+        font-size:0.26rem;
+        color: #ccc;
+
+    }
+
+    .istic>.sitic_time>.sitic_time2{
+      color: #000;
+    }
+    .istic>.sitic_con{
+        width:4.5rem;
+        height:auto;
+        float: right;
+        font-size: 0.28rem;
+        color: #ccc;
+
+    }
+
+    .istic>.sitic_con2{
+        color: #000;
+    }
+
+    .sitic_dian{
+        width:7px;
+        height:7px;
+        border-radius: 7px;
+        float: left;
+        margin-left:0.84rem;
+        margin-top:0.13rem;
+        background: #ccc;
+    }
+
+</style>

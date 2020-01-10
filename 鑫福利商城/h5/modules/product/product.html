@@ -1,0 +1,1330 @@
+<div class="bg" ng-controller="ProductController" style="min-height: 100vh;">
+    <style>
+        .no_goods_attrnumber{ background:#ccc !important; color:#fff; border:1px solid #999 !important;}
+    </style>
+    <style>
+        .proFoot .others li{
+            outline: none;
+        }
+
+
+        .proclass{
+            height:5rem;padding-bottom:0;margin-top:0.88rem;overflow: hidden;width:100%;
+        }
+        .xiangq p{
+            font-size: 0.3rem;
+            font-weight: bold;
+        }
+        .xiangq div{
+            font-size: 0.28rem;
+        }
+
+
+        .refundTip-box{
+            width:100%;
+            height:100%;
+            background: rgba(0,0,0,0.6);
+            position: fixed;
+            top:0;
+            left:0;
+            z-index: 99999999;
+        }
+        .refundTip{
+            width:70%;
+            height:3rem;
+            background: #fff;
+            border-radius: 0.08rem;
+            box-shadow: 0 0 0.04rem 0.01rem #ccc;
+            position: absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            margin:auto;
+        }
+
+        .refundTipa{
+            height:2rem;
+        }
+
+        .refundcon{
+            width:80%;
+            height:2rem;
+            margin:auto;
+            color: #000;
+            font-size:0.26rem;
+            text-align: center;
+            line-height:0.4rem;
+            padding-top:0.5rem;
+            box-sizing: border-box;
+        }
+
+        .refundcona{
+            height:1rem;
+            padding-top:0.34rem;
+        }
+
+        .refundbtn{
+            width: 100%;
+            height:1rem;
+            text-align: center;
+            line-height: 1rem;
+            font-weight:bold;
+            color: #0085d0;
+            border-top:1px solid #f0f0f0;
+
+        }
+        .refundbtn_left{
+            width: 100%;
+            height:100%;
+            text-align: center;
+            line-height: 1rem;
+            font-weight:bold;
+            color: #0085d0;
+
+        }
+        .layerBuy .note .noteBox{
+            padding:0.2rem;
+            border-radius: 0.1rem;
+            color: #999;
+            margin-top:0.4rem;
+        }
+
+        .layerBuy .note{
+            padding: 0 0.3rem;
+        }
+
+        .layerBuy .note p{
+            font-size: 0.24rem;
+        }
+
+        .layerBuy .note span{
+            /*font-weight: bold;*/
+            color: #000;
+            font-size:0.24rem;
+        }
+
+        .item{
+            padding: 0 0.3rem;
+        }
+        .item .label{
+            margin-left:0;
+            /*font-size: 16px;*/
+        }
+
+        .layerBuy .img{
+            width: 100px; height: 100px;  background-color: #beceeb; overflow: hidden; resize: both;
+            /*border:1px solid #f5f5f5;*/
+            border-radius: 0.04rem;
+            position:absolute;
+            top:-30px;
+            overflow: hidden;
+            left:20px;
+        }
+        .layerBuy .img img{
+            width: 100%; height: 100%; background-color: #ccc;
+            object-fit: cover;
+            border-radius: 0.04rem;
+
+        }
+
+        .yuding{
+            width:7.1rem;
+            margin:auto;
+            height:auto;
+            margin-top:0.2rem;
+            background: #fff;
+            border-radius: 0.2rem;
+        }
+
+        .yuding>.yud{
+            width: 6.8rem;
+            margin:auto;
+            height:0.9rem;
+            background: #fff;
+            font-size: 0.28rem;
+            overflow: hidden;
+
+        }
+        .yuding>.yud:last-child{
+
+
+        }
+        .yuding>.yud>.yud1{
+            float: left;
+            margin-left:0.1rem;
+            color: #4d4d4d;
+        }
+        .yuding>.yud>.yud3{
+            float: right;
+            margin-right:0.3rem;
+        }
+        .yuding>.yud>.yud2{
+            float: right;
+            margin-right:0.8rem;
+            font-size: 0.3rem;
+            color: #da0000;
+            font-weight: bold;
+        }
+        .yuding>.yud>.yud2 span{
+            font-size: 0.28rem;
+            color: #a6a6a6;
+        }
+
+        .yuding>.yud>.yud1, .yuding>.yud>.yud2, .yuding>.yud>.yud3{
+            font-size: 0.28rem;
+            width:auto;
+            height:100%;
+            line-height:0.9rem;
+            /*float: left;*/
+        }
+        .yuding>.yud>.yud3{
+            width:1.7rem;
+            height:0.6rem;
+            line-height:0.6rem;
+            text-align: center;
+            background: #ea1616;
+            color: #fff;
+            border-radius: 0.6rem;
+            font-size: 0.28rem;
+            margin-top:0.15rem;
+            outline: none;
+            margin-right:0.1rem;
+            /*font-weight: bold;*/
+        }
+
+
+
+        .details .detailsTaba{
+            border: 1px solid #000000;
+            overflow: auto;
+        }
+
+        .details .detailsConta {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .details .detailsTaba .active{
+            background: #000000;
+            color: #fff;
+        }
+
+        .details .detailsConta .tit {
+            padding: 5px 0;
+            font-weight: bold;
+            color: #000;
+            font-size:14px;
+        }
+
+        .details .detailsConta p {
+            line-height: 20px;
+            font-size: 14px;
+            color: #333;
+            margin-top:6px;
+        }
+
+        .details .detailsTaba li {
+            float: left;
+            width: 50%;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .heada{
+            width:100%;
+            height:auto;
+        }
+
+        .proFoota{
+            width:1.4rem;
+            height:100%;
+            position: absolute;
+            top:0;
+            right:0.2rem;
+
+        }
+        .othersa{
+            width:100%;
+            height:100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .proFoota .othersa li:after{
+            border-right: 0 solid #dfdfdf;
+        }
+
+
+        .dikou_new{
+            display: block;
+            height:0.4rem;
+            margin-top:0.06rem;
+            margin-left:0.2rem;
+            float: right;
+            margin-right:0.2rem;
+
+        }
+
+        .dikou_son{
+            background: #c90a29;
+            width:2.8rem;
+            height:0.45rem;
+            text-align: center;
+            font-size:0.24rem;
+            line-height:0.45rem;
+            color: #fff;
+            border-radius: 0.08rem;
+        }
+        .flex_top{
+            display: block;
+            width:1.4rem;
+            height:auto;
+            position: absolute;
+            top:1.2rem;
+            right:0.2rem;
+            z-index: 999999999999;
+        }
+
+        .toBuys{
+            width:50%;
+        }
+
+
+
+
+
+        .proLayerNote .sureBtn{
+            background: #DF283A;
+        }
+        .layer>.layerBuy{
+            height:67%;
+            overflow:scroll;
+            background: none;
+
+        }
+
+
+        .layerBuyBox{
+            margin-top:50px;
+            background: #fff;
+            padding-bottom:70px;
+            min-height:  calc(100% - 50px);
+            border-top-right-radius: 0.3rem;
+            border-top-left-radius: 0.3rem;
+        }
+
+        .buyBtn-box{
+            width:100%;
+            padding:0 0.3rem;
+            box-sizing: border-box;
+            position: fixed;
+            bottom:0.2rem;
+            left:0;
+            right:0;
+            margin:auto;
+            height:40px;
+            line-height:40px;
+            text-align:center;
+            /*background:#ff0000;*/
+            font-size:16px;
+            color:#fff;
+            z-index: 9999;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .buyBtn-box .buyBtn {
+            background: #df283a;
+            color: #fff;
+            width:49%;
+            border-radius: 0.04rem;
+
+
+        }
+
+        .buyBtn-box .buyBtnGray {
+            background: #ccc;
+            color: #fff;
+            /*width:40%;*/
+        }
+
+        /*.buyBtn-box{*/
+        /*position: absolute;*/
+        /*left:0;*/
+        /*bottom:0;*/
+        /*width:100%;*/
+        /*height:80px;*/
+        /*}*/
+
+        .score_box{
+            width:100%;
+            height:0.8rem;
+            background:#fff;
+            padding-left:0.2rem;
+            padding-right:0.2rem;
+            margin-top:0.2rem;
+            margin-bottom:0.2rem;
+            box-sizing: border-box;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #000;
+
+        }
+        .score_box>div{
+            font-size: 14px;
+        }
+
+        .score_box>.score_con{
+            width: 120px;
+            height:100%;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .score_box>.score_con>div{
+            font-size: 14px;
+            color: #df283a;
+        }
+
+
+        .score_box>.score_con>img{
+            display: block;
+            width:0.3rem;
+            height:0.3rem;
+        }
+
+        .layerBuy .sizeList .active{
+            background: #191919;
+            border: 1px solid #191919;
+        }
+
+        .layerBuy .word{
+            width:150px;
+            padding-top:14px;
+            margin-left:110px;
+
+        }
+
+        .layerBuy .word p:first-child{
+            font-size: 25px;
+        }
+
+        .layerBuy .close{
+            width: 35px;
+            height: 35px;
+            margin-top: 15px;
+            margin-left: 10px;
+        }
+        .layerBuy .close:before, .layerBuy .close:after{
+            width:20px;
+        }
+
+        .layerBuy .sizeList span{
+            outline: none;
+            display: inline-block;
+            height: 0.48rem;
+            line-height:  0.44rem;
+            margin-left: 0.1rem;
+            padding: 0 0.2rem;
+            border-radius: 0.05rem;
+            font-size: 0.26rem;
+            border: 1px solid #ccc;
+
+        }
+
+        .layerBuy .tit{
+            width: 100%;
+            font-size: 0.28rem;
+            clear: none;
+            overflow: hidden;
+            padding:0 0.3rem;
+            margin-top:0.28rem;
+        }
+
+        .layerBuy .tit .property_name{
+            float: left;
+            width:auto;
+            height:0.6rem;
+            line-height:0.6rem;
+            font-size: 0.3rem;
+
+        }
+        .layerBuy .tit .sizeList{
+            float: left;
+            width:5.8rem;
+            margin-left:0.2rem;
+            padding:0;
+
+
+        }
+
+        .layerBuy .layerBuyBoxTop{
+            height:70px;
+            clear: none;
+            position: relative;
+            border-bottom:1px solid #f1f1f1;
+        }
+
+        .layerBuy .item .cont{
+            text-align:left;
+        }
+
+        .proFoot .addBus{
+           background: #191919;
+        }
+
+        .itemsa .cont .minuse{
+            display: block;
+            width:0.64rem !important;
+            height:0.64rem !important;
+            line-height:0.64rem !important;
+            font-size: 0.44rem !important;
+            background: none !important;
+            border:none !important;
+            border-right:1px solid #ccc !important;
+            outline: none;
+        }
+
+        .itemsa .cont  .plus{
+            display: block;
+            width:0.64rem !important;
+            height:0.64rem !important;
+            line-height:0.64rem !important;
+            font-size: 0.44rem !important;
+            background: none !important;
+            border:none !important;
+            border-left:1px solid #ccc !important;
+            outline: none;
+        }
+        /*.cont{*/
+            /*border:1px solid #ccc;*/
+        /*}*/
+
+        .itemsa .contsa{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border:1px solid #ccc;
+            width:6rem;
+            padding:0;
+            margin-left:0.3rem;
+
+        }
+
+        .layerBuy .itemsa .cont .num{
+            display: block;
+            height:0.5rem !important;
+            padding:0 !important;
+            width:4.72rem !important;
+            border:none !important;
+            margin:0 !important;
+            font-size: 0.28rem !important;
+
+            /*border-top: 1px solid #ccc !important;*/
+            /*border-bottom: 1px solid #ccc !important;*/
+
+
+        }
+
+        .proslide img{
+            height:100%;
+        }
+    </style>
+
+
+    <!--精品专区-->
+  <div ng-show="is_yd==0">
+    <img class="flex_top" ng-src="image/jinpingact2.png" alt="" ng-if="product.is_bested==1">
+
+       <header class="head">
+        <div class="headFixed">
+            <div class="headBox">
+                <span class="share1"></span>
+                <a ng-if="user.company.id!=47" href="javascript:void(0);" ng-click="goBack()" class="back"></a>
+                <a ng-if="user.company.id==47" href="javascript:void(0);" ng-click="tozxlist()" class="back"></a>
+                <p>商品详情</p>
+                <ul class="protit">
+                    <li><span>商品</span></li>
+                    <li class="active"><span>详情</span></li>
+                    <li><span>答疑</span></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+       <div class="swiper-container proslide product-flash js-imgs-viewer-wrap">
+        <div class="swiper-wrapper" ng-if="isLoaded && product">
+            <figure class="swiper-slide figure" ng-repeat="photo in product.photos track by $index">
+                <div class="img-dv">
+                    <a href="javascript:;">
+                      <img class="js-img-viewer"  width="375" height="375" data-origin_w="800" data-origin_h="800" data-original="{{photo.large}}" data-yulan="{{photo.large}}" src="{{photo.large}}" alt="" style="width:100%;">
+                    </a>
+                </div>
+            </figure>
+
+            <div class="swiper-slide" ng-if="!product.photos || !product.photos.length">
+                <img ng-src="image/default-photo.png" alt="">
+            </div>
+
+        </div>
+
+        <div class="swiper-pagination" ng-if="product.photos && product.photos.length > 1"></div>
+    </div>
+
+        <div class="proinfo" ng-if="isLoaded && product" >
+            <div class="price" ng-if="product.is_show_discount==0">
+                <span class="s1" ng-class="{danger: currentStock}">{{currentSelectedPrice| currency:"￥"}}</span>
+                <span class="s2">{{product.price| currency:"￥"}}</span>
+                <!--<span class="s3">5.5折</span>-->
+            </div>
+            <div class="name" ng-if="product.is_show_discount==0">{{product.name}}</div>
+            <!--精品专区-->
+            <div style="overflow:hidden;" ng-if="product.is_show_discount>0">
+                <div class="price" style="float: left;margin-left:0.3rem;">
+                    <span class="s1" ng-class="{danger: currentStock}">{{currentSelectedPrice| currency:"￥"}}</span>
+                    <span class="s2">{{product.price| currency:"￥"}}</span>
+                    <!--<span class="s3">5.5折</span>-->
+                </div>
+                <div class="dikou_new" style="width:auto"><div class="dikou_son">福利卡最高抵扣{{product.is_show_discount}}元</div></div>
+            </div>
+            <div class="name" ng-if="product.is_show_discount>0" style="text-align: left">{{product.name}}</div>
+            <!--<p>在适合城市</p>-->
+        </div>
+        <div class="item">
+            <div class="itemBox">
+                <span class="label">运费</span>
+                <div class="cont yfcont">
+                    <span class="txt">包邮</span>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="itemBox">
+                <span class="label">发货</span>
+                <div class="cont fhcont">
+                    <span class="txt">48小时内发货，部分商品周末及节假日订单更新有延迟</span>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="itemBox">
+                <span class="label">保障</span>
+                <div class="cont bzcont">
+                    <span class="txt">100%正品保证 仅支持7天无理由退换货</span>
+                </div>
+            </div>
+        </div>
+        <ul class="proTag">
+            <li>
+                <img src="image/protag/i1.png" alt="" class="icon">
+                <p>官网正品</p>
+            </li>
+            <!--<li>-->
+            <!--<img src="images/protag/i2.png" alt="" class="icon">-->
+            <!--<p>优惠补贴</p>-->
+            <!--</li>-->
+            <li>
+                <img src="image/protag/i3.png" alt="" class="icon">
+                <p>超时保障</p>
+            </li>
+            <li>
+                <img src="image/protag/i4.png" alt="" class="icon">
+                <p>物流保障</p>
+            </li>
+        </ul>
+      <!--商品评价-->
+        <div class="score_box" ng-if="product.is_real==1" ng-click="tograde(product.id,product.review_rate)">
+            <div>商品评价({{product.comment_count}})</div>
+            <div class="score_con">
+                <div>好评率 {{product.review_rate}}</div>
+                <img src="image/score_more.png" alt="">
+            </div>
+        </div>
+
+        <div class="details">
+            <ul class="detailsTab">
+                <li class="active">图文详情</li>
+                <li>小鑫答疑</li>
+            </ul>
+
+            <div class="detailsCont" style="display:block;">
+                <div style="width:100%" alt="" ng-bind-html="(product.goods_desc || '没有产品详情') | trustHtml"></div>
+            </div>
+
+
+
+            <div class="detailsCont">
+                <div class="tit">1、关于正品</div>
+                <p>本店出售商品均为正品，可以放心购买</p><br >
+                <div class="tit">2、关于包邮</div>
+                <p>您购买的商品享受包邮服务</p><br >
+                <div class="tit">3、关于退换货</div>
+                <p>a、在不影响二次销售的情况下，平台支持7天无理由退换</p>
+                <p>b、鞋盒完整无损，每双鞋的鞋盒是唯一的，鞋盒也是商品的一部分</p>
+                <p>c、买家责任(不喜欢/不合适等)买家只需要承担退货运费。寄出时请保证商品、吊牌、附件和包装袋完好，包装袋或鞋盒不要直接绑胶带，请将加固盒一起寄回如不按要求寄回，鞋盒破损导致退货被拒收将由您承担损失。</p>
+                <p>d、电子产品价值较高拆封试机或使用后对产品的贬损大，影响二次销售不支持7天无理由退换</p><br >
+                <div class="tit">4、关于尺寸</div>
+                <p>产品品牌款式和产地以及个人测量方法不同，尺码会有偏差，最终以实物为准，请谅解</p><br >
+                <div class="tit">5、关于色差</div>
+                <p>所有产品均为实景拍摄，因灯光显示器以及个人对色彩认识的不同所呈现的实物，可能会与图片有所偏差，该类问题不属于商品质量问题，最终颜色与实际商品为准。</p><br >
+                <div class="tit">6、关于气味</div>
+                <p>鞋类商品都是工业制作成品，有皮质和胶水的气味很正常，因从生产车间出来就处于较封闭的状态，气味难免会难闻，属正常现象，请收到鞋子后请放在背光透气处</p><br>
+                <div class="tit">7、关于订单</div>
+                <p>在您提交订单时，请您务必仔细确认所购商品的名称、价格、数量、型号、颜色、规格、尺寸、联系地址、电话、收货人等信息</p><br>
+                <div class="tit">8、订单状态</div>
+                <p>a、订单状态为已付款待发货，如需取消请点击个人中心-全部订单-找到订单-申请退款</p>
+                <p>b、订单状态为已出库，需要客服核实是否发货。如商品已发货，需确认商品退回仓库后，客服才能为您办理退款</p><br>
+                <div class="tit">9、物流配送</div>
+                <p>如遇特殊情况(重大节日、重大会议、仓库盘点、地址搬迁、恶劣天气)会导致延时发货，请您谅解</p>
+                <p style="margin-top:0.1rem;">另外不提供以下服务，敬请知悉：</p>
+                <p>a、不提供指定配送时间、日期、快递公司的服务</p>
+                <p>b、已发货订单确认后，订单配送信息不可更改</p>
+                <p>c、不提供收货地址为海南、新疆、内蒙、西藏偏远地区、香港、台湾、澳门及其他海外地区的配送</p>
+                <p>d、为了确保您尽快收到所购商品，我们会采取多个仓库进行发货的操作，可能会出现商品分批到达的情况</p><br >
+                <div class="tit">10、关于发票</div>
+                <p>因福利劵为企业统一采购，不提供个人发票</p><br>
+                <br>
+            </div>
+
+        </div>
+        <div class="proFoot">
+            <div class="proFootFixed">
+                <div class="proFootBox">
+                    <div  class="toBuy"  ng-click="toAkucun()"  ng-show="product.is_show_discount==0">立即购买</div>
+                    <div  class="addBus"  ng-click="toAkucun()"  ng-show="product.is_show_discount==0">加入购物车</div>
+
+               <!--精品专区-->
+                    <div  class="toBuy toBuys" style="width:60%;" ng-click="toAkucun()" ng-show="product.is_show_discount>0">立即购买</div>
+
+                    <ul class="others"  ng-if="product.is_show_discount==0">
+                        <li class="kefu" ng-click="kefu()">
+                            <span class="icon i1"></span>
+                            <p>客服</p>
+                        </li>
+                        <li ng-click="touchLike()" ng-class="{active: product.is_liked}" ng-if="user.company.id!=47">
+                            <!--<img src="image/favorite-off.png" ng-if="!product.is_liked"/>-->
+                            <!--<img src="image/favorite-on.png" ng-if="product.is_liked"/>-->
+                            <span class="icon i2"></span>
+                            <p>收藏</p>
+                        </li>
+                        <li ng-click="touchCart()">
+                            <span class="icon i3"></span>
+                            <p>购物车</p>
+                            <!--<div class="cart-badge" ng-if="cartModel.total > 0">-->
+                            <!--{{cartModel.total}}-->
+                            <!--</div>-->
+                        </li>
+                    </ul>
+
+                    <ul class="others" style=""  ng-if="product.is_show_discount>0">
+                        <li style="width:50%;"  class="kefu" ng-click="kefu()">
+                            <span class="icon i1"></span>
+                            <p>客服</p>
+                        </li>
+                        <li style="width:50%;" ng-click="touchLike()" ng-class="{active: product.is_liked}">
+                            <!--<img src="image/favorite-off.png" ng-if="!product.is_liked"/>-->
+                            <!--<img src="image/favorite-on.png" ng-if="product.is_liked"/>-->
+                            <span class="icon i2"></span>
+                            <p>收藏</p>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--2018-12-25新增-->
+        <div class="layer" >
+            <div class="layerBox layerBuy"  style="overflow: unset;height:8.9rem;">
+                <div class="layerBuyBox">
+                    <div class="layerBuyBoxTop" style="clear: none">
+
+                        <div class="close"></div>
+                        <div class="img img_ss"><img src="{{product.default_photo.thumb}}"></div>
+                        <div class="word">
+                            <p>{{currentSelectedPrice| currency:"￥"}}</p>
+                            <!--<p>请选择尺码</p>-->
+                        </div>
+                    </div>
+                    <div style="overflow: scroll;height:5.2rem">
+                        <div style="margin-top:0.4rem;" ng-if="isLoaded && product && product.properties && product.properties.length && product.good_stock">
+                            <div class="tit titm" ng-repeat="property in product.properties track by $index">
+
+                                <div class="property_name">{{property.name}}</div>
+                                <div class="sizeList">
+                                <span id="attr_id_{{value.id}}"   ng-click="touchAttr(property,value)" ng-class="{active: isAttrSelected(value)}" ng-repeat="value in property.attrs track by $index">
+                                    {{value.attr_name}}{{value.stock_number}}
+                                    <!--<div ng-if="value.attr_price > 0">(加{{value.attr_price| currency:"￥"}})</div>-->
+                                </span>
+                                </div>
+                                <div class="attr-line" ng-if="attr !== product.attrs[product.attrs.length-1]"></div>
+                            </div>
+
+                        </div>
+                        <div class="item itemsa" ng-if="isLoaded && product && product.good_stock" style="margin-top:0.3rem;height:0.6rem">
+                            <span class="label" style="font-size:0.3rem;margin-left:0;height:100%;line-height: 0.6rem">数量</span>
+                            <div class="cont contsa"  ng-class="{active: canPurchase}" style="height:0.64rem;line-height:0.64rem;margin-left:0.9rem;">
+                                <span class="minuse"  ng-class="{'': input.currentAmount > 1}" ng-click="touchAmountSub()">-</span>
+                                <input class="num" type="number" ng-class="{'': input.currentAmount > 0}" ng-model="input.currentAmount"  ng-change="refreshAmount()">
+                                <span class="plus" ng-class="{'': input.currentAmount > 0}" ng-click="touchAmountAdd()">+</span>
+                            </div>
+                        </div>
+                        <div class="note">
+                            <div class="noteBox">
+                                <p><span>温馨提示: </span> 尺码、尺寸、颜色均由官网提供，仅供参考。</p>
+                                <p>选购商品时请根据自身情况进行选择，恕不接受色差、 尺码问题的退货。</p>
+                                <!--<p>*鞋内长可在鞋舌的鞋标处查看。</p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="buyBtn-box" style="display: none" ng-show="product.is_show_discount==0">
+                <div class="buyBtn add_cart" style="background: #191919" ng-class="{'buyBtnGray': !canCartPurchase}" ng-click="touchAddCart()">加入购物车</div>
+                <div class="buyBtn add_buy" ng-class="{'buyBtnGray': !canPurchase}" ng-click="touchPurchase()">立即购买</div>
+            </div>
+            <div class="buyBtn-box" style="display: none" ng-show="product.is_show_discount>0">
+                <div  class="buyBtn add_buy" style="width:100%;" ng-class="{'buyBtnGray': !canPurchase}" ng-click="touchPurchase()" >立即购买</div>
+            </div>
+
+
+        <div class="proLayerNote yf">
+            <div class="proLayerNoteBox">
+                <div class="proLayerNoteCont">
+                    <div class="close"></div>
+                    <div class="tit">运费说明</div>
+                    <ul class="notelist">
+                        <li>
+                            <h6>运费说明</h6>
+                            <p>免运费</p>
+                            <p>买家责任(不喜欢/不合适等)买家只需要承担退货运费</p>
+                        </li>
+                    </ul>
+                    <div class="sureBtn">完成</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="proLayerNote fh">
+            <div class="proLayerNoteBox">
+                <div class="proLayerNoteCont">
+                    <div class="close"></div>
+                    <div class="tit">发货</div>
+                    <ul class="notelist">
+                        <li>
+                            <h6>发货说明</h6>
+                            <p>48小时内发货</p>
+                            <p>部分商品周末及节假日订单更新有延迟</p>
+                        </li>
+
+                    </ul>
+                    <div class="sureBtn">完成</div>
+                </div>
+            </div>
+        </div>
+        <div class="proLayerNote bz">
+            <div class="proLayerNoteBox">
+                <div class="proLayerNoteCont">
+                    <div class="close"></div>
+                    <div class="tit">官网保障说明</div>
+                    <ul class="notelist">
+                        <li>
+                            <h6>正品保障；</h6>
+                            <p>100%正品保证</p>
+                        </li>
+                        <li>
+                            <h6>支持无条件退换货</h6>
+                            <p>7天无理由退换（不影响二次销售的情况下）；电子产品价值较高拆封试机或使用后对产品的贬损大，影响二次销售不支持7天无理由退换。</p>
+                        </li>
+                    </ul>
+                    <div class="sureBtn">完成</div>
+                </div>
+            </div>
+        </div>
+        <div class="confirm confirm_kefu" >
+            <div class="confirmBox">
+                <div class="close"></div>
+                <p>热线电话：<a href="tel:400-670-0690">400-670-0690</a></p>
+                <p>工作时间：<span>09:00-18:00</span></p>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+</div>
+
+  <div class="refundTip-box" ng-if="nameTipshowa">
+        <div class="refundTip refundTipa">
+            <div class="refundcon refundcona">{{tip_a}}
+            </div>
+            <div class="refundbtn">
+                <div class="refundbtn_left" ng-click="torefundTipa($event)">确定</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="refundTip-box" ng-if="nameTipshowb">
+        <div class="refundTip refundTipa">
+            <div class="refundcon refundcona">
+                您请求的资源不存在
+            </div>
+            <div class="refundbtn">
+                <div class="refundbtn_left" ng-click="torefundTipb($event)">确定</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--场馆预定-->
+  <div ng-show="is_yd==1">
+        <img class="flex_top" ng-src="image/jinpingact2.png" alt="" ng-if="product.is_bested==1">
+        <header class="head heada" >
+            <div class="headFixed">
+                <div class="headBox">
+                    <span class="share1"></span>
+                    <a href="javascript:void(0);" ng-click="goBack()" class="back"></a>
+                    <p>商品详情</p>
+                    <div class="proFoot proFoota">
+                        <ul class="others othersa">
+                                <li class="kefu" ng-click="kefu()">
+                                    <span class="icon i1"></span>
+                                </li>
+                                <li ng-click="touchLike()" ng-class="{active: product.is_liked}">
+                                    <!--<img src="image/favorite-off.png" ng-if="!product.is_liked"/>-->
+                                    <!--<img src="image/favorite-on.png" ng-if="product.is_liked"/>-->
+                                    <span class="icon i2"></span>
+                                </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="swiper-container proslide product-flash product-flasha js-imgs-viewer-wrap" style="height:5rem;padding-bottom:0;margin-top:0.88rem;overflow: hidden;width:100%;">
+            <div class="swiper-wrapper" ng-if="isLoaded && product" style="height:auto">
+                <figure class="figure swiper-slide " ng-repeat="photo in product.photos track by $index">
+                    <div class="img-dv" style="height:auto">
+                        <a href="javascript:;">
+                        <img class="js-img-viewer"  width="375" height="250" data-origin_w="800" data-origin_h="534" data-original="{{photo.large}}" data-yulan="{{photo.large}}" src="{{photo.large}}" alt="" style="height:auto">
+                        </a>
+                    </div>
+                </figure>
+                <div class="swiper-slide" ng-if="!product.photos || !product.photos.length">
+                    <img ng-src="image/default-photo.png" alt="">
+                </div>
+            </div>
+
+            <div class="swiper-pagination" ng-if="product.photos && product.photos.length > 1"></div>
+        </div>
+
+
+
+
+        <div class="proinfo" ng-if="isLoaded && product" style="border-radius: 0.2rem;width:7.1rem;margin: auto;margin-top:0.2rem;height:auto;line-height:0.48rem;font-size: 0.32rem;padding:0.26rem 0">
+            <!--<div class="price" ng-if="product.is_show_discount==0">-->
+                <!--<span class="s1" ng-class="{danger: currentStock}">{{currentSelectedPrice| currency:"￥"}}</span>-->
+                <!--<span class="s2">{{product.price| currency:"￥"}}</span>-->
+                <!--&lt;!&ndash;<span class="s3">5.5折</span>&ndash;&gt;-->
+            <!--</div>-->
+            <div class="name" ng-if="product.is_show_discount==0" style="font-size: 0.3rem;margin-top:0;">{{product.name}}</div>
+            <!--精品专区-->
+            <div style="overflow:hidden;" ng-if="product.is_show_discount>0">
+                <!--<div class="price" style="float: left;margin-left:0.3rem;">-->
+                    <!--<span class="s1" ng-class="{danger: currentStock}">{{currentSelectedPrice| currency:"￥"}}</span>-->
+                    <!--<span class="s2">{{product.price| currency:"￥"}}</span>-->
+                    <!--&lt;!&ndash;<span class="s3">5.5折</span>&ndash;&gt;-->
+                <!--</div>-->
+                <div class="dikou_new" style="width:auto"><div class="dikou_son">福利卡最高抵扣{{product.is_show_discount}}元</div></div>
+            </div>
+            <div class="name" ng-if="product.is_show_discount>0" style="text-align: left">{{product.name}}</div>
+            <!--<p>在适合城市</p>-->
+        </div>
+
+        <div class="yuding" ng-show="is_yd_h">
+            <div class="yud" ng-show="product.gold_shop!=''&&product.gold_shop!=undefined&&product.gold_shop!='0.00'" style="border-bottom:1px solid #e6e6e6;">
+                <div class="yud1">黄金时间段:</div>
+                <div class="yud3 toBuy" ng-click="toAkucun(product.gold_shop,1)">预定</div>
+                <div class="yud2">{{product.gold_shop| currency:"￥"}}  <span>/小时</span>  </div>
+
+            </div>
+            <div class="yud" ng-show="currentSelectedPrice!=''&&currentSelectedPrice!=undefined&&currentSelectedPrice!='0.00'">
+                <div class="yud1">非黄金时间段:</div>
+                <div class="yud3 toBuy" ng-click="toAkucun(currentSelectedPrice,0)">预定</div>
+                <div class="yud2">{{currentSelectedPrice| currency:"￥"}} <span>/小时</span>  </div>
+
+            </div>
+        </div>
+
+      <div class="yuding" ng-show="is_yd_h==false&&is_yd_h_son&&currentSelectedPrice!=''&&currentSelectedPrice!=undefined&&currentSelectedPrice!='0.00'">
+          <div class="yud">
+              <div class="yud1">单人价格:</div>
+              <div class="yud3 toBuy" ng-click="toAkucun(currentSelectedPrice)">预定</div>
+              <div class="yud2" style="margin-right:1.5rem">{{currentSelectedPrice| currency:"￥"}}</div>
+
+          </div>
+      </div>
+
+      <div class="yuding" ng-show="is_yd_h==false&&is_yd_h_son==false&&currentSelectedPrice!=''&&currentSelectedPrice!=undefined&&currentSelectedPrice!='0.00'">
+          <div class="yud">
+              <div class="yud1">每小时价格:</div>
+              <div class="yud3 toBuy" ng-click="toAkucun(currentSelectedPrice)">预定</div>
+              <div class="yud2" style="margin-right:1.3rem">{{currentSelectedPrice| currency:"￥"}}</div>
+
+          </div>
+      </div>
+
+
+
+        <div class="details" style="width:7.1rem;height:auto;margin:auto;border-radius:0.2rem;margin-top:0.2rem">
+            <ul class="detailsTaba">
+                <li class="active">图文详情</li>
+                <li>小鑫答疑</li>
+            </ul>
+
+            <div class="detailsConta" style="display:block;">
+                <div class="xiangq" style="width:100%" alt="" ng-bind-html="(product.goods_desc || '没有产品详情') | trustHtml"></div>
+            </div>
+            <div ng-if="is_yd_h" class="detailsConta" style="display: none">
+                <div class="tit">1、如何预订</div>
+                    <p>a、所有订场均需提前预定，至少需要提前24小时进行预订，临时下订的将无法保证订场成功。</p>
+                    <p>b、最多可进行7天内的场地预订，单次预订最多2个小时。</p>
+                    <p>c、高峰时段因产地资源紧缺，部分用户无法订到。</p>
+                    <p>d、每笔订单只支持一片场地的预订，如需多片场地请分开下单。</p>
+                <br >
+                <div class="tit">2、时段解释</div>
+                    <p>非黄金时段：周一至周五，早八点至午四点。</p>
+                    <p>黄金时段：节假日全天，非节假日午四点至晚十点。</p><br >
+                <div class="tit">3、退订须知</div>
+                    <p>a、所有场地需要在预定日期24小时前进行退订，否则将无法保证钱款正常退回。</p>
+                    <p>b、因临时有事导致无法按约到场的请先咨询客服。</p>
+                    <p>c、部分场馆一经预订不可退订，详细信息请前往图文详情中查看。</p>
+                <br >
+                <div class="tit">4、客服电话</div>
+                    <p>我们的联系方式是：400-670-0690</p>
+                    <p>工作时间：早九点至晚六点</p><br >
+
+            </div>
+
+            <div class="detailsConta" ng-if="is_yd_h==false" style="display: none">
+                <div class="tit">1、如何预订</div>
+                <p>a、最多可进行7天内的场地预订。</p>
+                <p>b、高峰时段因产地资源紧缺，部分用户无法订到。</p>
+                <p ng-show="is_yd_h_son">c、价格为单人价格，请按照实际前往人数进行下单。</p>
+                <p ng-show="is_yd_h_son==false">c、价格为每小时价格，请按照实际需要进行下单。</p><br >
+
+                <div class="tit">2、退订须知</div>
+                <p>a、所有场地需要在下订日期24小时前进行退订，否则将无法保证钱款正常退回。</p>
+                <p>b、因临时有事导致无法按约到场的请先咨询客服。</p><br >
+                <div class="tit">3、客服电话</div>
+                <p>我们的联系方式是：400-670-0690</p>
+                <p>工作时间：早九点至晚六点</p><br >
+
+            </div>
+
+        </div>
+
+
+        <!--2018-12-25新增-->
+        <div class="layer">
+            <div class="layerBox layerBuy" style="height:55%">
+                <div class="layerBuyBox">
+                    <div class="layerBuyBoxTop">
+
+                        <div class="close"></div>
+                        <div class="img" style="background: none"><img src="{{product.default_photo.thumb}}"></div>
+                        <div class="word">
+                            <p>{{currentSelectedPrice| currency:"￥"}}</p>
+                            <!--<p>请选择尺码</p>-->
+                        </div>
+                    </div>
+                    <div ng-if="isLoaded && product && product.properties && product.properties.length && product.good_stock" style="margin-top:0.4rem">
+                        <div class="tit titm" ng-repeat="property in product.properties track by $index">
+                            <div class="property_name">
+                              {{property.name}}
+                            </div>
+                            <div class="sizeList" >
+                        <span   ng-click="touchAttr(property,value)" ng-class="{active: isAttrSelected(value)}" ng-repeat="value in property.attrs track by $index">
+                            {{value.attr_name}}{{value.stock_number}}
+                            <!--<div ng-if="value.attr_price > 0">(加{{value.attr_price| currency:"￥"}})</div>-->
+                        </span>
+                            </div>
+                            <div class="attr-line" ng-if="attr !== product.attrs[product.attrs.length-1]"></div>
+                        </div>
+
+                    </div>
+                    <div class="item" ng-if="isLoaded && product && product.good_stock" style="margin-top:20px;padding:12px">
+                        <div class="cont" ng-class="{active: canPurchase}" style="width:100%;padding:0">
+                            <div ng-show="is_yd_h" class="label" style="float: left;font-size: 0.26rem;margin-left:0">预订时长，最少数量为1，最大数量为2</div>
+                            <div ng-show="is_yd_h==false&&is_yd_h_son" class="label" style="float: left;font-size: 0.26rem;margin-left:0">单人价格  <span style="font-size: 0.24rem">*请按参加人数购买</span></div>
+                            <div ng-show="is_yd_h==false&&is_yd_h_son==false" class="label" style="float: left;font-size: 0.26rem;margin-left:0">每小时价格 </div>
+
+                            <div style="float: right" >
+                                <span class="minuse" style="outline: none;" ng-class="{'': input.currentAmount > 1}" ng-click="touchAmountSub()">-</span>
+                                <input class="num" type="number" ng-class="{'': input.currentAmount > 0}" ng-model="input.currentAmount" ng-change="refreshAmount()">
+                                <span class="plus" style="outline: none;" ng-class="{'': input.currentAmount > 0}" ng-click="touchAmountAdd()">+</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note">
+
+                        <div class="noteBox">
+                            <span style="font-size: 14px;">温馨提示:</span>
+                            <p ng-if="is_yd_h">预订场地时最多可以预订7天内的场地；单次最多预订2个小时；如遇高峰时期可能会导致无法成功下订。</p>
+                            <p ng-if="is_yd_h==false&&is_yd_h_son">请按照具体参加人数进行购买，如有两人参加，则购买数量应为2个。</p>
+                            <p ng-if="is_yd_h==false&&is_yd_h_son==false">请根据实际需要进行下单，商品价格为每小时价格。</p>
+
+                            <!--<p>*鞋内长可在鞋舌的鞋标处查看。</p>-->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="buyBtn-box" style="display: none">
+                <!--<div class="buyBtn add_cart" ng-class="{'buyBtnGray': !canCartPurchase}" ng-click="touchAddCart()">加入购物车</div>-->
+                <div class="buyBtn add_buys" style="width:100%" ng-class="{'buyBtnGray': !canPurchase}" ng-click="touchPurchase()">立即预定</div>
+            </div>
+
+            <div class="confirm confirm_kefu" >
+                <div class="confirmBox">
+                    <div class="close"></div>
+                    <p>热线电话：<a href="tel:400-670-0690">400-670-0690</a></p>
+                    <p>工作时间：<span>09:00-18:00</span></p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <!--<button class="pswp__button pswp__button--share" title="Share"></button>-->
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function customizeInputBack() {
+            var customizeInputTop = $(window).scrollTop()+1;
+            $(window).scrollTop(customizeInputTop);
+        }
+
+        $(document).on('blur','input',function(){
+            customizeInputBack();
+        });
+
+        $(".fhcont").click(function(){
+            $(".layer").show()
+            $(".fh").show();
+            $(".fh .proLayerNoteBox").addClass("contActive");
+        })
+        $(".fh .close,.fh .sureBtn").click(function(){
+            $(".fh").hide();
+            $(".layer").hide()
+            $(".fh .proLayerNoteBox").removeClass("contActive");
+        })
+
+        $(".yfcont").click(function(){
+            $(".layer").show()
+            $(".yf").show();
+            $(".yf .proLayerNoteBox").addClass("contActive");
+        })
+
+        $(".yf .close,.yf .sureBtn").click(function(){
+            $(".yf").hide();
+            $(".layer").hide()
+            $(".yf .proLayerNoteBox").removeClass("contActive");
+        })
+
+        $(".bzcont").click(function(){
+            $(".layer").show()
+            $(".bz").show();
+            $(".bz .proLayerNoteBox").addClass("contActive");
+        })
+        $(".bz .close,.bz .sureBtn").click(function(){
+            $(".bz").hide();
+            $(".layer").hide()
+            $(".bz .proLayerNoteBox").removeClass("contActive");
+        })
+
+
+
+        //        $(".kefu").click(function(){
+        //            console.log("*************111")
+        //            alert("11111")
+        //            $(".layer").show()
+        //            $(".confirm_kefu").show();
+        //            $(".confirm_kefu").addClass("contActive");
+        //        })
+        $(".confirm_kefu .close").click(function(){
+            $(".layer").hide();
+            $(".confirm_kefu").hide()
+            $(".confirm_kefu").removeClass("contActive");
+        })
+
+
+
+
+
+       // var mySwiper = new Swiper('.swiper-container', {
+       //     autoplay: false,//可选选项，自动滑动
+       //     pagination:{
+       //         el: '.swiper-pagination'
+       //     }
+       // })
+
+        $(".viewmore span").click(function(){
+            if($(".companyInfo .cont").hasClass("contellpsis")){
+                $(".companyInfo .cont").removeClass("contellpsis");
+                $(this).text("关闭")
+            }else{
+                $(".companyInfo .cont").addClass("contellpsis");
+                $(this).text("展开全部")
+            }
+
+        })
+        $(".detailsTab li").click(function(){
+            var index = $(this).index();
+            $(this).addClass("active").siblings().removeClass("active");
+            $(".detailsCont").hide();
+            $(".detailsCont").eq(index).show();
+        })
+
+
+        $(".detailsTaba li").click(function(){
+            var index = $(this).index();
+            $(this).addClass("active").siblings().removeClass("active");
+            $(".detailsConta").hide();
+            $(".detailsConta").eq(index).show();
+        })
+        //        $(window).scroll(function(){
+        //            if($(window).scrollTop()>=$(".details").offset().top - 80){
+        //                $(".protit").show();
+        //                $(".head p").hide();
+        //            }else{
+        //                $(".protit").hide();
+        //                $(".head p").show();
+        //            }
+        //        })
+        $(".protit li").eq(0).click(function(){
+            $(window).scrollTop(0);
+            $(".protit li").eq(1).addClass("active").siblings().removeClass("active");
+            $(".detailsTab li").eq(0).addClass("active").siblings().removeClass("active");
+            $(".detailsCont").hide();
+            $(".detailsCont").eq(0).show();
+        })
+        $(".protit li").eq(2).click(function(){
+            $(".detailsTab li").eq(1).addClass("active").siblings().removeClass("active");
+            $(".detailsCont").hide();
+            $(".detailsCont").eq(1).show();
+        })
+
+        //        $(".sizeList span").click(function(){
+        //            if($(this).hasClass("active")){
+        //                $(this).removeClass("active");
+        //                $(".buyBtn").addClass("buyBtnGray")
+        //            }else{
+        //                $(this).addClass("active").siblings().removeClass("active")
+        //                $(".buyBtn").removeClass("buyBtnGray")
+        //            }
+        //        })
+        $(".buyBtn").click(function(){
+            if(!$(this).hasClass("buyBtnGray")){
+                $(".layer").hide();
+                $(".layer").removeClass("layerActive")
+                $(".buyBtn-box").hide()
+            }
+            $("body").css("overflow","visible")
+        })
+        $(".toBuy,.addBus").click(function(){
+            $(".buyBtn-box").show()
+            // if(!$(this).hasClass("toBuy")){
+            //     $(".add_cart").show();
+            //     $(".now_buy").hide();
+            // }else{
+            //     $(".add_cart").hide();
+            //     $(".now_buy").show();
+            // }
+            $(".add_cart").show();
+            $(".now_buy").show();
+            $(".layer").show();
+            $(".layer").addClass("layerActive");
+            $("body").css("overflow","hidden")
+
+        })
+        $(".layerBuy .close").click(function(){
+            $(".layer").hide();
+            $(".buyBtn-box").hide();
+            $(".layer").removeClass("layerActive");
+            $("body").css("overflow","visible");
+        })
+        //        $(".layerBuy .minuse").click(function(){
+        //            var num = parseInt($(".layerBuy .num").text());
+        //            if(num>1){
+        //                $(".layerBuy .num").text(num-1)
+        //            }
+        //        })
+        //        $(".layerBuy .plus").click(function(){
+        //            var num = parseInt($(".layerBuy .num").text());
+        //            $(".layerBuy .num").text(num+1)
+        //        })
+
+
+
+
+
+
+        //图片预览
+
+
+
+
+
+    </script>
+
+
+</div>

@@ -1,0 +1,145 @@
+<div ng-controller="CartController">
+    <style>
+        .zhezhao{
+            width:100%;
+            height:100%;
+            background: rgba(255,255,255,0.7);
+            position: absolute;
+            top:0;
+            left:0;
+            font-size:0.28rem;
+            color: #000;
+
+        }
+
+        .shopList li .delete{
+            bottom:0.2rem;
+        }
+
+        .kucun{
+            width:100%;
+            height:0.7rem;
+            font-size:0.26rem;
+            color: #000;
+            font-weight:bold;
+            text-align: left;
+            line-height: 0.7rem;
+            padding-left:0.06rem;
+            box-sizing: border-box;
+        }
+
+        .shopList li p {
+
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+
+        .shopList li .radio{
+            outline: none;
+        }
+    </style>
+    <header class="head headBorder0">
+        <div class="headBox">
+            <a href="javascript:;" class="back" ng-click="goBack()"></a>
+            <p></p>
+        </div>
+    </header>
+
+    <div class="shopBus" >
+        <!--<div class="tit"><span class="radio"></span>英特运动户外专营店</div>-->
+        <ul class="shopList" ng-if="cartModel.isLoaded" ng-repeat="group in cartModel.groups track by $index">
+            <li ng-class="{active: isSelected(goods)}" ng-repeat="goods in group.goods track by $index">
+                <div class="delete" ng-click="touchDelete(goods)"></div>
+                <div class="radio" ng-click="touchSelect(goods)"></div>
+                <div class="listItem">
+                    <div class="img" ng-click="touchProduct(goods.product)">
+                        <img ng-src="{{goods.product.default_photo.large}}"/>
+                    </div>
+                    <div class="info">
+                        <h5 class="name">{{goods.product.name}}</h5>
+                        <p>{{goods.property}}</p>
+                        <div class="others">
+                            <div class="number">
+                                <span class="minuse unabled" ng-class="{active: goods.amount > 1}" ng-click="touchAmountSub(goods)">-</span>
+                                <span class="num" ng-class="{active: goods.amount > 0}">{{goods.amount}}</span>
+                                <span class="plus" ng-class="{active: goods.amount > 0}" ng-click="touchAmountAdd(goods)">+</span>
+                            </div>
+                            <span class="price">￥{{goods.price | number:2}}</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="shopBusFoot" ng-if="cartModel.isLoaded && !cartModel.isEmpty">
+        <div class="shopBusFootFixed">
+            <div class="shopBusFootBox">
+                <span class="sure" ng-class="{active: selectedGoods && selectedGoods.length}" ng-click="touchSubmit()">
+                    确定
+                </span>
+                <div class="total">
+                    <span class="selectAll" style="outline: none"  ng-class="{active: isSelectedAll}" ng-click="touchSelectAll()"><i class="radio"></i>全选</span>
+                    <span class="price">合计：<i>{{selectedPrice | currency:"￥"}}</i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dialog -->
+    <div id="dialog" ng-show="showDialog" ng-if="cartModel.isLoaded">
+        <div class="mask">
+        </div>
+        <div class="dialog danger">
+            <div class="dialog-title">
+                确认删除
+            </div>
+            <div class="dialog-content">
+                是否要删除选中商品
+            </div>
+            <div class="dialog-button">
+                <div class="button left" ng-click="touchDialogCancel()">
+                    取消
+                </div>
+                <div class="button right" ng-click="touchDialogConfirm()">
+                    确认
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="empty" ng-if="cartModel.isEmpty">
+        <div class="empty-item">
+            <img class="item-logo" ng-src="image/icon-cart-empty.png"/>
+            <div class="item-text">您的购物车是空的</div>
+            <div class="item-button" ng-click="goHome()">随便逛逛</div>
+        </div>
+    </div>
+
+    <!--<footer class="nav">-->
+    <!--<div class="navFixed">-->
+    <!--<ul class="navBox">-->
+    <!--<li class="nhome" ng-click="goHome()"><a href="javascript:void(0);">-->
+    <!--<span class="icon"></span>-->
+    <!--<p>首页</p>-->
+    <!--</a></li>-->
+    <!--<li class="ncategory" ng-click="goCategory()"><a href="javascript:void(0);">-->
+    <!--<span class="icon"></span>-->
+    <!--<p>分类</p>-->
+    <!--</a></li>-->
+    <!--<li class="nbuybus active" ng-click="goCart()"><a href="javascript:void(0);">-->
+    <!--<span class="icon"></span>-->
+    <!--<p>购物车</p>-->
+    <!--</a></li>-->
+    <!--<li class="ncenter" ng-click="goProfile()"><a href="javascript:void(0);">-->
+    <!--<span class="icon"></span>-->
+    <!--<p>个人中心</p>-->
+    <!--</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</footer>-->
+</div>
+
+</div>

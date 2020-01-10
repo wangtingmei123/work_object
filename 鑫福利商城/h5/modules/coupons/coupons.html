@@ -1,0 +1,160 @@
+<div ng-controller="CouponsController" style="background: #f7f7f7;min-height:100vh">
+
+    <div class="navbar fixed-top">
+        <div class="navbar-left hide-weixin" ng-click="goBack()">
+            <img class="button-icon" ng-src="image/nav-left.png"/>
+            <div class="button-text">返回</div>
+        </div>
+        <div class="navbar-title">
+            优惠券
+        </div>
+    </div>
+
+    <div class="coupons_box">
+        <div class="coupons" ng-if="coupons.length>0" ng-repeat="coupon in coupons track by $index"  ng-class="{coupons_nos:coupon.status==0}">
+            <div class="conpons_left">
+                <div class="conpons_jine1">￥<span>{{coupon.full_reduction_amount}}  </span></div>
+                <div class="conpons_jine2">满{{coupon.rule_amount}}可用</div>
+            </div>
+            <div class="conpons_right">
+                <div class="conpons_right1">满{{coupon.rule_amount}} 减 {{coupon.full_reduction_amount}}</div>
+                <div class="conpons_right2">有效期：{{coupon.use_start_time}} - {{coupon.use_end_time}}</div>
+            </div>
+        </div>
+
+        <div class="no_coupons" ng-if="coupons.length==0">
+            <img src="image/no_coupons.png" alt="">
+            <div class="no_coupons_text">您还没有优惠券哦</div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+</div>
+
+<style>
+
+    .no_coupons{
+        width:3rem;
+        height:4rem;
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        margin:auto;
+
+    }
+    .no_coupons>img{
+        display: block;
+        width:3rem;
+        height:3rem;
+        margin:auto;
+    }
+
+
+    .no_coupons>.no_coupons_text{
+        font-size: 0.28rem;
+        margin-top:0.2rem;
+        text-align: center;
+        color: #3d3d3d;
+    }
+    body{
+        background: #f7f7f7;
+    }
+    *{
+        padding:0;
+        margin:0;
+    }
+   .coupons_box{
+       width:100%;
+       height:auto;
+       margin-top:44px;
+       overflow: hidden;
+       margin-bottom:0.2rem;
+   }
+    .coupons{
+        width:7.1rem;
+        height:1.6rem;
+        background: #fff;
+        border-radius: 0.1rem;
+        margin:auto;
+        margin-top:0.15rem;
+        display: flex;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+
+    .coupons_nos{
+        background: #d7d7d7;
+    }
+
+
+    .coupons>.conpons_left{
+        width:2.2rem;
+        height:1.6rem;
+        background: #ec808d;
+    }
+
+    .coupons_nos>.conpons_left{
+        background: #aaaaaa;
+    }
+    .coupons>.conpons_left>.conpons_jine1{
+        width:100%;
+        height:0.6rem;
+        margin-top:0.3rem;
+        font-size: 0.28rem;
+        line-height:0.6rem;
+        text-align: center;
+        color: #fff;
+    }
+    .coupons>.conpons_left>.conpons_jine1>span{
+        font-size: 0.5rem;
+        color: #fff;
+        font-weight:bold;
+    }
+    .coupons>.conpons_left>.conpons_jine2{
+        width:100%;
+        height:0.26rem;
+        margin-top:0.2rem;
+        font-size: 0.26rem;
+        line-height:0.26rem;
+        text-align: center;
+        color: #fff;
+    }
+
+
+    .coupons>.conpons_right{
+        width:4.7rem;
+        height:100%;
+    }
+
+    .coupons>.conpons_right>.conpons_right1{
+        width:100%;
+        height:0.3rem;
+        font-size:0.3rem;
+        line-height: 0.3rem;
+        margin-top:0.3rem;
+    }
+
+    .coupons>.conpons_right>.conpons_right2{
+        width:100%;
+        height:0.26rem;
+        font-size:0.24rem;
+        line-height: 0.26rem;
+        margin-top:0.5rem;
+        color: #989898;
+    }
+    .coupons_nos>.conpons_right{
+        color: #fff;
+    }
+
+    .coupons_nos>.conpons_right>.conpons_right2{
+        color: #fff;
+    }
+</style>

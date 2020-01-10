@@ -1,0 +1,277 @@
+<div class="app-container with-navbar with-tabbar" style="background: #f5f5f5;min-height: 100vh" ng-controller="GradeDetailController">
+
+
+    <style>
+        html,body{
+            -webkit-overflow-scrolling:touch
+        }
+        .loading-more{
+            font-size: 0.26rem;
+        }
+        .evaluation_box{
+            width:100%;
+            height:auto;
+
+        }
+
+        .evaluation{
+            width:100%;
+            padding:0 0.15rem;
+            height:1.1rem;
+            background: #fff;
+            position: fixed;
+            top:44px;
+            left:0;
+            z-index: 999;
+        }
+
+        .eval_left{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width:100%;
+            height:100%;
+
+        }
+
+        .eval_left>.evalr1{
+            display: block;
+            width:1.58rem;
+            height:0.56rem;
+            border-radius: 0.56rem;
+
+            text-align: center;
+            line-height:0.56rem;
+            font-size: 0.26rem;
+            color: #545454;
+            background: #fcf0f0;
+        }
+
+        .eval_left>.evalr1>span{
+            font-size: 0.26rem;
+            color: #1a1a1a;
+        }
+
+        .eval_right{
+            height:100%;
+            line-height: 44px;
+            font-size: 0.26rem;
+            padding-right:0.35rem;
+            float: right;
+        }
+
+        .eval_left> .eval_select{
+            outline: none;
+            border:1px solid #e86267;
+            box-sizing: border-box;
+            line-height:0.52rem;
+
+        }
+
+        .evaluat{
+            width:100%;
+            height:auto;
+            margin-top:1.1rem;
+            overflow: hidden;
+        }
+
+
+
+        .evaluat_con{
+            width:100%;
+            height:auto;
+            padding:0.28rem 0.35rem;
+            box-sizing: border-box;
+            margin:auto;
+            background: #fff;
+            margin-top:0.1rem;
+        }
+
+        .evaluatcon_title{
+            width:100%;
+            height:1.8rem;
+            overflow: hidden;
+        }
+        .evaluatcon_title>.evaluation_img{
+            width:1rem;
+            height:1rem;
+            border-radius: 1rem;
+            background: #ccc;
+            float: left;
+
+        }
+        .evaluatcon_title>.evaluation_img>img{
+            display: block;
+            width:100%;
+            height:100%;
+
+
+        }
+
+        .evaluatcon_title>.evaluation_user{
+            width:5.6rem;
+            height:100%;
+            float: right;
+        }
+
+        .evaluatcon_title>.evaluation_user>.evalu_phone{
+             width:100%;
+            height:1rem;
+            font-size: 0.28rem;
+
+            color: #1a1a1a;
+
+        }
+        .evaluatcon_title>.evaluation_user>.evalu_phone>.evalu_phone_left{
+            width:auto;
+            height: 0.6rem;
+            line-height:0.6rem;
+            font-size: 0.28rem;
+        }
+        .evaluatcon_title>.evaluation_user>.evalu_phone>.evalu_phone_right{
+            font-size: 0.22rem;
+            height:0.28rem;
+            width:100%;
+            color: #808080;
+            line-height:0.28rem;
+            overflow: hidden;/*超出部分隐藏*/
+            white-space: nowrap;/*不换行*/
+            text-overflow:ellipsis;/*超出部分文字以...显示*/
+        }
+
+        .evaluatcon_title>.evaluation_user>.evalu_score{
+            width: 100%;
+            height:0.68rem;
+        }
+
+        .evaluatcon_title>.evaluation_user>.evalu_score>.evalu_score_left{
+            width:1.36rem;
+            height:100%;
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .evaluatcon_title>.evaluation_user>.evalu_score>.evalu_score_left>.evalu_score_left_xin{
+            width:0.24rem;
+            height:0.23rem;
+
+        }
+        .evaluatcon_title>.evaluation_user>.evalu_score>.evalu_score_left>.evalu_score_left_xin>img{
+            display: block;
+            width:100%;
+            height:100%;
+        }
+
+        .evaluatcon_title>.evaluation_user>.evalu_score>.evalu_score_right{
+            float: right;
+            width:1.45rem;
+            height:100%;
+            line-height:0.68rem;
+            font-size: 0.24rem;
+            color: #bfbfbf;
+            margin-right:0.1rem;
+
+        }
+
+        .evaluatcon_main{
+            width:100%;
+            height:auto;
+            font-size: 0.26rem;
+            line-height:0.42rem;
+            color: #4d4d4d;
+            padding: 0 0.15rem;
+            box-sizing: border-box;
+
+        }
+
+        .eval_emty{
+            width:100%;
+            height:auto;
+            margin-top:1rem;
+            background: #f5f5f5;
+
+        }
+
+        .eval_emty>img{
+            display: block;
+            width:3rem;
+            height:3rem;
+            margin:auto;
+            margin-top:32vh;
+
+        }
+
+        .eval_emty>.eval_tip{
+            width:100%;
+            /*margin-top:0.2rem;*/
+            text-align: center;
+            font-size: 0.3rem;
+
+        }
+
+
+    </style>
+    <div class="navbar fixed-top" style="border-bottom: #f5f5f5 1px solid;box-shadow: none">
+        <div class="navbar-left hide-weixin" ng-click="goBack()" style="background: #fff;height:40px">
+            <img class="button-icon" ng-src="image/nav-left.png"/>
+        </div>
+        <div class="eval_right">好评{{review_rate}}</div>
+    </div>
+
+    <div class="evaluation_box">
+        <div class="evaluation">
+            <div class="eval_left">
+                <div class="evalr1" ng-click="evaluation_select(4)" ng-class="{eval_select:eval_select==4}">全部 </div>
+                <div class="evalr1" ng-click="evaluation_select(3)" ng-class="{eval_select:eval_select==3}">好评<span>{{subtotal.good}}</span></div>
+                <div class="evalr1" ng-click="evaluation_select(2)" ng-class="{eval_select:eval_select==2}">中评<span>{{subtotal.medium}}</span></div>
+                <div class="evalr1" ng-click="evaluation_select(1)" ng-class="{eval_select:eval_select==1}">差评<span>{{subtotal.bad}}</span></div>
+            </div>
+
+        </div>
+
+        <div class="evaluat" infinite-scroll='loadComment()' ng-if="commentlist.length>0" style="-webkit-overflow-scrolling:touch">
+            <div class="evaluat_con" ng-repeat="comment in commentlist track by $index" >
+                <div class="evaluatcon_title">
+                    <div class="evaluation_img"><img src="image/pj_photo_03.jpg" alt=""></div>
+                    <div class="evaluation_user">
+                        <div class="evalu_phone">
+                            <div class="evalu_phone_left">{{comment.author.telphone}}</div>
+                            <div class="evalu_phone_right">{{comment.goods_attr.property}}</div>
+                        </div>
+                        <div class="evalu_score">
+                            <div class="evalu_score_left">
+                                <div class="evalu_score_left_xin" ng-repeat="score in scores track by $index" >
+                                    <img ng-if="comment.comment_star<score" src="image/pj_score_05.jpg" alt="" >
+                                    <img class="score_select" ng-if="comment.comment_star>=score" src="image/pj_score_03.jpg" alt="" >
+                                </div>
+                            </div>
+                            <div class="evalu_score_right">
+                                {{comment.created_at}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="evaluatcon_main">{{comment.content}}</div>
+            </div>
+
+            <div class="loading-more" ng-if="!isLoaded" >
+                正在加载...
+            </div>
+            <div class="loading-more" ng-if="allend">
+                全部加载完毕
+            </div>
+
+        </div>
+
+
+        
+        <div class="eval_emty" ng-if="!is_comment">
+            <img src="image/no_evaluationa.png" alt="">
+            <div class="eval_tip">暂时还没有评价哦</div>
+        </div>
+        
+    </div>
+
+</div>

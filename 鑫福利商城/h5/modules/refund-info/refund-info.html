@@ -1,0 +1,119 @@
+<div class="app-container with-navbar with-tabbar" ng-controller="RefundInfoController">
+
+    <div class="navbar fixed-top">
+        <div class="navbar-left hide-weixin" ng-click="goBack()">
+            <img class="button-icon" ng-src="image/nav-left.png"/>
+            <div class="button-text">返回</div>
+        </div>
+        <div class="navbar-title">
+            <div class="navbar-title" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_REFUND"> 退款详情 </div>
+            <div class="navbar-title" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.REFUNDED"> 退款详情 </div>
+            <div class="navbar-title" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_RETURN"> 退货详情 </div>
+            <div class="navbar-title" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.RETURNING"> 退货详情 </div>
+            <div class="navbar-title" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.RETURNED"> 退货详情 </div>
+        </div>
+    </div>
+
+    <div class="app-content">
+
+        <!-- Address -->
+        <div class="refund-info">
+            <div class="refund-item">
+                订单编号：{{order_info.sn}}
+            </div>
+            <div class="refund-item" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_REFUND">  服务类型：退款 </div>
+            <div class="refund-item" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.REFUNDED">  服务类型：退款 </div>
+            <div class="refund-item" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_RETURN">  服务类型：退货 </div>
+            <div class="refund-item" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.RETURNING">  服务类型：退货 </div>
+            <div class="refund-item" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.RETURNED">  服务类型：退货 </div>
+
+            <div class="refund-item">
+                退款原因：{{order_goods_info.refund_reason_type_text}}
+            </div>
+
+            <div class="refund-item">
+                退款金额：
+                <span ng-if="order_goods_info.money_paid > 0">现金：{{order_goods_info.money_paid}}元</span>
+                <span ng-if="order_goods_info.balance_paid > 0">账户余额：{{order_goods_info.balance_paid}}元</span>
+            </div>
+
+            <div class="refund-item">
+                退款说明：{{order_goods_info.refund_reason}}
+            </div>
+        </div>
+
+        <!-- Goods -->
+        <div class="refund-info-gallery">
+            <div class="item-photo" ng-repeat="refund_image in refund_images track by $index">
+                <img ng-src="image/default-photo.png" lazy-img="{{refund_image.refund_image_url}}" />
+            </div>
+        </div>
+
+        <div class="refund-shipping-action" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.RETURNING && order_goods_info.refund_shipping_sn == ''">
+            <div class="bar-save" ng-click="touchToRefundShipping()">
+                请填写退货物流
+            </div>
+        </div>
+
+        <div class="refund-info" ng-if="order_goods_info.refund_shipping_sn != ''">
+            <div class="refund-message-title">
+                退货物流信息
+            </div>
+            <div class="refund-item">
+                退款物流：{{order_goods_info.refund_shipping_name}}
+            </div>
+            <div class="refund-item">
+                退款运单：{{order_goods_info.refund_shipping_sn}}
+            </div>
+        </div>
+
+        <div class="refund-message">
+            <div class="refund-message-title">
+                服务进程
+            </div>
+            <div class="refund-message-list" ng-repeat="refund_log in refund_logs track by $index">
+                <p class="refund-message-time">{{refund_log.log_time | localTime}}</p>
+                <p class="refund-message-content">{{refund_log.action_note}}
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    body{
+        background: #f4f4f4;
+    }
+    .refund-info{
+        width:7.2rem;
+        margin:auto;
+        margin-top:0.15rem;
+        background: #fff;
+        border-radius: 0.2rem;
+        border:none;
+    }
+    .refund-info-gallery{
+        border:none;
+        width:7.2rem;
+        margin:auto;
+        margin-top:0.15rem;
+        background: #fff;
+        border-radius: 0.2rem;
+        padding-left:0.1rem;
+        padding-right:0.1rem;
+        box-sizing: border-box;
+    }
+    .refund-message{
+        border:none;
+        width:7.2rem;
+        margin:auto;
+        margin-top:0.15rem;
+        background: #fff;
+        border-radius: 0.2rem;
+        padding-top:0.2rem;
+        padding-bottom:0.2rem;
+    }
+
+</style>

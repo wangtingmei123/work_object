@@ -1,0 +1,189 @@
+<style>
+
+
+    .refundTip-box{
+        width:100%;
+        height:100%;
+        background: rgba(0,0,0,0.6);
+        position: fixed;
+        top:0;
+        left:0;
+        z-index: 99999999;
+    }
+    .refundTip{
+        width:70%;
+        height:3rem;
+        background: #fff;
+        border-radius: 0.08rem;
+        box-shadow: 0 0 0.04rem 0.01rem #ccc;
+        position: absolute;
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
+        margin:auto;
+    }
+
+    .refundTipa{
+        height:2rem;
+    }
+
+    .refundcon{
+        width:80%;
+        height:2rem;
+        margin:auto;
+        color: #000;
+        font-size:0.26rem;
+        text-align: center;
+        line-height:0.4rem;
+        padding-top:0.5rem;
+        box-sizing: border-box;
+    }
+
+    .refundcona{
+        height:1rem;
+        padding-top:0.34rem;
+    }
+
+    .refundbtn{
+        width: 100%;
+        height:1rem;
+        text-align: center;
+        line-height: 1rem;
+        font-weight:bold;
+        color: #0085d0;
+        border-top:1px solid #f0f0f0;
+
+    }
+    .refundbtn_left{
+        width: 100%;
+        height:100%;
+        text-align: center;
+        line-height: 1rem;
+        font-weight:bold;
+        color: #0085d0;
+
+    }
+</style>
+
+<div class="app-container with-navbar with-tabbar" ng-controller="OrderRefundController">
+
+    <div class="navbar fixed-top">
+        <div class="navbar-left hide-weixin" ng-click="goBack()">
+            <img class="button-icon" ng-src="image/nav-left.png"/>
+            <div class="button-text">返回</div>
+        </div>
+        <div class="navbar-title" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.PAID || order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERY"> 申请退款 </div>
+        <div class="navbar-title" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED"> 申请退货 </div>
+    </div>
+
+    <div class="app-content">
+
+        <div class="order-refund">
+            <div class="form-item" >
+                <div class="item-title">
+                    申请服务
+                </div>
+                <div class="item-value" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.PAID || order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERY"> 退款 </div>
+                <div class="item-value" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED"> 退货 </div>
+            </div>
+
+            <div class="form-item" ng-click="touchRetundReasonPickerShow()">
+                <div class="item-title">
+                    退款原因
+                </div>
+                <div class="item-select" ng-if="!refundReason">
+                    请选择
+                </div>
+                <div class="item-value" ng-if="refundReason">
+                    {{refundReasonName}}
+                </div>
+                <img class="item-arrow" src="image/nav-right.png"/>
+            </div>
+
+            <div class="form-item">
+                <div class="item-title">
+                    退款金额
+                </div>
+                <div class="item-value">
+                    <span ng-if="order_goods_info.money_paid > 0">现金：{{order_goods_info.money_paid}}元</span>
+                    <span ng-if="order_goods_info.balance_paid > 0">账户余额：{{order_goods_info.balance_paid}}元</span>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="item-title">
+                    退款说明
+                </div>
+                <div class="item-textarea">
+                    <textarea type="text" placeholder="填写退款说明" ng-model="reason"></textarea>
+                </div>
+            </div>
+
+            <div class="refund-item-gallery" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED">
+                <div class="gallery_item" ng-repeat="refund_image in refund_image_list track by $index" type="file" ngf-select="upload($newFiles,$index)" ng-model="file" name="file" ngf-pattern="'image/*" accept="image/*" ngf-max-size="20MB" ngf-min-height="100" >
+                    <img ng-if="refund_image.image == ''" src="image/carame_icon.png" />
+                    <img ng-if="refund_image.image != ''" src="{{refund_image.image}}" />
+                    <div class="gallery_item_tip">商品({{refund_image.position}})</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Picker -->
+    <div class="address-mask" ng-show="showRefundTypePicker" ng-animate="{enter: 'mask-anim-enter', leave: 'mask-anim-leave'}" ng-click="touchRefundTypePickerCancel()"></div>
+    <div class="address-picker" ng-show="showRefundTypePicker" ng-animate="{enter: 'picker-anim-enter', leave: 'picker-anim-leave'}">
+        <div class="picker-header">
+            请选择退款方式
+        </div>
+        <div class="picker-list">
+            <div class="list-item" ng-repeat="(refundType,refundTypeName) in pickerRefundTypeData" ng-click="touchRefundTypePickerRegion(refundType)" >
+                {{refundTypeName}}
+            </div>
+        </div>
+        <div class="picker-cancel" ng-click="touchRefundTypePickerCancel()">
+            取消
+        </div>
+    </div>
+
+    <!-- Picker -->
+    <div class="address-mask" ng-show="showRefundReasonPicker" ng-animate="{enter: 'mask-anim-enter', leave: 'mask-anim-leave'}" ng-click="touchRefundReasonPickerCancel()"></div>
+    <div class="address-picker" ng-show="showRefundReasonPicker" ng-animate="{enter: 'picker-anim-enter', leave: 'picker-anim-leave'}">
+        <div class="picker-header">
+            请选择退款原因
+        </div>
+        <div class="picker-list">
+            <div class="list-item" ng-repeat="(refundReason,refundReasonName) in pickerRefundReasonData" ng-click="touchRefundReasonPicker(refundReason)" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.PAID || order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERY">
+                {{refundReasonName}}
+            </div>
+            <div class="list-item" ng-repeat="(refundReason,refundReasonName) in pickerRefundReasonData1" ng-click="touchRefundReasonPicker1(refundReason)" ng-if="order_goods_info.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED">
+                {{refundReasonName}}
+            </div>
+        </div>
+        <div class="picker-cancel" ng-click="touchRefundReasonPickerCancel()">
+
+            取消
+        </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="refund-action">
+        <div class="bar-cancel" ng-click="touchCancel()">
+            取消
+        </div>
+        <div class="bar-save" ng-click="touchSave()">
+            保存
+        </div>
+    </div>
+
+    <div class="refundTip-box" ng-if="nameTipshowa">
+        <div class="refundTip refundTipa">
+            <div class="refundcon refundcona">{{tip_a}}
+            </div>
+            <div class="refundbtn">
+                <div class="refundbtn_left" ng-click="torefundTipa($event)">确定</div>
+            </div>
+        </div>
+    </div>
+
+</div>

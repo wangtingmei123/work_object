@@ -1,0 +1,71 @@
+<div class="app-container with-navbar with-tabbar" ng-controller="RefundShippingController">
+
+    <div class="navbar fixed-top">
+        <div class="navbar-left hide-weixin" ng-click="goBack()">
+            <img class="button-icon" ng-src="image/nav-left.png"/>
+            <div class="button-text">返回</div>
+        </div>
+        <div class="navbar-title">
+            填写退货物流信息
+        </div>
+    </div>
+
+    <div class="app-content">
+
+        <div class="order-refund">
+            <div class="form-item">
+                <div class="item-title">
+                    物流名称
+                </div>
+                <div class="item-input">
+                    <input type="text" placeholder="填写物流公司名称" ng-model="shipping_name" />
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="item-title">
+                    物流单号
+                </div>
+                <div class="item-input">
+                    <input type="text" placeholder="填写物流单号" ng-model="shipping_sn"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="refund-action">
+        <div class="bar-cancel" ng-click="touchCancel()">
+            取消
+        </div>
+        <div class="bar-save" ng-click="touchSave()">
+            保存
+        </div>
+    </div>
+
+</div>
+
+<style>
+    body{
+        background: #f4f4f4;
+    }
+    .app-content{
+        width:7.2rem;
+        margin:auto;
+        margin-top:0.15rem;
+        background: #fff;
+        border-radius: 0.2rem;
+    }
+    .order-refund{
+        margin-top:0;
+        border:none;
+    }
+
+    .order-refund .form-item{
+        border-bottom: #f4f4f4 1px solid;
+    }
+    .order-refund .form-item .item-input input{
+        background-color: #fff;
+    }
+</style>

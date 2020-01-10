@@ -1,0 +1,395 @@
+<div class="app-container with-navbar with-tabbar" style="background: #f5f5f5;min-height: 100vh" ng-controller="OrderReviewController">
+    <style>
+
+
+
+        .refundTip-box{
+            width:100%;
+            height:100%;
+            background: rgba(0,0,0,0.6);
+            position: fixed;
+            top:0;
+            left:0;
+        }
+        .refundTip{
+            width:70%;
+            height:3rem;
+            background: #fff;
+            border-radius: 0.08rem;
+            box-shadow: 0 0 0.04rem 0.01rem #ccc;
+            position: absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            margin:auto;
+        }
+        .refundTipa{
+            height:2rem;
+        }
+
+        .refundcon{
+            width:80%;
+            height:2rem;
+            margin:auto;
+            color: #000;
+            font-size:0.26rem;
+            text-align: center;
+            line-height:0.4rem;
+            padding-top:0.5rem;
+            box-sizing: border-box;
+        }
+
+
+        .refundcona{
+            height:1rem;
+            padding-top:0.34rem;
+        }
+        .refundbtn{
+            width: 100%;
+            height:1rem;
+            text-align: center;
+            line-height: 1rem;
+            font-weight:bold;
+            color: #0085d0;
+            border-top:1px solid #f0f0f0;
+
+        }
+        .refundbtn_left{
+            width: 100%;
+            height:100%;
+            text-align: center;
+            line-height: 1rem;
+            font-weight:bold;
+            color: #0085d0;
+
+        }
+
+
+
+        .xin_pins{
+           width:7.2rem;
+            height:auto;
+            margin:auto;
+
+        }
+
+        .xin_pins>.xinp1{
+            width:100%;
+            height:0.8rem;
+            padding-left:0.2rem;
+            padding-right:0.2rem;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.28rem;
+        }
+
+        .xin_pins>.xinp1>.xinpleft{
+            font-size: 0.28rem;
+
+        }
+        .xin_pins>.xinp1>.xinpright{
+            width:2.2rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .xin_pins>.xinp1>.xinpright>.img{
+            width:0.4rem;
+            height:0.4rem;
+            position: relative;
+            outline:none;
+        }
+        .xin_pins>.xinp1>.xinpright>.img>img{
+            display: block;
+            width:0.4rem;
+            height:0.4rem;
+            outline:none;
+        }
+
+        .xin_pins>.xinp1>.xinpright>.img>.score_select{
+            position: absolute;
+            top:0;
+            left:0
+        }
+
+        .grade_select{
+            color: #D0021B;
+        }
+
+        .evaluation_box{
+            width:7.2rem;
+            height:auto;
+            margin:auto;
+            padding-top:0.2rem;
+            padding-bottom:0.2rem;
+            background: #fff;
+            border-radius: 0.2rem;
+            margin-top:0.15rem;
+        }
+        .grade_tip{
+            width:auto;
+            height:0.6rem;
+            font-size: 0.28rem;
+            padding-left: 0.2rem;
+
+        }
+
+        .grade_box{
+            width:90%;
+            margin:auto;
+            height:1rem;
+            padding-left:0.2rem;
+            padding-right:0.2rem;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.26rem;
+            padding-bottom:0.2rem;
+            border-bottom:1px solid #f5f5f5;
+        }
+
+        .grade_box .info-grade{
+            height:1rem;
+            width:3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            outline:none;
+        }
+
+        .grade_box .info-grade .grade-icon{
+            display: block;
+            width:0.6rem;
+            height:0.6rem;
+        }
+
+        .grade_box .info-grade .grade-name{
+            display: block;
+            font-size: 0.28rem;
+            margin-left:0.2rem;
+        }
+
+
+        .review-goods .good-box{
+            width:7.2rem;
+            overflow: hidden;
+            margin:auto;
+            margin-top:0.15rem;
+            border-radius: 0.2rem;
+            background: #fff;
+            border:none;
+            height:2rem;
+        }
+        .review-goods .good-box .goods_nc{
+            width:100%;
+            height:0.6rem;
+            font-size: 0.26rem;
+            color: #999;
+            padding-left: 0.2rem;
+            box-sizing: border-box;
+            line-height: 0.6rem;
+        }
+
+        .review-goods .good-box .goods-item{
+            width:7.2rem;
+            overflow: hidden;
+            margin:auto;
+            border-radius: 0.2rem;
+            background: #fff;
+            border:none;
+            height:1.6rem;
+            padding-right:0.15rem;
+            box-sizing: border-box;
+
+        }
+
+        .review-goods .goods-item .item-info{
+            padding:0.1rem 0;
+            margin-left:0.2rem;
+        }
+
+        .goods-item .item-info .info-name{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+
+
+        .review-goods .goods-item .item-photo{
+            position: unset;
+            float: left;
+            width:1.6rem;
+            height:1.2rem;
+            border:none;
+
+
+        }
+
+        .review-goods .goods-item .item-photo>img{
+            display: block;
+            width:1.2rem;
+            height:100%;
+            margin:auto;
+
+        }
+
+        .item-textarea{
+            width:7.2rem;
+            height:3rem;
+            margin:auto;
+            padding:0.2rem;
+            box-sizing: border-box;
+            background: #fff;
+            border-radius: 0.1rem;
+            margin-top:0.15rem
+        }
+
+        .item-textarea textarea{
+            width:100%;
+            height:2rem;
+            font-size: 0.26rem;
+            border:none;
+        }
+        
+        .review-submit{
+            position: fixed;
+            bottom:0;
+            width:100%;
+            left:0;
+            background: #d0021b;
+            color: #fff;
+            margin:0;
+            border-radius: 0;
+        }
+
+
+    </style>
+
+
+    <div class="navbar fixed-top">
+        <div class="navbar-left hide-weixin" ng-click="goBack()" style="background: #fff;height:40px">
+            <img class="button-icon" ng-src="image/nav-left.png"/>
+
+            <div class="button-text">返回</div>
+        </div>
+        <div class="navbar-title">
+            发表评价
+        </div>
+    </div>
+
+    <div class="app-content" style="background: #f5f5f5" ng-if="isLoaded">
+
+        <!-- Goods -->
+        <div class="review-goods" style="background: #f5f5f5">
+            <div class="good-box">
+                <div class="goods_nc">#{{order.sn}}</div>
+                <div class="goods-item">
+                    <div class="item-photo">
+                        <img ng-src="image/default-photo.png" lazy-img="{{goods.product.default_photo.large}}"/>
+                    </div>
+                    <div class="item-info">
+                        <div class="info-name" style="margin-top:0.1rem;font-size: 0.28rem;line-height:0.34rem">
+                            {{goods.product.name}}【{{goods.order_status_text}}】
+                        </div>
+                        <div class="info-attr" style="font-size: 0.26rem;">
+                            {{goods.property}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="evaluation_box">
+
+                <div class="grade_tip">整体评价</div>
+                <div class="grade_box">
+                    <div class="info-grade" ng-click="touchGood(ENUM.ORDER_GRADE.GOOD)">
+                        <img class="grade-icon" ng-src="image/grade1_select.png" ng-if="ENUM.ORDER_GRADE.GOOD == grade"/>
+                        <img class="grade-icon" ng-src="image/grade1.png" ng-if="ENUM.ORDER_GRADE.GOOD != grade"/>
+                        <span class="grade-name" ng-class="{grade_select:ENUM.ORDER_GRADE.GOOD == grade}">
+                                    好评
+                        </span>
+                    </div>
+                    <div class="info-grade" ng-click="touchGood(ENUM.ORDER_GRADE.MEDIUM)">
+                        <img class="grade-icon" ng-src="image/grade2_select.png" ng-if="ENUM.ORDER_GRADE.MEDIUM == grade"/>
+                        <img class="grade-icon" ng-src="image/grade2.png" ng-if="ENUM.ORDER_GRADE.MEDIUM != grade"/>
+                        <span class="grade-name" ng-class="{grade_select:ENUM.ORDER_GRADE.MEDIUM == grade}">
+                                    中评
+                        </span>
+                    </div>
+                    <div class="info-grade" ng-click="touchGood(ENUM.ORDER_GRADE.BAD)">
+                        <img class="grade-icon" ng-src="image/grade3_select.png" ng-if="ENUM.ORDER_GRADE.BAD == grade"/>
+                        <img class="grade-icon" ng-src="image/grade3.png" ng-if="ENUM.ORDER_GRADE.BAD != grade"/>
+                        <span class="grade-name" ng-class="{grade_select:ENUM.ORDER_GRADE.BAD == grade}">
+                                    差评
+                        </span>
+                    </div>
+                </div>
+                <div class="xin_pins">
+                   <div class="xinp1">
+                       <div class="xinpleft">描述相符</div>
+                       <div class="xinpright">
+                           <div class="img" ng-repeat="score in scores track by $index" ng-click="tochscore(score,1)">
+                               <img ng-if="score_select1<score" src="image/score.png" alt="" >
+                               <img class="score_select" ng-if="score_select1>=score" src="image/score_select.png" alt="" >
+                           </div>
+                       </div>
+                   </div>
+                    <div class="xinp1">
+                        <div class="xinpleft">商品质量</div>
+                        <div class="xinpright">
+                            <div class="img" ng-repeat="score in scores track by $index" ng-click="tochscore(score,2)">
+                                <img ng-if="score_select2<score" src="image/score.png" alt="" >
+                                <img class="score_select" ng-if="score_select2>=score" src="image/score_select.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xinp1">
+                        <div class="xinpleft">物流包装</div>
+                        <div class="xinpright">
+                            <div class="img" ng-repeat="score in scores track by $index" ng-click="tochscore(score,3)">
+                                <img ng-if="score_select3<score" src="image/score.png" alt="" >
+                                <img class="score_select" ng-if="score_select3>=score" src="image/score_select.png" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-textarea">
+                <div class="grade_tip" style="padding:0">文字评价</div>
+                <textarea class="textarea" type="text" maxlength="150" placeholder="感觉商品有什么不足之处，请详细描述下吧！最好不要超过150个字哦！" ng-model="comment">{{comment}}</textarea>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="review-submit" ng-click="touchSubmit()">
+        提交
+    </div>
+
+    <div class="refundTip-box" ng-if="nameTipshowa">
+        <div class="refundTip refundTipa">
+            <div class="refundcon refundcona">{{tip_a}}
+            </div>
+            <div class="refundbtn">
+                <div class="refundbtn_left" ng-click="torefundTipa($event)">确定</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function customizeInputBack() {
+        var customizeInputTop = $(window).scrollTop()+1;
+        $(window).scrollTop(customizeInputTop);
+    }
+
+    $(document).on('blur','.textarea',function(){
+        customizeInputBack();
+    });
+</script>

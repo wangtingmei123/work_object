@@ -1,0 +1,138 @@
+<div ng-controller="BrandallController" style="min-height:2000px">
+
+    <header class="head headBorder0">
+        <div class="headBox">
+            <a href="javascript:;" class="back" ng-click="goBack()"></a>
+            <p></p>
+        </div>
+    </header>
+
+    <div class="pp_list">
+        <span ng-if="items && items.length && items[0].szm!=' '" ng-repeat="items in letter_sort track by $index" ng-click="tomaodian(items[0].szm)">
+            {{items[0].szm}}
+        </span>
+        <span ng-if="items && items.length && items[0].szm==' '" ng-repeat="items in letter_sort track by $index"  ng-click="tomaodian('#')">
+            #
+        </span>
+    </div>
+
+    <div class="pp_list pp_list_position">
+        <span ng-if="items && items.length && items[0].szm!=' '" ng-repeat="items in letter_sort track by $index" ng-click="tomaodian(items[0].szm)">
+            {{items[0].szm}}
+        </span>
+        <span ng-if="items && items.length && items[0].szm==' '" ng-repeat="items in letter_sort track by $index" ng-click="tomaodian('#')">
+            #
+        </span>
+    </div>
+
+
+    <div class="pp_con" ng-if="items && items.length" ng-repeat="items in letter_sort track by $index">
+
+        <div class="pp_title"  ng-if="items[0].szm!=' '">{{items[0].szm}}</div>
+        <div class="pp_title" ng-if="items[0].szm==' '">#</div>
+        <ul class="slidebarBox" >
+            <li  ng-repeat="item in items track by $index"  ng-click="touchSearchResult(item.id)">
+                <div class="item_img">
+                    <img src="{{item.logo.large}}">
+                </div>
+                <a href="javascript:void(0);">{{item.name}}</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+
+</div>
+
+<style>
+    .pp_list{
+        width:100%;
+        height:auto;
+        overflow: hidden;
+
+    }
+
+    .pp_list_position{
+        position: fixed;
+        top:0;
+        left:0;
+        z-index: 999;
+        background: #fff;
+        display: none;
+        box-shadow: 0 0.01rem 0.08rem 0.02rem #ccc;
+
+    }
+
+    .pp_list>span{
+        display: block;
+        width:0.5rem;
+        height:0.5rem;
+        /*background: #f0f0f0;*/
+        color: #000;
+        text-align: center;
+        line-height:0.5rem;
+        font-size:0.3rem;
+        font-weight:bold;
+        float: left;
+        margin-left:0.17rem;
+        margin-top:0.15rem;
+    }
+
+    .pp_con{
+        width:100%;
+        /*margin-top:0.3rem;*/
+    }
+
+    .pp_title{
+        width:100%;
+        height:0.5rem;
+        background: #f8f8f8;
+        font-size:0.3rem;
+        padding-left:0.15rem;
+        line-height:0.5rem;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .pp_con .slidebarBox{
+        width:100%;
+        height:auto;
+    }
+
+    .pp_con .slidebarBox>li{
+        width:100%;
+        height:1.2rem;
+        border-bottom:1px solid #f8f8f8;
+    }
+
+    .pp_con .slidebarBox>li>.item_img{
+        display: block;
+        width:0.9rem;
+        height: 0.9rem;
+        margin-left:0.15rem;
+        float: left;
+        margin-top:0.15rem;
+        position: relative;
+        background: #fff;
+    }
+
+    .pp_con .slidebarBox>li>.item_img img{
+        position: absolute;
+        display: block;
+        width: 100%;
+        height:auto;
+        top:0;bottom:0;left:0;right:0;margin:auto;
+    }
+
+    .pp_con .slidebarBox>li>a{
+        margin-left:0.4rem;
+        float: left;
+        line-height: 1.2rem;
+        color: #000;
+    }
+</style>
+
+
+

@@ -1,0 +1,144 @@
+<div class="bg" ng-controller="ProfileController">
+    <header ng-if="user.company.id==47" class="head headBorder0">
+        <div class="headBox">
+            <a href="javascript:;" class="back" ng-click="tozxlist()"></a>
+            <p style="line-height:0.84rem;">个人中心</p>
+        </div>
+    </header>
+
+    <div class="mebCenterTop">
+
+        <div class="mebCenterTopBox">
+            <div class="photo"><img ng-src="image/default-avatar.png" lazy-img="{{user.avatar.thumb}}"></div>
+            <div class="mebinfo">
+                <p>{{user.company.real_name}}</p>
+                <p ng-if="isSignIn()&&user.company.id==47">{{user.company.department_name}}</p>
+                <p ng-if="isSignIn()&&user.company.id!=47">{{user.telphone}}</p>
+                <a ng-if="isSignIn()" ng-click="touchAccount()" class="cardLink">福利余额
+                      <span ng-if="isSignIn()&&user.company.id==47">￥{{cesum}}  </span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <div class="orderLink">
+        <a ng-click="touchOrderCreated()">
+            <span class="icon o1"></span>
+            <p>待付款</p>
+        </a>
+        <a ng-click="touchOrderPayed()">
+            <span class="icon o2"></span>
+            <p>待发货</p>
+        </a>
+        <a ng-click="touchOrderDelivering()">
+            <span class="icon o3"></span>
+            <p>待收货</p>
+        </a>
+        <a ng-click="touchOrderFinished()">
+            <span class="icon o4"></span>
+            <p>已完成</p>
+        </a>
+        <a ng-click="touchAllOrders()">
+            <span class="icon o5"></span>
+            <p>全部订单</p>
+        </a>
+    </div>
+    <ul class="mebCenterCare" ng-if="user.company.id!=47">
+        <li ng-click="touchcoupons()">
+            <div class="num" >{{couponslength}}</div>
+            <p>优惠券</p>
+        </li>
+        <li ng-click="touchFav()">
+            <div class="num">{{myFavoriteModel.products.length > 0 ? myFavoriteModel.products.length :0}}<i></i></div>
+            <p>商品关注</p>
+        </li>
+        <li>
+            <div class="num">0</div>
+            <p>品牌关注</p>
+        </li>
+        <li>
+            <div class="num">0</div>
+            <p>活动关注</p>
+        </li>
+
+    </ul>
+    <ul class="centerLink">
+        <li ng-click="touchKnow()" ng-if="user.company.id!=47">
+            <a href="javascript:void(0);" class="box">
+                <span class="label">退换货须知</span>
+            </a>
+        </li>
+        <li ng-if="user.company.id==47">
+            <a href="javascript:void(0);" class="box" style="background: none">
+                <span class="label">退换货须知：下单次日12：00后不能取消订单</span>
+            </a>
+        </li>
+        <li ng-click="touchAddress()">
+            <a href="javascript:void(0);" class="box">
+                <span class="label">收货地址</span>
+            </a>
+        </li>
+        <li ng-if="user.company.id==47">
+            <a href="javascript:void(0);" class="box" style="background: none">
+                <span class="label">客服热线：400-670-0690</span>
+            </a>
+        </li>
+        <li ng-click="touchPassword()" ng-if="user.company.id!=47">
+            <a href="javascript:void(0);" class="box">
+                <span class="label">修改密码</span>
+            </a>
+        </li>
+    </ul>
+    <div class="exitLogin"><div class="exitBtn" ng-click="touchSignout()" ng-if="isSignIn()&&user.company.id!=47">退出登录</div></div>
+    <footer class="nav" ng-if="user.company.id!=47">
+        <div class="navFixed">
+            <ul class="navBox">
+                <li class="nhome" ng-click="goHome()"><a href="javascript:void(0);">
+                    <span class="icon"></span>
+                    <p>首页</p>
+                </a></li>
+                <li class="ncategory" ng-click="goCategory()"><a href="javascript:void(0);">
+                    <span class="icon"></span>
+                    <p>分类</p>
+                </a></li>
+                <li class='nbuybus' ng-click="goCart()"><a href="javascript:void(0);">
+                    <span class="icon"></span>
+                    <p>购物车</p>
+                </a></li>
+                <li class="ncenter active" ng-click="goProfile()"><a href="javascript:void(0);">
+                    <span class="icon"></span>
+                    <p>个人中心</p>
+                </a></li>
+            </ul>
+        </div>
+    </footer>
+</div>
+
+<style>
+
+
+
+    .backa{
+        position: absolute;
+        top:0.2rem;
+        left:0.2rem;
+        width: 44px;
+        height: 44px;
+        background: url(../../image/newicon/icon_back.png) center center no-repeat;
+        background-size: 9px 15px;
+        text-decoration:none;
+        color: #fff;
+        z-index: 9999;
+    }
+    .orderLink{
+        border-radius: 0.2rem;
+    }
+    .mebCenterCare{
+        border-radius: 0.2rem;
+    }
+    .centerLink{
+        border-radius: 0.2rem;
+        overflow: hidden;
+
+    }
+</style>

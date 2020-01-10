@@ -1,0 +1,498 @@
+<style>
+    .quickLink a img{
+        border-radius: 0.06rem;
+
+    }
+
+    .trand .trandList .img{
+        border-radius: 0.06rem;
+        overflow: hidden;
+    }
+
+    .hotlist .img img{
+
+    }
+    .more_1{
+        width: 1.4rem;
+        margin:auto;
+        height:0.8rem;
+        font-size:0.3rem;
+        font-weight:bold;
+        line-height:0.8rem;
+        border-bottom:1px solid #f2f2f2;
+        margin-top:0.8rem;
+        text-align: center;
+
+    }
+
+    .more_2{
+        width: auto;
+        margin:auto;
+        height:0.4rem;
+        font-size:0.26rem;
+        line-height:0.5rem;
+        text-align: center;
+
+    }
+
+    .look_more{
+        display: block;
+        width:80%;
+        height:auto;
+        margin:auto;
+        vertical-align: middle;
+        margin-top:1.2rem;
+    }
+
+    .goods .idetify{
+        margin-top:0;
+        margin-bottom:0;
+        border-radius: 0.2rem;
+        overflow: hidden;
+    }
+    .goods .idetify .img{
+        border-radius: 0.1rem;
+    }
+
+
+    .swiper-wrapperaa{
+        display: -webkit-box;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling:touch;
+        position: static;
+        margin-right:0.1rem;
+    }
+
+    .homehotlist .swiper-slide{
+        height:3.25rem;
+        border:none;
+        padding: 0;
+        width:2.1rem !important;
+        background: #fff;
+        margin-left:0.1rem;
+        margin-right:0.1rem;
+        margin-top:0.2rem;
+        border-radius: 0.2rem;
+        overflow: hidden;
+    }
+    .homehotlist .swiper-slide a{
+        height:auto;
+        width:100%;
+        /*padding: 0.1rem;*/
+        background: #fff;
+
+        border:none;
+    }
+    .hotlist{
+        height:3.75rem;
+        padding-bottom: 0.1rem;
+        background: #f2f2f2;
+
+        /*padding-left:0.1rem;*/
+        padding-right:0.1rem;
+        border-bottom:0;
+    }
+
+    .homehotlist .name{
+        height: 0.6rem;
+        line-height: 0.3rem;
+        font-size: 0.26rem;
+        color: #4a4a4a;
+        padding:0;
+        padding-left: 0.1rem;
+        padding-right: 0.1rem;
+    }
+
+    .homehotlist .price{
+        padding:0;
+        font-size:0.28rem;
+        height:auto;
+        text-align: center;
+        padding-left: 0.1rem;
+        padding-right: 0.1rem;
+    }
+
+
+
+
+
+
+    .jiazia-box{
+        width:100%;
+        height:100vh;
+        position: fixed;
+        top:0;
+        left:0;
+        background: rgba(0,0,0,0.5);
+        z-index: 9999;
+        display: block;
+    }
+    .jiazia{
+        width:1.5rem;
+        height:1.5rem;
+        position: absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        margin:auto;
+
+    }
+
+    .jiazia>img{
+        display: block;
+        width:100%;
+        height:100%;
+    }
+
+
+    .swiper-pagination{
+        z-index: 999999;
+    }
+
+    .category{
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+
+
+    /* 滚动条最外面轨道样式 :: 前面保留一个空格*/
+    .category ::-webkit-scrollbar {
+        width: 2px; /* 对纵向滚动条起作用*/
+        height: 2px; /* 对横向滚动条起作用*/
+        background: #fff;
+        display: none; /* 不显示滚动条 */
+    }
+
+    /* 滚动条最外面滑块样式 :: 前面保留一个空格*/
+    .category ::-webkit-scrollbar-thumb {
+        background: #fff;
+        border-radius: 2px;
+        width: 2px; /* 对纵向滚动条起作用*/
+        height: 2px; /* 对横向滚动条起作用*/
+    }
+
+
+
+
+
+    .cate_box{
+        width:10.5rem;
+        height:100%;
+
+    }
+
+   .category .cate_box li{
+        width:1.5rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .cate_box li a img{
+        width:0.9rem;
+        height:0.9rem;
+    }
+
+    .cate_box li a p{
+        font-size:0.24rem;
+        margin-top:0.16rem;
+    }
+
+    .tap_hua{
+        width:45px;
+        height:0.06rem;
+        background:#ccc;
+        margin:auto;
+        border-radius: 0.1rem;
+        overflow: hidden;
+        margin-bottom:0.14rem;
+        position: relative;
+        -webkit-transform: translateZ(0);
+        -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+    }
+
+    .tap_center{
+        width:30px;
+        height:100%;
+        background: #ff6700;
+        position: absolute;
+        left:0;
+        top:0;
+        -webkit-transform: translateZ(0);
+        border-radius: 0.1rem;
+        -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+
+    }
+
+    .jingpin{
+        width:100%;
+        height:2.2rem;
+        position: relative;
+        /*margin-top:0.2rem;*/
+
+    }
+    .jingpin>img{
+        display: block;
+        width:7.5rem;
+        height:2.7rem;
+        margin:auto;
+        position: absolute;
+        top:0;
+        left:0;
+
+    }
+
+</style>
+
+<div ng-controller="HomeController">
+
+    <div class="homeTop">
+        <div class="homeSearch">
+            <div class="homeSearchBox" ng-click="touchSearch()"><input type="" name=""></div>
+        </div>
+        <!--<div ng-if="banners && banners.length">-->
+            <!--<div ng-repeat="banner in banners track by $index" ng-click="touchBanner(banner)">-->
+                <!--<img ng-src="{{banner.photo.large || 'image/default-photo.png'}}"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="swiper-container" ng-if="banners && banners.length">
+            <div class="swiper-wrapper" style="position:relative;">
+                <div class="swiper-slide" ng-repeat="banner in banners track by $index" ng-click="touchBanner(banner)">
+                    <img ng-src="{{banner.photo.large || 'image/default-photo.png'}}"/>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="category">
+        <ul class="cate_box">
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=1950&navTitle=%E5%9C%BA%E9%A6%86%E9%A2%84%E8%AE%A2&navStyle=default')">
+                    <img ng-src="image/category/c1.png">
+                    <p>场馆预订</p>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2103&navTitle=%E8%BF%90%E5%8A%A8%E6%9C%8D%E9%A5%B0&navStyle=default')">
+                    <img src="image/category/c2.png">
+                    <p>运动服饰</p>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2136&navTitle=%E8%BF%90%E5%8A%A8%E8%A3%85%E5%A4%87&navStyle=default')">
+                    <img ng-src="image/category/c3.png">
+                    <p>运动装备</p>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2095&navTitle=%E7%94%9F%E6%B4%BB%E6%9C%8D%E5%8A%A1&navStyle=default')">
+                    <img src="image/category/c4.png">
+                    <p>生活服务</p>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2155&navTitle=%E5%81%A5%E5%BA%B7%E9%A3%9F%E5%93%81&navStyle=default')">
+                    <img src="image/category/c5.png">
+                    <p>健康食品</p>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2231&navTitle=%E5%9B%A2%E9%98%9F%E6%9C%8D%E5%8A%A1&navStyle=default')">
+                    <img ng-src="image/category/c8.png">
+                    <p>团队服务</p>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2313&navTitle=%E5%8A%B3%E4%BF%9D%E6%B6%88%E9%98%B2&navStyle=default')">
+                    <img ng-src="image/category/laobao.png">
+                    <p>劳保消防</p>
+                </a>
+            </li>
+
+
+
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2172&navTitle=%E5%AE%B6%E5%B1%85%E6%97%A5%E7%94%A8&navStyle=default')">
+                    <img src="image/category/c6.png">
+                    <p>家居日用</p>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2192&navTitle=%E6%95%B0%E7%A0%81%E7%94%B5%E5%99%A8&navStyle=default')">
+                    <img src="image/category/c7.png">
+                    <p>数码电器</p>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2249&navTitle=%E7%AE%B1%E5%8C%85%E9%92%9F%E8%A1%A8&navStyle=default')">
+                    <img ng-src="image/category/zhongbiao.png">
+                    <p>箱包钟表</p>
+                </a>
+            </li>
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2245&navTitle=%E4%B8%AA%E6%8A%A4%E6%B8%85%E6%B4%81&navStyle=default')">
+                    <img ng-src="image/category/gehu.png">
+                    <p>个护清洁</p>
+                </a>
+            </li>
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2320&navTitle=%E6%AF%8D%E5%A9%B4%E7%94%A8%E5%93%81&navStyle=default')">
+                    <img ng-src="image/category/muyin.png">
+                    <p>母婴用品</p>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2257&navTitle=%E6%B1%BD%E8%BD%A6%E7%94%A8%E5%93%81&navStyle=default')">
+                    <img ng-src="image/category/qiche.png">
+                    <p>汽车用品</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tap_hua">
+        <div class="tap_center"></div>
+    </div>
+
+    <!--精品专区-->
+    <div ng-if="activityList && activityList.length">
+        <div class="jingpin"  ng-click="touchActivity(list)" ng-if="list.cate_id == 7" ng-repeat="list in activityList track by $index">
+            <img src="image/jpzq_img.gif" alt="">
+        </div>
+    </div>
+
+    <div style="background: #e61122;overflow: hidden;border-top-right-radius: 0.15rem;border-top-left-radius: 0.15rem">
+        <ul class="partOne" style="margin-top:0.55rem;padding-bottom:8px" ng-if="activityList && activityList.length">
+            <li ng-if="list.cate_id == one_cate_id" ng-repeat="list in activityList track by $index">
+                <div class="img" ng-click="touchActivity(list)">
+                    <img ng-src="image/default-photo.png" style="border-radius: 0.1rem" lazy-img="{{list.act_banner}}"></div>
+                <h3></h3>
+                <p style="color: #fff;font-weight: normal">{{list.act_name}}</p>
+            </li>
+        </ul>
+        <div class="banner" ng-if="activityList && activityList.length" style="padding:0 8px">
+            <div ng-click="touchActivity(list)" ng-if="list.cate_id == two_cate_id" ng-repeat="list in activityList track by $index">
+                <img ng-src="image/default-photo.png" style="border-radius: 0.1rem;width:100%;margin:auto" lazy-img="{{list.act_banner}}">
+            </div>
+        </div>
+        <ul class="quickLink" ng-if="activityList && activityList.length">
+            <li ng-if="list.cate_id == three_cate_id" ng-repeat="list in activityList track by $index">
+                <a ng-click="touchActivity(list)">
+                    <img ng-src="image/default-photo.png" style="border-radius: 0.1rem" lazy-img="{{list.act_banner}}">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="trand">
+        <div class="trandTit">
+            <div style="font-size: 0.28rem;margin:auto;margin-top:0.2rem;letter-spacing: 0.02rem;color: #000;">品牌推荐</div>
+            <p style="font-size: 0.24rem;margin:auto;margin-top:0.04rem;letter-spacing: 0.01rem;">尽情释放你我</p>
+        </div>
+        <ul class="trandList" ng-if="brand_arr && brand_arr.length" style="overflow: hidden">
+            <li ng-click="touchSearchResult(brand_item.brand_id)" ng-repeat="brand_item in brand_arr track by $index">
+                <div class="img">
+                    <img class="cover" src="{{brand_item.img}}">
+                    <div class="logo"><img src=""></div>
+                </div>
+                <p>{{brand_item.brand_name}}</p>
+            </li>
+        </ul>
+    </div>
+    <div class="goods" ng-if="activityList && activityList.length">
+        <div class="tit" style="background: #f2f2f2;padding-top:0.2rem;padding-bottom:0.2rem">
+            <div style="font-size: 0.28rem;margin:auto;margin-top:0.1rem;letter-spacing: 0.02rem;color: #000;">运动经典</div>
+            <p style="font-size: 0.24rem;margin:auto;margin-top:0.04rem;letter-spacing: 0.01rem;">让运动与众不同</p>
+        </div>
+        <div ng-repeat="list in activityList2 track by $index" style="background: #f2f2f2">
+            <div ng-if="list.cate_id == four_cate_id" >
+                <div class="idetify">
+                    <div class="img">
+                        <img ng-click="touchActivity(list)" ng-src="image/default-photo.png" lazy-img="{{list.act_banner}}">
+                    </div>
+                </div>
+
+                <!--<ul class="product" ng-if="list.goods_list">-->
+                    <!--<li ng-repeat="goods in list.goods_list track by $index">-->
+                        <!--<div class="img"><img ng-src="image/default-photo.png" lazy-img="{{goods.default_photo.thumb}}"></div>-->
+                        <!--<div class="word">-->
+                            <!--<div class="name">{{goods.name}}</div>-->
+                            <!--<div class="price">{{goods.current_price| currency:"￥"}}</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <div class="swiper-container hotlist homehotlist swiper{{$index}}" >
+                    <div class="swiper-wrapper swiper-wrapperaa" >
+                        <div class="swiper-slide swiper-slideaa" ng-repeat="goods in list.goods_list track by $index" ng-click="touchProduct(goods)"><a>
+                            <div class="img"><img ng-src="{{goods.default_photo.thumb}}"></div>
+                            <div class="name">{{goods.name}}</div>
+                            <div class="price">{{goods.current_price| currency:"￥"}}</div>
+                        </a></div>
+
+                        <div class="swiper-slide swiper-slideaa"  ng-click="touchActivity(list)"><a>
+                            <div class="more_1">查看更多</div>
+                            <div class="more_2">more</div>
+                            <!--<img class="look_more" ng-src="image/loook_more.png" alt="">-->
+                        </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="nav">
+        <div class="navFixed" style="z-index:3;">
+            <ul class="navBox">
+                <li class="nhome  active" ng-click="goHome()"><a href="javascript:void(0);">
+                    <span class="icon"></span>
+                    <p>首页</p>
+                </a></li>
+                <li class="ncategory" ng-click="goCategory()"><a href="javascript:void(0);">
+                    <span class="icon"></span>
+                    <p>分类</p>
+                </a></li>
+                <li class='nbuybus' ng-click="goCart()"><a href="javascript:void(0);">
+                    <span class="icon"></span><!--ng-if="cartModel.total > 0"-->
+                    <p>购物车</p>
+                </a></li>
+                <li class="ncenter" ng-click="goProfile()"><a href="javascript:void(0);">
+                    <span class="icon"></span>
+                    <p>个人中心</p>
+                </a></li>
+            </ul>
+        </div>
+    </footer>
+    <!--<div class="jiazia-box">-->
+        <!--<div class="jiazia"><img src="image/jiazai.gif" alt=""></div>-->
+    <!--</div>-->
+</div>
+    <script>
+        var swiper2 = new Swiper('.homehotlist', {
+            slidesPerView: 4,
+            spaceBetween: 0
+        });
+
+
+        $(document).ready(function() {
+            $('.category').scroll(function (e) {
+                var scroll_left=$(".category").scrollLeft()/10;
+                $(".tap_center").css({left: scroll_left+'px'});
+        });
+
+        })
+
+
+    </script>
+
+
