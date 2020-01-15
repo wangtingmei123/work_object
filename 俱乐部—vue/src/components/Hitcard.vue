@@ -4,7 +4,7 @@
         <div class="image-item space" @click="showActionSheet()">
             <div class="image-up"></div>
         </div>
-        <input id="upload_file" type="file" style="display: none;" multiple="multiple" accept='image/*' name="file" @change="fileChange($event)"/>
+        <input id="upload_file" type="file" style="display: none;" accept='image/*' name="file" capture="camera"  @change="fileChange($event)"/>
         <baidu-map class="map" :center="center" :zoom="zoom">
             <bm-marker :position="center" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
                 <bm-label :content="address_name" :labelStyle="{color: 'red', fontSize : '12px'}" :offset="{width: -35, height: 30}"/>
@@ -33,7 +33,7 @@
         <div class='torefund_box2' v-if="hit_nn">
             <div class='tfright2' >
                 <div class="tfrboxsc" v-if="imgList.length >=1">
-                    <img class="tfrboxscimg" :src="imgList[0].file.src" style='width:100%;height:auto' >
+                    <img class="tfrboxscimg" :src="imgList[0]" style='width:100%;height:auto' >
                     <img  class="del_img"  :src="del"  style='width:0.50rem;height:0.50rem;' @click="fileDel(0)">
                 </div>
                 <div class="tfrboxsc tfrboxsca" @click="fileClick()" v-if="imgList.length < 1">
@@ -179,7 +179,7 @@
                     "issue_id":_this.issue_id,
                     "longitude":_this.getLongitude,
                     "latitude":_this.getLatitude,
-                    "image_tmp":_this.imgList[0].file.src
+                    "image_tmp":_this.imgList[0]
                 },
                 { headers: {
                         'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
@@ -389,10 +389,7 @@
                     this.datas.append("file",this.files[i]);
                 }
                 this.show1=false;
-                console.log(typeof this.files);
-                console.log(this.files);
-                console.log("***")
-                console.log(this.datas)
+
                 // if()
                 if (!el.target.files[0].size) return;
                 this.fileList(el.target);
@@ -434,23 +431,40 @@
                 })
             },
             fileAdd(file) {
+               var _this=this
                 //总大小
                 this.size = this.size + file.size;
                 //判断是否为图片文件
                 if (file.type.indexOf('image') == -1) {
                     file.src = 'wenjian.png';
-                    this.imgList.push({
-                        file
-                    });
+                    lrz( file.src, {
+                        quality: 0.5    //自定义使用压缩方式
+                    }).then(function(rst) {
+                        //成功时执行
+                        _this.imgList.push(rst.base64);
+                    }).catch(function(error) {
+                        //失败时执行
+                        _this.imgList.push(file.src);
+                    }).always(function() {
+                        //不管成功或失败，都会执行
+                    })
                 } else {
                     let reader = new FileReader();
                     reader.vue = this;
                     reader.readAsDataURL(file);
                     reader.onload = function () {
                         file.src = this.result;
-                        this.vue.imgList.push({
-                            file
-                        });
+                        lrz( file.src, {
+                            quality: 0.5    //自定义使用压缩方式
+                        }).then(function(rst) {
+                            //成功时执行
+                            _this.imgList.push(rst.base64);
+                        }).catch(function(error) {
+                            //失败时执行
+                            _this.imgList.push(file.src);
+                        }).always(function() {
+                            //不管成功或失败，都会执行
+                        })
                         // this.file_src.push(file.src)
 
                     }
@@ -459,7 +473,7 @@
 
             },
             fileDel(index) {
-                this.size = this.size - this.imgList[index].file.size;//总大小
+//                this.size = this.size - this.imgList[index].file.size;//总大小
                 this.imgList.splice(index, 1);
             },
             bytesToSize(bytes) {

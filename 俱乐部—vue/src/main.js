@@ -4,16 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Axios from 'axios'
-//设置axios为form-data
-// Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-// Axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
-// Axios.defaults.transformRequest = [function (data) {
-//     let ret = ''
-//     for (let it in data) {
-//         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-//     }
-//     return ret
-// }]
+import lrz from 'lrz'
 Vue.prototype.$axios = Axios;
 import global from './assets/public/Global'//引用文件
 

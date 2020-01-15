@@ -10,7 +10,7 @@
                 </div>
             </div>
 
-            <div class="apply_list_box" v-show="audit_list.length>0" ref="opBottomEcharts2">
+            <div class="apply_list_box" v-show="audit_list.length>0" ref="opBottomEcharts2" @scroll="gotoScroll()">
                 <div class="apply_list" v-for="(item,index) in audit_list">
                     <div class="apply_user">
                         <div class="apply_name">{{item.user_name}}</div>
@@ -72,32 +72,35 @@
                 select_list:[],
                 clientHeight:'',
                 scrollHeight:'',
+                scrollTop:'',
                 club_id:'',
                 audit_list:[],
                 page:0,
-                page_end:true
+                page_end:true,
+                loadFlag:true
                 // select:[1,2,3,4,5]
             }
         },
         created() {
+            this.club_id=this.$route.query.club_id;
            this.request()
 
         },
         mounted() {
-            this.clientHeight = this.$refs.opBottomEcharts2.clientHeight;
-            this.scrollHeight=this.$refs.opBottomEcharts2.scrollHeight;
-            this.$refs.opBottomEcharts2.addEventListener('scroll',this.gotoScroll)
+
         },
         methods: {
             gotoScroll(){
                 let _this=this
                 console.log("ppp")
-                let scrollTop=_this.$refs.opBottomEcharts2.scrollTop;
+                this.scrollTop=this.$refs.opBottomEcharts3.scrollTop;
+                this.clientHeight = this.$refs.opBottomEcharts3.clientHeight;
+                this.scrollHeight=this.$refs.opBottomEcharts3.scrollHeight;
                 //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
-                console.log(scrollTop+"+"+_this.clientHeight+"+"+_this.scrollHeight)
-                if(scrollTop+_this.clientHeight >= _this.scrollHeight){
-
-                    if(_this.page_end){
+                console.log(this.scrollTop+"+"+_this.clientHeight+"+"+_this.scrollHeight)
+                if(this.scrollTop+_this.clientHeight >= _this.scrollHeight-10){
+                    if(_this.page_end && _this.loadFlag==false){
+                        _this.loadFlag=true
                         let page = _this.page+1;
                         _this.page=page;
                         console.log(_this.page)
@@ -109,8 +112,9 @@
             },
             request(){
                 let _this=this;
-                this.club_id=this.$route.query.club_id;
-                this.$axios.get("/club-users",{
+
+                if(_this.loadFlag){
+                _this.$axios.get("/club-users",{
                     headers: {
                         'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
                     },
@@ -122,17 +126,17 @@
                 }).then(res=>{
                     console.log(res)
                     if(res.status==200){
-                        if(res.data.data.length<15){
+                        if(res.data.data.length<_this.GLOBAL.page_total){
                             _this.page_end=false
                         }
                         let audit_list=_this.audit_list;
                         if(audit_list.length==0){
                             audit_list=res.data.data
                         }else{
-                            audit_list.concat(res.data.data);
+                            audit_list.push.apply(audit_list,res.data.data);
                         }
                         _this.audit_list=audit_list;
-
+                        _this.loadFlag=false;
 
                     }else {
                         _this.showa=true;
@@ -142,24 +146,13 @@
                     .catch(err=>{
                         console.log(err)
                     })
+                }
 
             },
             getpagedata(){
                 console.log(this.page)
             },
-            gotoScroll(){
-                console.log("ppp")
-                let scrollTop=document.body.scrollTop|| document.documentElement.scrollTop;
 
-                //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
-                console.log(scrollTop+"+"+this.clientHeight+"+"+this.scrollHeight)
-                if(scrollTop+this.clientHeight >= this.scrollHeight+74){
-                    this.page=2
-                    console.log("bbb")
-                    console.log("cccc")
-                    this.getpagedata()
-                }
-            },
             select(e,event){
 
                 var select_list=this.select_list;

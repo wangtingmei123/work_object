@@ -114,16 +114,25 @@
                 </div>
             </div>
         </div>
-        <div class="detail_but" v-if="is_authorized==1">
-            <div class="detail_but1"><span>￥</span>1100.00</div>
-            <div class="detail_but2">报名缴费</div>
+
+
+        <div class="creat_club_box" v-if="active_info.status==0 ||active_info.status==1" @click="notosing()">
+            <div class="creat_club">取消报名</div>
         </div>
-
-
-        <div class="creat_club_box" v-if="is_authorized==0&&active_info.status==1" @click="to_editactive(active_info.id,active_info.issue_nums)">
+        <div class="detail_but" v-if="active_info.status==0">
+            <div class="detail_but1"><span>￥</span>{{active_info.entry_fees/100}}</div>
+            <div class="detail_but2" @click="tosing()">报名缴费</div>
+        </div>
+        <div class="creat_club_box" v-if="is_authorized==1&&(active_info.status==0 ||active_info.status==1)" @click="to_editactive(active_info.id,active_info.issue_nums)">
             <div class="creat_club">编辑</div>
         </div>
 
+        <Eject  type='alert' @took='okfall' :showstate='showa'  >
+            <div slot='text'>{{show_tip}}</div>
+        </Eject>
+        <Eject  type='alert'  @tocancel="nofall"  @took='okfall1' :showstate='showa1' :cancel='cancel' >
+            <div slot='text'>{{show_tip1}}</div>
+        </Eject>
         <div class="hide_tip_box" v-show="hidea">
             <div class="hide_tip">{{hide_tip}}</div>
         </div>
@@ -134,14 +143,19 @@
 
 
 <script>
-
+    import Eject from './eject'
     import Header from './Header'
     export default {
-        components: { Header },
+        components: { Header,Eject },
         name: '',
         data() {
             return {
-                hide_tip:'哈哈哈哈哈哈哈哈哈',
+                cancel:true,
+                showa:false,
+                showa1:false,
+                show_tip:'',
+                show_tip1:'',
+                hide_tip:'',
                 hidea:false,
                 title: '活动详情',
                 show: true,
@@ -172,6 +186,72 @@
 
         },
         methods: {
+            tosing(){
+                let _this=this
+                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                    _this.$axios.post("/activity-users",
+                        {
+                            "act_id": localStorage.getItem('active_id')
+                        },{
+                            headers: {
+                                'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                            }
+                        }).then(res=>{
+                        if(res.status==200){
+                            _this.hidea=true;
+                            _this.hide_tip='报名成功';
+                            setTimeout(function(){
+                                _this.hidea=false;
+                            },1500)
+                        }else{
+                            _this.showa=true;
+                            _this.show_tip=res.data.message;
+                            return
+                        }
+                    })
+                        .catch(err=>{
+                        })
+
+                }else{
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
+
+            },
+            notosing(){
+                let _this=this
+                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                    _this.$axios.delete("/activity-users", {
+                        headers: {
+                            'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                        },
+                        params:{
+                            'act_id':localStorage.getItem('active_id')
+                        }
+
+                    }).then(res=>{
+                        if(res.status==200){
+                            _this.hidea=true;
+                            _this.hide_tip='取消报名成功';
+                            setTimeout(function(){
+                                _this.hidea=false;
+                            },1500)
+                        }else{
+                            _this.showa=true;
+                            _this.show_tip=res.data.message;
+                            return
+                        }
+                    })
+                        .catch(err=>{
+                        })
+                }else {
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
+
+            },
 
             to_issuesactive(){
                 let _this=this
@@ -186,7 +266,6 @@
 
                     if(res.status==200){
                         _this.issuesactive=res.data;
-
                     }else{
                         _this.showa=true;
                         _this.show_tip=res.data.message;
@@ -238,7 +317,17 @@
             },
             to_issueactive(id){
                 this.$router.push({path:'./issueactivedetail',query:{id:id}})
-            }
+            },
+            okfall(){
+                this.showa=false;
+            },
+            okfall1(){
+                this.showa1=false;
+            },
+            nofall(){
+                this.showa=false;
+            },
+
         }
 
     }
@@ -290,7 +379,7 @@
         align-items: center;
         background: #fff;
         border-top:1px solid #e6e6e6;
-        font-weight: bold;
+
         box-shadow: 0 0 0.08rem #ccc;
     }
     .detail_but>.detail_but1{
@@ -304,6 +393,7 @@
         line-height: 1rem;
         font-family: DINCondensedC;
 
+
     }
     .detail_but>.detail_but1>span{
         font-size: 0.3rem;
@@ -313,7 +403,7 @@
         background: #ff5757;
         color: #fff;
         font-size: 0.3rem;
-        font-weight: bold;
+
         width:50%;
         text-align: center;
         height:100%;

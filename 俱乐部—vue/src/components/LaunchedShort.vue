@@ -80,10 +80,7 @@
                     <div class="rank_item_tit">设置打卡范围</div>
                     <input style="width:5.1rem;" type="number" placeholder="请设置打卡范围,建议不低于400米" v-model="clock_scope" @blur="blurEvent">
                 </div>
-                <!--<div class="rank_item">-->
-                    <!--<div class="rank_item_tit">活动详情</div>-->
-                    <!--<textarea class="rank_item_textarea" name="" id="" cols="30" rows="10" placeholder="请输入活动详情，最多150个字" maxlength="150" v-model="active_details" @blur="blurEvent"></textarea>-->
-                <!--</div>-->
+
                 <div class="rank_item" style="height:3.2rem;align-items: normal;border:none;">
                     <div class="rank_item_tit" style="margin-top:0.34rem;">活动详情</div>
                     <textarea class="rank_item_textarea" name="" id="" cols="30" rows="10" placeholder="请输入活动详情，最多150个字" maxlength="150" v-model="active_details" @blur="blurEvent"></textarea>
@@ -374,6 +371,11 @@
                 if(this.active_num==''){
                     this.showa=true;
                     this.show_tip='请填写活动人数'
+                    return
+                }
+                if(parseInt(this.active_num)<=0){
+                    this.showa=true;
+                    this.show_tip='活动人数必须大于0'
                     return
                 }
 

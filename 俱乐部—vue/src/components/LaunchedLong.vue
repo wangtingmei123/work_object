@@ -319,6 +319,11 @@
                     this.show_tip='请填写活动人数'
                     return
                 }
+                if(parseInt(this.active_num)<=0){
+                    this.showa=true;
+                    this.show_tip='活动人数必须大于0'
+                    return
+                }
 
                 if(this.registration==''){
                     this.registration=0

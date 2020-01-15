@@ -98,41 +98,58 @@
             </div>
         </div>
 
-        <!--<div class="detail_but">-->
-            <!--<div class="detail_but1"><span>￥</span>1100.00</div>-->
-            <!--<div class="detail_but2">报名缴费</div>-->
-        <!--</div>-->
-        <div class="creat_club_box" v-if="active_info.status==1" @click="">
-            <div class="creat_club">取消报名</div>
-        </div>
-        <div class="creat_club_box" v-if="is_authorized==0&&active_info.status==1" @click="to_editactive(active_info.id,active_info.issue_nums)">
+
+
+        <div class="creat_club_box" v-if="is_authorized==1&&(active_info.status==0 ||active_info.status==1)" @click="to_editactive(active_info.id,active_info.issue_nums)">
             <div class="creat_club">编辑</div>
         </div>
-        <div class="creat_club_box" v-show="active_info.status==3" @click="to_commentfb">
+        <div class="creat_club_box" v-if="active_info.status==3" @click="to_commentfb">
             <div class="creat_club">发表评价</div>
         </div>
-        <div class="creat_club_box" v-show="active_info.status==1" @click="to_hitcard">
+        <div class="creat_club_box"  @click="to_hitcard" v-show="active_info.status==2">
             <div class="creat_club">签到打卡</div>
         </div>
 
+        <div class="creat_club_box" v-if="active_info.status==0 ||active_info.status==1" @click="notosing()">
+            <div class="creat_club">取消报名</div>
+        </div>
+        <div class="detail_but" v-if="active_info.status==0">
+            <div class="detail_but1"><span>￥</span>{{active_info.entry_fees/100}}</div>
+            <div class="detail_but2" @click="tosing()">报名缴费</div>
+        </div>
         <!--<div class="creat_clubbut" style="display:flex;justify-content: space-around;align-items: center;">-->
             <!--<div class="but1">取消报名</div>-->
             <!--<div class="but2" @click="to_launchedshort">编辑</div>-->
         <!--</div>-->
-
+        <Eject  type='alert' @took='okfall' :showstate='showa'>
+            <div slot='text'>{{show_tip}}</div>
+        </Eject>
+        <Eject  type='alert'  @tocancel="nofall" @took='okfall1' :showstate='showa1' :cancel='cancel'>
+            <div slot='text'>{{show_tip1}}</div>
+        </Eject>
+        <div class="hide_tip_box" v-show="hidea">
+            <div class="hide_tip">{{hide_tip}}</div>
+        </div>
 
     </div>
 </template>
 
 
 <script>
-
+    import Eject from './eject'
     import Header from './Header'
     export default {
-        components: { Header },
+        components: { Header,Eject },
         name: '',
         data() {
             return {
+                cancel:true,
+                showa:false,
+                showa1:false,
+                show_tip:'',
+                show_tip1:'',
+                hide_tip:'',
+                hidea:false,
                 title: '活动详情',
                 show: true,
                 backpage: '',
@@ -162,6 +179,74 @@
 
         },
         methods: {
+            notosing(){
+                let _this=this
+                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true) {
+
+                    _this.$axios.delete("/activity-users", {
+                        headers: {
+                            'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                        },
+                        params: {
+                            'act_id': localStorage.getItem('active_id')
+                        }
+
+                    }).then(res => {
+                        if (res.status == 200) {
+                            _this.hidea=true;
+                            _this.hide_tip='取消报名成功';
+                            setTimeout(function(){
+                                _this.hidea=false;
+                            },1500)
+                        } else {
+                            _this.showa = true;
+                            _this.show_tip = res.data.message;
+                            return
+                        }
+                    })
+                        .catch(err => {
+                        })
+                }else{
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
+            },
+
+            tosing(){
+                let _this=this
+
+                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                    _this.$axios.post("/activity-users",
+                        {
+                            "act_id": localStorage.getItem('active_id')
+                        },{
+                            headers: {
+                                'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                            }
+                        }).then(res=>{
+                        if(res.status==200){
+                            _this.hidea=true;
+                            _this.hide_tip='报名成功';
+                            setTimeout(function(){
+                                _this.hidea=false;
+                            },1500)
+                        }else{
+                            _this.showa=true;
+                            _this.show_tip=res.data.message;
+                            return
+                        }
+                    })
+                        .catch(err=>{
+                        })
+
+                }else{
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
+
+            },
 
             active_detail(){
                 let _this=this
@@ -208,7 +293,16 @@
             },
             to_comment(){
                 this.$router.push({path:'./evaluation'})
-            }
+            },
+            okfall(){
+                this.showa=false;
+            },
+            okfall1(){
+                this.showa1=false;
+            },
+            nofall(){
+                this.showa=false;
+            },
         }
 
     }
@@ -295,7 +389,7 @@
         align-items: center;
         background: #fff;
         border-top:1px solid #e6e6e6;
-        font-weight: bold;
+        /*font-weight: bold;*/
     }
     .detail_but>.detail_but1{
         background: #fff;
@@ -317,7 +411,7 @@
         background: #ff5757;
         color: #fff;
         font-size: 0.3rem;
-        font-weight: bold;
+        /*font-weight: bold;*/
         width:50%;
         text-align: center;
         height:100%;

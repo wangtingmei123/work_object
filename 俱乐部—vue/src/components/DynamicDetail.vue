@@ -1,118 +1,96 @@
 <template>
     <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
-        <div class="club_dynamic_box" style="margin-bottom: 1.3rem">
+        <div class="club_dynamic_box" style="margin-bottom: 1.5rem" ref="opBottomEcharts" @scroll="gotoScroll()">
             <div class="club_dynamic_main">
                 <div class="dynamic_main1">
-                    <div class="dynamic_main1_user">
-                        <img :src="dynamic.img" alt="">
+                    <div class="dynamic_main1_user" >
+                        <img v-if="dynamic_user.avatar!=''" :src="dynamic_user.avatar" alt="">
+                        <img v-if="dynamic_user.avatar==''" :src="club_members" alt="">
                     </div>
                     <div class="dynamic_main1_center">
-                        <div class="dynamic_m1c1">{{dynamic.name}}</div>
-                        <div class="dynamic_m1c2">{{dynamic.bumne}}</div>
+                        <div class="dynamic_m1c1">{{dynamic_user.user_name}}</div>
+                        <div class="dynamic_m1c2">{{dynamic_user.department}}</div>
                     </div>
                     <div class="dynamic_main1_right">
-                        1小时前
+                        {{dynamic.time}}
                     </div>
                 </div>
                 <div class="dynamic_main2">
-                   {{dynamic.con}}
+                   {{dynamic.contents}}
                 </div>
                 <div class="dynamic_main3">
-                    <div class="dynamic_main3_img"  v-for="i in imgs">
-                        <img :src="i" alt=""  @click="showBigImg(i)">
+                    <div class="dynamic_main3_img"  v-for="(items,index) in dynamic.image_data">
+                        <img :src="items" alt=""  @click="showBigImg(items)">
                     </div>
-
                 </div>
 
                 <div class="dynamic_main4">
                     <div class="dynamic_m4a">
-                        <div class="dynamic_m41" @click="touch_like(dynamic.is_like,dynamic.id)">
-                            <img v-show="dynamic.is_like" :src="like_img" alt="">
-                            <img v-show="dynamic.is_like==false" :src="like_img_false" alt="">
-                            <span style="margin-left:0.08rem;">{{dynamic.like}}</span>
+                        <div class="dynamic_m41" @click="touch_like(dynamic.dynamic_praise_id,dynamic.id)">
+                            <img v-show="dynamic.dynamic_praise_id!=0" :src="like_img" alt="">
+                            <img v-show="dynamic.dynamic_praise_id==0" :src="like_img_false" alt="">
+                            <span style="margin-left:0.08rem;">{{dynamic.praise_count}}</span>
                         </div>
-                        <div class="dynamic_m42"  @click="comment(dynamic.id)"><img :src="ping_img" alt=""><span style="margin-left:0.08rem;">{{dynamic.comment}}</span></div>
+                        <div class="dynamic_m42"  @click="comment(dynamic.id)"><img :src="ping_img" alt=""><span style="margin-left:0.08rem;">{{dynamic.reply_count}}</span></div>
                     </div>
                     <div class="dynamic_m4b">
-                        <div class="dynamic_m43">审核中</div>
-                        <div class="dynamic_m44" @click="touch_del(dynamic.id)">删除</div>
+                        <div class="dynamic_m43" v-if="dynamic.is_self_release==1&&dynamic.is_audited==0">审核中</div>
+                        <div class="dynamic_m43" v-if="dynamic.is_self_release==1&&dynamic.is_audited==1">已审核</div>
+                        <div class="dynamic_m44" v-if="dynamic.is_self_release==1" @click="touch_del(dynamic.id)">删除</div>
                     </div>
 
                 </div>
             </div>
-            <div class="club_members_main">
+            <div class="club_members_main" @click="to_likelist(dynamic.id)">
                 <div class="club_members">
-                    <img :src="club_members" alt="">
-                    <img :src="club_members" alt="">
-                    <img :src="club_members" alt="">
-                    <img :src="club_members" alt="">
-                    <img :src="club_members" alt="">
-                    <img :src="club_members" alt="">
+                    <div class="club_members_img" v-for="(item,index) in like_list">
+                        <img v-if="item.user.avatar==''" :src="club_members" alt="">
+                        <img v-if="item.user.avatar!=''" :src="item.user.avatar" alt="">
+                    </div>
                 </div>
-                <div class="club_members_num">{{dynamic.like}}人赞了 <img class="right_tipa" :src="right_tip" alt="" ></div>
+                <div class="club_members_num">{{dynamic.praise_count}}人赞了 <img class="right_tipa" :src="right_tip" alt="" ></div>
             </div>
-            <div class="comment_box">
-                <div class="comment_num">{{dynamic.comment}}人回复过</div>
-                <div class="club_dynamic_main" style="padding-bottom:0">
-                    <div class="dynamic_main1">
-                        <div class="dynamic_main1_user">
-                            <img :src="club_members" alt="">
-                        </div>
-                        <div class="dynamic_main1_center">
-                            <div class="dynamic_m1c1">林夏美</div>
-                            <div class="dynamic_m1c2">5分钟前</div>
-                        </div>
-                        <div class="dynamic_main1_right">
+            <div class="comment_box" v-if="coment_list.length>0">
+                <div class="comment_num">{{dynamic.reply_count}}人回复过</div>
+                <div>
+                    <div class="club_dynamic_main" style="padding-bottom:0;width:6.8rem;padding:0;margin:auto" v-for="(item,index) in coment_list">
+                        <div class="dynamic_main1">
+                            <div class="dynamic_main1_user">
+                                <img v-if="item.user.avatar!=''" :src="item.user.avatar" alt="">
+                                <img v-if="item.user.avatar==''" :src="club_members" alt="">
+                            </div>
+                            <div class="dynamic_main1_center">
+                                <div class="dynamic_m1c1">{{item.user.user_name}}</div>
+                                <div class="dynamic_m1c2">{{item.time}}</div>
+                            </div>
+                            <div class="dynamic_main1_right">
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="dynamic_main2">
-                        日升，日落，人海浮沉
+                        <div class="dynamic_main2">
+                            {{item.contents}}
+                        </div>
                     </div>
                 </div>
-                <div class="club_dynamic_main" style="padding-bottom:0">
-                    <div class="dynamic_main1">
-                        <div class="dynamic_main1_user">
-                            <img :src="club_members" alt="">
-                        </div>
-                        <div class="dynamic_main1_center">
-                            <div class="dynamic_m1c1">林夏美</div>
-                            <div class="dynamic_m1c2">5分钟前</div>
-                        </div>
-                        <div class="dynamic_main1_right">
 
-                        </div>
-                    </div>
-                    <div class="dynamic_main2">
-                        日升，日落，人海浮沉
-                    </div>
-                </div>
-                <div class="club_dynamic_main" style="padding-bottom:0">
-                    <div class="dynamic_main1">
-                        <div class="dynamic_main1_user">
-                            <img :src="club_members" alt="">
-                        </div>
-                        <div class="dynamic_main1_center">
-                            <div class="dynamic_m1c1">林夏美</div>
-                            <div class="dynamic_m1c2">5分钟前</div>
-                        </div>
-                        <div class="dynamic_main1_right">
-
-                        </div>
-                    </div>
-                    <div class="dynamic_main2">
-                        日升，日落，人海浮沉
-                    </div>
-                </div>
             </div>
         </div>
         <div class="but_flex">
-            <div v-show="dynamic.is_like==false" class="but_flex1" @click="touch_love(dynamic.is_like,dynamic.id)">点赞</div>
-            <div class="but_flex1" v-show="dynamic.is_like" @click="touch_love(dynamic.is_like,dynamic.id)">取消点赞</div>
+            <div v-show="dynamic.dynamic_praise_id==0" class="but_flex1" @click="touch_like(dynamic.dynamic_praise_id,dynamic.id)">点赞</div>
+            <div class="but_flex1" v-show="dynamic.dynamic_praise_id!=0" @click="touch_like(dynamic.dynamic_praise_id,dynamic.id)">取消点赞</div>
             <div class="but_flex2" @click="comment(dynamic.id)">回复</div>
         </div>
-        <wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="isShowBigImg = false"></wimg>
+        <wimg :show="isShowBigImg" :imgs="dynamic_image_data" :currentImg="current" @close="isShowBigImg = false"></wimg>
+        <Eject  type='alert' @took='okfall' :showstate='showa' >
+            <div slot='text'>{{show_tip}}</div>
+        </Eject>
+        <Eject  type='alert'  @tocancel="nofall"  @took='okfall1' :showstate='showa1'  :cancel='cancel'>
+            <div slot='text'>{{show_tip1}}</div>
+        </Eject>
+        <div class="hide_tip_box" v-show="hidea">
+            <div class="hide_tip">{{hide_tip}}</div>
+        </div>
     </div>
 </template>
 
@@ -120,12 +98,20 @@
 <script>
     import Header from './Header'
     import wimg from 'w-previewimg'
+    import Eject from './eject'
     export default {
-        components: { Header,wimg },
+        components: { Header,wimg,Eject },
         name: '',
         data() {
             return {
-                 dynamic:  {'id':1,'name':'王哈哈','img':'./static/img/07club_32.png','bumne':'技术部','time':'1小时前','con':'日升，日落, 人海浮沉','like':123,'comment':'24','is_like':false},
+                cancel:true,
+                showa:false,
+                show_tip:'',
+                showa1:false,
+                show_tip1:'',
+                hide_tip:'',
+                hidea:false,
+                dynamic: [],
                 tap_selece:1,
                 title: '动态详情',
                 show: true,
@@ -135,56 +121,256 @@
                 ping_img:'./static/img/07club_42.png',
                 imgs: ["./static/img/03index_29.png",
                     "./static/img/03index_06.png",
-
                 ],
                 club_members:'./static/img/07club_32.png',
                 right_tip:'./static/img/03index_25.png',
                 isShowBigImg: false,
-                current :''
+                current :'',
+                dynamic_id:'',
+                can_show:true,
+                page:0,
+                clientHeight:'',
+                scrollHeight:'',
+                scrollTop:'',
+                page_end:true,
+                loadFlag:true,
+                coment_list:[],
+                dynamic_user:[],
+                dynamic_image_data:[],
+                like_list:[]
+
             }
         },
         created() {
+            let _this=this
+            this.dynamic_id=this.$route.query.dynamic_id;
+            _this.dynamicinfo()
+            _this.replies()
+            _this.like()
 
         },
         mounted() {
 
         },
         methods: {
+            like(){
+                let _this=this;
+                this.$axios.get("dynamic-praise",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "dynamic":_this.dynamic_id,
+                        "page":0
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        _this.like_list=res.data.data.slice(0,10);
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
+            replies(){
+                let _this=this;
+
+                this.$axios.get("/dynamic-replies",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "dynamic_id":_this.dynamic_id,
+                        "page":_this.page
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        if(res.data.data.length<_this.GLOBAL.page_total){
+                            _this.page_end=false
+                        }
+                        let coment_list=_this.coment_list;
+                        if(coment_list.length==0){
+                            coment_list=res.data.data
+                        }else{
+                            coment_list.push.apply(coment_list,res.data.data);
+                        }
+                        _this.coment_list=coment_list;
+                        _this.loadFlag=false;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
+            gotoScroll(){
+                console.log("ppp")
+                let _this=this
+                this.scrollTop=this.$refs.opBottomEcharts.scrollTop;
+                this.clientHeight = this.$refs.opBottomEcharts.clientHeight;
+                this.scrollHeight=this.$refs.opBottomEcharts.scrollHeight;
+                //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
+                console.log(this.scrollTop+"+"+this.clientHeight+"+"+this.scrollHeight)
+                if(this.scrollTop+this.clientHeight >= this.scrollHeight-10){
+                    if(_this.page_end&&_this.loadFlag==false){
+                        _this.loadFlag=true
+                        let page = _this.page+1;
+                        _this.page=page;
+                        console.log(_this.page)
+                        _this.replies()
+                    }
+
+                }
+            },
+            dynamicinfo(){
+                let _this=this
+                _this.$axios.get("/dynamics/"+_this.dynamic_id,{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+//                    "id":_this.dynamic_id,
+                    }
+                }).then(res=>{
+                    console.log(res.data.data)
+                    if(res.status==200){
+                        _this.dynamic=res.data.data;
+                        _this.dynamic_user=res.data.data.user;
+                        _this.dynamic_image_data=res.data.data.image_data;
+                        console.log(_this.dynamic.user.avatar)
+
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
+            to_likelist(id){
+                this.$router.push({ path: '/likelist',query:{dynamic_id:id}}) // -> /user
+            },
             touch_del(id){
-                // var comm=this.dynamic;
-                // comm=[];
-                // this.dynamic=comm
+                let _this=this;
+                _this.$axios.delete("/dynamics",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "id":id,
+                    }
+                }).then(res=>{
+                    _this.can_show=true
+                    if(res.status==200){
+                        _this.hidea=true;
+                        _this.hide_tip='删除成功';
+                        setTimeout(function(){
+                            _this.hidea=false;
+                            _this.$router.go(-1);
+                        },1500)
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        _this.can_show=true
+                        console.log(err)
+                    })
             },
-            touch_like(is_like,id){
-                var comm=this.dynamic;
-                if(is_like){
-                    comm.like-=1
+            touch_like(dynamic_praise_id,id){
+                let _this=this;
+                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+
+                    if(dynamic_praise_id==0&&_this.can_show){
+                        _this.can_show=false;
+                        _this.$axios.post("/dynamic-praise",{
+                                "id":id,
+                            },
+                            {headers: {
+                                'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                            },
+                            }).then(res=>{
+                            _this.can_show=true
+                            if(res.status==201){
+                                _this.dynamic.praise_count+=1
+                                _this.dynamic.dynamic_praise_id=res.data.data.id;
+                            }else {
+                                _this.showa=true;
+                                _this.show_tip=res.data.message;
+                            }
+                        })
+                            .catch(err=>{
+                                _this.can_show=true
+                                console.log(err)
+                            })
+                    }else if(dynamic_praise_id!=0&&_this.can_show){
+                        _this.can_show=false;
+                        _this.$axios.delete("/dynamic-praise",{
+                            headers: {
+                                'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                            },
+                            params: {
+                                "id":dynamic_praise_id,
+                            }
+                        }).then(res=>{
+                            _this.can_show=true
+                            if(res.status==200){
+                                _this.dynamic.praise_count-=1
+                                _this.dynamic.dynamic_praise_id=0;
+                            }else {
+                                _this.showa=true;
+                                _this.show_tip=res.data.message;
+                            }
+                        })
+                            .catch(err=>{
+                                _this.can_show=true
+                                console.log(err)
+                            })
+                    }
                 }else{
-                    comm.like+=1
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
                 }
-                comm.is_like=!is_like;
-                this.dynamic=comm
-            },
-            touch_love(is_like,id){
-                var comm=this.dynamic;
-                if(is_like){
-                    comm.like-=1
-                }else{
-                    comm.like+=1
-                }
-                comm.is_like=!is_like;
-                this.dynamic=comm
+
+
             },
             tap_bind(tap){
                 this.tap_selece=tap
             },
-              showBigImg (i) {
+            showBigImg (i) {
                 this.current = i
                 this.isShowBigImg = true
             },
-            comment(){
-                this.$router.push({ path: '/dynamicreply'}) // -> /user
-            }
+            comment(id){
+                let _this=this
+                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                    this.$router.push({ path: '/dynamicreply',query:{dynamic_id:id}}) // -> /user
+                }else{
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
+
+            },
+            okfall(){
+                this.showa=false;
+            },
+            okfall1(){
+                this.showa1=false;
+            },
+            nofall(){
+                this.showa=false;
+            },
         }
 
     }
@@ -235,11 +421,15 @@
         width:6.8rem;
         margin:auto;
         height:0.7rem;
-        border-bottom:1px solid #e6e6e6;
+
         font-size: 0.24rem;
         color: #989898;
         text-align: right;
         line-height:0.7rem;
+    }
+
+    .comment_num_border{
+
     }
     .club_members_main{
         width:7.1rem;
@@ -264,7 +454,16 @@
         height:0.5rem;
 
     }
-    .club_members_main>.club_members>img{
+
+    .club_members_main>.club_members>.club_members_img{
+        display: block;
+        width:0.5rem;
+        height:0.5rem;
+        border-radius: 0.5rem;
+        float: left;
+        margin-left:-0.12rem;
+    }
+    .club_members_main>.club_members>.club_members_img>img{
         display: block;
         width:0.5rem;
         height:0.5rem;
@@ -272,7 +471,7 @@
         float: left;
         margin-left:-0.08rem;
     }
-    .club_members_main>.club_members>img:nth-child(1){
+    .club_members_main>.club_members>.club_members_img:nth-child(1){
         margin-left:0;
 
     }
@@ -300,14 +499,20 @@
 
     .club_dynamic_box{
         width:7.1rem;
-        height:auto;
+        height:calc(100vh - 1.23rem);
         margin:auto;
         margin-top:1.03rem;
-        margin-bottom:0.2rem;
+        padding-bottom:0.2rem;
+        overflow: scroll;
 
     }
     .club_dynamic_main:nth-child(1){
-        margin-top:0
+        margin-top:0;
+
+    }
+
+    .comment_box .club_dynamic_main:nth-child(1){
+        border-top:1px solid #e6e6e6;
     }
 
     .club_dynamic_main{

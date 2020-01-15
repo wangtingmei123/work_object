@@ -20,7 +20,7 @@
 
                     <div class="form-item user">
                         <img style="height:0.34rem" :src="invited21" alt="">
-                        <input name="phone" type="text" placeholder="请输入姓名"    @input="nameInput" v-model="name" @blur="blurEvent" />
+                        <input name="phone" type="text" placeholder="请输入姓名"    v-model="name" @blur="blurEvent" />
                     </div>
                     <div class="form-item user">
                         <img style="height:0.32rem" :src="invited22" alt="">
@@ -28,11 +28,11 @@
                     </div>
                     <div class="form-item user">
                         <img style="height:0.36rem" :src="invited23" alt="">
-                        <input name="phone" type="number" placeholder="请输入手机号"    @input="userMobileInput" v-model="phone" @blur="blurEvent" />
+                        <input name="phone" type="number" placeholder="请输入手机号"   v-model="phone" @blur="blurEvent" />
                     </div>
                     <div class="form-item psw">
                         <img style="height:0.35rem"  :src="invited24" alt="">
-                        <input name="code" placeholder="请输入验证码" type="number"  @input="codeinput" v-model="code" @blur="blurEvent"  />
+                        <input name="code" placeholder="请输入验证码" type="number"   v-model="code" @blur="blurEvent"  />
                         <div class="code_tip" @click="sendCode">{{sendCodeButtonTxt}}</div>
 
                     </div>
@@ -159,11 +159,13 @@
                 let _this=this;
                 console.log("000")
                 if (this.phone == '') {
-                    this.phone_tip="手机号不能为空"
+                    this.showa=true;
+                    this.show_tip='手机号不能为空'
                     return
 
                 } else if (this.phone.length != 11){
-                    this.phone_tip="手机号错误"
+                    this.showa=true;
+                    this.show_tip='手机号错误'
                     return
                 }
                 //避免按钮双击
@@ -219,43 +221,8 @@
 
 
             },
-            //判断手机号
-            userMobileInput(e){
-                let phone = this.phone;
-                console.log(phone)
-                if (phone==''){
-                    this.phone_tip=''
-                } else if (phone.length !=11){
-                    this.phone_tip= '手机号错误'
-                }else{
-                    this.phone_tip=''
-                }
-            },
-            nameInput(){
-                let name = this.name;
-                if (name==''){
-                    this.phone_tip=''
-                } else if (name.length >5){
-                    this.name_tip= '姓名不能超过五个字符'
-                } else if (name.length <2){
-                    this.name_tip= '姓名不能少于两个字符'
-                }
-                else{
-                    this.name_tip=''
-                }
-            },
-            //判断验证码
-            codeinput(e){
-                var code = this.code;
-                if (code == '') {
-                    this.code_tip=''
-                } else if (code.length != 6) {
-                    this.code_tip='验证码错误'
-                } else {
-                    this.code_tip=''
 
-                }
-            },
+            //判断验证码
             submit(){
                 console.log("++++1")
                 console.log("888")

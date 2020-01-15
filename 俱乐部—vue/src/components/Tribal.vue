@@ -4,7 +4,7 @@
         <div class="image-item space" @click="showActionSheet()">
             <div class="image-up"></div>
         </div>
-        <input id="upload_file" type="file" style="display: none;" multiple="multiple" accept='image/*' name="file" @change="fileChange($event)"/>
+        <input id="upload_file" type="file" style="display: none;" multiple="multiple"  accept='image/*' name="file" @change="fileChange($event)"/>
 
         <div class="write_box">
             <textarea class="textarea"  maxlength="150"  placeholder='请输入动态内容，最多150个字'  @input="write_tribal" v-model="text_tribal" @blur="blurEvent" ></textarea>
@@ -31,7 +31,7 @@
                         <div class="upload_warp_img_div_top del_img">
                             <img  :src="del_img" class="upload_warp_img_div_del" @click="fileDel(index)">
                         </div>
-                        <img class="tfrboxscimg" :src="item.file.src" >
+                        <img class="tfrboxscimg" :src="item" >
                     </div>
                     <div class="upload_warp_left tfrboxsc tfrboxsca" id="upload_warp_left" @click="fileClick()" v-if="this.imgList.length < 6">
                         <!--<img src="../assets/upload.png">-->
@@ -42,11 +42,14 @@
             </div>
         </div>
         <div class="creat_club" @click="to_uplode()">发布</div>
-        <Eject  type='alert' @tocancel="nofall" @took='okfall' :showstate='showa'  :cancel='cancel'>
+        <Eject  type='alert'  @took='okfall' :showstate='showa'  >
             <div slot='text'>{{show_tip}}</div>
         </Eject>
         <div class="hide_tip_box" v-show="hidea">
             <div class="hide_tip">{{hide_tip}}</div>
+        </div>
+        <div class="lode_img" v-show="lode_end">
+            <img :src="lode_img" alt="">
         </div>
     </div>
 </template>
@@ -60,6 +63,8 @@
         name: '',
         data() {
             return {
+                lode_img:'./static/img/loding.gif',
+                lode_end:false,
                 showa:false,
                 show_tip:'',
                 hide_tip:'',
@@ -103,33 +108,31 @@
             },
             to_uplode(){
                 let _this=this;
+                _this.lode_end=true;
                 let imgList=this.imgList;
                 if(imgList.length==0&&_this.text_tribal==''){
                     _this.showa=true;
                     _this.show_tip='不能发表空内容哦！'
                     return
                 }
-                var imgList_arr=[]
-                for(let a=0;a<imgList.length;a++){
-                    imgList_arr.push(imgList[a].file.src)
-                }
-                console.log(imgList_arr)
+
                 this.$axios.post("dynamics", {
                     "club_id": localStorage.getItem('club_id'),
                     "contents": _this.text_tribal,
-                    "image_tmps": imgList_arr
-
+                    "image_tmps": imgList
                 },{
                     headers: {
                         'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
                  }}
                 ).then(res=>{
+                    _this.lode_end=false;
                     console.log(res)
                     if(res.status==201){
                         _this.hidea=true;
                         _this.hide_tip='发表成功，待审核';
                         setTimeout(function(){
                             _this.hidea=false;
+                            _this.$router.go(-1);
                         },1500)
 
                     }else {
@@ -138,12 +141,11 @@
                     }
                 })
                     .catch(err=>{
+                        _this.lode_end=false;
                         console.log(err)
                     })
 
 
-
-                console.log(this.imgList)
             },
             go_home(){
                 this.$router.push({ path: '/'}) // -> /user
@@ -168,11 +170,22 @@
                 });
             },
             //从相册选择照片
+            galleryImgs() {
+                plus.gallery.pick(function(e) {
+                    let name = e.substr(e.lastIndexOf('/') + 1);
+                    compressImage(e,name);
+                }, function(e) {
+                }, {
+                    filter: "image"
+                });
 
+            },
             //点击事件，弹出选择摄像头和相册的选项
             showActionSheet() {
                 let bts = [{
                     title: "拍照"
+                }, {
+                    title: "从相册选择"
                 }];
                 plus.nativeUI.actionSheet({
                         cancel: "取消",
@@ -181,6 +194,8 @@
                     function(e) {
                         if (e.index == 1) {
                             this.getImage();
+                        } else if (e.index == 2) {
+                            this.galleryImgs();
                         }
                     }
                 );
@@ -188,7 +203,6 @@
             fileChange(el) {
 
                 this.files=$("#upload_file").get(0).files;
-                console.log(el)
                 console.log(this.files.length);
 
                 for(let i=0;i<this.files.length;i++){
@@ -240,23 +254,43 @@
                 })
             },
             fileAdd(file) {
+                var _this=this
                 //总大小
                 this.size = this.size + file.size;
                 //判断是否为图片文件
                 if (file.type.indexOf('image') == -1) {
                     file.src = 'wenjian.png';
-                    this.imgList.push({
-                        file
-                    });
+
+                    lrz( file.src, {
+                        quality: 0.7    //自定义使用压缩方式
+                    }).then(function(rst) {
+                            //成功时执行
+                            _this.imgList.push(rst.base64);
+                        }).catch(function(error) {
+                        //失败时执行
+                        _this.imgList.push(file.src);
+                    }).always(function() {
+                        //不管成功或失败，都会执行
+                    })
+
+
                 } else {
                     let reader = new FileReader();
                     reader.vue = this;
                     reader.readAsDataURL(file);
                     reader.onload = function () {
                         file.src = this.result;
-                        this.vue.imgList.push({
-                            file
-                        });
+                        lrz( file.src, {
+                            quality: 0.7    //自定义使用压缩方式
+                        }).then(function(rst) {
+                                //成功时执行
+                                _this.imgList.push(rst.base64);
+                            }).catch(function(error) {
+                            //失败时执行
+                            _this.imgList.push(file.src);
+                        }).always(function() {
+                            //不管成功或失败，都会执行
+                        })
                         // this.file_src.push(file.src)
 
                     }
@@ -266,7 +300,7 @@
 
             },
             fileDel(index) {
-                this.size = this.size - this.imgList[index].file.size;//总大小
+//                this.size = this.size - this.imgList[index].file.size;//总大小
                 this.imgList.splice(index, 1);
             },
             bytesToSize(bytes) {

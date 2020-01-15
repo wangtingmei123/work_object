@@ -113,7 +113,6 @@
             //获取验证码
             sendCode(){
                 let _this=this;
-                console.log("000")
                 if (this.phone == '') {
                         this.phone_tip="手机号不能为空"
                     return
@@ -180,7 +179,6 @@
             //判断手机号
             userMobileInput(e){
                 let phone = this.phone;
-                console.log(phone)
                 if (phone==''){
                     this.phone_tip=''
                 } else if (phone.length !=11){
@@ -218,11 +216,6 @@
                     this.code_tip= "验证码不能为空"
                     return
                 } else if (this.code.length !=6) {
-                    this.code_tip="验证码错误"
-                    return
-                }
-
-                else if (this.code!=this.verify_code) {
                     this.code_tip="验证码错误"
                     return
                 }

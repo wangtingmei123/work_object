@@ -1,5 +1,5 @@
 <template>
-  <div class="hello" style="background:#f7f7f7;">
+  <div class="hello" style="background:#f7f7f7;min-height: 100vh">
       <Header :title="title" :show="show" :backpage="backpage"></Header>
       <div class="banner">
           <section class="my-swiper">
@@ -90,18 +90,18 @@
                   <div class="title_center" style="margin-right:4.5rem">我的俱乐部</div>
                   <img class="right_tip" :src="right_tip" alt="">
               </div>
-              <div class="club_main" @click="to_clubindex">
-                  <div class="club_main_left">
-                      <img :src="club_img" alt="">
+              <div class="club_main"  v-for="(item,index) in club_list">
+                  <div class="club_main_left" @click="to_clubindex(item.club.id,item.club.name)">
+                      <img :src="item.club.logo" alt="">
                   </div>
                   <div class="club_main_right">
-                      <div class="club_main_right1">富山足球俱乐部</div>
-                      <div class="club_main_right2">
-                          <div class="club_main_right2_tap1">lv18</div>
-                          <div class="club_main_right2_tap1">滑雪</div>
-                          <div class="club_main_right2_peoper">20252人</div>
+                      <div class="club_main_right1" @click="to_clubindex(item.club.id,item.club.name)">{{item.club.name}}</div>
+                      <div class="club_main_right2" @click="to_clubindex(item.club.id,item.club.name)">
+                          <!--<div class="club_main_right2_tap1">lv18</div>-->
+                          <div class="club_main_right2_tap1">{{item.club.type_name}}</div>
+                          <div class="club_main_right2_peoper">{{item.club.members}}</div>
                       </div>
-                      <div class="club_main_right3">富山足球俱乐部成立于2017年6月24日，建队以来共计参加国内比赛34场，荣获金杯6个，银杯12个...</div>
+                      <div class="club_main_right3" @click="to_clubindex(item.club.id,item.club.name)">{{item.club.explanation}}</div>
                   </div>
               </div>
           </div>
@@ -144,17 +144,22 @@
                 loop: true,
             },
             swiperList: ['./static/img/03index_06.png', './static/img/03index_06.png', './static/img/03index_06.png'], // 轮播图数组对象
+            user_id:'',
+            club_list:[]
         }
     },
 
     created() {
 
-        this.user_get()
+        if(localStorage.getItem('token_type')!=null){
+            this.user_get()
+        }
+
 
     },
 
     methods: {
-            user_get(){
+        user_get(){
                 let _this=this;
                 this.$axios.get("/user",{
                     headers: {
@@ -166,9 +171,10 @@
                     console.log(res)
                     if(res.status==200){
                         console.log(res)
+                        _this.user_id=res.data.data.id;
+                        _this.real_show()
                         localStorage.setItem('is_root',res.data.data.is_root)
                         localStorage.setItem('user_id',res.data.data.id)
-
                     }else {
                     }
                 })
@@ -177,8 +183,36 @@
                     })
             },
 
-        to_clubindex(){
-            this.$router.push({ path: '/clubindex'}) // -> /user
+        real_show(){
+            console.log("0000")
+            let _this=this;
+                this.$axios.get("/user-clubs/"+_this.user_id,{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+//                            last_id:_this.page
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        _this.club_list=res.data.data.slice(0,3);
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+
+        },
+
+        to_clubindex(id,name){
+            localStorage.setItem('club_id',id)
+            localStorage.setItem('club_name',name)
+            this.$router.push({ path: '/clubindex',query:{id:id}}) // -> /user
+
         },
         to_detail(type){
             if(type==1){
@@ -203,6 +237,13 @@
             this.$router.push({ path: '/myclub'}) // -> /user
         },
 
+        to_clubindex(id,name){
+            localStorage.setItem('club_id',id)
+            localStorage.setItem('club_name',name)
+            this.$router.push({ path: '/clubindex',query:{id:id}}) // -> /user
+
+        },
+
         to_foot(){
             this.$router.push({ path: '/select1'}) // -> /user
         },
@@ -223,7 +264,7 @@
     .club_box{
         width:100%;
         margin-top:0.15rem;
-        padding-bottom:0.2rem;
+        margin-bottom:0.2rem;
         background: #fff;
     }
     .club{

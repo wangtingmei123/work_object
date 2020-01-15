@@ -1,7 +1,7 @@
 <template>
     <div class="apply_bg" style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
-        <div class="member_list_boxs" ref="opBottomEcharts3" v-show="audit_list.length>0">
+        <div class="member_list_boxs" ref="opBottomEcharts3" v-show="audit_list.length>0" @scroll="gotoScroll()">
              <div class="member_list_box" >
                 <div class="member_list" v-for="(item,index) in audit_list">
                     <div class="member1">
@@ -70,33 +70,34 @@
                 audit_list:[],
                 clientHeight:'',
                 scrollHeight:'',
+                scrollTop:'',
                 club_id:'',
                 page:0,
                 page_end:true,
+                loadFlag:true,
                 no_empty:false,
                 authorized:''
             }
         },
         created() {
+            this.club_id=this.$route.query.club_id;
             this.authorized=localStorage.getItem('is_authorized')
             this.request()
-
         },
         mounted() {
-            this.clientHeight = this.$refs.opBottomEcharts3.clientHeight;
-            this.scrollHeight=this.$refs.opBottomEcharts3.scrollHeight;
-            this.$refs.opBottomEcharts3.addEventListener('scroll',this.gotoScroll)
         },
         methods: {
             gotoScroll(){
                 let _this=this
                 console.log("ppp")
-                let scrollTop=_this.$refs.opBottomEcharts3.scrollTop;
+                this.scrollTop=this.$refs.opBottomEcharts3.scrollTop;
+                this.clientHeight = this.$refs.opBottomEcharts3.clientHeight;
+                this.scrollHeight=this.$refs.opBottomEcharts3.scrollHeight;
                 //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
-                console.log(scrollTop+"+"+_this.clientHeight+"+"+_this.scrollHeight)
-                if(scrollTop+_this.clientHeight >= _this.scrollHeight){
-
-                    if(_this.page_end){
+                console.log(this.scrollTop+"+"+_this.clientHeight+"+"+_this.scrollHeight)
+                if(this.scrollTop+_this.clientHeight >= _this.scrollHeight-10){
+                    if(_this.page_end && _this.loadFlag==false){
+                        _this.loadFlag=true
                         let page = _this.page+1;
                         _this.page=page;
                         console.log(_this.page)
@@ -108,43 +109,39 @@
             },
             request(){
                 let _this=this;
-                this.club_id=this.$route.query.club_id;
-                this.$axios.get("/club-users",{
-                    headers: {
-                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
-                    },
-                    params: {
-                        "club_id":_this.club_id,
-                        "is_verified":1,
-                        "last_id":_this.page
-                    }
-                }).then(res=>{
-                    console.log(res)
-                    if(res.status==200){
-                        if(res.data.data.length<15){
-                            _this.page_end=false
+                if(_this.loadFlag) {
+                    _this.$axios.get("/club-users", {
+                        headers: {
+                            'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token'),
+                        },
+                        params: {
+                            "club_id": _this.club_id,
+                            "is_verified": 1,
+                            "last_id": _this.page
                         }
-                        let audit_list=_this.audit_list;
-                        if(audit_list.length==0){
-                            audit_list=res.data.data
-                        }else{
-                            audit_list.concat(res.data.data);
+                    }).then(res => {
+                        console.log(res)
+                        if (res.status == 200) {
+                            if (res.data.data.length < _this.GLOBAL.page_total) {
+                                _this.page_end = false
+                            }
+                            let audit_list = _this.audit_list;
+                            if (audit_list.length == 0) {
+                                audit_list = res.data.data
+                            } else {
+                                audit_list.push.apply(audit_list, res.data.data);
+                            }
+                            _this.audit_list = audit_list;
+                            _this.loadFlag = false;
+                        } else {
+                            _this.showa = true;
+                            _this.show_tip = res.data.message;
                         }
-                        _this.audit_list=audit_list;
-                        if(_this.audit_list.length==0){
-                            _this.no_empty=true
-                        }
-
-
-                    }else {
-                        _this.showa=true;
-                        _this.show_tip=res.data.message;
-                    }
-                })
-                    .catch(err=>{
-                        console.log(err)
                     })
-
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
             },
             to_guan(id,is_authorized,index,user_id){
                 let _this=this;

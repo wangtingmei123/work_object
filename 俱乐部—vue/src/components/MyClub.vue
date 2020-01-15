@@ -1,114 +1,163 @@
 <template>
     <div style="background: #f7f7f7;min-height: 100vh">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
-        <div class="rank_list_box">
-            <div class="rank_list">
-                <div class="club_main" @click="to_clubindex">
-                    <div class="club_main_left">
-                        <img :src="club_img" alt="">
+        <div class="rank_list_box" v-show="club_list.length>0" :class="{'rank_list_box_root':is_root==false}" ref="opBottomEcharts1"  @scroll="gotoScroll()" >
+            <div class="rank_list" >
+                <div class="club_main"  v-for="(item,index) in club_list">
+                    <div class="club_main_left" @click="to_clubindex(item.club.id,item.club.name)">
+                        <img :src="item.club.logo" alt="">
                     </div>
                     <div class="club_main_right">
-                        <div class="club_main_right1">富山足球俱乐部</div>
-                        <div class="club_main_right2">
-                            <div class="club_main_right2_tap1">lv18</div>
-                            <div class="club_main_right2_tap1">滑雪</div>
-                            <div class="club_main_right2_peoper">20252人</div>
+                        <div class="club_main_right1" @click="to_clubindex(item.club.id,item.club.name)">{{item.club.name}}</div>
+                        <div class="club_main_right2" @click="to_clubindex(item.club.id,item.club.name)">
+                            <!--<div class="club_main_right2_tap1">lv18</div>-->
+                            <div class="club_main_right2_tap1">{{item.club.type_name}}</div>
+                            <div class="club_main_right2_peoper">{{item.club.members}}</div>
                         </div>
-                        <div class="club_main_right3">富山足球俱乐部成立于2017年6月24日，建队以来共计参加国内比赛34场，荣获金杯6个，银杯12个...</div>
+                        <div class="club_main_right3" @click="to_clubindex(item.club.id,item.club.name)">{{item.club.explanation}}</div>
 
                     </div>
                 </div>
-
-                <div class="club_main">
-                    <div class="club_main_left">
-                        <img :src="club_img" alt="">
-                    </div>
-                    <div class="club_main_right">
-                        <div class="club_main_right1">富山足球俱乐部</div>
-                        <div class="club_main_right2">
-                            <div class="club_main_right2_tap1">lv18</div>
-                            <div class="club_main_right2_tap1">滑雪</div>
-                            <div class="club_main_right2_peoper">20252人</div>
-                        </div>
-                        <div class="club_main_right3">富山足球俱乐部成立于2017年6月24日，建队以来共计参加国内比赛34场，荣获金杯6个，银杯12个...</div>
-                    </div>
-                </div>
-                <div class="club_main">
-                    <div class="club_main_left">
-                        <img :src="club_img" alt="">
-                    </div>
-                    <div class="club_main_right">
-                        <div class="club_main_right1">富山足球俱乐部</div>
-                        <div class="club_main_right2">
-                            <div class="club_main_right2_tap1">lv18</div>
-                            <div class="club_main_right2_tap1">滑雪</div>
-                            <div class="club_main_right2_peoper">20252人</div>
-                        </div>
-                        <div class="club_main_right3">富山足球俱乐部成立于2017年6月24日，建队以来共计参加国内比赛34场，荣获金杯6个，银杯12个...</div>
-                    </div>
-                </div>
-                <div class="club_main">
-                <div class="club_main_left">
-                    <img :src="club_img" alt="">
-                </div>
-                <div class="club_main_right">
-                    <div class="club_main_right1">富山足球俱乐部</div>
-                    <div class="club_main_right2">
-                        <div class="club_main_right2_tap1">lv18</div>
-                        <div class="club_main_right2_tap1">滑雪</div>
-                        <div class="club_main_right2_peoper">20252人</div>
-                    </div>
-                    <div class="club_main_right3">富山足球俱乐部成立于2017年6月24日，建队以来共计参加国内比赛34场，荣获金杯6个，银杯12个...</div>
-                </div>
-            </div>
-                <div class="club_main">
-                    <div class="club_main_left">
-                        <img :src="club_img" alt="">
-                    </div>
-                    <div class="club_main_right">
-                        <div class="club_main_right1">富山足球俱乐部</div>
-                        <div class="club_main_right2">
-                            <div class="club_main_right2_tap1">lv18</div>
-                            <div class="club_main_right2_tap1">滑雪</div>
-                            <div class="club_main_right2_peoper">20252人</div>
-                        </div>
-                        <div class="club_main_right3">富山足球俱乐部成立于2017年6月24日，建队以来共计参加国内比赛34场，荣获金杯6个，银杯12个...</div>
-                    </div>
-                </div>
-
             </div>
         </div>
-        <!--<div class="creat_club" @click="creat_club">创建俱乐部</div>-->
+
+        <div class="empty_box" v-show="club_list.length==0&&no_empty">
+            <img :src="empty_img" alt="">
+            <!--<div class="empty_tip">目前还没有俱乐部哦</div>-->
+        </div>
+
+        <Eject  type='alert' @tocancel="nofall" @took='okfall' :showstate='showa'  :cancel='cancel'>
+            <div slot='text'>{{show_tip}}</div>
+        </Eject>
+        <div class="hide_tip_box" v-show="hidea">
+            <div class="hide_tip">{{hide_tip}}</div>
+        </div>
+        <div class="empty_box" v-show="club_list.length==0">
+            <img :src="empty_img" alt="">
+            <!--<div class="empty_tip">目前还没有俱乐部哦</div>-->
+        </div>
+
     </div>
 </template>
 
 
 <script>
+    import Eject from './eject'
     import Header from './Header'
     export default {
-        components: { Header },
+        components: { Header,Eject },
         name: '',
         data() {
             return {
+                lode_img:'./static/img/loding.gif',
+                empty_img:'./static/img/empty_img.png',
+                cancel:true,
+                showa:false,
+                show_tip:'',
+                hide_tip:'',
+                hidea:false,
                 title: '加入的俱乐部',
                 show: true,
                 backpage: '',
                 club_img:'./static/img/03index_37.png',
+                clientHeight:'',
+                scrollHeight:'',
+                scrollTop:'',
+                page_end:true,
+                loadFlag:true,
+                page:0,
+                club_list:[],
+                apply:0,
+                club_id:'',
+                is_joined:'',
+                club_index:'',
+                no_empty:false
+
             }
         },
         created() {
+            this.is_root=localStorage.getItem('is_root')
+            this.real_show()
 
         },
         mounted() {
 
+            this.$refs.opBottomEcharts1.addEventListener('scroll',this.gotoScroll)
         },
         methods: {
-            to_clubindex(){
-                this.$router.push({ path: '/clubindex'}) // -> /user
+
+            real_show(){
+                let user_id=localStorage.getItem('user_id')
+                console.log(this.page)
+                let _this=this;
+                if(_this.loadFlag){
+                    this.$axios.get("/user-clubs/"+user_id,{
+                        headers: {
+                            'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                        },
+                        params: {
+//                            last_id:_this.page
+                        }
+                    }).then(res=>{
+                        console.log(res)
+                        if(res.status==200){
+                            if(res.data.data.length<_this.GLOBAL.page_total){
+                                _this.page_end=false
+                            }
+                            let club_list=_this.club_list;
+                            if(club_list.length==0){
+                                club_list=res.data.data
+                            }else{
+                                club_list.push.apply(club_list,res.data.data);
+                            }
+                            _this.club_list=club_list;
+                            _this.loadFlag=false
+                        }else {
+                            _this.showa=true;
+                            _this.show_tip=res.data.message;
+                        }
+                    })
+                        .catch(err=>{
+                            console.log(err)
+                        })
+                }
             },
-            creat_club(){
-                this.$router.push({ path: '/createclub'}) // -> /user
-            }
+
+            gotoScroll(){
+                let _this=this
+                console.log("ppp")
+                this.scrollTop=_this.$refs.opBottomEcharts1.scrollTop;
+                this.clientHeight = this.$refs.opBottomEcharts1.clientHeight;
+                this.scrollHeight=this.$refs.opBottomEcharts1.scrollHeight;
+                //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
+                console.log(this.scrollTop+"+"+_this.clientHeight+"+"+_this.scrollHeight)
+                if(this.scrollTop+_this.clientHeight >= _this.scrollHeight-10){
+                    if(_this.page_end&&_this.loadFlag==false){
+                        _this.loadFlag=true
+                        let page = _this.page+1;
+                        _this.page=page;
+                        console.log(_this.page)
+                        _this.real_show()
+                    }
+
+                }
+            },
+            okfall(){
+                let _this=this;
+                this.showa=false;
+            },
+            nofall(){
+                this.showa=false;
+            },
+            to_clubindex(id,name){
+                localStorage.setItem('club_id',id)
+                localStorage.setItem('club_name',name)
+                this.$router.push({ path: '/clubindex',query:{id:id}}) // -> /user
+
+            },
+
+
+
         }
 
     }
@@ -116,27 +165,34 @@
 
 <style scoped>
 
-    .creat_club{
-        width:7.1rem;
-        height:0.9rem;
+
+
+    .creat_club_box{
+        width:100%;
+        height:1.3rem;
+        background: #f7f7f7;
         position: fixed;
         left:0;
         right:0;
+        bottom:0;
         margin:auto;
-        bottom:0.2rem;
+        box-shadow: 0 0 0.08rem #ccc;
+    }
+    .creat_club{
+        width:7.1rem;
+        height:0.9rem;
+        margin:auto;
+        margin-top:0.2rem;
         background: #ff5757;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
         font-size: 0.3rem;
-        /*font-weight: bold;*/
         border-radius: 0.1rem;
 
     }
-
     .rank_list_box{
         width:7.1rem;
-        height:auto;
         margin:auto;
         /*margin-top:0.88rem;*/
         /*overflow: hidden;*/
@@ -146,14 +202,18 @@
         bottom:0;
         left:0;right:0;
         overflow: scroll;
-        padding-bottom:0.2rem;
+        height:calc(100vh - 0.88rem);
 
+    }
 
+    .rank_list_box_root{
+        height:calc(100vh - 0.88rem);
+        bottom:0;
     }
 
     .rank_list{
         width:100%;
-        height:auto;
+        height:100%;
 
 
     }

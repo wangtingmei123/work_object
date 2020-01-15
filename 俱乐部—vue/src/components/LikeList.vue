@@ -1,46 +1,22 @@
 <template>
     <div class="apply_bg" style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
-        <div class="member_list_box">
-            <div class="member_list">
+        <div class="member_list_box" ref="opBottomEcharts" @scroll="gotoScroll()">
+            <div class="member_list" v-for="(item,index) in like_list">
                 <div class="member1">
-                    <img :src="photo" alt="">
+                    <img v-if="item.user.avatar==''" :src="photo" alt="">
+                    <img v-if="item.user.avatar!=''"  :src="item.user.avatar" alt="">
                 </div>
                 <div class="member2">
-                    <div class="member2_name">王丽坤</div>
-                    <div class="member2_bumen">技术部</div>
+                    <div class="member2_name">{{item.user.user_name}}</div>
+                    <div class="member2_bumen">{{item.user.department}}</div>
                 </div>
 
                 <div class="member5">
-                    1分钟前
+                    {{item.time}}
                 </div>
             </div>
-            <div class="member_list">
-                <div class="member1">
-                    <img :src="photo" alt="">
-                </div>
-                <div class="member2">
-                    <div class="member2_name">王丽坤</div>
-                    <div class="member2_bumen">技术部</div>
-                </div>
 
-                <div class="member5">
-                    1分钟前
-                </div>
-            </div>
-            <div class="member_list">
-                <div class="member1">
-                    <img :src="photo" alt="">
-                </div>
-                <div class="member2">
-                    <div class="member2_name">王丽坤</div>
-                    <div class="member2_bumen">技术部</div>
-                </div>
-
-                <div class="member5">
-                    1分钟前
-                </div>
-            </div>
 
 
         </div>
@@ -59,16 +35,81 @@
                 title: '点赞详情',
                 show: true,
                 backpage: '',
-                photo:'./static/img/07club_32.png'
+                photo:'./static/img/07club_32.png',
+                page:0,
+                clientHeight:'',
+                scrollHeight:'',
+                scrollTop:'',
+                page_end:true,
+                loadFlag:true,
+                dynamic_id:'',
+                like_list:[]
             }
         },
         created() {
+            this.dynamic_id=this.$route.query.dynamic_id;
+            this.like()
 
         },
         mounted() {
 
         },
-        methods: {}
+        methods: {
+            like(){
+                let _this=this;
+                this.$axios.get("dynamic-praise",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "dynamic":_this.dynamic_id,
+                        "page":_this.page
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        if(res.data.data.length<999){
+                            _this.page_end=false
+                        }
+                        let like_list=_this.like_list;
+                        if(like_list.length==0){
+                            like_list=res.data.data
+                        }else{
+                            like_list.push.apply(like_list,res.data.data);
+                        }
+                        _this.like_list=like_list;
+                        _this.loadFlag=false;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
+            gotoScroll(){
+                console.log("ppp")
+                let _this=this
+                this.scrollTop=this.$refs.opBottomEcharts.scrollTop;
+                this.clientHeight = this.$refs.opBottomEcharts.clientHeight;
+                this.scrollHeight=this.$refs.opBottomEcharts.scrollHeight;
+                //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
+                console.log(this.scrollTop+"+"+this.clientHeight+"+"+this.scrollHeight)
+                if(this.scrollTop+this.clientHeight >= this.scrollHeight-10){
+                    if(_this.page_end&&_this.loadFlag==false){
+                        _this.loadFlag=true
+                        let page = _this.page+1;
+                        _this.page=page;
+                        console.log(_this.page)
+                        _this.like()
+                    }
+
+                }
+            },
+
+        }
 
     }
 </script>
@@ -103,7 +144,7 @@
         display: block;
         width:100%;
         height:100%;
-
+        border-radius: 0.78rem;
     }
     .member_list>.member2{
         width:4.74rem;

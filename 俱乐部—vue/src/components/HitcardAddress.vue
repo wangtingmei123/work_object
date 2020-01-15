@@ -9,8 +9,8 @@
         </baidu-map>
 
         <div class="float" >
-            <a href="http://uri.amap.com/marker?position=116.404,39.915&name=北京天安门&coordinate=gaode&callnative=1">高德</a>
-            <a  href="http://api.map.baidu.com/marker?location=116.404,39.915&title=北京天安门&content=北京天安门广场&output=html">百度</a>
+            <a :href="urla">高德</a>
+            <a :href="urlb">百度</a>
         </div>
         <Eject  type='alert' @took='okfall' :showstate='showa'>
             <span slot='tlt'>提示</span>
@@ -47,12 +47,15 @@
                 hidea:false,
                 center: {lng: this.$route.query.lng, lat: this.$route.query.lat},
                 zoom: 15,
-                address_name:this.$route.query.address_name
+                address_name:this.$route.query.address_name,
+                urla:'',
+                urlb:''
             }
         },
         created() {
-//            this.center.lng=this.$route.query.lng;
-//            console.log(this.center.lng)
+
+            this.urla='http://uri.amap.com/marker?position='+ this.$route.query.lng+','+this.$route.query.lat+'&name='+this.$route.query.address_name+'&coordinate=gaode&callnative=1'
+            this.urlb='http://api.map.baidu.com/marker?location='+ this.$route.query.lng+','+this.$route.query.lat+'&title='+this.$route.query.address_name+'&content='+this.$route.query.address_name+'&output=html'
 
 
         },

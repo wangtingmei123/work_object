@@ -280,11 +280,16 @@
                     this.show_tip='请设置俱乐部加入人数上限'
                     return
                 }
-                if(this.club_tip==''){
+                if(parseInt(this.club_num)<=0){
                     this.showa=true;
-                    this.show_tip='请填写俱乐部公告'
+                    this.show_tip='俱乐部加入人数上限必须大于0'
                     return
                 }
+//                if(this.club_tip==''){
+//                    this.showa=true;
+//                    this.show_tip='请填写俱乐部公告'
+//                    return
+//                }
 
 
                 if(_this.type_l==0){

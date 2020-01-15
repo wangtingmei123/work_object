@@ -9,8 +9,6 @@
         </div>
         <div class="club_dynamic_box" ref="opBottomEcharts4" @scroll="gotoScroll()">
             <div>
-
-
             <div  class="club_dynamic_main" v-for="(item,index) in dynamic_list" >
                 <div class="dynamic_main1" @click="to_dynamicdetail(item.id)">
                     <div class="dynamic_main1_user">
@@ -33,14 +31,13 @@
                     <div class="dynamic_main3_img"  v-for="(items,index) in item.image_data">
                         <img :src="items" alt="">
                     </div>
-
                 </div>
 
                 <div class="dynamic_main4">
                     <div class="dynamic_m4a">
-                        <div class="dynamic_m41" @click="touch_like(index,item.is_like,item.id)">
-                            <img v-show="item.is_praise==1" :src="like_img" alt="">
-                            <img v-show="item.is_praise==0" :src="like_img_false" alt="">
+                        <div class="dynamic_m41" @click="touch_like(index,item.dynamic_praise_id,item.id)">
+                            <img v-show="item.dynamic_praise_id!=0" :src="like_img" alt="">
+                            <img v-show="item.dynamic_praise_id==0" :src="like_img_false" alt="">
                             <span style="margin-left:0.08rem;">{{item.praise_count}}</span>
                         </div>
                         <div class="dynamic_m42"  @click="comment(item.id)">
@@ -49,7 +46,8 @@
                         </div>
                     </div>
                     <div class="dynamic_m4b">
-                        <div class="dynamic_m43" v-if="tap_selece==1">审核中</div>
+                        <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==0">审核中</div>
+                        <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==1">已审核</div>
                         <div class="dynamic_m44" v-if="item.is_self_release==1" @click="touch_del(index,item.id)">删除</div>
                     </div>
                 </div>
@@ -61,8 +59,24 @@
         </div>
         <wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="isShowBigImg = false"></wimg>
         <!--<div class="creat_club" @click="to_tribal">发布动态</div>-->
-        <div class="creat_club_box">
+        <div class="creat_club_box" v-if="is_joined==true&&is_verified==true">
             <div class="creat_club" @click="to_tribal">发布动态</div>
+        </div>
+        <div class="lode_img" v-show="lode_end">
+            <img :src="lode_img" alt="">
+        </div>
+        <div class="empty_box" v-show="dynamic_list.length==0">
+            <img :src="empty_img" alt="">
+            <!--<div class="empty_tip">目前还没有俱乐部哦</div>-->
+        </div>
+        <Eject  type='alert' @took='okfall' :showstate='showa' >
+            <div slot='text'>{{show_tip}}</div>
+        </Eject>
+        <Eject  type='alert' @tocancel="nofall"  @took='okfall1' :showstate='showa1'  :cancel='cancel'>
+            <div slot='text'>{{show_tip1}}</div>
+        </Eject>
+        <div class="hide_tip_box" v-show="hidea">
+            <div class="hide_tip">{{hide_tip}}</div>
         </div>
     </div>
 </template>
@@ -71,11 +85,22 @@
 <script>
     import Header from './Header'
     import wimg from 'w-previewimg'
+    import Eject from './eject'
     export default {
-        components: { Header,wimg },
+        components: { Header,wimg,Eject},
         name: '',
         data() {
             return {
+                empty_img:'./static/img/empty_img.png',
+                cancel:true,
+                showa:false,
+                showa1:false,
+                show_tip:'',
+                show_tip1:'',
+                hide_tip:'',
+                hidea:false,
+                lode_img:'./static/img/loding.gif',
+                lode_end:false,
                 dynamic_list:[],
                 tap_selece:0,
                 title: '全部动态',
@@ -96,11 +121,15 @@
                 page_end:true,
                 act_list:[],
                 stare:'',
-                loadFlag:true
+                loadFlag:true,
+                can_show:true,
+                is_joined:'',
+                is_verified:''
             }
         },
         created() {
-
+            this.is_joined=localStorage.getItem('is_joined')
+            this.is_verified=localStorage.getItem('is_verified')
             this.active_list()
 
         },
@@ -113,35 +142,120 @@
                 this.$router.push({ path: '/tribal'}) // -> /user
             },
             touch_del(index,id){
-                var comm=this.dynamic_list;
-                comm.splice(index,1);
-                this.dynamic_list=comm
+                let _this=this;
+                _this.$axios.delete("/dynamics",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "id":id,
+                    }
+                }).then(res=>{
+                    _this.can_show=true
+                    if(res.status==200){
+                        _this.hidea=true;
+                        _this.hide_tip='删除成功';
+                        setTimeout(function(){
+                            _this.hidea=false;
+                            _this.dynamic_list.splice(index,1);
+                        },1500)
+
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        _this.can_show=true
+                        console.log(err)
+                    })
+
+
             },
-            touch_like(index,is_like,id){
-                 var comm=this.dynamic_list;
-                if(is_like){
-                    comm[index].like-=1
-                }else{
-                    comm[index].like+=1
-                }
-                comm[index].is_like=!is_like;
-                this.dynamic_list=comm
+            touch_like(index,dynamic_praise_id,id){
+                 let _this=this;
+                 if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                     if(dynamic_praise_id==0&&_this.can_show){
+                         _this.can_show=false;
+                         _this.$axios.post("/dynamic-praise",{
+                                 "id":id,
+                             },
+                             {headers: {
+                                 'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                             },
+                             }).then(res=>{
+                             _this.can_show=true
+                             if(res.status==201){
+                                 _this.dynamic_list[index].praise_count+=1
+                                 _this.dynamic_list[index].dynamic_praise_id=res.data.data.id;
+                             }else {
+                                 _this.showa=true;
+                                 _this.show_tip=res.data.message;
+                             }
+                         })
+                             .catch(err=>{
+                                 _this.can_show=true
+                                 console.log(err)
+                             })
+                     }else if(dynamic_praise_id!=0&&_this.can_show){
+                         _this.can_show=false;
+                         _this.$axios.delete("/dynamic-praise",{
+                             headers: {
+                                 'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                             },
+                             params: {
+                                 "id":dynamic_praise_id,
+                             }
+                         }).then(res=>{
+                             _this.can_show=true
+                             if(res.status==200){
+                                 _this.dynamic_list[index].praise_count-=1
+                                 _this.dynamic_list[index].dynamic_praise_id=0;
+                             }else {
+                                 _this.showa=true;
+                                 _this.show_tip=res.data.message;
+                             }
+                         })
+                             .catch(err=>{
+                                 _this.can_show=true
+                                 console.log(err)
+                             })
+                     }
+
+                 }else{
+                     _this.showa=true;
+                     _this.show_tip='您还不是该俱乐部成员，没有权限';
+                     return
+                 }
+
+
             },
             tap_bind(tap){
                 this.tap_selece=tap;
                 this.page=0;
+                this.loadFlag=true;
+                this.page_end=true;
                 this.dynamic_list=[];
                 this.active_list()
             },
-            to_dynamicdetail(){
-                this.$router.push({ path: '/dynamicdetail'}) // -> /user
+            to_dynamicdetail(id){
+                this.$router.push({ path: '/dynamicdetail',query:{dynamic_id:id}}) // -> /user
             },
             showBigImg (i) {
                 this.current = i
                 this.isShowBigImg = true
             },
-            comment(){
-                this.$router.push({ path: '/dynamicreply'}) // -> /user
+            comment(id){
+                let _this=this
+                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                    _this.$router.push({ path: '/dynamicreply',query:{dynamic_id:id}}) // -> /user
+
+                }else{
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
+
             },
             active_list(){
                 console.log(this.page)
@@ -160,7 +274,7 @@
                     console.log(res)
                     if(res.status==200){
                         console.log(res)
-                        if(res.data.data.length<4){
+                        if(res.data.data.length<10){
                             _this.page_end=false
                         }
                         let dynamic_list=_this.dynamic_list;
@@ -169,7 +283,6 @@
                         }else{
                             dynamic_list.push.apply(dynamic_list,res.data.data);
                         }
-                        console.log(dynamic_list)
                         _this.dynamic_list=dynamic_list;
                         _this.loadFlag=false
                     }else {
@@ -191,7 +304,7 @@
 
                 //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
                 console.log(scrollTop+"+"+this.clientHeight+"+"+this.scrollHeight)
-                if(scrollTop+_this.clientHeight >= _this.scrollHeight){
+                if(scrollTop+_this.clientHeight >= _this.scrollHeight-10){
                     console.log(_this.page_end)
 
                     if(_this.page_end&&_this.loadFlag==false){
@@ -204,14 +317,16 @@
 
                 }
             },
+            okfall(){
+                this.showa=false;
+            },
+            okfall1(){
+                this.showa1=false;
+            },
+            nofall(){
+                this.showa=false;
+            },
 
-            select(tap){
-                this.act_selece=tap;
-                this.page=0;
-                this.status=tap;
-                this.dynamic_list=[];
-                this.active_list()
-            }
         },
         destroyed(){
             console.log(this.$refs.opBottomEcharts)
@@ -264,7 +379,6 @@
         border-bottom:1px solid #e6e6e6;
         height:1rem;
         padding:0 0.15rem;
-
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -292,7 +406,7 @@
         width:7.1rem;
         margin:auto;
         margin-top:2.04rem;
-        margin-bottom:1.3rem;
+        padding-bottom:1.3rem;
         height:calc(100vh - 3.34rem);
         overflow: scroll;
 

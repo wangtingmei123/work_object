@@ -64,8 +64,6 @@
         </div>
 
 
-
-
         <div class="creat_club_box" v-if="is_authorized==0&&issuesactive.status==1" @click="to_issoue(issuesactive.id)">
             <div class="creat_club">编辑</div>
         </div>
@@ -75,10 +73,6 @@
         <div class="creat_club_box" v-show="issuesactive.status==2" @click="to_hitcard">
             <div class="creat_club">签到打卡</div>
         </div>
-        <!--<div class="creat_club_box" @click="to_comment">-->
-            <!--<div class="creat_club">签到打卡</div>-->
-        <!--</div>-->
-
 
     </div>
 </template>

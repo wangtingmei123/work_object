@@ -141,9 +141,7 @@
                     .then(res=>{
                         console.log()
                         if(res.status==204){
-                            localStorage.removeItem('access_token')
-                            localStorage.removeItem('expires_in')
-                            localStorage.removeItem('token_type')
+                            localStorage.clear()
                             _this.$router.push({ path: '/codelogin'}) // -> /user
                         }else {
                             _this.showa=true;

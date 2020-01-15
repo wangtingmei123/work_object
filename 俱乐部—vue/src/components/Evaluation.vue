@@ -3,7 +3,7 @@
         <Header :title="title" :show="show" :backpage="backpage"></Header>
 
 
-        <div class="evaluation_box" ref="opBottomEcharts1">
+        <div class="evaluation_box" >
             <div class="evaluation">
                 <div class="eval_right">好评100%</div>
                 <div class="eval_left">
@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="evaluat" >
+            <div class="evaluat" ref="opBottomEcharts" v-show="coment_list.length>0" @scroll="gotoScroll()">
                 <div class="evaluat_con" v-for="(item,index) in coment_list" >
                     <div class="evaluatcon_title">
                         <div class="evaluation_img">
@@ -43,39 +43,12 @@
                     </div>
                     <div class="evaluatcon_main">{{item.content}}</div>
                 </div>
-                <div class="evaluat_con" >
-                    <div class="evaluatcon_title">
-                        <div class="evaluation_img"><img :src="evalu_photo" alt=""></div>
-                        <div class="evaluation_user">
-                            <div class="evalu_phone">
-                                <div class="evalu_phone_left">王丽坤</div>
-                            </div>
-                            <div class="evalu_score">
-                                <div class="evalu_score_left">
-                                    <div class="evalu_score_left_xin"  >
-
-                                        <img class="score_select"  :src="evalu_img_select" alt="" >
-                                        <img class="score_select"  :src="evalu_img_select" alt="" >
-                                        <img class="score_select"  :src="evalu_img_select" alt="" >
-
-                                    </div>
-                                </div>
-                                <div class="evalu_score_right">
-                                    2019-10-19
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="evaluatcon_main">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</div>
-                </div>
-
             </div>
 
-
-            <!--<div class="eval_emty" >-->
-                <!--<img :src="no_evaluationa" alt="">-->
-                <!--<div class="eval_tip">暂时还没有评价哦</div>-->
-            <!--</div>-->
+            <div class="eval_emty" v-if="coment_list.length==0">
+                <img :src="no_evaluationa" alt="">
+                <div class="eval_tip">暂时还没有评价哦</div>
+            </div>
 
         </div>
     </div>
@@ -94,15 +67,17 @@
                 title: '全部评价',
                 show: true,
                 backpage: '',
-                eval_select:4,
+                eval_select:'',
                 evalu_img:'./static/img/30evalu_05.png',
                 evalu_img_select:'./static/img/30evalu_03.png',
                 evalu_photo:'./static/img/07club_32.png',
                 no_evaluationa:'./static/img/no_evaluationa.png',
+                page:0,
                 clientHeight:'',
                 scrollHeight:'',
+                scrollTop:'',
                 page_end:true,
-                page:0,
+                loadFlag:true,
                 coment_list:[],
                 global_eval:'',
                 rank_list:[1,2,3,4,5]
@@ -112,20 +87,20 @@
             this.real_show()
         },
         mounted() {
-            this.clientHeight = this.$refs.opBottomEcharts1.clientHeight;
-            this.scrollHeight=this.$refs.opBottomEcharts1.scrollHeight;
-            this.$refs.opBottomEcharts1.addEventListener('scroll',this.gotoScroll)
+
         },
         methods: {
             gotoScroll(){
-                let _this=this
                 console.log("ppp")
-                let scrollTop=_this.$refs.opBottomEcharts1.scrollTop;
+                let _this=this
+                this.scrollTop=this.$refs.opBottomEcharts.scrollTop;
+                this.clientHeight = this.$refs.opBottomEcharts.clientHeight;
+                this.scrollHeight=this.$refs.opBottomEcharts.scrollHeight;
                 //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
-                console.log(scrollTop+"+"+_this.clientHeight+"+"+_this.scrollHeight)
-                if(scrollTop+_this.clientHeight >= _this.scrollHeight){
-
-                    if(_this.page_end){
+                console.log(this.scrollTop+"+"+this.clientHeight+"+"+this.scrollHeight)
+                if(this.scrollTop+this.clientHeight >= this.scrollHeight-10){
+                    if(_this.page_end&&_this.loadFlag==false){
+                        _this.loadFlag=true
                         let page = _this.page+1;
                         _this.page=page;
                         console.log(_this.page)
@@ -149,19 +124,19 @@
                 }).then(res=>{
                     console.log(res)
                     if(res.status==200){
-                        console.log(res)
 
-                        if(res.data.length<15){
+                        if(res.data.length<_this.GLOBAL.page_total){
                             _this.page_end=false
                         }
                         let coment_list=_this.coment_list;
                         if(coment_list.length==0){
                             coment_list=res.data
                         }else{
-                            coment_list.concat(res.data);
+                            coment_list.push.apply(coment_list,res.data);
                         }
-
                         _this.coment_list=coment_list;
+                        _this.loadFlag=false;
+
                     }else {
 
                     }
@@ -175,6 +150,8 @@
                 this.page=0;
                 this.global_eval=e;
                 this.coment_list=[];
+                this.loadFlag=true;
+                this.page_end=true;
                 this.real_show()
             }
         }
@@ -266,8 +243,9 @@
     .evaluat{
         width:100%;
         margin-top:2.98rem;
-        height:calc(100vh - 2.98rem);
+        height:calc(100vh - 3.18rem);
         overflow: scroll;
+        padding-bottom:0.2rem;
 
     }
 
@@ -298,10 +276,12 @@
         float: left;
 
     }
+
     .evaluatcon_title>.evaluation_img>img{
         display: block;
         width:100%;
         height:100%;
+        border-radius: 1rem;
 
 
     }
@@ -394,7 +374,7 @@
         width:3rem;
         height:3rem;
         margin:auto;
-        margin-top:32vh;
+        margin-top:36vh;
 
     }
 

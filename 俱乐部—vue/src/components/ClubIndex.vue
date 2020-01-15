@@ -1,7 +1,7 @@
 <template>
     <div style="background: #f7f7f7;min-height: 100vh;overflow:hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
-        <div style="" class="club_big_box" :class="{club_big_box_authorized:is_authorized==0}">
+        <div style="" class="club_big_box" >
             <!--俱乐部banner-->
             <div class="club_banner_box">
                     <img class="banner_img" :src="club_info.back_image" alt="">
@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="but_top">
-                            <img @click="to_invited" class="but_top3" :src="but_top3" alt="">
+                            <!--<img @click="to_invited" class="but_top3" :src="but_top3" alt="">-->
                             <img v-if="is_authorized==1" @click="to_clubaudit" class="but_top1" :src="but_top1" alt="">
                             <img v-if="is_authorized==1" @click="to_createclub" class="but_top2" :src="but_top2" alt="">
                         </div>
@@ -33,19 +33,21 @@
                                 <div class="sign_center_tit">每日签到</div>
                                 <div class="sign_center_title">通过每日签到为俱乐部积攒积分</div>
                             </div>
-                            <div class="sign_right">签到</div>
+                            <div class="sign_right" v-if="is_joined&&is_signed==false" @click="sign()">签到</div>
+                            <div class="sign_right1" v-if="is_joined&&is_signed" >已签到</div>
+                            <div class="sign_right1" v-if="is_joined==false"></div>
                         </div>
                     </div>
             </div>
             <!--俱乐部公告-->
-            <div class="club_announ_box" style=" padding-bottom:0.2rem;">
+            <div class="club_announ_box" style=" padding-bottom:0.2rem;" v-if="club_info.explanation!=''">
                 <div class="club_announ" >
-                    <div class="active_title" style="border-bottom:1px solid #e6e6e6;justify-content: left">
+                    <div class="active_title" style="justify-content: left">
                         <img style="width:0.38rem;height:0.4rem;" class="active_title1 active_title2" :src="active_title2" alt="">
-                        <div class="title_center" style="margin-left:0.1rem">俱乐部公告:</div>
+                        <div class="title_center" style="margin-left:0.1rem">俱乐部公告</div>
                         <!--<img class="right_tip" :src="right_tip" alt="">-->
                     </div>
-                    <div class="club_announ_main">
+                    <div class="club_announ_main" style="border-top:1px solid #e6e6e6;">
                         {{club_info.explanation}}
 
                     </div>
@@ -74,12 +76,12 @@
             <!--俱乐部成员-->
             <div v-if="club_info.type_id==0" class="club_announ_box">
                 <div class="club_announ" @click="to_members">
-                    <div class="active_title" style="border-bottom:1px solid #e6e6e6">
+                    <div class="active_title" >
                         <img style="width:0.41rem;height:0.34rem;" class="active_title1 active_title3" :src="active_title3" alt="">
-                        <div class="title_center" style="margin-right:4.3rem">俱乐部成员:</div>
+                        <div class="title_center" style="margin-right:4.3rem">俱乐部成员</div>
                         <img class="right_tip" :src="right_tip" alt="">
                     </div>
-                    <div class="club_members_main" >
+                    <div class="club_members_main" style="border-top:1px solid #e6e6e6" v-if="audit_list.length>0">
                         <div class="club_members">
                             <div class="club_members_img" v-for="(item,index) in audit_list">
                                 <img v-if="item.user.avatar==''" :src="club_members" alt="">
@@ -93,18 +95,22 @@
                 </div>
             </div>
             <!--俱乐部活动-->
-            <div class="active_box">
+            <div class="active_box" >
                 <div class="active">
                     <div class="active_title" @click="to_allactive()">
                         <img class="active_title1" style="width:0.38rem;height:0.38rem" :src="active_title4" alt="">
-                        <div class="title_center" style="margin-right:4.3rem;">俱乐部活动: </div>
+                        <div class="title_center" style="margin-right:4.3rem;">俱乐部活动</div>
                         <img class="right_tip" :src="right_tip" alt="">
                     </div>
-                    <div class="act_main" v-for="(item,index) in active_info" @click="to_activedetail(item.issue_nums,item.id,item.name)">
+                    <div class="act_main" style="padding-bottom:0.2rem;" v-if="active_info.length>=1" v-for="(item,index) in active_info" @click="to_activedetail(item.issue_nums,item.id,item.name)">
                         <div class="act_main_left">
                             <img :src="item.logo_url" alt="">
                             <!--<div class="act_time">{{item.apply_stoped}}</div>-->
-                            <div class="act_time_tip">距离活动结束</div>
+                            <!--<div class="act_time_tip">距离活动结束</div>-->
+                            <div v-show="item.status==0" class="act_buta">报名中</div>
+                            <div v-show="item.status==1" class="act_buta">即将开始</div>
+                            <div v-show="item.status==2" class="act_buta">签到中</div>
+                            <div v-show="item.status==3" class="act_buta">已结束</div>
                         </div>
                         <div class="act_main_right">
                             <div class="act_main_right1">{{item.name}}</div>
@@ -129,12 +135,12 @@
             <!--俱乐部动态-->
             <div class="club_announ_box" >
                 <div class="club_announ">
-                    <div class="active_title" style="border-bottom:1px solid #e6e6e6" @click="to_alldynamic">
+                    <div class="active_title"  @click="to_alldynamic">
                         <img style="width:0.4rem;height:0.41rem;" class="active_title1 active_title5" :src="active_title5" alt="">
-                        <div class="title_center" style="margin-right:4.3rem">俱乐部动态:</div>
+                        <div class="title_center" style="margin-right:4.3rem">俱乐部动态</div>
                         <img class="right_tip" :src="right_tip" alt="">
                     </div>
-                    <div class="club_dynamic_main" v-for="(item,index) in dynamic_detail">
+                    <div class="club_dynamic_main" style="border-top:1px solid #e6e6e6" v-for="(item,index) in dynamic_info">
                         <div class="dynamic_main1"  @click="to_dynamicdetail(item.id)">
                              <div class="dynamic_main1_user">
                                  <img :src="club_members" alt="">
@@ -158,9 +164,9 @@
                         </div>
                         <div class="dynamic_main4">
                             <div class="dynamic_m4a">
-                                <div class="dynamic_m41" @click="touch_like(index,item.is_like,item.id)">
-                                    <img v-show="item.is_praise==1" :src="like_img" alt="">
-                                    <img v-show="item.is_praise==0" :src="like_img_false" alt="">
+                                <div class="dynamic_m41" @click="touch_like(index,item.dynamic_praise_id,item.id)">
+                                    <img v-show="item.dynamic_praise_id!=0" :src="like_img" alt="">
+                                    <img v-show="item.dynamic_praise_id==0" :src="like_img_false" alt="">
                                     <span style="margin-left:0.08rem;">{{item.praise_count}}</span>
                                 </div>
                                 <div class="dynamic_m42"  @click="comment(item.id)">
@@ -169,6 +175,8 @@
                                 </div>
                             </div>
                             <div class="dynamic_m4b">
+                                <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==0">审核中</div>
+                                <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==1">已审核</div>
                                 <div class="dynamic_m44" v-if="item.is_self_release==1" @click="touch_del(index,item.id)">删除</div>
                             </div>
                         </div>
@@ -180,19 +188,42 @@
         <div class="creat_club_box" v-if="is_authorized==1">
             <div class="creat_club" @click="launched">发起活动</div>
         </div>
+        <div class="creat_club_box" v-if="is_joined==false">
+            <div class="creat_club" @click="to_apply">申请加入</div>
+        </div>
+        <div class="creat_club_box creat_club_box1" v-if="is_verified==false">
+            <div class="creat_club">申请审核中</div>
+        </div>
+        <Eject  type='alert' @took='okfall' :showstate='showa' >
+            <div slot='text'>{{show_tip}}</div>
+        </Eject>
+        <Eject  type='alert'  @tocancel="nofall" @took='okfall1' :showstate='showa1'  :cancel='cancel'>
+            <div slot='text'>{{show_tip1}}</div>
+        </Eject>
+        <div class="hide_tip_box" v-show="hidea">
+            <div class="hide_tip">{{hide_tip}}</div>
+        </div>
     </div>
 </template>
 
 
 <script>
+    import Eject from './eject'
     import Header from './Header'
     import wimg from 'w-previewimg'
     export default {
-        components: { Header,wimg },
+        components: { Header,wimg,Eject},
         name: '',
         data() {
             return {
-                club_id:12,
+                cancel:true,
+                showa:false,
+                show_tip:'',
+                showa1:false,
+                show_tip1:'',
+                hide_tip:'',
+                hidea:false,
+                club_id:'',
                 is_admin:'',
                 club_info:[],
                 audit_list:[],
@@ -229,20 +260,23 @@
                     "./static/img/03index_37.png",
                 ],
                 is_authorized:'',
-                dynamic_detail:[]
+                is_joined:'',
+                is_signed:'',
+                is_verified:'',
+                dynamic_info:[],
+                can_show:true,
+                apply:0
 
             }
         },
         created() {
-            let _this=this
+            let _this=this;
              _this.club_id=_this.$route.query.id;
-             _this.is_admin=_this.$route.query.is_admin;
             _this.authis()
             _this.club_detail()
             _this.members()
             _this.active_list()
             _this.dynamic_list()
-             console.log(_this.club_id,_this.is_admin)
 
 
         },
@@ -250,7 +284,171 @@
 
         },
         methods: {
+            to_apply(){
+                this.showa1=true;
+                this.show_tip1='确定加入俱乐部吗？'
+                this.apply=1;
+            },
+            sign(){
+                let _this=this;
+                this.$axios.post("/club-users/sign",{
+                    "club_id":_this.club_id,
+                },
+                { headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        _this.hidea=true;
+                        _this.hide_tip='签到成功';
+                        setTimeout(function(){
+                            _this.hidea=false;
+                            _this.is_signed=true
+                        },1500)
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
+            okfall(){
+                this.showa=false;
+            },
+            okfall1(){
+                let _this=this;
+                this.showa1=false;
+                if(this.apply==1){
+                    this.apply=0;
+                    this.$axios.post("/club-users ",{
+                        "club_id": _this.club_id,
+                    },{headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    }}).then(res=>{
+                        console.log(res)
+                        if(res.status==200){
+                            _this.hidea=true;
+                            _this.hide_tip='申请成功，待审核';
+                            setTimeout(function(){
+                                _this.hidea=false;
+                            },1500)
 
+                        }else {
+                            _this.showa=true;
+                            _this.show_tip=res.data.message;
+                        }
+                    })
+                        .catch(err=>{
+                            console.log(err)
+                        })
+                }
+            },
+            nofall(){
+                this.showa=false;
+            },
+            touch_like(index,dynamic_praise_id,id){
+                let _this=this;
+                if(_this.is_joined==true && _this.is_verified==true){
+                    if(dynamic_praise_id==0&&_this.can_show){
+                        _this.can_show=false;
+                        _this.$axios.post("/dynamic-praise",{
+                                "id":id,
+                            },
+                            {headers: {
+                                'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                            },
+                            }).then(res=>{
+                            _this.can_show=true
+                            if(res.status==201){
+                                _this.dynamic_info[index].praise_count+=1
+                                _this.dynamic_info[index].dynamic_praise_id=res.data.data.id;
+                            }else {
+                                _this.showa=true;
+                                _this.show_tip=res.data.message;
+                            }
+                        })
+                            .catch(err=>{
+                                _this.can_show=true
+                                console.log(err)
+                            })
+                    }else if(dynamic_praise_id!=0&&_this.can_show){
+                        _this.can_show=false;
+                        _this.$axios.delete("dynamic-praise",{
+                            headers: {
+                                'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                            },
+                            params: {
+                                "id":dynamic_praise_id,
+                            }
+                        }).then(res=>{
+                            _this.can_show=true
+                            if(res.status==200){
+                                _this.dynamic_info[index].praise_count-=1
+                                _this.dynamic_info[index].dynamic_praise_id=0;
+                            }else {
+                                _this.showa=true;
+                                _this.show_tip=res.data.message;
+                            }
+                        })
+                            .catch(err=>{
+                                _this.can_show=true
+                                console.log(err)
+                            })
+                    }
+
+                }else{
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
+
+
+            },
+            touch_del(index,id){
+                let _this=this;
+                _this.$axios.delete("dynamics",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "id":id,
+                    }
+                }).then(res=>{
+                    _this.can_show=true
+                    if(res.status==200){
+                        _this.hidea=true;
+                        _this.hide_tip='删除成功';
+                        setTimeout(function(){
+                            _this.hidea=false;
+                            _this.dynamic_list()
+                        },1500)
+
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        _this.can_show=true
+                        console.log(err)
+                    })
+
+
+            },
+            comment(id){
+                let _this=this;
+                if(_this.is_joined==true && _this.is_verified==true){
+                    _this.$router.push({ path: '/dynamicreply',query:{dynamic_id:id}}) // -> /user
+                }else{
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
+
+            },
             authis(){
                 let _this=this;
                 this.$axios.get("/club-users/auth",{
@@ -264,8 +462,14 @@
                     console.log(res)
                     if(res.status==200){
                         console.log(res)
-                        _this.is_authorized=res.data.data.is_authorized
-                       localStorage.setItem('is_authorized',res.data.data.is_authorized)
+                        _this.is_authorized=res.data.data.is_authorized;
+                        _this.is_joined=res.data.data.is_joined;
+                        _this.is_signed=res.data.data.is_signed;
+                        _this.is_verified=res.data.data.is_verified;
+                        localStorage.setItem('is_authorized',res.data.data.is_authorized)
+                        localStorage.setItem('is_joined',res.data.data.is_joined)
+                        localStorage.setItem('is_signed',res.data.data.is_signed)
+                        localStorage.setItem('is_verified',res.data.data.is_verified)
 
                     }else {
 
@@ -290,10 +494,9 @@
                 }).then(res=>{
                     console.log(res)
                     if(res.status==200){
-
-                        _this.dynamic_detail=res.data.data.slice(0,1);
+                        _this.dynamic_info=res.data.data.slice(0,1);
                         console.log("+++++")
-                        console.log(_this.dynamic_detail)
+                        console.log(_this.dynamic_info)
                     }else {
                     }
                 })
@@ -301,9 +504,6 @@
                         console.log(err)
                     })
             },
-
-
-
 
             active_list(){
                 let _this=this;
@@ -383,11 +583,9 @@
                 }
             },
 
-
             to_createclub(){
-                if(this.is_admin){
                 this.$router.push({ path: '/createclub',query:{club_id:this.club_id,type_l:1}}) // -> /user
-                }
+
             },
             to_soccer(){
                 this.$router.push({ path: '/soccerhome'}) // -> /user
@@ -416,8 +614,8 @@
             to_allactive(){
                 this.$router.push({ path: '/allactive'}) // -> /user
             },
-            to_dynamicdetail(){
-                this.$router.push({ path: '/dynamicdetail'}) // -> /user
+            to_dynamicdetail(id){
+                this.$router.push({ path: '/dynamicdetail',query:{dynamic_id:id}}) // -> /user
             },
         }
 
@@ -428,7 +626,7 @@
 
     .club_big_box{
         width:100%;
-        height:calc(100vh - 2.24rem);
+        height:calc(100vh - 2.28rem);
         margin-top:0.88rem;
         overflow: scroll;
         padding-bottom:1.4rem;
@@ -450,6 +648,9 @@
         margin:auto;
         box-shadow: 0 0 0.08rem #ccc;
     }
+
+
+
     .creat_club{
         width:6.8rem;
         height:0.9rem;
@@ -464,6 +665,10 @@
 
     }
 
+    .creat_club_box1 .creat_club{
+        background: #bfbfbf;
+    }
+
     .club_dynamic_main{
         width:100%;
         height:auto;
@@ -471,7 +676,7 @@
         color: #4d4d4d;
         line-height: 0.48rem;
         font-size: 0.26rem;
-        margin-top:0.2rem;
+        /*padding-top:0.2rem;*/
         box-sizing: border-box;
         padding-bottom:0.1rem;
     }
@@ -631,6 +836,7 @@
         padding:0 0.1rem;
         color: #4d4d4d;
         line-height: 0.48rem;
+        box-sizing: border-box;
         font-size: 0.26rem;
         display: flex;
         justify-content: space-between;
@@ -688,7 +894,8 @@
         color: #4d4d4d;
         line-height: 0.48rem;
         font-size: 0.26rem;
-        margin-top:0.2rem;
+        padding-top:0.2rem;
+        box-sizing: border-box;
         
     }
 
@@ -833,7 +1040,7 @@
         margin:auto;
         margin-top:0.12rem;
         background: #fff;
-        padding-bottom:0.2rem;
+
 
 
     }
@@ -906,6 +1113,20 @@
         background: antiquewhite;
 
     }
+
+    .act_main>.act_main_left>.act_buta{
+        width:1.5rem;
+        height:0.48rem;
+        background: #ff5757;
+        color: #fff;
+        font-size: 0.28rem;
+        text-align: center;
+        line-height:0.48rem;
+        margin:auto;
+        margin-top:0.2rem;
+        border-radius: 0.1rem;
+    }
+
 
     .act_main>.act_main_left>.act_time{
         width:100%;
@@ -1063,8 +1284,17 @@
         border-radius: 0.1rem;
         margin-right:0.3rem;
         margin-top:0.5rem;
+    }
 
-
+    .sign_box>.sign_right1{
+        width:1.3rem;
+        height:0.5rem;
+        color: #1a1a1a;
+        text-align: center;
+        line-height: 0.5rem;
+        border-radius: 0.1rem;
+        margin-right:0.3rem;
+        margin-top:0.5rem;
     }
 
     .club_banner_box{

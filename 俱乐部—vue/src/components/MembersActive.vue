@@ -3,290 +3,24 @@
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="member_list_boxs">
             <div class="member_list_box">
-            <div class="member_list" style="justify-content:left;color: #989898;font-size: 0.26rem;height:0.9rem">
-                本次活动共计2人报名，1人打卡，1人未打，参与率50%
-            </div>
-            <div class="member_list">
-                <div class="member1">
-                    <img :src="photo" alt="">
+                <div class="member_list" style="justify-content:left;color: #989898;font-size: 0.26rem;height:0.9rem">
+                    本次活动共计2人报名，1人打卡，1人未打，参与率50%
                 </div>
-                <div class="member2">
-                    <div class="member2_name">王丽坤</div>
-                    <div class="member2_bumen">技术部</div>
-                </div>
+                <div class="member_list" v-for="(item,index) in member_list">
+                    <div class="member1">
+                        <img :src="item.user.avatar" alt="">
+                    </div>
+                    <div class="member2">
+                        <div class="member2_name">{{item.user.real_name}}</div>
+                        <div class="member2_bumen">{{item.user.department}}</div>
+                    </div>
 
-                <div class="member5">
-                  已打卡
-                </div>
-            </div>
-            <div class="member_list">
-                <div class="member1">
-                    <img :src="photo" alt="">
-                </div>
-                <div class="member2">
-                    <div class="member2_name">王丽坤</div>
-                    <div class="member2_bumen">技术部</div>
+                    <div class="member5">
+                      <span>已打卡</span>
+                    </div>
                 </div>
 
-                <div class="member5">
-                    已打卡
-                </div>
-            </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
             </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>         <div class="member_list">
-            <div class="member1">
-                <img :src="photo" alt="">
-            </div>
-            <div class="member2">
-                <div class="member2_name">王丽坤</div>
-                <div class="member2_bumen">技术部</div>
-            </div>
-
-            <div class="member5">
-                已打卡
-            </div>
-        </div>
-
-
-        </div>
         </div>
     </div>
 </template>
@@ -302,16 +36,82 @@
                 title: '成员列表',
                 show: true,
                 backpage: '',
-                photo:'./static/img/07club_32.png'
+                photo:'./static/img/07club_32.png',
+                clientHeight:'',
+                scrollHeight:'',
+                scrollTop:'',
+                act_id:'',
+                page:0,
+                page_end:true,
+                loadFlag:true,
+                member_list:[]
             }
         },
         created() {
-
+            this.memberactive()
         },
         mounted() {
 
         },
-        methods: {}
+        methods: {
+            memberactive(){
+                let _this=this
+                if(_this.loadFlag){
+                this.$axios.get("/activity-users",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "act_id":localStorage.getItem('active_id'),
+                    }
+                }).then(res=>{
+
+                    if(res.status==200){
+                        if(res.data.length<_this.GLOBAL.page_total){
+                            _this.page_end=false
+                        }
+                        let member_list=_this.member_list;
+                        if(member_list.length==0){
+                            member_list=res.data
+                        }else{
+                            member_list.push.apply(member_list,res.data);
+                        }
+
+                        _this.member_list=member_list;
+                        console.log(_this.member_list)
+                        _this.loadFlag=false;
+
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+                }
+            },
+            gotoScroll(){
+                console.log("ppp")
+                let _this=this
+                console.log(this.$refs.opBottomEcharts)
+                this.scrollTop=this.$refs.opBottomEcharts.scrollTop;
+                this.clientHeight = this.$refs.opBottomEcharts.clientHeight;
+                this.scrollHeight=this.$refs.opBottomEcharts.scrollHeight;
+                //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
+                console.log(this.scrollTop+"+"+this.clientHeight+"+"+this.scrollHeight)
+                if(this.scrollTop+this.clientHeight >= this.scrollHeight-10){
+                    if(_this.page_end&&_this.loadFlag==false){
+                        _this.loadFlag=true
+                        let page = _this.page+1;
+                        _this.page=page;
+                        console.log(_this.page)
+                        _this.memberactive()
+                    }
+
+                }
+            },
+        }
 
     }
 </script>
@@ -356,6 +156,7 @@
         display: block;
         width:100%;
         height:100%;
+        border-radius: 0.78rem;
 
     }
     .member_list>.member2{

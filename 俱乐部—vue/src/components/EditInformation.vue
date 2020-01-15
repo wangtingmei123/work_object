@@ -100,8 +100,8 @@
                     { value: '男' },
                     { value: '女' },
                 ],
-                radioVal: '男',
-                radioVal_sex:'m',
+                radioVal: '',
+                radioVal_sex:'',
                 title: '编辑个人资料',
                 show: true,
                 backpage: '',
@@ -403,9 +403,14 @@
         color: #1a1a1a;
     }
 
+    .form_edit1_tit input{
+        height:0.6rem;
+    }
+
     .form_edit1>label>input{
         width:0.4rem;
         outline: none;
+
     }
     .form_edit1>label:last-child{
         margin-left:0.6rem;
@@ -416,6 +421,7 @@
         color: #a6a6a6;
         border:none;
         outline: none;
+        height:0.6rem;
     }
     .form_edit1>input::placeholder{
         color: #a6a6a6;

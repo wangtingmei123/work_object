@@ -4,19 +4,19 @@
         <div class="active_tap">
             <div class="act" :class="{'act_selece':act_selece==''}" @click="select('')">全部</div>
             <div class="act" :class="{'act_selece':act_selece==1}" @click="select(1)">报名中</div>
-            <div class="act" :class="{'act_selece':act_selece==2}" @click="select(2)">待签到</div>
+            <div class="act" :class="{'act_selece':act_selece==2}" @click="select(2)">签到中</div>
             <div class="act" :class="{'act_selece':act_selece==3}" @click="select(3)">已结束</div>
         </div>
-        <div class="active_box" ref="opBottomEcharts">
+        <div class="active_box" ref="opBottomEcharts" @scroll="gotoScroll()">
             <div class="active">
-                <div class="act_main" @click="to_detail(item.issue_nums)" v-for="(item,index) in act_list">
+                <div class="act_main" @click="to_detail(item.issue_nums,item.id)" v-for="(item,index) in act_list">
                     <div class="act_main_left">
                         <img :src="item.logo_url" alt="">
                         <!--<div  class="act_time">29:28:40</div>-->
                         <!--<div class="act_time_tip">距离活动开始</div>-->
                         <div v-show="item.status==0" class="act_buta">报名中</div>
                         <div v-show="item.status==1" class="act_buta">即将开始</div>
-                        <div v-show="item.status==2" class="act_buta">待签到</div>
+                        <div v-show="item.status==2" class="act_buta">签到中</div>
                         <div v-show="item.status==3" class="act_buta">已结束</div>
                     </div>
                     <div class="act_main_right">
@@ -37,8 +37,11 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+        </div>
+        <div class="empty_box" v-show="act_list.length==0">
+            <img :src="empty_img" alt="">
+            <!--<div class="empty_tip">目前还没有俱乐部哦</div>-->
         </div>
     </div>
 </template>
@@ -51,6 +54,7 @@
         name: '',
         data() {
             return {
+                empty_img:'./static/img/empty_img.png',
                 title: '全部活动',
                 show: true,
                 backpage: '',
@@ -60,7 +64,9 @@
                 page:0,
                 clientHeight:'',
                 scrollHeight:'',
+                scrollTop:'',
                 page_end:true,
+                loadFlag:true,
                 act_list:[],
                 stare:''
 
@@ -71,12 +77,9 @@
         },
         mounted() {
 
-            this.clientHeight = this.$refs.opBottomEcharts.clientHeight;
-            this.scrollHeight=this.$refs.opBottomEcharts.scrollHeight;
-            this.$refs.opBottomEcharts.addEventListener('scroll',this.gotoScroll)
         },
         methods: {
-            to_detail(issue_nums){
+            to_detail(issue_nums,id){
 
                 localStorage.setItem('active_id',id)
                 localStorage.setItem('active_name',name)
@@ -90,6 +93,9 @@
             active_list(){
                 console.log(this.page)
                 let _this=this;
+                if(_this.loadFlag){
+
+
                 this.$axios.get("/activities",{
                     headers: {
                         'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
@@ -102,16 +108,17 @@
                 }).then(res=>{
                     console.log(res)
                     if(res.status==200){
-                        if(res.data.data.length<15){
+                        if(res.data.data.length<_this.GLOBAL.page_total){
                             _this.page_end=false
                         }
                         let act_list=_this.act_list;
                         if(act_list.length==0){
                             act_list=res.data.data
                         }else{
-                            act_list.concat(res.data.data);
+                            act_list.push.apply(act_list,res.data.data);
                         }
                         _this.act_list=act_list;
+                        _this.loadFlag=false;
 
                     }else {
                         _this.showa=true;
@@ -121,17 +128,21 @@
                     .catch(err=>{
                         console.log(err)
                     })
+
+                }
             },
             gotoScroll(){
                 console.log("ppp")
                 let _this=this
                 console.log(this.$refs.opBottomEcharts)
-                    let scrollTop=this.$refs.opBottomEcharts.scrollTop;
-
+                    this.scrollTop=this.$refs.opBottomEcharts.scrollTop;
+                    this.clientHeight = this.$refs.opBottomEcharts.clientHeight;
+                    this.scrollHeight=this.$refs.opBottomEcharts.scrollHeight;
                     //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
-                    console.log(scrollTop+"+"+this.clientHeight+"+"+this.scrollHeight)
-                    if(scrollTop+this.clientHeight >= this.scrollHeight){
-                        if(_this.page_end){
+                    console.log(this.scrollTop+"+"+this.clientHeight+"+"+this.scrollHeight)
+                    if(this.scrollTop+this.clientHeight >= this.scrollHeight-10){
+                        if(_this.page_end&&_this.loadFlag==false){
+                            _this.loadFlag=true
                             let page = _this.page+1;
                             _this.page=page;
                             console.log(_this.page)
@@ -145,6 +156,8 @@
                 this.act_selece=tap;
                 this.page=0;
                 this.status=tap;
+                this.loadFlag=true;
+                this.page_end=true;
                 this.act_list=[];
                 this.active_list()
             }

@@ -1,7 +1,7 @@
 <template>
     <div style="background: #f7f7f7;min-height: 100vh">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
-        <div class="rank_list_box" v-show="club_list.length>0" :class="{'rank_list_box_root':is_root==false}" ref="opBottomEcharts1" >
+        <div class="rank_list_box" v-show="club_list.length>0" :class="{'rank_list_box_root':is_root==false}" ref="opBottomEcharts1"  @scroll="gotoScroll()" >
             <div class="rank_list" >
                 <div class="club_main"  v-for="(item,index) in club_list">
                     <div class="club_main_left" @click="to_clubindex(item.is_joined,item.id,item.is_admin,item.name)">
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="empty_box" v-show="club_list.length==0&&no_empty">
+        <div class="empty_box" v-show="club_list.length==0">
             <img :src="empty_img" alt="">
             <!--<div class="empty_tip">目前还没有俱乐部哦</div>-->
         </div>
@@ -36,6 +36,7 @@
             <div class="hide_tip">{{hide_tip}}</div>
         </div>
 
+
     </div>
 </template>
 
@@ -48,6 +49,7 @@
         name: '',
         data() {
             return {
+                lode_img:'./static/img/loding.gif',
                 empty_img:'./static/img/empty_img.png',
                 cancel:true,
                 showa:false,
@@ -60,7 +62,9 @@
                 club_img:'./static/img/03index_37.png',
                 clientHeight:'',
                 scrollHeight:'',
+                scrollTop:'',
                 page_end:true,
+                loadFlag:true,
                 page:0,
                 club_list:[],
                 apply:0,
@@ -77,8 +81,7 @@
 
         },
         mounted() {
-            this.clientHeight = this.$refs.opBottomEcharts1.clientHeight;
-            this.scrollHeight=this.$refs.opBottomEcharts1.scrollHeight;
+
             this.$refs.opBottomEcharts1.addEventListener('scroll',this.gotoScroll)
         },
         methods: {
@@ -86,6 +89,7 @@
             real_show(){
                 console.log(this.page)
                 let _this=this;
+                if(_this.loadFlag){
                 this.$axios.get("/clubs",{
                     headers: {
                         'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
@@ -96,22 +100,17 @@
                 }).then(res=>{
                     console.log(res)
                     if(res.status==200){
-                        if(res.data.data.length<15){
+                        if(res.data.data.length<_this.GLOBAL.page_total){
                             _this.page_end=false
                         }
                         let club_list=_this.club_list;
                         if(club_list.length==0){
                             club_list=res.data.data
                         }else{
-                            club_list.concat(res.data.data);
+                            club_list.push.apply(club_list,res.data.data);
                         }
-
                         _this.club_list=club_list;
-
-                        if(_this.club_list.length==0){
-                            _this.no_empty=true
-                        }
-                        console.log(_this.club_list)
+                        _this.loadFlag=false
                     }else {
                         _this.showa=true;
                         _this.show_tip=res.data.message;
@@ -120,18 +119,20 @@
                     .catch(err=>{
                         console.log(err)
                     })
+                }
             },
 
             gotoScroll(){
                 let _this=this
                 console.log("ppp")
-                let scrollTop=_this.$refs.opBottomEcharts1.scrollTop;
-
+                this.scrollTop=_this.$refs.opBottomEcharts1.scrollTop;
+                this.clientHeight = this.$refs.opBottomEcharts1.clientHeight;
+                this.scrollHeight=this.$refs.opBottomEcharts1.scrollHeight;
                 //滚动条到底部的条件:div 到头部的距离 + 屏幕高度 = 可滚动的总高度
-                console.log(scrollTop+"+"+_this.clientHeight+"+"+_this.scrollHeight)
-                if(scrollTop+_this.clientHeight >= _this.scrollHeight){
-
-                    if(_this.page_end){
+                console.log(this.scrollTop+"+"+_this.clientHeight+"+"+_this.scrollHeight)
+                if(this.scrollTop+_this.clientHeight >= _this.scrollHeight-10){
+                    if(_this.page_end&&_this.loadFlag==false){
+                        _this.loadFlag=true
                         let page = _this.page+1;
                         _this.page=page;
                         console.log(_this.page)
@@ -175,11 +176,10 @@
                 this.showa=false;
             },
             to_clubindex(is_joined,id,is_admin,name){
-                if(is_joined==1){
-                    localStorage.setItem('club_id',id)
-                    localStorage.setItem('club_name',name)
-                    this.$router.push({ path: '/clubindex',query:{id:id,is_admin:is_admin}}) // -> /user
-                }
+                localStorage.setItem('club_id',id)
+                localStorage.setItem('club_name',name)
+                this.$router.push({ path: '/clubindex',query:{id:id,is_admin:is_admin}}) // -> /user
+
             },
             creat_club(){
                 this.$router.push({ path: '/createclub',query:{type_l:0}}) // -> /user
@@ -198,6 +198,8 @@
 </script>
 
 <style scoped>
+
+
 
     .creat_club_box{
         width:100%;
