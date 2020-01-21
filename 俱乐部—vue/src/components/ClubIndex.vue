@@ -278,8 +278,6 @@
         },
         created() {
 
-
-
             let _this=this;
              _this.club_id=_this.$route.query.id;
              if(_this.$route.query.id!=undefined){

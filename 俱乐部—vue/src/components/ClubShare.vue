@@ -17,6 +17,7 @@
              </div>
 
              <div class="share_but">
+                 <div id="QRCodeNone" class="share_erweim_a" style="display:none;"></div>
                   <div class=share_erweim id="qrcode" ref="qrcode"></div>
              </div>
 
@@ -71,7 +72,65 @@
 
         },
         mounted() {
+             let _this=this
+               var link='https://club.xindongguoji.com/'+'?#/clubshare?club_id='+_this.$route.query.club_id+'&company_id='+this.$route.query.company_id
+              this.$axios.post("wx-share",{
+                  url:'https://club.xindongguoji.com/'
+              },{headers: {
+                'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+            }})
+                .then(res=>{
+                    if(res.status==200){
+                            console.log(res)
+                            // console.log(Base64.decode(res.data.data))
+                            wx.config({
+                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                appId: res.data.appId, // 必填，公众号的唯一标识
+                                timestamp:res.data.timestamp, // 必填，生成签名的时间戳
+                                nonceStr: res.data.nonceStr, // 必填，生成签名的随机串
+                                signature: res.data.signature,// 必填，签名
+                                jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ','onMenuShareQZone','onMenuShareWeibo'] // 必填，需要使用的JS接口列表
+                            });
 
+                        wx.ready(function(){
+                                wx.onMenuShareAppMessage({
+                                    title: '邀请加入', // 分享标题
+                                    desc: '邀请您加入'+_this.club_info.name, // 分享描述
+                                    link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                    imgUrl: _this.club_info.logo, // 分享图标
+                                    success: function () {
+                                        // 设置成功
+                                    }
+
+                                })
+                                // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容（1.4.0）最新接口
+                                wx.onMenuShareTimeline({
+                                    title: '邀请加入', // 分享标题
+                                    link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                    imgUrl: '', // 分享图标
+                                    success: function () {
+                                        // 设置成功
+                                    }
+
+                                })
+                        })
+
+
+                        //通过error接口处理失败验证
+                        wx.error(function(res){
+                            console.log(res)
+                            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+                        });
+                  }else{
+                  }
+            
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+
+    
+                            
         },
         methods: {
             qrcode () {
@@ -86,8 +145,18 @@
                           height: code_h, // 二维码高度，单位像素
                           text: "https://club.xindongguoji.com/#/clubindex?company_id="+_this. company_id+"&id="+_this.club_id// 生成二维码的链接
                     });
+                var myCanvas = document.getElementsByTagName('canvas')[0];
+                var img = _this.convertCanvasToImage(myCanvas);
+  
+                $("#qrcode").append(img);
 
             },
+
+            convertCanvasToImage(canvas){
+                var image = new Image();
+                image.src = canvas.toDataURL("image/png");
+                return image;
+            },
 
 
             club_detail(){
@@ -142,14 +211,22 @@
         margin:auto;
         margin-top:0.65rem;
         border-top:1px solid #f0f0f0;
-    
     }
+
+    .share_erweim_a{
+        width: 2.48rem;
+        height:2.48rem;
+        margin:auto;
+        margin-top:0.58rem;
+         overflow: hidden;
+    }
+
     .share_erweim{
         width: 2.48rem;
         height:2.48rem;
         margin:auto;
         margin-top:0.58rem;
-        background: #ccc;
+        overflow: hidden;
     }
 
 

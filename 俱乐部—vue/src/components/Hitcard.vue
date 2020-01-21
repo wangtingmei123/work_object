@@ -24,7 +24,7 @@
                 <div class="dakad">
                     <img :src="daka_adress" style='display:block;width:0.24rem;height:0.26rem;'>
                     <div class="daka_tip">请前往打卡地点</div>
-                    <div class="didian"  @click="to_hitcardaddress()"> {{'<'}}{{address_name}}{{'>'}} </div>
+                    <div class="didian"  @click="to_hitcardaddress()">  &gt;  {{address_name}}  &lt;   </div>
                 </div>
             </div>
         </div>

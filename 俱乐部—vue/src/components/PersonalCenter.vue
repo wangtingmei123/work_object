@@ -95,7 +95,8 @@
                 percen_right:'./static/img/40my_17.png',
                 invited_posit1:'./static/img/40my_fenxiang.png',
                 invited_posit2:'./static/img/40my_05.png',
-                share_a:'./static/img/share_ap.png'
+                share_a:'./static/img/share_ap.png',
+                company_name:''
             }
         },
         created() {
@@ -112,6 +113,7 @@
                         console.log(res)
                         _this.name=res.data.data.name;
                         _this.department=res.data.data.department;
+                        _this.company_name=res.data.data.company.name;
                         if(res.data.data.avatar!=''){
                             _this.user_img=res.data.data.avatar
                         }
@@ -129,7 +131,9 @@
 
         },
         mounted() {
+            let _this=this;
                var company_id= localStorage.getItem('company_id');
+            
                var link='https://club.xindongguoji.com/'+'?#/businessinvitation?company_id='+company_id
               this.$axios.post("wx-share",{
                   url:'https://club.xindongguoji.com/'
@@ -152,7 +156,7 @@
                         wx.ready(function(){
                                 wx.onMenuShareAppMessage({
                                     title: '邀请加入', // 分享标题
-                                    desc: '', // 分享描述
+                                    desc:'邀请您加入'+_this.company_name, // 分享描述
                                     link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                     imgUrl: '', // 分享图标
                                     success: function () {

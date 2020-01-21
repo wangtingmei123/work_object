@@ -225,8 +225,9 @@
 
     methods: {
 
+
        authtion(){
-            let _this=this
+               let _this=this
                     _this.$axios.put("authorizations/refresh",{},
                         { headers: {
                             'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),

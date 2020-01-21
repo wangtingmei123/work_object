@@ -86,7 +86,6 @@
                     <textarea class="rank_item_textarea" name="" id="" cols="30" rows="10" placeholder="请输入活动详情，最多150个字" maxlength="150" v-model="active_details" @blur="blurEvent"></textarea>
                 </div>
 
-
             </div>
         </div>
         <div class="creat_club_box">
