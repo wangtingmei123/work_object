@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
+    <div style="min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="launched_box">
             <img :src="launched_bg" alt="">

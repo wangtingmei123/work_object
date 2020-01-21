@@ -112,17 +112,18 @@
                 verify_key:"verification_code_AkGft5ad8X8F07E",
                 verify_code:'123456',
                 invite_code:"",
-                club_name:''
+                club_name:'',
+                company_id:''
 
             }
         },
         created() {
-            let _this=this
-            console.log("888")
-            console.log(localStorage.getItem('access_token'))
+         let _this=this
+         _this.company_id=_this.$route.query.company_id
+
             this.$axios.post("/invitationCodes",{
                 "type":"company", // 邀请类型
-                "id":1 // 可选
+                "id":_this.company_id// 可选
             },{headers: {
                 'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
             }})
@@ -131,8 +132,8 @@
                         _this.club_name=res.data.company_name;
                         _this.invite_code=res.data.invite_code;
                     }else{
-                        this.showa=true;
-                        this.show_tip=res.data.message;
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
                         return
                     }
                 })
@@ -144,6 +145,8 @@
 
         },
         methods: {
+
+        
             okfall(){
                 this.showa=false;
             },
@@ -227,6 +230,7 @@
                 console.log("++++1")
                 console.log("888")
                 console.log(getCookie('access_token'))
+
                 let _this=this
                 //姓名校验
                 if (this.name ==''){
@@ -285,7 +289,7 @@
                     "invite_code": _this.invite_code,
                     "department": _this.member
                 }, {headers: {
-                    'Authorization': getCookie('token_type') + getCookie('access_token'),
+                  'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
                 }})
                     .then(res=>{
                         if(res.status==201){
@@ -453,12 +457,12 @@
     .form-item>.code_tip {
         width: 1.53rem;
         height: 0.5rem;
-        /*border: 1px solid #ff5757;*/
+        /*border: 1px solid #f7282f;*/
         /*border-radius: 0.1rem;*/
         font-size: 0.26rem;
         text-align: center;
         line-height: 0.5rem;
-        color: #ff5757;
+        color: #f7282f;
         /*box-sizing: border-box;*/
         letter-spacing: 0.01rem;
 

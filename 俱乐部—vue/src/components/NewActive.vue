@@ -51,7 +51,7 @@
         data() {
             return {
                 empty_img:'./static/img/empty_img.png',
-                title: '即将签到的活动',
+                title: '最新活动',
                 show: true,
                 backpage: '',
                 club_img:'./static/img/03index_37.png',
@@ -100,11 +100,6 @@
                             'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
                         },
                         params: {
-                            "near_days":3,
-                            "user_id":localStorage.getItem('user_id'),
-                            "is_apply":0,
-                            "is_signee":1,
-                            "is_ended":0,
                             "last_id":_this.page
                         }
                     }).then(res=>{

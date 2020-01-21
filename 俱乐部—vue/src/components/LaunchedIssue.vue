@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
+    <div style="background:#f7f7f7;min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="rank_list_box">
             <div class="rank_list">
@@ -61,7 +61,7 @@
             </baidu-map>
 
             <div class="data_br">
-                <div class="data_br_li" v-for="item in data_br" @click="to_address(item.title,item.marker.point)">
+                <div class="data_br_li" v-for="(item,index) in data_br" @click="to_address(item.title,item.marker.point)" :key="index">
                     <div class="title">{{item.title}}  </div>
                     <div class="addr-box">
                         <div class="address_icona">
@@ -431,7 +431,7 @@
         width: 0.22rem;
         height: 0.28rem;
         float: left;
-        vertical-align: middle;
+        /* vertical-align: middle; */
 
     }
 
@@ -583,7 +583,7 @@
 
         margin:auto;
         margin-top:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -627,9 +627,7 @@
 
     }
 
-    .rank_item_con>img{
 
-    }
 
     .club_name{
         color: #a6a6a6;
@@ -642,7 +640,7 @@
         border-width: 0.08rem;
         border-style: solid;
         border-color: #c0c0c0 transparent  transparent transparent;
-        float: right;
+        /* float: right; */
         margin-top:0.14rem;
         margin-left:0.1rem;
         border-radius: 0.02rem;

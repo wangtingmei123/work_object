@@ -1,12 +1,12 @@
 <template>
-    <div class="apply_bg" style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
+    <div class="apply_bg" style="min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="member_list_boxs">
             <div class="member_list_box">
                 <div class="member_list" style="justify-content:left;color: #989898;font-size: 0.26rem;height:0.9rem">
                     本次活动共计2人报名，1人打卡，1人未打，参与率50%
                 </div>
-                <div class="member_list" v-for="(item,index) in member_list">
+                <div class="member_list" v-for="(item,index) in member_list" :key="index">
                     <div class="member1">
                         <img :src="item.user.avatar" alt="">
                     </div>

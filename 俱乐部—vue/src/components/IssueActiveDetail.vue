@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden;">
+    <div style="background:#f7f7f7;min-height: 100vh;overflow: hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="scoll_box">
             <!--活动时间-->
@@ -13,7 +13,6 @@
                         <div class="detail2b2_left">第{{issuesactive.cur_issue}}期:</div>
                         <div class="detail2b2_right" style="font-size: 0.26rem;line-height: 0.62rem">{{issuesactive.start_date}} - {{issuesactive.end_date}}</div>
                     </div>
-
                 </div>
             </div>
             <!--活动地点-->
@@ -64,13 +63,13 @@
         </div>
 
 
-        <div class="creat_club_box" v-if="is_authorized==0&&issuesactive.status==1" @click="to_issoue(issuesactive.id)">
+        <div class="creat_club_box" v-if="is_authorized==1&&(issuesactive.status==1||issuesactive.status==0)" @click="to_issoue(issuesactive.id)">
             <div class="creat_club">编辑</div>
         </div>
-        <div class="creat_club_box" v-show="issuesactive.status==3" @click="to_commentfb">
+        <div class="creat_club_box" v-show="issuesactive.status==3&&is_hide" @click="to_commentfb">
             <div class="creat_club">发表评价</div>
         </div>
-        <div class="creat_club_box" v-show="issuesactive.status==2" @click="to_hitcard">
+        <div class="creat_club_box" v-show="issuesactive.status==2&&is_hide==false&&need_signee" @click="to_hitcard">
             <div class="creat_club">签到打卡</div>
         </div>
 
@@ -100,7 +99,14 @@
                 right_tip:'./static/img/22right_15.png',
                 righta:'./static/img/22righta_23.png',
                 issue_id:'',
-                issuesactive:''
+                issuesactive:'',
+                is_authorized:'',
+                is_joined:'',
+                is_signed:'',
+                is_verified:'',
+                 is_applyed:'',
+                need_signee:'',
+                is_hide:''
 
 
             }
@@ -132,13 +138,77 @@
                 .catch(err=>{
                 })
 
+            this.authentication()
+            this.authis()
+
+
         },
         mounted() {
 
         },
         methods: {
+
+            authentication(){
+                 let _this=this;
+                this.$axios.get("/activity-authentication",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                         "act_id": localStorage.getItem('active_id')
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        _this.is_applyed=res.data.data.is_applyed;
+                        _this.is_hide=res.data.data.is_signed;
+                        _this.need_signee=res.data.data.need_signee;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+
+            },
+             authis(){
+                let _this=this;
+                this.$axios.get("/club-users/auth",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "club_id":localStorage.getItem('club_id'),
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        _this.is_authorized=res.data.data.is_authorized;
+                        _this.is_joined=res.data.data.is_joined;
+                        _this.is_signed=res.data.data.is_signed;
+                        _this.is_verified=res.data.data.is_verified;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
             to_hitcard(){
-                this.$router.push({path:'./hitcard',query:{issue_id:this.issue_id}})
+                 let  _this=this
+                if(_this.is_joined==true && _this.is_verified==true){
+                     _this.$router.push({path:'./hitcard',query:{issue_id:this.issue_id}})
+                }else{
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
             },
             to_issoue(id){
                 console.log(id)
@@ -147,8 +217,15 @@
             to_comment(){
                 this.$router.push({path:'./evaluation'})
             },
-            to_commentfb(){
-                this.$router.push({path:'./comment'})
+              to_commentfb(){
+                   let  _this=this
+                if(_this.is_joined==true && _this.is_verified==true){
+                       _this.$router.push({path:'./comment'})
+                }else{
+                        _this.showa=true;
+                        _this.show_tip='您还不是该俱乐部成员，没有权限';
+                        return
+                }
             },
         }
 
@@ -214,7 +291,7 @@
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -239,7 +316,7 @@
     }
     .detail_but>.detail_but1{
         background: #fff;
-        color: #ff5757;
+        color: #f7282f;
         font-size: 0.55rem;
         display: flex;align-items: end;
         justify-content: center;
@@ -254,7 +331,7 @@
         line-height: 1.16rem;
     }
     .detail_but>.detail_but2{
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         font-size: 0.3rem;
         font-weight: bold;

@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
+    <div style="min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="player_box1">
             <img :src="player_banner" alt="">
@@ -187,7 +187,7 @@
         width:100%;
         height:0.8rem;
         font-size: 0.3rem;
-        color: #ff5757;
+        color: #f7282f;
         display: flex;
         justify-content: space-between;
         align-items: center;

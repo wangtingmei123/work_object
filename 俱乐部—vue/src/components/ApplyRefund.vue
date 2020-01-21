@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden;">
+    <div style="min-height: 100vh;overflow: hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="active_tap">
             <div class="act" :class="{'act_selece':act_selece==0}" @click="select(0)">全部</div>
@@ -285,7 +285,7 @@
     .act_main>.act_main_left>.act_buta{
         width:1.5rem;
         height:0.48rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         font-size: 0.28rem;
         text-align: center;
@@ -302,7 +302,7 @@
         text-align: center;
         line-height:0.42rem;
         font-size: 0.48rem;
-        color: #ff5757;
+        color: #f7282f;
         font-weight: bold;
         font-family: 'DINCondensedC';
     }
@@ -313,7 +313,7 @@
         text-align: center;
         line-height:0.24rem;
         font-size: 0.24rem;
-        color: #ff5757;
+        color: #f7282f;
     }
     .act_main>.act_main_right{
         width:4.28rem;

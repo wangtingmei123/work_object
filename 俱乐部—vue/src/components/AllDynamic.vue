@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden;">
+    <div style="min-height: 100vh;overflow: hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="rank_list">
             <div class="rank_list_title">
@@ -9,7 +9,7 @@
         </div>
         <div class="club_dynamic_box" ref="opBottomEcharts4" @scroll="gotoScroll()">
             <div>
-            <div  class="club_dynamic_main" v-for="(item,index) in dynamic_list" >
+            <div  class="club_dynamic_main" v-for="(item,index) in dynamic_list"  :key="index">
                 <div class="dynamic_main1" @click="to_dynamicdetail(item.id)">
                     <div class="dynamic_main1_user">
                         <img v-show="item.user.avatar!=''" :src="item.user.avatar" alt="">
@@ -28,7 +28,7 @@
                     {{item.contents}}
                 </div>
                 <div class="dynamic_main3" @click="to_dynamicdetail(item.id)" >
-                    <div class="dynamic_main3_img"  v-for="(items,index) in item.image_data">
+                    <div class="dynamic_main3_img"  v-for="(items,index) in item.image_data" :key="index">
                         <img :src="items" alt="">
                     </div>
                 </div>
@@ -59,7 +59,7 @@
         </div>
         <wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="isShowBigImg = false"></wimg>
         <!--<div class="creat_club" @click="to_tribal">发布动态</div>-->
-        <div class="creat_club_box" v-if="is_joined==true&&is_verified==true">
+        <div class="creat_club_box" v-if="is_joined==true && is_verified==true">
             <div class="creat_club" @click="to_tribal">发布动态</div>
         </div>
         <div class="lode_img" v-show="lode_end">
@@ -123,14 +123,15 @@
                 stare:'',
                 loadFlag:true,
                 can_show:true,
+                is_authorized:'',
                 is_joined:'',
-                is_verified:''
+                is_signed:'',
+                is_verified:'',
             }
         },
         created() {
-            this.is_joined=localStorage.getItem('is_joined')
-            this.is_verified=localStorage.getItem('is_verified')
             this.active_list()
+            this.authis()
 
         },
         mounted() {
@@ -138,6 +139,32 @@
 //            this.$refs.opBottomEcharts4.addEventListener('scroll',this.gotoScroll)
         },
         methods: {
+            authis(){
+                let _this=this;
+                this.$axios.get("/club-users/auth",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "club_id":localStorage.getItem('club_id'),
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        _this.is_authorized=res.data.data.is_authorized;
+                        _this.is_joined=res.data.data.is_joined;
+                        _this.is_signed=res.data.data.is_signed;
+                        _this.is_verified=res.data.data.is_verified;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
             to_tribal(){
                 this.$router.push({ path: '/tribal'}) // -> /user
             },
@@ -173,8 +200,9 @@
 
             },
             touch_like(index,dynamic_praise_id,id){
+
                  let _this=this;
-                 if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                 if(_this.is_joined==true && _this.is_verified==true){
                      if(dynamic_praise_id==0&&_this.can_show){
                          _this.can_show=false;
                          _this.$axios.post("/dynamic-praise",{
@@ -247,7 +275,7 @@
             },
             comment(id){
                 let _this=this
-                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                if(_this.is_joined && _this.is_verified){
                     _this.$router.push({ path: '/dynamicreply',query:{dynamic_id:id}}) // -> /user
 
                 }else{
@@ -349,11 +377,11 @@
         box-shadow: 0 0 0.08rem #ccc;
     }
     .creat_club{
-        width:7.1rem;
+        width:7.2rem;
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -363,9 +391,9 @@
 
     }
     .rank_list{
-        width:7.1rem;
+        width:7.2rem;
         height:auto;
-        background: #f7f7f7;
+        background: #f0f0f0;
         margin:auto;
         top:0.88rem;
         left:0;
@@ -374,16 +402,17 @@
 
     }
     .rank_list_title{
-        width:6.8rem;
+        width:6.9rem;
         margin:auto;
-        border-bottom:1px solid #e6e6e6;
+        /*border-bottom:1px solid #e6e6e6;*/
         height:1rem;
         padding:0 0.15rem;
         display: flex;
         align-items: center;
         justify-content: space-around;
-        margin-top:0.15rem;
+        margin-top:0.2rem;
         background: #fff;
+        border-radius: 0.1rem;
 
     }
 
@@ -403,20 +432,18 @@
 
 
     .club_dynamic_box{
-        width:7.1rem;
+        width:7.2rem;
         margin:auto;
-        margin-top:2.04rem;
+        margin-top:2.08rem;
         padding-bottom:1.3rem;
-        height:calc(100vh - 3.34rem);
+        height:calc(100vh - 3.38rem);
         overflow: scroll;
 
-    }
-    .club_dynamic_main:nth-child(1){
-        margin-top:0
+
     }
 
     .club_dynamic_main{
-        width:7.1rem;
+        width:7.2rem;
         margin:auto;
         height:auto;
         background: #fff;
@@ -427,7 +454,8 @@
         overflow: hidden;
         box-sizing: border-box;
         padding-bottom:0.32rem;
-        margin-top:0.1rem;
+        margin-top:0.2rem;
+        border-radius: 0.1rem;
 
     }
     .club_dynamic_main>.dynamic_main1{

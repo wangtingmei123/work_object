@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden;">
+    <div style="min-height: 100vh;overflow: hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="editation_box">
             <div class="editation_bt">
@@ -338,9 +338,9 @@
 
     }
 
-    .rank_item_con>img{
+    /* .rank_item_con>img{
 
-    }
+    } */
 
     .club_name{
         color: #a6a6a6;
@@ -353,7 +353,7 @@
         border-width: 0.08rem;
         border-style: solid;
         border-color: #c0c0c0 transparent  transparent transparent;
-        float: right;
+        /* float: right; */
         margin-top:0.14rem;
         margin-left:0.1rem;
         border-radius: 0.02rem;
@@ -368,7 +368,7 @@
         right:0;
         margin:auto;
         bottom:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;

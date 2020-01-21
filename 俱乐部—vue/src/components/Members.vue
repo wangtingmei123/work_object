@@ -1,9 +1,9 @@
 <template>
-    <div class="apply_bg" style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
+    <div class="apply_bg" style="min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="member_list_boxs" ref="opBottomEcharts3" v-show="audit_list.length>0" @scroll="gotoScroll()">
              <div class="member_list_box" >
-                <div class="member_list" v-for="(item,index) in audit_list">
+                <div class="member_list" v-for="(item,index) in audit_list" :key="index">
                     <div class="member1">
                         <img v-if="item.user.avatar==''" :src="photo" alt="">
                         <img v-if="item.user.avatar!=''" :src="item.user.avatar" alt="">
@@ -222,10 +222,11 @@
         overflow: scroll;
     }
   .member_list_box{
-      width:7.1rem;
+      width:7.2rem;
       height:auto;
       margin:auto;
       background: #fff;
+      border-radius: 0.1rem;
   }
   .member_list{
       width:6.84rem;

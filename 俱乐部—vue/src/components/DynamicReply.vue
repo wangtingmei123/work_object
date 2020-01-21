@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
+    <div style="min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="image-item space" @click="showActionSheet()">
             <div class="image-up"></div>
@@ -129,7 +129,7 @@
         right:0;
         margin:auto;
         bottom:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -177,7 +177,7 @@
     }
 
     .area_tip>.color{
-        color: #ff5757;
+        color: #f7282f;
     }
 
     .submit{

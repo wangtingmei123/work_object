@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh">
+    <div style="min-height: 100vh">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="image-item space" @click="showActionSheet()">
             <div class="image-up"></div>

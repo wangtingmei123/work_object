@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/Index'
-import Codelogin from '@/components/Codelogin'
+import Codelog from '@/components/Codelog'
 import Login from '@/components/Login'
 import RankList from '@/components/RankList'
 import AllClub from '@/components/AllClub'
@@ -36,8 +36,11 @@ import BusinessInvitation from '@/components/BusinessInvitation'
 import EditInformation from '@/components/EditInformation'
 import DynamicReply from '@/components/DynamicReply'
 import SigninActive from '@/components/SigninActive'
+import NewActive from '@/components/NewActive'
 import Hitcard from '@/components/Hitcard'
 import HitcardAddress from '@/components/HitcardAddress'
+import Paypage from '@/components/Paypage'
+import ClubShare from '@/components/ClubShare'
 
 Vue.use(Router)
 export default new Router({
@@ -52,9 +55,9 @@ export default new Router({
 
     },
     {
-      path: '/codelogin',
-      name: 'Codelogin',
-      component: Codelogin
+      path: '/codelog',
+      name: 'Codelog',
+      component: Codelog
     },
     {
       path: '/login',
@@ -232,6 +235,11 @@ export default new Router({
           component: SigninActive
       },
       {
+          path: '/newactive',
+          name: 'NewActive',
+          component: NewActive
+      },
+      {
           path: '/hitcard',
           name: 'Hitcard',
           component: Hitcard
@@ -241,5 +249,15 @@ export default new Router({
           name: 'HitcardAddress',
           component: HitcardAddress
       },
+      {
+        path: '/paypage',
+        name: 'Paypage',
+        component: Paypage
+    },
+    {
+      path: '/clubshare',
+      name: 'ClubShare',
+      component: ClubShare
+  },
   ]
 })

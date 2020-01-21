@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height:100vh;overflow: hidden">
+    <div style="min-height:100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
 
 
@@ -15,7 +15,7 @@
             </div>
 
             <div class="evaluat" ref="opBottomEcharts" v-show="coment_list.length>0" @scroll="gotoScroll()">
-                <div class="evaluat_con" v-for="(item,index) in coment_list" >
+                <div class="evaluat_con" v-for="(item,index) in coment_list"  :key="index">
                     <div class="evaluatcon_title">
                         <div class="evaluation_img">
                             <img v-show="item.user.avatar!=''" :src="item.user.avatar" alt="">

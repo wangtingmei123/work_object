@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden;">
+    <div style="background:#f7f7f7;min-height: 100vh;overflow: hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="activedetail_box_big" style="margin-bottom:1.3rem;">
             <div class="detail1_box">
@@ -103,17 +103,17 @@
         <div class="creat_club_box" v-if="is_authorized==1&&(active_info.status==0 ||active_info.status==1)" @click="to_editactive(active_info.id,active_info.issue_nums)">
             <div class="creat_club">编辑</div>
         </div>
-        <div class="creat_club_box" v-if="active_info.status==3" @click="to_commentfb">
+        <div class="creat_club_box" v-if="active_info.status==3&&is_hide" @click="to_commentfb">
             <div class="creat_club">发表评价</div>
         </div>
-        <div class="creat_club_box"  @click="to_hitcard" v-show="active_info.status==2">
+        <div class="creat_club_box"  @click="to_hitcard" v-show="active_info.status==2&&is_hide==false&&need_signee">
             <div class="creat_club">签到打卡</div>
         </div>
 
-        <div class="creat_club_box" v-if="active_info.status==0 ||active_info.status==1" @click="notosing()">
+        <div class="creat_club_box" v-if="(active_info.status==0 ||active_info.status==1)&&is_applyed" @click="notosing()">
             <div class="creat_club">取消报名</div>
         </div>
-        <div class="detail_but" v-if="active_info.status==0">
+        <div class="detail_but" v-if="active_info.status==0&&is_applyed==false">
             <div class="detail_but1"><span>￥</span>{{active_info.entry_fees/100}}</div>
             <div class="detail_but2" @click="tosing()">报名缴费</div>
         </div>
@@ -163,7 +163,14 @@
                 right_tip:'./static/img/22right_15.png',
                 righta:'./static/img/22righta_23.png',
                 active_id:'',
-                active_info:[]
+                active_info:[],
+                is_authorized:'',
+                is_joined:'',
+                is_signed:'',
+                is_verified:'',
+                is_applyed:'',
+                need_signee:'',
+                is_hide:''
 
             }
         },
@@ -172,16 +179,74 @@
             _this.is_authorized=localStorage.getItem('is_authorized')
             _this.club_name=localStorage.getItem('club_name')
             _this.active_id=localStorage.getItem('active_id');
+            this.authis()
             this.active_detail()
+            this.authentication()
 
         },
         mounted() {
 
         },
         methods: {
+            authentication(){
+
+                 let _this=this;
+                this.$axios.get("/activity-authentication",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                         "act_id": localStorage.getItem('active_id')
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res.data.data.is_signed)
+                        _this.is_applyed=res.data.data.is_applyed;
+                        _this.is_hide=res.data.data.is_signed;
+                        _this.need_signee=res.data.data.need_signee;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+
+            },
+
+
+
+            authis(){
+                let _this=this;
+                this.$axios.get("/club-users/auth",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "club_id":localStorage.getItem('club_id'),
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        _this.is_authorized=res.data.data.is_authorized;
+                        _this.is_joined=res.data.data.is_joined;
+                        _this.is_signed=res.data.data.is_signed;
+                        _this.is_verified=res.data.data.is_verified;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
             notosing(){
                 let _this=this
-                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true) {
+                if(_this.is_joined==true && _this.is_verified==true) {
 
                     _this.$axios.delete("/activity-users", {
                         headers: {
@@ -197,6 +262,7 @@
                             _this.hide_tip='取消报名成功';
                             setTimeout(function(){
                                 _this.hidea=false;
+                                _this.is_applyed=false
                             },1500)
                         } else {
                             _this.showa = true;
@@ -216,29 +282,39 @@
             tosing(){
                 let _this=this
 
-                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
-                    _this.$axios.post("/activity-users",
-                        {
-                            "act_id": localStorage.getItem('active_id')
-                        },{
-                            headers: {
-                                'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
-                            }
-                        }).then(res=>{
-                        if(res.status==200){
-                            _this.hidea=true;
-                            _this.hide_tip='报名成功';
-                            setTimeout(function(){
-                                _this.hidea=false;
-                            },1500)
-                        }else{
-                            _this.showa=true;
-                            _this.show_tip=res.data.message;
-                            return
-                        }
-                    })
-                        .catch(err=>{
-                        })
+                if(_this.is_joined==true && _this.is_verified==true){
+
+                    if(_this.active_info.entry_fees==0){
+
+                            _this.$axios.post("/activity-users",
+                                {
+                                    "act_id": localStorage.getItem('active_id')
+                                },{
+                                    headers: {
+                                        'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                                    }
+                                }).then(res=>{
+                                if(res.status==200){
+                                    _this.hidea=true;
+                                    _this.hide_tip='报名成功';
+                                    setTimeout(function(){
+                                        _this.hidea=false;
+                                    },1500)
+                                }else{
+                                    _this.showa=true;
+                                    _this.show_tip=res.data.message;
+                                    return
+                                }
+                            })
+                                .catch(err=>{
+                                })  
+
+
+                    }else{
+                          _this.$router.push({path:'./paypage'})
+                    }
+
+                
 
                 }else{
                     _this.showa=true;
@@ -272,7 +348,14 @@
 
 
             to_hitcard(){
-                this.$router.push({path:'./hitcard',query:{issue_id:0}})
+                let  _this=this
+                if(_this.is_joined==true && _this.is_verified==true){
+                        _this.$router.push({path:'./hitcard',query:{issue_id:0}})
+                }else{
+                    _this.showa=true;
+                    _this.show_tip='您还不是该俱乐部成员，没有权限';
+                    return
+                }
             },
             to_editactive(id,issue_nums){
                 if(issue_nums==0){
@@ -283,7 +366,14 @@
 
             },
             to_commentfb(){
-                this.$router.push({path:'./comment'})
+                   let  _this=this
+                if(_this.is_joined==true && _this.is_verified==true){
+                       _this.$router.push({path:'./comment'})
+                }else{
+                        _this.showa=true;
+                        _this.show_tip='您还不是该俱乐部成员，没有权限';
+                        return
+                }
             },
             menbersactive(){
                 this.$router.push({path:'./membersactive'})
@@ -368,7 +458,7 @@
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -393,7 +483,7 @@
     }
     .detail_but>.detail_but1{
         background: #fff;
-        color: #ff5757;
+        color: #f7282f;
         font-size: 0.55rem;
         display: flex;align-items: end;
         justify-content: center;
@@ -408,7 +498,7 @@
         line-height: 1.16rem;
     }
     .detail_but>.detail_but2{
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         font-size: 0.3rem;
         /*font-weight: bold;*/

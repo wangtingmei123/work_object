@@ -302,6 +302,15 @@
                                     var activityList2=$scope.activityList2
                                     activity_detail.goods_list=activity_detail.goods_list.slice(0,7)
                                     $scope.activityList2 = activityList2.concat(activity_detail);
+                                    for(var a=0;a<$scope.activityList2.length-1;a++){
+                                        for(var b=0;b<$scope.activityList2.length-1-a;b++){
+                                            if($scope.activityList2[b].act_id<$scope.activityList2[b+1].act_id){
+                                                var temp = $scope.activityList2[b];
+                                                $scope.activityList2[b] = $scope.activityList2[b+1];
+                                                $scope.activityList2[b+1] = temp;
+                                            }
+                                         }
+                                    }
 
                                 }else{
 

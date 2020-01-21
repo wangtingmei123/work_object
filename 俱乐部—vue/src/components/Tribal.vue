@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
+    <div style="background:#f7f7f7;min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="image-item space" @click="showActionSheet()">
             <div class="image-up"></div>
@@ -27,7 +27,7 @@
 
             <div class="upload_warp torefund_box2">
                 <div class="upload_warp_img tfright2">
-                    <div class="upload_warp_img_div tfrboxsc" v-for="(item,index) in imgList">
+                    <div class="upload_warp_img_div tfrboxsc" v-for="(item,index) in imgList" :key="index">
                         <div class="upload_warp_img_div_top del_img">
                             <img  :src="del_img" class="upload_warp_img_div_del" @click="fileDel(index)">
                         </div>
@@ -40,7 +40,9 @@
                     </div>
                 </div>
             </div>
+            
         </div>
+
         <div class="creat_club" @click="to_uplode()">发布</div>
         <Eject  type='alert'  @took='okfall' :showstate='showa'  >
             <div slot='text'>{{show_tip}}</div>
@@ -86,12 +88,25 @@
             }
         },
         created() {
-
+        
+            
+                 
         },
         mounted() {
 
         },
         methods: {
+
+            // choosimg(){
+            //     wx.chooseImage({
+            //     count: 1, // 默认9
+            //     sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            //     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            //     success: function (res) {
+            //     var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            //     }
+            //     });
+            // },
             okfall() {
                 this.showa = false;
             },
@@ -347,7 +362,7 @@
         right:0;
         margin:auto;
         bottom:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -395,7 +410,7 @@
     }
 
     .area_tip>.color{
-        color: #ff5757;
+        color: #f7282f;
     }
 
     .submit{

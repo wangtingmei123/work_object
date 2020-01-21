@@ -417,12 +417,12 @@
     .form-item>.code_tip {
         width: 1.53rem;
         height: 0.5rem;
-        /*border: 1px solid #ff5757;*/
+        /*border: 1px solid #f7282f;*/
         /*border-radius: 0.1rem;*/
         font-size: 0.26rem;
         text-align: center;
         line-height: 0.5rem;
-        color: #ff5757;
+        color: #f7282f;
         /*box-sizing: border-box;*/
         letter-spacing: 0.01rem;
 

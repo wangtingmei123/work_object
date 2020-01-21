@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background:#fff;min-height: 100vh;overflow: hidden">
 
         <div class="login">
             <Header :title="title" :show="show" :backpage="backpage"></Header>
@@ -234,9 +234,7 @@
                         if(res.status==200){
                             _this.hidea=true;
                             _this.hide_tip='登录成功';
-//                            setCookie("access_token",res.data.access_token);
-//                            setCookie("expires_in",res.data.expires_in);
-//                            setCookie("token_type",res.data.token_type);
+                    
                             localStorage.setItem('access_token',res.data.access_token);
                             localStorage.setItem('expires_in',res.data.expires_in);
                             localStorage.setItem('token_type',res.data.token_type)
@@ -286,8 +284,8 @@
        width:1.86rem;
        height:100%;
        line-height: 0.94rem;
-       border-bottom:0.04rem solid #ff5757;
-       color: #ff5757;
+       border-bottom:0.04rem solid #f7282f;
+       color: #f7282f;
        box-sizing: border-box;
        font-size: 0.3rem;
        font-weight: bold;
@@ -382,12 +380,12 @@
    .form-item>.code_tip{
        width: 1.6rem;
        height:0.5rem;
-       border:1px solid #ff5757;
+       border:1px solid #f7282f;
        border-radius: 0.1rem;
        font-size: 0.22rem;
        text-align: center;
        line-height:0.5rem;
-       color: #ff5757;
+       color: #f7282f;
        /*box-sizing: border-box;*/
        letter-spacing: 0.01rem;
 
@@ -409,8 +407,7 @@
         font-size: 0.24rem;
         color: #b3b3b3;
         margin:auto;
-        position: fixed;
-        left:0;right:0;bottom:0.7rem;
+        margin-top:15vh;
 
 
     }
@@ -422,7 +419,7 @@
         height:0.9rem;
         color: #fff;
         padding:0;
-        background: #ff5757;
+        background: #f7282f;
         box-shadow: 0 0.04rem 0.20rem 0 #ffd3d3;
         border-radius: 0.08rem;
         line-height:0.9rem;

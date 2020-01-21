@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
+    <div style="min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="rank_list_box">
             <div class="rank_list">
@@ -15,7 +15,7 @@
                         <span class="club_name_tip"></span>
                     </div>
                     <div class="float_choos float_choos_time" v-show="show_lx">
-                        <div class="choos" v-for="(item, i) in lxlist"  @click="choos_lx(item)">{{item.name}}</div>
+                        <div class="choos" v-for="(item, i) in lxlist"  @click="choos_lx(item)" :key="i">{{item.name}}</div>
                     </div>
                 </div>
 
@@ -29,7 +29,7 @@
                     </div>
                     <input type="file" name="file" ref="files1" accept="image/*" @change="uploadImg1" />
                 </div>
-                <div class="rank_item">
+                <!-- <div class="rank_item">
                     <div class="rank_item_tit">俱乐部banner</div>
                     <div class="rank_item_con">
                         <span class="club_name" v-if="base64_banner==''">请选择并上传俱乐部banner</span>
@@ -37,7 +37,7 @@
                         <img class="right_tip" :src="right_tip" alt="" >
                     </div>
                     <input type="file" name="file" ref="files2" accept="image/*" @change="uploadImgbanner1"/>
-                </div>
+                </div> -->
 
                 <div class="rank_item">
                     <div class="rank_item_tit">所在地区</div>
@@ -195,8 +195,8 @@
                 reader.onload = img => {
                     console.log('***')
                     clipic.getImage({
-                        width: 400,
-                        height: 300,
+                        width: 440,
+                        height: 400,
                         src: img.target.result,
                         onDone: base64 => {
                             console.log("***")
@@ -265,11 +265,11 @@
                     this.show_tip='请上传俱乐部logo'
                     return
                 }
-                if(this.base64_banner==''){
-                    this.showa=true;
-                    this.show_tip='请上传俱乐部banner'
-                    return
-                }
+                // if(this.base64_banner==''){
+                //     this.showa=true;
+                //     this.show_tip='请上传俱乐部banner'
+                //     return
+                // }
                 if(this.agentArea==''){
                     this.showa=true;
                     this.show_tip='请选择俱乐部所在地区'
@@ -298,7 +298,7 @@
                     data_all.explanation=_this.club_tip;
                     data_all.type_id=_this.choos_lx_id;
                     data_all.logo_tmp=_this.base64_logo;
-                    data_all.back_tmp=_this.base64_banner;
+                    // data_all.back_tmp=_this.base64_banner;
                     data_all.prov_id=_this.province;
                     data_all.city_id=_this.city;
                     data_all.dist_id=_this.area;
@@ -328,7 +328,7 @@
                     data_all.explanation=_this.club_tip;
                     data_all.type_id=_this.choos_lx_id;
                     data_all.logo_tmp=_this.base64_logo;
-                    data_all.back_tmp=_this.base64_banner;
+                    // data_all.back_tmp=_this.base64_banner;
                     data_all.prov_id=_this.province;
                     data_all.city_id=_this.city;
                     data_all.dist_id=_this.area;
@@ -436,7 +436,7 @@
         right:0;
         margin:auto;
         bottom:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -480,9 +480,6 @@
 
     }
 
-    .rank_item_con>img{
-
-    }
 
     .club_name{
         color: #a6a6a6;
@@ -495,7 +492,7 @@
         border-width: 0.08rem;
         border-style: solid;
         border-color: #c0c0c0 transparent  transparent transparent;
-        float: right;
+        /* float: right; */
         margin-top:0.14rem;
         margin-left:0.1rem;
         border-radius: 0.02rem;

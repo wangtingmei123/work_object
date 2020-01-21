@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh">
+    <div style="min-height: 100vh">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="rank_list">
             <div class="rank_list_title">
@@ -169,7 +169,7 @@
         font-size: 0.22rem;
         height:0.26rem;
         line-height:0.28rem;
-        background:  #ff5757;
+        background:  #f7282f;
         border-radius: 0.06rem;
         padding:0 0.14rem;
         float: left;

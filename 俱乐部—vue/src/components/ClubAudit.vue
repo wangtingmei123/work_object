@@ -1,5 +1,5 @@
 <template>
-    <div class="apply_bg" style="background: #f7f7f7;min-height: 100vh">
+    <div class="apply_bg" style="background:#f7f7f7;min-height: 100vh">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
 
             <div class="apply_all_box" v-show="audit_list.length>0">
@@ -11,7 +11,7 @@
             </div>
 
             <div class="apply_list_box" v-show="audit_list.length>0" ref="opBottomEcharts2" @scroll="gotoScroll()">
-                <div class="apply_list" v-for="(item,index) in audit_list">
+                <div class="apply_list" v-for="(item,index) in audit_list" :key="index">
                     <div class="apply_user">
                         <div class="apply_name">{{item.user_name}}</div>
                         <div class="apply_menber">{{item.user.department}}</div>
@@ -250,7 +250,7 @@
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -267,6 +267,7 @@
         margin-top:1.48rem;
         background: #fff;
         margin-bottom:1.3rem;
+        border-radius: 0.1rem;
 
     }
     .apply_list_box>.apply_list{

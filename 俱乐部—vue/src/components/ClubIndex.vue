@@ -1,10 +1,13 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow:hidden;">
+    <div style="background: #f0f0f0;min-height: 100vh;overflow:hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div style="" class="club_big_box" >
             <!--俱乐部banner-->
             <div class="club_banner_box">
-                    <img class="banner_img" :src="club_info.back_image" alt="">
+                    <div class="banner_img_a">
+                        <img class="banner_img" :src="club_info.logo" alt="">
+                    </div>
+                   
                     <div class="banner_box">
                         <div class="club_main">
                             <div class="club_main_left">
@@ -21,18 +24,21 @@
                             </div>
                         </div>
                         <div class="but_top">
-                            <!--<img @click="to_invited" class="but_top3" :src="but_top3" alt="">-->
+                            <img v-if="is_authorized==1" @click="to_invited" class="but_top3" :src="but_top3" alt="">
                             <img v-if="is_authorized==1" @click="to_clubaudit" class="but_top1" :src="but_top1" alt="">
                             <img v-if="is_authorized==1" @click="to_createclub" class="but_top2" :src="but_top2" alt="">
                         </div>
                         <div class="sign_box">
+                           <div class="active_title" style="justify-content: left">
+                            <!-- <img style="width:0.38rem;height:0.4rem;" class="active_title1 active_title2" :src="active_title2" alt=""> -->
+                                <div class="title_center" style="margin-left:0.2rem;padding-top:0.08rem">每日签到</div>
+                            <!--<img class="right_tip" :src="right_tip" alt="">-->
+                           </div>
                             <div class="sign_left">
                                 <img :src="sign_left_img" alt="">
                             </div>
-                            <div class="sign_center">
-                                <div class="sign_center_tit">每日签到</div>
-                                <div class="sign_center_title">通过每日签到为俱乐部积攒积分</div>
-                            </div>
+                            <div class="sign_but">通过每日签到为俱乐部积攒积分</div>
+                          
                             <div class="sign_right" v-if="is_joined&&is_signed==false" @click="sign()">签到</div>
                             <div class="sign_right1" v-if="is_joined&&is_signed" >已签到</div>
                             <div class="sign_right1" v-if="is_joined==false"></div>
@@ -40,14 +46,14 @@
                     </div>
             </div>
             <!--俱乐部公告-->
-            <div class="club_announ_box" style=" padding-bottom:0.2rem;" v-if="club_info.explanation!=''">
+            <div class="club_announ_box"  v-if="club_info.explanation!=''">
                 <div class="club_announ" >
                     <div class="active_title" style="justify-content: left">
-                        <img style="width:0.38rem;height:0.4rem;" class="active_title1 active_title2" :src="active_title2" alt="">
+                        <!-- <img style="width:0.38rem;height:0.4rem;" class="active_title1 active_title2" :src="active_title2" alt=""> -->
                         <div class="title_center" style="margin-left:0.1rem">俱乐部公告</div>
                         <!--<img class="right_tip" :src="right_tip" alt="">-->
                     </div>
-                    <div class="club_announ_main" style="border-top:1px solid #e6e6e6;">
+                    <div class="club_announ_main" style=" padding-bottom:0.35rem;">
                         {{club_info.explanation}}
 
                     </div>
@@ -59,7 +65,7 @@
             <div v-if="club_info.type_id==1" class="club_announ_box" >
                 <div class="club_announ">
                     <div class="active_title" style="border-bottom:1px solid #e6e6e6;justify-content: left;">
-                        <img style="width:0.38rem;height:0.4rem;" class="active_title1 active_title2" :src="active_title2" alt="">
+                        <!-- <img style="width:0.38rem;height:0.4rem;" class="active_title1 active_title2" :src="active_title2" alt=""> -->
                         <div class="title_center" style="margin-left:0.1rem">球队首页:</div>
                         <!--<img class="right_tip" :src="right_tip" alt="">-->
                     </div>
@@ -77,13 +83,13 @@
             <div v-if="club_info.type_id==0" class="club_announ_box">
                 <div class="club_announ" @click="to_members">
                     <div class="active_title" >
-                        <img style="width:0.41rem;height:0.34rem;" class="active_title1 active_title3" :src="active_title3" alt="">
+                        <!-- <img style="width:0.41rem;height:0.34rem;" class="active_title1 active_title3" :src="active_title3" alt=""> -->
                         <div class="title_center" style="margin-right:4.3rem">俱乐部成员</div>
                         <img class="right_tip" :src="right_tip" alt="">
                     </div>
-                    <div class="club_members_main" style="border-top:1px solid #e6e6e6" v-if="audit_list.length>0">
+                    <div class="club_members_main" v-if="audit_list.length>0">
                         <div class="club_members">
-                            <div class="club_members_img" v-for="(item,index) in audit_list">
+                            <div class="club_members_img" v-for="(item,index) in audit_list" :key="index">
                                 <img v-if="item.user.avatar==''" :src="club_members" alt="">
                                 <img v-if="item.user.avatar!=''" :src="item.user.avatar" alt="">
                             </div>
@@ -98,19 +104,19 @@
             <div class="active_box" >
                 <div class="active">
                     <div class="active_title" @click="to_allactive()">
-                        <img class="active_title1" style="width:0.38rem;height:0.38rem" :src="active_title4" alt="">
-                        <div class="title_center" style="margin-right:4.3rem;">俱乐部活动</div>
+                        <!-- <img class="active_title1" style="width:0.38rem;height:0.38rem" :src="active_title4" alt=""> -->
+                        <div class="title_center" style="margin-right:4.5rem;">俱乐部活动</div>
                         <img class="right_tip" :src="right_tip" alt="">
                     </div>
-                    <div class="act_main" style="padding-bottom:0.2rem;" v-if="active_info.length>=1" v-for="(item,index) in active_info" @click="to_activedetail(item.issue_nums,item.id,item.name)">
+                    <div class="act_main" style="padding-bottom: 0.5rem" :class="{act_main_a1:index==0}" v-for="(item,index) in active_info" :key="index" v-show="active_info.length>=1"   @click="to_activedetail(item.issue_nums,item.id,item.name)">
                         <div class="act_main_left">
                             <img :src="item.logo_url" alt="">
                             <!--<div class="act_time">{{item.apply_stoped}}</div>-->
                             <!--<div class="act_time_tip">距离活动结束</div>-->
-                            <div v-show="item.status==0" class="act_buta">报名中</div>
-                            <div v-show="item.status==1" class="act_buta">即将开始</div>
-                            <div v-show="item.status==2" class="act_buta">签到中</div>
-                            <div v-show="item.status==3" class="act_buta">已结束</div>
+                            <!--<div v-show="item.status==0" class="act_buta">报名中</div>-->
+                            <!--<div v-show="item.status==1" class="act_buta">即将开始</div>-->
+                            <!--<div v-show="item.status==2" class="act_buta">签到中</div>-->
+                            <!--<div v-show="item.status==3" class="act_buta">已结束</div>-->
                         </div>
                         <div class="act_main_right">
                             <div class="act_main_right1">{{item.name}}</div>
@@ -118,14 +124,15 @@
                                 <span v-if="item.address!=''&&item.address!=undefined">{{item.address}}</span>
                                 <span v-if="item.address==''||item.address==undefined">长期活动详情可见</span>
                             </div>
-                            <div class="act_main_right2">开始时间:
+                            <div class="act_main_right3">开始时间:
                                 <span v-if="item.start_date!=''&&item.start_date!=undefined">{{item.start_date}}</span>
                                 <span v-if="item.start_date==''||item.start_date==undefined">长期活动详情可见</span>
                                 <!--<span>16:00-18:00</span>-->
                             </div>
-                            <div class="act_main_right4">已报名:20人</div>
+
                             <div class="act_main_right5">
-                                <span>报名费：￥{{item.entry_fees/100}} </span>
+                                <span>已报名:{{item.members}}人</span>
+                                <span>报名费：￥{{item.entry_fees/100}}</span>
                                 <span>保证金：￥{{item.cash_pledges/100}}</span>
                             </div>
                         </div>
@@ -136,11 +143,11 @@
             <div class="club_announ_box" >
                 <div class="club_announ">
                     <div class="active_title"  @click="to_alldynamic">
-                        <img style="width:0.4rem;height:0.41rem;" class="active_title1 active_title5" :src="active_title5" alt="">
+                        <!-- <img style="width:0.4rem;height:0.41rem;" class="active_title1 active_title5" :src="active_title5" alt=""> -->
                         <div class="title_center" style="margin-right:4.3rem">俱乐部动态</div>
                         <img class="right_tip" :src="right_tip" alt="">
                     </div>
-                    <div class="club_dynamic_main" style="border-top:1px solid #e6e6e6" v-for="(item,index) in dynamic_info">
+                    <div class="club_dynamic_main"  v-for="(item,index) in dynamic_info" :key="index">
                         <div class="dynamic_main1"  @click="to_dynamicdetail(item.id)">
                              <div class="dynamic_main1_user">
                                  <img :src="club_members" alt="">
@@ -157,7 +164,7 @@
                             {{item.contents}}
                         </div>
                         <div class="dynamic_main3" @click="to_dynamicdetail(item.id)">
-                            <div class="dynamic_main3_img"  v-for="(items,index) in item.image_data">
+                            <div class="dynamic_main3_img"  v-for="(items,index) in item.image_data" :key="index">
                                 <img :src="items" alt="" >
                             </div>
 
@@ -231,13 +238,13 @@
                 show: true,
                 backpage: '',
                 active_info:[],
-                but_top1:'./static/img/07club_06.png',
-                but_top2:'./static/img/07club_03.png',
+                but_top1:'./static/img/07club_index_03.png',
+                but_top2:'./static/img/07club_index_05.png',
                 but_top3:'./static/img/40my_fenxiang.png',
                 club_banner:'./static/img/07clubbanner_02.jpg',
                 club_img:'./static/img/03index_37.png',
                 address:'./static/img/07club_11.png',
-                sign_left_img:'./static/img/07club_15.png',
+                sign_left_img:'./static/img/07club_index_10.png',
                 active_title2:'./static/img/07club_19.png',
                 active_title3:'./static/img/07club_22.png',
                 active_title4:'./static/img/07club_26.png',
@@ -270,8 +277,15 @@
             }
         },
         created() {
+
+
+
             let _this=this;
              _this.club_id=_this.$route.query.id;
+             if(_this.$route.query.id!=undefined){
+                localStorage.setItem('club_id',_this.$route.query.id) 
+             }
+          
             _this.authis()
             _this.club_detail()
             _this.members()
@@ -285,9 +299,13 @@
         },
         methods: {
             to_apply(){
-                this.showa1=true;
-                this.show_tip1='确定加入俱乐部吗？'
-                this.apply=1;
+
+            // if(){
+                    this.showa1=true;
+                    this.show_tip1='确定加入俱乐部吗？'
+                    this.apply=1;
+                // }
+               
             },
             sign(){
                 let _this=this;
@@ -334,6 +352,9 @@
                             _this.hide_tip='申请成功，待审核';
                             setTimeout(function(){
                                 _this.hidea=false;
+                                _this.is_joined=true;
+                                _this.is_verified=false
+
                             },1500)
 
                         }else {
@@ -599,7 +620,8 @@
                 this.isShowBigImg = true
             },
             to_invited(){
-                this.$router.push({ path: '/invited'}) // -> /user
+                let company_id=localStorage.getItem('company_id')
+                this.$router.push({ path: '/clubshare',query:{company_id:company_id,club_id:this.club_id}}) // -> /user
             },
             to_clubaudit(){
                 this.$router.push({ path: '/clubaudit',query:{club_id:this.club_id}}) // -> /user
@@ -640,7 +662,7 @@
     .creat_club_box{
         width:100%;
         height:1.3rem;
-        background: #f7f7f7;
+        background: #f0f0f0;
         position: fixed;
         left:0;
         right:0;
@@ -656,7 +678,7 @@
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -685,7 +707,7 @@
         height:1rem;
         display:flex;
         justify-content: space-between;
-        margin-top:0.2rem;
+        /*margin-top:0.2rem;*/
         padding:0 0.1rem;
 
     }
@@ -832,7 +854,7 @@
 
     .club_members_main{
         width:100%;
-        height:1rem;
+        height:1.2rem;
         padding:0 0.1rem;
         color: #4d4d4d;
         line-height: 0.48rem;
@@ -840,19 +862,20 @@
         font-size: 0.26rem;
         display: flex;
         justify-content: space-between;
+        padding-bottom:0.5rem;
 
     }
     .club_members_main>.club_members{
-        width:4.6rem;
-        height:0.5rem;
-        margin-top:0.2rem;
+        width:6.6rem;
+        height:0.7rem;
+        /*margin-top:0.2rem;*/
 
     }
     .club_members_main>.club_members>.club_members_img{
         display: block;
-        width:0.5rem;
-        height:0.5rem;
-        border-radius: 0.5rem;
+        width:0.7rem;
+        height:0.7rem;
+        border-radius: 0.7rem;
         float: left;
         margin-left:-0.12rem;
     }
@@ -860,7 +883,8 @@
         display: block;
         width:100%;
         height:100%;
-        border-radius: 0.5rem;
+        border-radius: 0.7rem;
+        border:1px solid #f8f8f8;
     }
     .club_members_main>.club_members>.club_members_img:nth-child(1){
         margin-left:0;
@@ -894,7 +918,7 @@
         color: #4d4d4d;
         line-height: 0.48rem;
         font-size: 0.26rem;
-        padding-top:0.2rem;
+        /*padding-top:0.2rem;*/
         box-sizing: border-box;
         
     }
@@ -926,17 +950,17 @@
     }
 
     .club_announ_box{
-        width:7.1rem;
+        width:7.2rem;
         height:auto;
         margin: auto;
-        margin-top:0.12rem;
+        margin-top:0.2rem;
         background: #fff;
-        border-radius: 0.06rem;
+        border-radius: 0.1rem;
 
     }
 
     .club_announ{
-        width:6.8rem;
+        width:6.9rem;
         height:auto;
         margin:auto;
     }
@@ -960,8 +984,10 @@
 
     }
     .club>.club_main>.club_main_left>img{
-        width:2rem;
-        height: 1.5rem;
+        display: block;
+        width:100%;
+        height:100%;
+        object-fit: cover;
 
     }
     .club>.club_main>.club_main_right{
@@ -994,12 +1020,12 @@
         font-size: 0.22rem;
         height:0.26rem;
         line-height:0.28rem;
-        border:1px solid #ff5757;
+        border:1px solid #f7282f;
         border-radius: 0.06rem;
         padding:0 0.14rem;
         float: left;
         margin-left:0.14rem;
-        color: #ff5757;
+        color: #f7282f;
         margin-top:0.01rem;
 
     }
@@ -1035,17 +1061,17 @@
     }
 
     .active_box{
-        width:7.1rem;
+        width:7.2rem;
         height:auto;
         margin:auto;
-        margin-top:0.12rem;
+        margin-top:0.2rem;
         background: #fff;
 
-
+        border-radius: 0.1rem;
 
     }
     .active{
-        width:6.8rem;
+        width:6.9rem;
         height:auto;
         margin:auto;
     }
@@ -1053,24 +1079,23 @@
     .active_title .title_center{
         color: #1a1a1a;
         margin-right:0.56rem;
-        font-size: 0.28rem;
+        font-size: 0.3rem;
         font-weight: bold;
+        margin-left:0.05rem;
 
     }
     .active_title .title_center>span{
-        color: #a6a6a6;
-        font-size: 0.28rem;
+        color: #aaaaaa;
+        font-size: 0.24rem;
         font-weight: normal;
     }
 
     .active_title{
         width:100%;
-        height:0.9rem;
+        height:1.1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding:0 0.1rem;
-        box-sizing: border-box;
 
 
     }
@@ -1092,32 +1117,36 @@
         width:0.17rem;
         height:0.29rem;
     }
+
     .act_main{
         width:100%;
-        height:3.02rem;
-        border-top:1px solid #e6e6e6;
-        padding:0.3rem 0;
-        box-sizing: border-box;
+        height:2rem;
         display: flex;
         justify-content: space-between;
+        margin-top:0.5rem;
     }
+    .act_main_a1{
+        margin-top:0;
+    }
+
     .act_main>.act_main_left{
-        width:2rem;
-        height:100%;
+        width:2.2rem;
+        height:2rem;
 
     }
 
     .act_main>.act_main_left>img{
         width:100%;
-        height:1.5rem;
+        height:100%;
         background: antiquewhite;
+        border-radius: 0.1rem;
 
     }
 
     .act_main>.act_main_left>.act_buta{
         width:1.5rem;
         height:0.48rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         font-size: 0.28rem;
         text-align: center;
@@ -1127,39 +1156,39 @@
         border-radius: 0.1rem;
     }
 
-
     .act_main>.act_main_left>.act_time{
         width:100%;
         height:0.38rem;
-        margin-top:0.14rem;
+        margin-top:0.1rem;
         text-align: center;
         line-height:0.42rem;
         font-size: 0.48rem;
-        color: #1a1a1a;
+        color: #f7282f;
         font-weight: bold;
         font-family: 'DINCondensedC';
     }
     .act_main>.act_main_left>.act_time_tip{
         width:100%;
         height:0.24rem;
-        margin-top:0.14rem;
+        margin-top:0.08rem;
         text-align: center;
         line-height:0.24rem;
         font-size: 0.24rem;
-        color: #4d4d4d;
+        color: #f7282f;
     }
     .act_main>.act_main_right{
-        width:4.52rem;
+        width:4.6rem;
         height:100%;
 
     }
     .act_main>.act_main_right>.act_main_right1{
         width:100%;
         height:0.36rem;
-        font-size: 0.26rem;
+        font-size: 0.3rem;
         line-height:0.36rem;
         font-weight: bold;
         color: #333333;
+        margin-top:0.08rem;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
@@ -1169,35 +1198,33 @@
     .act_main>.act_main_right>.act_main_right2{
         width:100%;
         height:0.36rem;
-        font-size: 0.26rem;
+        font-size: 0.24rem;
         line-height:0.36rem;
-        color: #545454;
-        margin-top:0.2rem;
+        color: #4d4d4d;
+        margin-top:0.18rem;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
     }
 
-    .act_main_right2>span{
-        font-size: 0.26rem;
+    .act_main>.act_main_right>.act_main_right2>span{
+        font-size: 0.24rem;
     }
     .act_main>.act_main_right>.act_main_right3{
         width:100%;
         height:0.36rem;
-        font-size: 0.26rem;
+        font-size: 0.24rem;
         line-height:0.36rem;
-        color: #545454;
-        margin-top:0.18rem;
+        color: #4d4d4d;
+        margin-top:0.05rem;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
-        display: flex;
-        justify-content: space-between;
+
+        /*justify-content: space-between;*/
     }
     .act_main>.act_main_right>.act_main_right3>span{
-        display: block;
-        font-size: 0.26rem;
-        color: #545454;
+        font-size: 0.24rem;
     }
 
     .act_main>.act_main_right>.act_main_right4{
@@ -1206,19 +1233,19 @@
         font-size: 0.24rem;
         line-height:0.36rem;
         color: #a6a6a6;
-        margin-top:0.18rem;
+        margin-top:0.16rem;
 
     }
     .act_main>.act_main_right>.act_main_right5{
         width:100%;
         height:0.36rem;
-        font-size: 0.24rem;
+        font-size: 0.2rem;
         line-height:0.36rem;
         color: #a6a6a6;
-        margin-top:0.14rem;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
+        margin-top:0.26rem;
+        /*overflow: hidden;*/
+        /*text-overflow:ellipsis;*/
+        /*white-space: nowrap;*/
         display: flex;
         justify-content: space-between;
     }
@@ -1233,27 +1260,42 @@
 
 
     .sign_box{
-        width:7.1rem;
-        height:1.48rem;
+        width:7.2rem;
+        height:3rem;
         background: #fff;
-        border-radius: 0.06rem;
+        border-radius: 0.1rem;
         margin:auto;
         display: flex;
         justify-content: space-between;
+        position: relative;
     }
 
     .sign_box>.sign_left{
-        width:0.78rem;
-        height:0.81rem;
-        margin-top:0.28rem;
-        margin-left:0.2rem;
+        width:3.06rem;
+        height:1.2rem;
+        position: absolute;
+        left:0;
+        right:0;
+        top:0.67rem;
+        margin:auto;
     }
     .sign_box>.sign_left>img{
         display: block;
         width:100%;
         height:100%;
     }
-
+ .sign_box>.sign_but{
+        width:100%;
+        height:0.28rem;
+        position: absolute;
+        left:0;
+        right:0;
+        bottom:0.5rem;
+        margin:auto;
+        text-align: center;
+        font-size: 0.28rem;
+        color: #a6a6a6;
+    }
     .sign_box>.sign_center{
         width:4.3rem;
         height:auto;
@@ -1277,7 +1319,7 @@
     .sign_box>.sign_right{
         width:1.3rem;
         height:0.5rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height: 0.5rem;
@@ -1299,14 +1341,25 @@
 
     .club_banner_box{
         width:100%;
-        height:4.38rem;
+        height:5.86rem;
         position: relative;
+    }
+
+    .banner_img_a{
+        display: block;
+        width:100%;
+        height:3.78rem;
     }
 
     .banner_img{
         display: block;
         width:100%;
-        height:3.32rem;
+        height:100%;
+        object-fit: cover;
+        filter: blur(20px);
+	-webkit-filter: blur(20px);  /* chrome, opera */		
+	-ms-filter: blur(20px);		
+	-moz-filter: blur(20px);
     }
 
     .banner_box{
@@ -1318,7 +1371,7 @@
     }
 
     .banner_box .but_top{
-        width:1.86rem;
+        width:2rem;
         height:0.5rem;
         position: absolute;
         right:0.46rem;
@@ -1336,8 +1389,8 @@
     }
     .banner_box .but_top .but_top2{
         display: block;
-        width:0.46rem;
-        height:0.48rem;
+        width:0.48rem;
+        height:0.46rem;
     }
     .banner_box .but_top .but_top3{
         display: block;
@@ -1350,7 +1403,7 @@
     .club_main{
         width:100%;
         height:2.87rem;
-        padding:0.66rem 0.3rem 0.58rem 0.3rem;
+        padding:0.75rem 0.35rem 0.44rem 0.35rem;
         box-sizing: border-box;
         display: flex;
         align-items: center;
@@ -1358,26 +1411,29 @@
     }
 
     .club_main>.club_main_left{
-        width:2rem;
-        height: 1.5rem;
-        border:1px solid #fff;
+        width:1.7rem;
+        height: 1.7rem;
+        border:0.04rem solid #fff;
+        border-radius: 0.1rem;
     }
     .club_main>.club_main_left>img{
-        width:2rem;
-        height: 1.5rem;
+        width:100%;
+        height:100%;
+        object-fit: cover;
         background: palegoldenrod;
         border:none;
+        border-radius: 0.1rem;
     }
     .club_main>.club_main_right{
-        width:4.7rem;
-        height: 1.5rem;
+        width:4.92rem;
+        height: 1.7rem;
         position: relative;
     }
 
     .club_main>.club_main_right .to_join{
         width:1.2rem;
         height:0.4rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.4rem;
@@ -1390,9 +1446,9 @@
     }
     .club_main>.club_main_right>.club_main_right1{
         width:100%;
-        height:0.36rem;
-        font-size: 0.3rem;
-        line-height:0.36rem;
+        height:0.48rem;
+        font-size: 0.32rem;
+        line-height:0.48rem;
         /*font-weight: bold;*/
         color: #fff;
         overflow: hidden;
@@ -1402,9 +1458,9 @@
 
     .club_main>.club_main_right>.club_main_right2{
         width:100%;
-        height:0.3rem;
+        height:0.32rem;
         font-size: 0.22rem;
-        line-height:0.3rem;
+        line-height:0.32rem;
         color: #fff;
         margin-top:0.1rem;
     }
@@ -1412,14 +1468,14 @@
     .club_main>.club_main_right>.club_main_right2>.club_main_right2_tap1{
         width:auto;
         font-size: 0.22rem;
-        height:0.26rem;
-        line-height:0.28rem;
-        background: #fff;
-        border-radius: 0.06rem;
+        height:0.32rem;
+        line-height:0.32rem;
+        background: #f7282f;
+        border-radius: 0.1rem;
         padding:0 0.14rem;
         float: left;
         margin-left:0.14rem;
-        color: #ff5757;
+        color: #fff;
         /*margin-top:0.01rem;*/
 
     }
@@ -1434,22 +1490,26 @@
         color: #fff;
         margin-left:0.2rem;
         height:100%;
-        line-height:0.3rem;
+        line-height:0.32rem;
         float: left;
     }
 
     .club_main>.club_main_right>.club_main_right3{
         height:auto;
         width:100%;
-        margin-top:0.1rem;
         line-height:0.34rem;
-        font-size: 0.26rem;
+        font-size: 0.24rem;
         color: #fcedeb;
         overflow: hidden;
         display: flex;
         align-items: center;
+        margin-top:0.2rem;
 
 
+    }
+
+    .club_main>.club_main_right>.club_main_right3>span{
+                font-size: 0.24rem;
     }
 
     .club_main_right3>img{
@@ -1464,9 +1524,8 @@
     .club_main>.club_main_right>.club_main_right4{
         height:auto;
         width:100%;
-        margin-top:0.1rem;
         line-height:0.34rem;
-        font-size: 0.26rem;
+        font-size: 0.24rem;
         color: #fcedeb;
         overflow: hidden;
 

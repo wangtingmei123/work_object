@@ -1,5 +1,5 @@
 <template>
-    <div class="apply_bg" style="background: #f7f7f7;min-height: 100vh">
+    <div class="apply_bg" style="background:#f7f7f7;min-height: 100vh">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
 
         <div class="apply_all_box">
@@ -256,7 +256,7 @@
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -273,6 +273,7 @@
         margin-top:1.48rem;
         background: #fff;
         margin-bottom:1.3rem;
+        border-radius: 0.1rem;
 
     }
     .apply_list_box>.apply_list{
@@ -340,6 +341,7 @@
         background: #f7f7f7;
         position: fixed;
         top:0.88rem;
+        border-radius: 0.1rem;
 
     }
     .apply_all_box>.apply_all{

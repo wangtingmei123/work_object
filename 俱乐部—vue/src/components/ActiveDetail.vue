@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden;">
+    <div style="background:#f7f7f7;min-height: 100vh;overflow: hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="activedetail_box_big" style="margin-bottom:1.3rem;">
             <div class="detail1_box">
@@ -37,7 +37,7 @@
                     <img style="width:0.35rem;height:0.34rem" :src="detail3" alt="">
                     <div class="detail2a_title">已报名成员</div>
                 </div>
-                <div class="detail2b">
+                <div class="detail2b"  @click="menbersactive">
                     <div class="detail2b1" style="justify-content: space-between;">
                         <div>5人报名</div>
                         <img style="display: block;width:0.11rem;height:0.19rem" :src="right_tip" alt="">
@@ -77,7 +77,7 @@
                         <div class="detail2b2_left">期数:</div>
                         <div class="detail2b2_right" style="color: #000;">共{{active_info.issue_nums}}期</div>
                     </div>
-                    <div class="detail2b1 detail2b15" v-for="(itema,index) in issuesactive" @click="to_issueactive(itema.id)">
+                    <div class="detail2b1 detail2b15" v-show="issuesactive.length>0"  v-for="(itema,index) in issuesactive" @click="to_issueactive(itema.id)" :key="index">
                         <div class="detail2b1_1">第{{itema.cur_issue}}期:</div>
                         <div class="detail2b1_2">{{itema.start_date}}</div>
                         <div v-show="itema.status==0" class="detail2b1_3">未签到</div>
@@ -86,7 +86,7 @@
                     </div>
 
 
-                    <div class="detail2b1 detail2b15" v-if="issuesactive.length<active_info.issue_nums&&is_authorized==1" @click="to_launched(active_info.id,active_info.name,issuesactive.length)">
+                    <div class="detail2b1 detail2b15" v-show="(issuesactive.length<active_info_issue||issuesactive.length==undefined)&&is_authorized==1" @click="to_launched(active_info.id,active_info.name,issuesactive.length)">
                         <div class="detail2b1_1">添加活动</div>
                         <div class="detail2b1_2"></div>
                         <div class="detail2b1_3"></div>
@@ -116,10 +116,10 @@
         </div>
 
 
-        <div class="creat_club_box" v-if="active_info.status==0 ||active_info.status==1" @click="notosing()">
+        <div class="creat_club_box" v-if="(active_info.status==0 ||active_info.status==1)&&is_applyed" @click="notosing()">
             <div class="creat_club">取消报名</div>
         </div>
-        <div class="detail_but" v-if="active_info.status==0">
+        <div class="detail_but" v-if="active_info.status==0&&is_applyed==false">
             <div class="detail_but1"><span>￥</span>{{active_info.entry_fees/100}}</div>
             <div class="detail_but2" @click="tosing()">报名缴费</div>
         </div>
@@ -169,26 +169,88 @@
                 right_tip:'./static/img/22right_15.png',
                 righta:'./static/img/22righta_23.png',
                 active_info:[],
+                active_info_issue:'',
                 issuesactive:[],
-                is_authorized:''
+                is_authorized:'',
+                is_joined:'',
+                is_signed:'',
+                is_verified:'',
+                 is_applyed:'',
+                need_signee:'',
+                is_hide:''
 
             }
         },
         created() {
             let _this=this
-            _this.is_authorized=localStorage.getItem('is_authorized')
             _this.club_name=localStorage.getItem('club_name')
             _this.active_id=_this.$route.query.id;
+            _this.authis();
             this.active_detail()
             this.to_issuesactive()
+            this.authentication()
         },
         mounted() {
 
         },
         methods: {
+            authentication(){
+                 let _this=this;
+                this.$axios.get("/activity-authentication",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                         "act_id": localStorage.getItem('active_id')
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        _this.is_applyed=res.data.data.is_applyed;
+                        _this.is_hide=res.data.data.is_signed;
+                        _this.need_signee=res.data.data.need_signee;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+
+            },
+
+
+            authis(){
+                let _this=this;
+                this.$axios.get("/club-users/auth",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "club_id":localStorage.getItem('club_id'),
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        _this.is_authorized=res.data.data.is_authorized;
+                        _this.is_joined=res.data.data.is_joined;
+                        _this.is_signed=res.data.data.is_signed;
+                        _this.is_verified=res.data.data.is_verified;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
             tosing(){
                 let _this=this
-                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                if(_this.is_joined==true && _this.is_verified==true){
                     _this.$axios.post("/activity-users",
                         {
                             "act_id": localStorage.getItem('active_id')
@@ -221,7 +283,7 @@
             },
             notosing(){
                 let _this=this
-                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                if(_this.is_joined==true && _this.is_verified==true){
                     _this.$axios.delete("/activity-users", {
                         headers: {
                             'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
@@ -236,6 +298,7 @@
                             _this.hide_tip='取消报名成功';
                             setTimeout(function(){
                                 _this.hidea=false;
+                                  _this.is_applyed=false
                             },1500)
                         }else{
                             _this.showa=true;
@@ -294,6 +357,9 @@
                 }).then(res=>{
                     if(res.status==200){
                         _this.active_info=res.data.data;
+                        _this.active_info_issue=res.data.data.issue_nums;
+                        console.log(_this.active_info_issue)
+                        console.log(_this.active_info.length)
 
                     }else{
                         _this.showa=true;
@@ -314,6 +380,10 @@
             },
             to_launched(id,name,issue_id){
                 this.$router.push({path:'./launchedissue',query:{active_id:id,active_name:name,issue_id:issue_id}})
+                
+            },
+            menbersactive(){
+                this.$router.push({path:'./membersactive'})
             },
             to_issueactive(id){
                 this.$router.push({path:'./issueactivedetail',query:{id:id}})
@@ -358,7 +428,7 @@
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -384,7 +454,7 @@
     }
     .detail_but>.detail_but1{
         background: #fff;
-        color: #ff5757;
+        color: #f7282f;
         font-size: 0.55rem;
         display: flex;align-items: end;
         justify-content: center;
@@ -400,7 +470,7 @@
         line-height: 1.16rem;
     }
     .detail_but>.detail_but2{
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         font-size: 0.3rem;
 

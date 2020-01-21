@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden;">
+    <div style="min-height: 100vh;overflow: hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="club_dynamic_box" style="margin-bottom: 1.5rem" ref="opBottomEcharts" @scroll="gotoScroll()">
             <div class="club_dynamic_main">
@@ -20,7 +20,7 @@
                    {{dynamic.contents}}
                 </div>
                 <div class="dynamic_main3">
-                    <div class="dynamic_main3_img"  v-for="(items,index) in dynamic.image_data">
+                    <div class="dynamic_main3_img"  v-for="(items,index) in dynamic.image_data" :key="index">
                         <img :src="items" alt=""  @click="showBigImg(items)">
                     </div>
                 </div>
@@ -44,7 +44,7 @@
             </div>
             <div class="club_members_main" @click="to_likelist(dynamic.id)">
                 <div class="club_members">
-                    <div class="club_members_img" v-for="(item,index) in like_list">
+                    <div class="club_members_img" v-for="(item,index) in like_list" :key="index">
                         <img v-if="item.user.avatar==''" :src="club_members" alt="">
                         <img v-if="item.user.avatar!=''" :src="item.user.avatar" alt="">
                     </div>
@@ -54,7 +54,7 @@
             <div class="comment_box" v-if="coment_list.length>0">
                 <div class="comment_num">{{dynamic.reply_count}}人回复过</div>
                 <div>
-                    <div class="club_dynamic_main" style="padding-bottom:0;width:6.8rem;padding:0;margin:auto" v-for="(item,index) in coment_list">
+                    <div class="club_dynamic_main" style="padding-bottom:0;width:6.8rem;padding:0;margin:auto" v-for="(item,index) in coment_list" :key="index">
                         <div class="dynamic_main1">
                             <div class="dynamic_main1_user">
                                 <img v-if="item.user.avatar!=''" :src="item.user.avatar" alt="">
@@ -137,22 +137,54 @@
                 coment_list:[],
                 dynamic_user:[],
                 dynamic_image_data:[],
-                like_list:[]
+                like_list:[],
+                is_authorized:'',
+                is_joined:'',
+                is_signed:'',
+                is_verified:'',
 
             }
         },
         created() {
             let _this=this
             this.dynamic_id=this.$route.query.dynamic_id;
+            _this.authis()
             _this.dynamicinfo()
             _this.replies()
             _this.like()
+
 
         },
         mounted() {
 
         },
         methods: {
+            authis(){
+                let _this=this;
+                this.$axios.get("/club-users/auth",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "club_id":localStorage.getItem('club_id'),
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        _this.is_authorized=res.data.data.is_authorized;
+                        _this.is_joined=res.data.data.is_joined;
+                        _this.is_signed=res.data.data.is_signed;
+                        _this.is_verified=res.data.data.is_verified;
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
             like(){
                 let _this=this;
                 this.$axios.get("dynamic-praise",{
@@ -288,7 +320,7 @@
             },
             touch_like(dynamic_praise_id,id){
                 let _this=this;
-                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                if(_this.is_joined==true && _this.is_verified==true){
 
                     if(dynamic_praise_id==0&&_this.can_show){
                         _this.can_show=false;
@@ -350,10 +382,16 @@
             showBigImg (i) {
                 this.current = i
                 this.isShowBigImg = true
+                // let _this=this;
+                // console.log(i)
+                // wx.previewImage({
+                //     current: i, // 当前显示图片的http链接
+                //     urls: _this.dynamic.image_data // 需要预览的图片http链接列表
+                //     });
             },
             comment(id){
                 let _this=this
-                if(localStorage.getItem('is_joined')==true && localStorage.getItem('is_verified')==true){
+                if(_this.is_joined==true && _this.is_verified==true){
                     this.$router.push({ path: '/dynamicreply',query:{dynamic_id:id}}) // -> /user
                 }else{
                     _this.showa=true;
@@ -428,9 +466,7 @@
         line-height:0.7rem;
     }
 
-    .comment_num_border{
 
-    }
     .club_members_main{
         width:7.1rem;
         height:1rem;

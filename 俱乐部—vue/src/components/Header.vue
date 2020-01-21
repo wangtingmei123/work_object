@@ -17,7 +17,7 @@
         },
         data() {
             return {
-                back:'./static/img/03index_03.png'
+                back:'./static/img/03back_03.png'
             }
         },
         created() {

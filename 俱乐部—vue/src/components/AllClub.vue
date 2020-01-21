@@ -1,9 +1,9 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh">
+    <div style="background: #f0f0f0;min-height: 100vh">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="rank_list_box" v-show="club_list.length>0" :class="{'rank_list_box_root':is_root==false}" ref="opBottomEcharts1"  @scroll="gotoScroll()" >
             <div class="rank_list" >
-                <div class="club_main"  v-for="(item,index) in club_list">
+                <div class="club_main"  v-for="(item,index) in club_list" :key="index">
                     <div class="club_main_left" @click="to_clubindex(item.is_joined,item.id,item.is_admin,item.name)">
                         <img :src="item.logo" alt="">
                     </div>
@@ -204,7 +204,7 @@
     .creat_club_box{
         width:100%;
         height:1.3rem;
-        background: #f7f7f7;
+        background: #f0f0f0;
         position: fixed;
         left:0;
         right:0;
@@ -213,11 +213,11 @@
         box-shadow: 0 0 0.08rem #ccc;
     }
     .creat_club{
-        width:7.1rem;
+        width:7.2rem;
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -226,7 +226,7 @@
 
     }
     .rank_list_box{
-        width:7.1rem;
+        width:7.2rem;
         height:calc(100vh - 2.08rem);
         margin:auto;
         /*margin-top:0.88rem;*/
@@ -248,61 +248,63 @@
     .rank_list{
         width:100%;
         height:100%;
-
-
     }
 
 
     .club_main{
         width:100%;
-        height:2.1rem;
-        padding:0.27rem 0.12rem 0.33rem 0.12rem;
+        height:2.6rem;
+        padding:0.3rem 0.17rem;
         box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top:0.1rem;
+        margin-top:0.2rem;
         background: #fff;
+        border-radius: 0.1rem;
     }
 
    .club_main>.club_main_left{
-        width:2rem;
-        height: 1.5rem;
+        width:2.2rem;
+        height: 2rem;
 
     }
    .club_main>.club_main_left>img{
-        width:2rem;
-        height: 1.5rem;
+        width:100%;
+        height: 100%;
+       object-fit: cover;
        background: palegoldenrod;
        border:none;
+       border-radius: 0.1rem;
     }
     .club_main>.club_main_right{
-        width:4.7rem;
-        height: 1.5rem;
+        width:4.56rem;
+        height: 2rem;
         position: relative;
     }
 
     .club_main>.club_main_right .to_join{
-        width:1.2rem;
-        height:0.4rem;
-        background: #ff5757;
+        width:1.3rem;
+        height:0.5rem;
+        background: #f7282f;
         color: #fff;
         text-align: center;
-        line-height:0.4rem;
+        line-height:0.5rem;
         border-radius: 0.1rem;
         position: absolute;
-        font-size: 0.24rem;
-        top:0;
-        right:0.04rem;
+        font-size: 0.26rem;
+        top:0.12rem;
+        right:0;
 
     }
    .club_main>.club_main_right>.club_main_right1{
         width:100%;
         height:0.36rem;
-        font-size: 0.26rem;
+        font-size: 0.3rem;
         line-height:0.36rem;
         font-weight: bold;
-        color: #4d4d4d;
+        margin-top:0.08rem;
+        color: #1a1a1a;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
@@ -310,9 +312,9 @@
 
    .club_main>.club_main_right>.club_main_right2{
         width:100%;
-        height:0.3rem;
+        height:0.32rem;
         font-size: 0.22rem;
-        line-height:0.3rem;
+        line-height:0.32rem;
         color: #999;
         margin-top:0.1rem;
     }
@@ -320,14 +322,14 @@
     .club_main>.club_main_right>.club_main_right2>.club_main_right2_tap1{
         width:auto;
         font-size: 0.22rem;
-        height:0.26rem;
-        line-height:0.28rem;
-        border:1px solid #ff5757;
+        height:0.32rem;
+        line-height:0.32rem;
+        background:#f7282f;
         border-radius: 0.06rem;
-        padding:0 0.14rem;
+        padding:0 0.1rem;
         float: left;
         margin-left:0.14rem;
-        color: #ff5757;
+        color: #fff;
         /*margin-top:0.01rem;*/
 
     }
@@ -338,20 +340,20 @@
 
      .club_main>.club_main_right>.club_main_right2>.club_main_right2_peoper{
         width:auto;
-        font-size: 0.24rem;
+        font-size: 0.22rem;
         color: #999;
         margin-left:0.2rem;
         height:100%;
-        line-height:0.3rem;
+        line-height:0.32rem;
         float: left;
     }
 
     .club_main>.club_main_right>.club_main_right3{
         height:auto;
         width:100%;
-        margin-top:0.1rem;
-        line-height:0.34rem;
-        font-size: 0.24rem;
+        margin-top:0.3rem;
+        line-height:0.4rem;
+        font-size: 0.22rem;
         color: #4d4d4d;
         overflow: hidden;
         display: -webkit-box;

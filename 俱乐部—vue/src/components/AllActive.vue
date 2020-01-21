@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height: 100vh;overflow: hidden;">
+    <div style="background: #f0f0f0;min-height: 100vh;overflow: hidden;">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="active_tap">
             <div class="act" :class="{'act_selece':act_selece==''}" @click="select('')">全部</div>
@@ -9,15 +9,15 @@
         </div>
         <div class="active_box" ref="opBottomEcharts" @scroll="gotoScroll()">
             <div class="active">
-                <div class="act_main" @click="to_detail(item.issue_nums,item.id)" v-for="(item,index) in act_list">
+                <div class="act_main" @click="to_detail(item.issue_nums,item.id)" v-for="(item,index) in act_list" :key="index">
                     <div class="act_main_left">
                         <img :src="item.logo_url" alt="">
                         <!--<div  class="act_time">29:28:40</div>-->
                         <!--<div class="act_time_tip">距离活动开始</div>-->
-                        <div v-show="item.status==0" class="act_buta">报名中</div>
-                        <div v-show="item.status==1" class="act_buta">即将开始</div>
-                        <div v-show="item.status==2" class="act_buta">签到中</div>
-                        <div v-show="item.status==3" class="act_buta">已结束</div>
+                        <!--<div v-show="item.status==0" class="act_buta">报名中</div>-->
+                        <!--<div v-show="item.status==1" class="act_buta">即将开始</div>-->
+                        <!--<div v-show="item.status==2" class="act_buta">签到中</div>-->
+                        <!--<div v-show="item.status==3" class="act_buta">已结束</div>-->
                     </div>
                     <div class="act_main_right">
                         <div class="act_main_right1">{{item.name}}</div>
@@ -25,15 +25,16 @@
                             <span v-if="item.address!=''&&item.address!=undefined">{{item.address}}</span>
                             <span v-if="item.address==''||item.address==undefined">长期活动详情可见</span>
                         </div>
-                        <div class="act_main_right2">开始时间:
+                        <div class="act_main_right3">开始时间:
                             <span v-if="item.start_date!=''&&item.start_date!=undefined">{{item.start_date}}</span>
                             <span v-if="item.start_date==''||item.start_date==undefined">长期活动详情可见</span>
                             <!--<span>16:00-18:00</span>-->
                         </div>
-                        <div class="act_main_right4">已报名:20人</div>
+                        <!--<div class="act_main_right4">已报名:20人</div>-->
                         <div class="act_main_right5">
-                            <span>报名费：￥{{item.entry_fees/100}} </span>
-                            <span>保证金：￥{{item.cash_pledges/100}}</span>
+                            <span>已报名:{{item.members}}人</span>
+                            <span>报名费:￥{{item.entry_fees/100}} </span>
+                            <span>保证金:￥{{item.cash_pledges/100}}</span>
                         </div>
                     </div>
                 </div>
@@ -68,7 +69,11 @@
                 page_end:true,
                 loadFlag:true,
                 act_list:[],
-                stare:''
+                stare:'',
+                is_apply:0,
+                is_signee:0,
+                is_ended:0
+
 
             }
         },
@@ -102,7 +107,9 @@
                     },
                     params: {
                         "club_id":localStorage.getItem('club_id'),
-                        "stare":_this.stare,
+                        "is_apply":_this.is_apply,
+                        "is_signee":_this.is_signee,
+                        "is_ended":_this.is_ended,
                         "last_id":_this.page
                     }
                 }).then(res=>{
@@ -155,11 +162,48 @@
             select(tap){
                 this.act_selece=tap;
                 this.page=0;
-                this.status=tap;
-                this.loadFlag=true;
-                this.page_end=true;
-                this.act_list=[];
-                this.active_list()
+                if(tap==''){
+                    this.is_apply=0;
+                    this.is_signee=0;
+                    this.is_ended=0;
+                    this.loadFlag=true;
+                    this.page_end=true;
+                    this.act_list=[];
+                    this.active_list()
+                }else if(tap==1){
+                    this.is_apply=1;
+                    this.is_signee=0;
+                    this.is_ended=0;
+                    this.loadFlag=true;
+                    this.page_end=true;
+                    this.act_list=[];
+                    this.active_list()
+                }else if(tap==2){
+                    this.is_apply=0;
+                    this.is_signee=1;
+                    this.is_ended=0;
+                    this.loadFlag=true;
+                    this.page_end=true;
+                    this.act_list=[];
+                    this.active_list()
+                }else if(tap==3){
+                    this.is_apply=0;
+                    this.is_signee=0;
+                    this.is_ended=1;
+                    this.loadFlag=true;
+                    this.page_end=true;
+                    this.act_list=[];
+                    this.active_list()
+                }else{
+                    this.is_apply=0;
+                    this.is_signee=0;
+                    this.is_ended=0;
+                    this.loadFlag=true;
+                    this.page_end=true;
+                    this.act_list=[];
+                    this.active_list()
+                }
+
             }
         },
         destroyed(){
@@ -172,10 +216,10 @@
 <style scoped>
 
     .active_tap{
-        width:7.1rem;
+        width:7.2rem;
         margin:auto;
-        height:0.9rem;
-        padding:0 0.38rem;
+        height:1.1rem;
+        padding:0 0.24rem;
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;
@@ -184,13 +228,14 @@
         font-size: 0.32rem;
         background: #fff;
         position: fixed;
-        top:1.03rem;left:0;right:0
+        top:1.08rem;left:0;right:0;
+        border-radius: 0.1rem;
     }
 
     .act{
         width:1.3rem;
         height:100%;
-        line-height: 0.96rem;
+        line-height: 1.1rem;
         color: #999;
         font-size: 0.32rem;
         text-align: center;
@@ -204,15 +249,11 @@
 
     }
     .active_box{
-        width:7.1rem;
-        height:calc(100vh - 2.15rem);
+        width:7.2rem;
+        height:calc(100vh - 2.59rem);
         margin:auto;
-
-        top:1.95rem;
-        position: absolute;
-        bottom:0.2rem;
-        left:0;
-        right:0;
+        margin-top:2.39rem;
+        padding-bottom:0.2rem;
         overflow: scroll;
         /*padding-bottom:0.2rem;*/
         /*margin-top:1.03rem;*/
@@ -276,31 +317,34 @@
     }
     .act_main{
         width:100%;
-        padding:0.22rem 0.34rem;
-        height:2.8rem;
-        margin-top:0.1rem;
+        padding:0.3rem 0.2rem;
+        height:2.6rem;
+        margin-top:0.2rem;
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;
         background: #fff;
+        border-radius: 0.1rem;
     }
     .act_main>.act_main_left{
-        width:2rem;
-        height:100%;
+        width:2.2rem;
+        height:2rem;
 
     }
 
     .act_main>.act_main_left>img{
         width:100%;
-        height:1.5rem;
+        height:100%;
+        object-fit: cover;
         background: antiquewhite;
+        border-radius: 0.1rem;
 
     }
 
     .act_main>.act_main_left>.act_buta{
         width:1.5rem;
         height:0.48rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         font-size: 0.28rem;
         text-align: center;
@@ -317,7 +361,7 @@
         text-align: center;
         line-height:0.42rem;
         font-size: 0.48rem;
-        color: #ff5757;
+        color: #f7282f;
         font-weight: bold;
         font-family: 'DINCondensedC';
     }
@@ -328,20 +372,21 @@
         text-align: center;
         line-height:0.24rem;
         font-size: 0.24rem;
-        color: #ff5757;
+        color: #f7282f;
     }
     .act_main>.act_main_right{
-        width:4.28rem;
+        width:4.5rem;
         height:100%;
 
     }
     .act_main>.act_main_right>.act_main_right1{
         width:100%;
         height:0.36rem;
-        font-size: 0.26rem;
+        font-size: 0.3rem;
         line-height:0.36rem;
         font-weight: bold;
         color: #333333;
+        margin-top:0.08rem;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
@@ -351,35 +396,33 @@
     .act_main>.act_main_right>.act_main_right2{
         width:100%;
         height:0.36rem;
-        font-size: 0.26rem;
+        font-size: 0.24rem;
         line-height:0.36rem;
-        color: #545454;
-        margin-top:0.16rem;
+        color: #4d4d4d;
+        margin-top:0.18rem;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
     }
 
     .act_main>.act_main_right>.act_main_right2>span{
-        font-size: 0.26rem;
+        font-size: 0.24rem;
     }
     .act_main>.act_main_right>.act_main_right3{
         width:100%;
         height:0.36rem;
-        font-size: 0.26rem;
+        font-size: 0.24rem;
         line-height:0.36rem;
-        color: #545454;
-        margin-top:0.16rem;
+        color: #4d4d4d;
+        margin-top:0.05rem;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
-        display: flex;
-        justify-content: space-between;
+
+        /*justify-content: space-between;*/
     }
     .act_main>.act_main_right>.act_main_right3>span{
-        display: block;
-        font-size: 0.26rem;
-        color: #545454;
+        font-size: 0.24rem;
     }
 
     .act_main>.act_main_right>.act_main_right4{
@@ -394,13 +437,13 @@
     .act_main>.act_main_right>.act_main_right5{
         width:100%;
         height:0.36rem;
-        font-size: 0.24rem;
+        font-size: 0.2rem;
         line-height:0.36rem;
         color: #a6a6a6;
-        margin-top:0.14rem;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
+        margin-top:0.26rem;
+        /*overflow: hidden;*/
+        /*text-overflow:ellipsis;*/
+        /*white-space: nowrap;*/
         display: flex;
         justify-content: space-between;
     }

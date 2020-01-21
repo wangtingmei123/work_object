@@ -1,5 +1,5 @@
 <template>
-    <div style="background: #f7f7f7;min-height:100vh;overflow: hidden">
+    <div style="min-height:100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="comment_box">
             <div class="comment">
@@ -31,7 +31,7 @@
                 <div class="comment_c">
                     <div class="commc">活动场地</div>
                     <div class="commx">
-                        <div class="img" v-for="score in scores "  @click="tochscore(score,1)">
+                        <div class="img" v-for="(score,index) in scores "  @click="tochscore(score,1)"  :key="index">
                             <img v-show="score_select1<score" :src="scorea" alt="" >
                             <img style="width:0.35rem;height:0.33rem" class="score_select" v-show="score_select1>=score" :src="score_select" alt="" >
                         </div>
@@ -40,7 +40,7 @@
                 <div class="comment_c">
                     <div class="commc">活动内容</div>
                     <div class="commx">
-                        <div class="img" v-for="score in scores "  @click="tochscore(score,2)">
+                        <div class="img" v-for="(score,index) in scores "  @click="tochscore(score,2)"  :key="index">
                             <img v-show="score_select2<score" :src="scorea" alt="" >
                             <img style="width:0.35rem;height:0.33rem" class="score_select" v-show="score_select2>=score" :src="score_select" alt="" >
                         </div>
@@ -49,7 +49,7 @@
                 <div class="comment_c">
                     <div class="commc">组织管理</div>
                     <div class="commx">
-                        <div class="img" v-for="score in scores "  @click="tochscore(score,3)">
+                        <div class="img" v-for="(score,index) in scores "  @click="tochscore(score,3)" :key="index">
                             <img v-show="score_select3<score" :src="scorea" alt="" >
                             <img style="width:0.35rem;height:0.33rem" class="score_select" v-show="score_select3>=score" :src="score_select" alt="" >
                         </div>
@@ -206,7 +206,7 @@
         right:0;
         margin:auto;
         bottom:0.2rem;
-        background: #ff5757;
+        background: #f7282f;
         color: #fff;
         text-align: center;
         line-height:0.9rem;

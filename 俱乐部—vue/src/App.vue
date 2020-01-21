@@ -7,11 +7,11 @@
 
 <script>
     import { setCookie,getCookie,delCookie} from './assets/public/cookie'
-export default {
+  export default {
   name: 'App',
     data(){
       return{
-          authorizations:null
+
       }
     },
 
@@ -20,56 +20,15 @@ export default {
     },
 
     mounted() {
-        console.log("app.vue")
-        var url=window.location.href;
-        console.log(url)
-        var access_token = localStorage.getItem("access_token")
-        var expires_in = localStorage.getItem("expires_in")
-        if (access_token == null || expires_in == null) {
-            this.$router.push({path: '/codelogin'}) // -> /user
-        }else{
-            this.authtion()
-        }
+      
+    console.log("app.vue")
+    
     },
 
     methods: {
-        authtion(){
-            let _this=this
-            var  authorizations = setInterval(function () {
-
-            if (localStorage.getItem("access_token") == null || localStorage.getItem("expires_in") == null) {
-                this.$router.push({path: '/codelogin'}) // -> /user
-                return
-            }else{
-                    _this.$axios.put("authorizations/refresh",{},
-                        { headers: {
-                            'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
-                        }}).then(res=>{
-                        console.log(res)
-                        if(res.status==200){
-                            localStorage.setItem('access_token',res.data.access_token);
-                            localStorage.setItem('expires_in',res.data.expires_in);
-                            localStorage.setItem('token_type',res.data.token_type)
-                        }else {
-
-                        }
-                    })
-                        .catch(err=>{
-                            console.log(err)
-                        })
-
-            }
-
-            },600000)
-
-            _this.authorizations=authorizations;
-        }
+     
     },
-    destroyed(){
-        if (this.authorizations) {
-            clearInterval(this.authorizations);
-        }
-    }
+ 
 
 }
 </script>
@@ -82,10 +41,19 @@ export default {
     font-size:0.28rem;
     letter-spacing: 0.01rem;
   }
+  ::-webkit-scrollbar {
+    width: 0rem;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 0rem;
+  }
+
+
 
   body{
     overflow:auto;   /* 用于 android4+，或其他设备 */
     -webkit-overflow-scrolling:touch;    /* 用于 ios5+ */
+    background: #f0f0f0 !important;
 
   }
 
@@ -190,6 +158,10 @@ export default {
     right:0;
     bottom:0;
     margin:auto;
+  }
+
+  .creat_club_box{
+    background: #f0f0f0 !important;
   }
   
 </style>

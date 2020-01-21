@@ -1,8 +1,8 @@
 <template>
-    <div class="apply_bg" style="background: #f7f7f7;min-height: 100vh;overflow: hidden">
+    <div class="apply_bg" style="background:#f7f7f7;min-height: 100vh;overflow: hidden">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="member_list_box" ref="opBottomEcharts" @scroll="gotoScroll()">
-            <div class="member_list" v-for="(item,index) in like_list">
+            <div class="member_list" v-for="(item,index) in like_list" :key="index">
                 <div class="member1">
                     <img v-if="item.user.avatar==''" :src="photo" alt="">
                     <img v-if="item.user.avatar!=''"  :src="item.user.avatar" alt="">
