@@ -30,6 +30,8 @@
                         <div class="log_btn" @click="submit">登录</div>
                     </div>
 
+                    <div v-show="zhuc" @click="to_zhuc" class="zhuc">没有账号？<span>去注册</span> </div>
+
                 </form>
             </div>
             <div class="to_tip">
@@ -80,16 +82,26 @@
                 timer_number: 0,
                 is_sending_code : 0,
                 verify_key:"verification_code_AkGft5ad8X8F07E",
-                verify_code:'123456'
+                verify_code:'123456',
+                zhuc:false
             }
         },
         created() {
+
+            if(this.$route.query.company_id!=undefined){
+                this.zhuc=true
+
+            }
 
         },
         mounted() {
 
         },
         methods: {
+            to_zhuc(){
+                let _this=this
+              _this.$router.push({ path: '/businessinvitation',query:{company_id:_this.$route.query.company_id}}) // -> /user
+            },
             okfall(){
                 this.showa=false
             },
@@ -263,12 +275,31 @@
 </script>
 
 <style scoped>
+
+    .zhuc{
+        width:auto;
+        font-size: 0.26rem;
+        color: #4d4d4d;
+        line-height: 0.3rem;
+        margin:auto;
+        margin-top:0.3rem;
+        text-align: center;
+
+    }
+
+    .zhuc>span{
+     font-size: 0.26rem;
+      text-decoration: underline;
+    }
+
+
     input:focus{
         outline: none;
     }
 
     .login{
-        height:100vh;
+        height:auto;
+        overflow: hidden;
     }
    .form_title{
        width:5.45rem;
@@ -407,7 +438,9 @@
         font-size: 0.24rem;
         color: #b3b3b3;
         margin:auto;
-        margin-top:15vh;
+        margin-top:12vh;
+        margin-bottom:0.5rem;
+        overflow: hidden;
 
 
     }

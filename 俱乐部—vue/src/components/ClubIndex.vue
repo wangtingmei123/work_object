@@ -285,6 +285,18 @@
              if(_this.$route.query.id!=undefined){
                 localStorage.setItem('club_id',_this.$route.query.id) 
              }
+
+             if(_this.$route.query.company_id!=undefined){
+                 localStorage.setItem('company_id',_this.$route.query.company_id) 
+             }
+
+
+             if(localStorage.getItem('access_token')==null){
+                    _this.showa1=true;
+                    _this.show_tip1='您还没有登录,是否去登录？'
+                    _this.apply=2;
+                    return
+             }
           
             _this.authis()
             _this.club_detail()
@@ -366,9 +378,17 @@
                             console.log(err)
                         })
                 }
+
+                if(this.apply==2){
+                    this.$router.push({ path: '/codelog',query:{company_id:_this.$route.query.company_id}}) // -> /user
+                }
             },
             nofall(){
                 this.showa=false;
+                this.showa1=false;
+                if(this.apply==2){
+                      this.$router.go(-1);
+                }
             },
             touch_like(index,dynamic_praise_id,id){
                 let _this=this;
