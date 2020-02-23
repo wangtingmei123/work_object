@@ -4,7 +4,7 @@
 
         <div class="active_box" ref="opBottomEcharts" @scroll="gotoScroll()">
             <div class="active">
-                <div class="act_main" @click="to_detail(item.issue_nums,item.id)" v-for="(item,index) in act_list" :key="index">
+                <div class="act_main" @click="to_detail(item.issue_nums,item.id,item.club_id)" v-for="(item,index) in act_list" :key="index">
                     <div class="act_main_left">
                         <img :src="item.logo_url" alt="">
                         <!--<div  class="act_time">29:28:40</div>-->
@@ -79,11 +79,13 @@
 
         },
         methods: {
-            to_detail(issue_nums,id){
+            to_detail(issue_nums,id,club_id){
 
                 localStorage.setItem('active_id',id)
                 localStorage.setItem('active_name',name)
                 localStorage.setItem('issue_nums',issue_nums)
+                localStorage.setItem('club_id',club_id)
+
                 if(issue_nums==0){
                     this.$router.push({ path: '/activedetailshort',query:{id:id}}) // -> /user
                 }else{

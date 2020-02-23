@@ -311,7 +311,9 @@
 
 
                     }else{
-                          _this.$router.push({path:'./paypage'})
+                        _this.getUserCode()
+
+                        //   _this.$router.push({path:'./paypage'})
                     }
 
                 
@@ -323,6 +325,19 @@
                 }
 
             },
+
+             getUserCode() {
+                    const baseurl = "https://front.club.xindongguoji.com/wechats/#/paypage"
+                    const  redirectURL = encodeURIComponent(baseurl);//获取地址
+//                    const  redirectURL = encodeURI((baseurl + window.location.pathname + window.location.search).split('&code')[0]);//获取地址
+                    const base = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1831b622b7904e1a';
+                    let state;
+                    let surl;
+                    let reserveUrl;
+                    let appid ="wx1831b622b7904e1a";
+                    let scope = "1";
+                    window.location.href =base +'&redirect_uri='+ redirectURL +'&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
+                },
 
             active_detail(){
                 let _this=this

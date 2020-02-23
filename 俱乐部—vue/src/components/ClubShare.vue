@@ -17,8 +17,8 @@
              </div>
 
              <div class="share_but">
-                 <div id="QRCodeNone" class="share_erweim_a" style="display:none;"></div>
-                  <div class=share_erweim id="qrcode" ref="qrcode"></div>
+                 <div id="QRCodeNone"  class="share_erweim_a" style="display:none;"></div>
+                  <div class="share_erweim" id="qrcode" ref="qrcode"></div>
              </div>
 
              <div class="share_tip">长按扫码加入运动团</div>
@@ -140,7 +140,7 @@
                 const code_w = 248 / rate;
                 const code_h = 248 / rate;
 
-                let qrcode = new QRCode("qrcode", {
+                let qrcode = new QRCode(document.getElementById("QRCodeNone"), {
                           width: code_w, // 二维码宽度，单位像素
                           height: code_h, // 二维码高度，单位像素
                           text: "https://club.xindongguoji.com/#/clubindex?company_id="+_this. company_id+"&id="+_this.club_id// 生成二维码的链接

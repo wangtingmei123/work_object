@@ -84,7 +84,7 @@
                 <div class="club_announ" @click="to_members">
                     <div class="active_title" >
                         <!-- <img style="width:0.41rem;height:0.34rem;" class="active_title1 active_title3" :src="active_title3" alt=""> -->
-                        <div class="title_center" style="margin-right:4.3rem">俱乐部成员</div>
+                        <div class="title_center" style="margin-right:4.3rem;margin-left:0.1rem">俱乐部成员</div>
                         <img class="right_tip" :src="right_tip" alt="">
                     </div>
                     <div class="club_members_main" v-if="audit_list.length>0">
@@ -144,7 +144,7 @@
                 <div class="club_announ">
                     <div class="active_title"  @click="to_alldynamic">
                         <!-- <img style="width:0.4rem;height:0.41rem;" class="active_title1 active_title5" :src="active_title5" alt=""> -->
-                        <div class="title_center" style="margin-right:4.3rem">俱乐部动态</div>
+                        <div class="title_center" style="margin-right:4.3rem;margin-left:0.1rem">俱乐部动态</div>
                         <img class="right_tip" :src="right_tip" alt="">
                     </div>
                     <div class="club_dynamic_main"  v-for="(item,index) in dynamic_info" :key="index">
@@ -167,6 +167,7 @@
                             <div class="dynamic_main3_img"  v-for="(items,index) in item.image_data" :key="index">
                                 <img :src="items" alt="" >
                             </div>
+
 
                         </div>
                         <div class="dynamic_main4">
@@ -796,10 +797,10 @@
     .club_dynamic_main>.dynamic_main3>.dynamic_main3_img{
         display: block;
         float: left;
-        margin-top:0.1rem;
-        margin-left:0.1rem;
-        width:3.26rem;
-        height:2.35rem;
+        margin-top:0.12rem;
+        margin-left:0.12rem;
+        width:2.18rem;
+        height:2.02rem;
     }
 
     .club_dynamic_main>.dynamic_main3>.dynamic_main3_img>img{
@@ -978,7 +979,7 @@
     }
 
     .club_announ{
-        width:6.9rem;
+        width:7rem;
         height:auto;
         margin:auto;
     }

@@ -447,7 +447,7 @@
         margin:auto;
         height:auto;
         background: #fff;
-        padding:0 0.15rem;
+        padding:0 0.1rem;
         color: #4d4d4d;
         line-height: 0.48rem;
         font-size: 0.26rem;
@@ -534,10 +534,10 @@
     .club_dynamic_main>.dynamic_main3>.dynamic_main3_img{
         display: block;
         float: left;
-        margin-top:0.1rem;
-        margin-left:0.1rem;
-        width:3.26rem;
-        height:2.35rem;
+        margin-top:0.12rem;
+        margin-left:0.12rem;
+        width:2.18rem;
+        height:2.02rem;
     }
 
     .club_dynamic_main>.dynamic_main3>.dynamic_main3_img>img{

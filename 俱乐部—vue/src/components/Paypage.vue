@@ -47,34 +47,47 @@
         },
         mounted() {
 
+            const baseurl = "https://front.club.xindongguoji.com/wechats/#/paypage"
+            const  redirectURL = encodeURIComponent(baseurl);//获取地址
+            console.log(redirectURL)
+            console.log(this.getUrlParam().code)
+
+
         },
         methods: {
-             getUrlParam (name) {
-                    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
-                    let url = window.location.href.split('#')[0]
-                    let search = url.split('?')[1]
-                    if (search) {
-                        var r = search.substr(0).match(reg)
-                        if (r !== null) return unescape(r[2])
-                        return null
-                    } else {
-                        return null
+             getUrlParam () {
+                  var url = location.search
+                this.winUrl = url
+                var theRequest = new Object()
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1)
+                    var strs = str.split("&")
+                    for(var i = 0; i < strs.length; i ++) {
+                        theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1])
                     }
-                },
+                }
+                return theRequest
+        
+
+
+
+             },
              getUserCode() {
-                 const baseurl = "https://club.xindongguoji.com"
-                  const  redirectURL = encodeURI((baseurl + window.location.pathname + window.location.search).split('&code')[0]);//获取地址
+                    const baseurl = "https://front.club.xindongguoji.com/wechats/#/paypage"
+                    const  redirectURL = encodeURIComponent(baseurl);//获取地址
+//                    const  redirectURL = encodeURI((baseurl + window.location.pathname + window.location.search).split('&code')[0]);//获取地址
                     const base = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1831b622b7904e1a';
                     let state;
                     let surl;
                     let reserveUrl;
-                    let appid = "";
+                    let appid ="wx1831b622b7904e1a";
                     let scope = "1";
-                    window.location.href =base + appid +'&redirect_uri='+ redirectURL +'&response_type=code&scope='+ scope +  '#wechat_redirect';
+                    window.location.href =base +'&redirect_uri='+ redirectURL +'&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
                 },
 
             to_pay(){
-               var code= this.getUrlParam('code');
+               var code= this.getUrlParam().code
+               console.log(code)
                if(!code){
                    this. getUserCode();
                }

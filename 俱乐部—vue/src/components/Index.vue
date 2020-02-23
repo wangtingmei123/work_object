@@ -42,7 +42,7 @@
               </div>
               <div class="act_new_main_box" v-if="act_list_new.length>0">
                   <div class="act_new_main_float" >
-                      <div class="act_new_main"  :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id)" v-for="(item,index) in act_list_new" :key="index">
+                      <div class="act_new_main"  :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id,item.club_id)" v-for="(item,index) in act_list_new" :key="index">
                           <div class="act_new_main_img">
                               <img :src="item.logo_url" alt="">
                           </div>
@@ -70,7 +70,7 @@
                   <img class="right_tip" :src="right_tip" alt="">
               </div>
               <div style="padding-bottom: 0.5rem" v-if="act_list.length>0">
-                <div class="act_main" :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id)" v-for="(item,index) in act_list" :key="index">
+                <div class="act_main" :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id,item.club_id)" v-for="(item,index) in act_list" :key="index">
                   <div class="act_main_left">
                       <img :src="item.logo_url" alt="">
                       <!--<div  class="act_time">29:28:40</div>-->
@@ -209,9 +209,6 @@
           if (access_token == null || expires_in == null) {
                 this.$router.push({path: '/codelog'}) // -> /user
             }else{
-                    this.user_get()
-                    this.active_list_new()
-                    this.banner()
                     this.authtion()
             }
 
@@ -236,7 +233,10 @@
                         if(res.status==200){
                             localStorage.setItem('access_token',res.data.access_token);
                             localStorage.setItem('expires_in',res.data.expires_in);
-                            localStorage.setItem('token_type',res.data.token_type)
+                            localStorage.setItem('token_type',res.data.token_type);
+                            _this.user_get()
+                            _this.active_list_new()
+                            _this.banner()
                         }else {
 
                         }
@@ -380,11 +380,13 @@
             this.$router.push({ path: '/clubindex',query:{id:id}}) // -> /user
 
         },
-        to_detail(issue_nums,id){
+        to_detail(issue_nums,id,club_id){
 
             localStorage.setItem('active_id',id)
             localStorage.setItem('active_name',name)
             localStorage.setItem('issue_nums',issue_nums)
+            localStorage.setItem('club_id',club_id)
+
             if(issue_nums==0){
                 this.$router.push({ path: '/activedetailshort',query:{id:id}}) // -> /user
             }else{
