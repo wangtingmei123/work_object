@@ -285,11 +285,11 @@
                     this.show_tip='俱乐部加入人数上限必须大于0'
                     return
                 }
-//                if(this.club_tip==''){
-//                    this.showa=true;
-//                    this.show_tip='请填写俱乐部公告'
-//                    return
-//                }
+               if(this.club_tip==''){
+                   this.showa=true;
+                   this.show_tip='请填写俱乐部公告'
+                   return
+               }
 
 
                 if(_this.type_l==0){
@@ -312,6 +312,7 @@
                                 _this.hide_tip='创建成功';
                                 setTimeout(function(){
                                     _this.hidea=false;
+                                    _this.$router.go(-1);
                                 },1500)
                             }else{
                                 _this.showa=true;

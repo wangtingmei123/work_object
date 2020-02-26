@@ -13,13 +13,18 @@
         name: '',
         props:{
             title:'',
-            show:true
+            show:true,
+            backpage:''
         },
+   
         data() {
             return {
-                back:'./static/img/03back_03.png'
+                back:'./static/img/03back_03.png',
+            
             }
         },
+
+   
         created() {
 
 
@@ -29,7 +34,9 @@
         },
         methods: {
             goback(){
-                this.$router.go(-1);
+                   this.$router.go(-1);
+             
+                
 
             }
         }

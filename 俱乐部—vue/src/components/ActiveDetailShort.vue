@@ -11,6 +11,9 @@
                     <div class="detail1d">活动地点：{{active_info.address}}</div>
                     <div class="detail1d">俱乐部：{{club_name}}</div>
                 </div>
+                <div class="but_top" v-if="is_authorized==1&&(active_info.status==0 ||active_info.status==1)" @click="to_editactive(active_info.id,active_info.issue_nums)">
+                     <img class="but_top2" :src="but_top2" alt="">
+                </div>
             </div>
             <!--活动收费-->
             <div class="detail2_box">
@@ -41,7 +44,7 @@
                 </div>
                 <div class="detail2b" @click="menbersactive">
                     <div class="detail2b1" style="justify-content: space-between;">
-                        <div>5人报名</div>
+                        <div>{{active_info.members}}人报名</div>
                         <img style="display: block;width:0.11rem;height:0.19rem" :src="right_tip" alt="">
                     </div>
 
@@ -100,9 +103,9 @@
 
 
 
-        <div class="creat_club_box" v-if="is_authorized==1&&(active_info.status==0 ||active_info.status==1)" @click="to_editactive(active_info.id,active_info.issue_nums)">
+        <!-- <div class="creat_club_box" v-if="is_authorized==1&&(active_info.status==0 ||active_info.status==1)" @click="to_editactive(active_info.id,active_info.issue_nums)">
             <div class="creat_club">编辑</div>
-        </div>
+        </div> -->
         <div class="creat_club_box" v-if="active_info.status==3&&is_hide" @click="to_commentfb">
             <div class="creat_club">发表评价</div>
         </div>
@@ -162,6 +165,7 @@
                 detail7:'./static/img/22active_detail_33.png',
                 right_tip:'./static/img/22right_15.png',
                 righta:'./static/img/22righta_23.png',
+                but_top2:'./static/img/07club_index_05.png',
                 active_id:'',
                 active_info:[],
                 is_authorized:'',
@@ -170,7 +174,8 @@
                 is_verified:'',
                 is_applyed:'',
                 need_signee:'',
-                is_hide:''
+                is_hide:'',
+                order_id:''
 
             }
         },
@@ -248,30 +253,11 @@
                 let _this=this
                 if(_this.is_joined==true && _this.is_verified==true) {
 
-                    _this.$axios.delete("/activity-users", {
-                        headers: {
-                            'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
-                        },
-                        params: {
-                            'act_id': localStorage.getItem('active_id')
-                        }
+                    _this.showa1=true;
+                    _this.show_tip1='您确定要取消报名吗？'
 
-                    }).then(res => {
-                        if (res.status == 200) {
-                            _this.hidea=true;
-                            _this.hide_tip='取消报名成功';
-                            setTimeout(function(){
-                                _this.hidea=false;
-                                _this.is_applyed=false
-                            },1500)
-                        } else {
-                            _this.showa = true;
-                            _this.show_tip = res.data.message;
-                            return
-                        }
-                    })
-                        .catch(err => {
-                        })
+
+                    
                 }else{
                     _this.showa=true;
                     _this.show_tip='您还不是该俱乐部成员，没有权限';
@@ -295,11 +281,11 @@
                                     }
                                 }).then(res=>{
                                 if(res.status==200){
-                                    _this.hidea=true;
-                                    _this.hide_tip='报名成功';
-                                    setTimeout(function(){
-                                        _this.hidea=false;
-                                    },1500)
+                                    _this.order_id=res.data.data.order_id
+                                    _this.order_get()
+
+
+                            
                                 }else{
                                     _this.showa=true;
                                     _this.show_tip=res.data.message;
@@ -324,6 +310,37 @@
                     return
                 }
 
+            },
+
+
+             order_get(){
+                let _this=this
+                _this.$axios.get("/paid-orders/"+ _this.order_id,{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                    },
+                    params:{
+                    }
+                }).then(res=>{
+                    if(res.status==201){
+                        console.log(res)
+                        _this.hidea=true;
+                        _this.hide_tip='报名成功';
+                        setTimeout(function(){
+                            _this.hidea=false;
+                            _this.$router.push({path: '/myactive'})
+                        },1500)
+                    }else{
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                        return
+                    }
+                })
+                    .catch(err=>{
+                        // _this.showa=true;
+                        // _this.show_tip=err;
+                        // return
+                    })
             },
 
              getUserCode() {
@@ -403,10 +420,37 @@
                 this.showa=false;
             },
             okfall1(){
-                this.showa1=false;
+                let _this=this;
+                   this.showa1=false;
+                _this.$axios.delete("/activity-users", {
+                        headers: {
+                            'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                        },
+                        params: {
+                            'act_id': localStorage.getItem('active_id')
+                        }
+
+                    }).then(res => {
+                        if (res.status == 200) {
+                            _this.hidea=true;
+                            _this.hide_tip='取消报名成功';
+                            setTimeout(function(){
+                                _this.hidea=false;
+                                _this.authentication()
+                            },1500)
+                        } else {
+                            _this.showa = true;
+                            _this.show_tip = res.data.message;
+                            return
+                        }
+                    })
+                        .catch(err => {
+                        })
+             
             },
             nofall(){
                 this.showa=false;
+                this.showa1=false;
             },
         }
 
@@ -414,6 +458,22 @@
 </script>
 
 <style scoped>
+
+  .detail1_box .but_top{
+        width:0.48rem;
+        height:0.46rem;
+        position: absolute;
+        right:0.46rem;
+        top:0.25rem;
+        
+    }
+
+
+    .detail1_box .but_top .but_top2{
+        display: block;
+        width:0.48rem;
+        height:0.46rem;
+    }
     .activedetail_box_big{
         width:100%;
         height:auto;

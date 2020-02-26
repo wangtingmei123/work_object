@@ -31,7 +31,7 @@
                 </div>
                 <div class="rank_item">
                     <div class="rank_item_tit">开始时间</div>
-                    <input style="background: none;width:3.5rem" type="datetime-local" placeholder="请选择本次活动的开始时间" v-model="statre_time" @blur="blurEvent">
+                    <input style="background: none;width:4rem" type="datetime-local" placeholder="请选择本次活动的开始时间" v-model="statre_time" @blur="blurEvent">
                     <!--<div class="rank_item_con">-->
                         <!--<span class="club_name">请选择本次活动的开始时间</span>-->
                         <!--<img class="right_tip" :src="right_tip" alt="" >-->
@@ -39,7 +39,7 @@
                 </div>
                 <div class="rank_item">
                     <div class="rank_item_tit">结束时间</div>
-                    <input style="background: none;width:3.5rem" type="datetime-local" placeholder="请选择本次活动的开始时间" v-model="end_time" value="end_time" @blur="blurEvent">
+                    <input style="background: none;width:4rem" type="datetime-local" placeholder="请选择本次活动的开始时间" v-model="end_time" value="end_time" @blur="blurEvent">
                     <!--<div class="rank_item_con">-->
                         <!--<span class="club_name">请选择本次活动的结束时间</span>-->
                         <!--<img class="right_tip" :src="right_tip" alt="" >-->
@@ -47,8 +47,8 @@
                 </div>
 
                 <div class="rank_item">
-                    <div class="rank_item_tit">截止时间</div>
-                    <input style="background: none;width:3.5rem" type="datetime-local" placeholder="请选择本次活动的截止时间" v-model="jiezhi_time" @blur="blurEvent">
+                    <div class="rank_item_tit">报名截止时间</div>
+                    <input style="background: none;width:4rem" type="datetime-local" placeholder="请选择本次活动的截止时间" v-model="jiezhi_time" @blur="blurEvent">
                 </div>
 
                 <div class="rank_item">
@@ -151,7 +151,7 @@
             return {
                 hide_tip:'',
                 hidea:false,
-                back:'./static/img/03index_03.png',
+                back:'./static/img/03back_03.png',
                 dingwei:'./static/img/dingwei1.png',
                 showa:false,
                 show_tip:'',
@@ -527,8 +527,8 @@
     }
    .address_box_search header>.goback{
         position: absolute;
-        width:0.24rem;
-        height:0.44rem;
+        width:0.18rem;
+        height:0.3rem;
         top:0;
         bottom:0;
         margin:auto;

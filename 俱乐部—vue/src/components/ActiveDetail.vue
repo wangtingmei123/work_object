@@ -9,6 +9,9 @@
                     <div class="detail1b">俱乐部：{{club_name}}</div>
                     <!--<div class="detail1c">活动地点：{{}}</div>-->
                 </div>
+                <div class="but_top" v-if="is_authorized==1&&(active_info.status==0 ||active_info.status==1)" @click="to_editactive(active_info.id,active_info.issue_nums)">
+                     <img class="but_top2" :src="but_top2" alt="">
+                </div>
             </div>
             <!--活动收费-->
             <div class="detail2_box">
@@ -168,6 +171,7 @@
                 detail6:'./static/img/22active_detail_20.png',
                 right_tip:'./static/img/22right_15.png',
                 righta:'./static/img/22righta_23.png',
+                but_top2:'./static/img/07club_index_05.png',
                 active_info:[],
                 active_info_issue:'',
                 issuesactive:[],
@@ -177,7 +181,8 @@
                 is_verified:'',
                  is_applyed:'',
                 need_signee:'',
-                is_hide:''
+                is_hide:'',
+                order_id:''
 
             }
         },
@@ -262,11 +267,10 @@
                             }
                         }).then(res=>{
                         if(res.status==200){
-                            _this.hidea=true;
-                            _this.hide_tip='报名成功';
-                            setTimeout(function(){
-                                _this.hidea=false;
-                            },1500)
+                           _this.order_id=res.data.data.order_id
+                                    _this.order_get()
+
+
                         }else{
                             _this.showa=true;
                             _this.show_tip=res.data.message;
@@ -289,6 +293,34 @@
 
             },
 
+            order_get(){
+                let _this=this
+                _this.$axios.get("/paid-orders/"+ _this.order_id,{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                    },
+                    params:{
+                    }
+                }).then(res=>{
+                    if(res.status==200){
+                        console.log(res)
+                        _this.hidea=true;
+                        _this.hide_tip='报名成功';
+                        setTimeout(function(){
+                            _this.hidea=false;
+                            _this.$router.push({path: '/myactive'})
+                        },1500)
+                    }else{
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                        return
+                    }
+                })
+                    .catch(err=>{
+
+                    })
+            },
+
 
             getUserCode() {
                     const baseurl = "https://front.club.xindongguoji.com/wechats/#/paypage"
@@ -307,30 +339,8 @@
             notosing(){
                 let _this=this
                 if(_this.is_joined==true && _this.is_verified==true){
-                    _this.$axios.delete("/activity-users", {
-                        headers: {
-                            'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
-                        },
-                        params:{
-                            'act_id':localStorage.getItem('active_id')
-                        }
-
-                    }).then(res=>{
-                        if(res.status==200){
-                            _this.hidea=true;
-                            _this.hide_tip='取消报名成功';
-                            setTimeout(function(){
-                                _this.hidea=false;
-                                  _this.is_applyed=false
-                            },1500)
-                        }else{
-                            _this.showa=true;
-                            _this.show_tip=res.data.message;
-                            return
-                        }
-                    })
-                        .catch(err=>{
-                        })
+                      _this.showa1=true;
+                    _this.show_tip1='您确定要取消报名吗？'
                 }else {
                     _this.showa=true;
                     _this.show_tip='您还不是该俱乐部成员，没有权限';
@@ -414,11 +424,38 @@
             okfall(){
                 this.showa=false;
             },
-            okfall1(){
-                this.showa1=false;
+           okfall1(){
+                let _this=this;
+                   this.showa1=false;
+                _this.$axios.delete("/activity-users", {
+                        headers: {
+                            'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                        },
+                        params: {
+                            'act_id': localStorage.getItem('active_id')
+                        }
+
+                    }).then(res => {
+                        if (res.status == 200) {
+                            _this.hidea=true;
+                            _this.hide_tip='取消报名成功';
+                            setTimeout(function(){
+                                _this.hidea=false;
+                                _this.authentication()
+                            },1500)
+                        } else {
+                            _this.showa = true;
+                            _this.show_tip = res.data.message;
+                            return
+                        }
+                    })
+                        .catch(err => {
+                        })
+             
             },
             nofall(){
                 this.showa=false;
+                  this.showa1=false;
             },
 
         }
@@ -427,6 +464,21 @@
 </script>
 
 <style scoped>
+  .detail1_box .but_top{
+        width:0.48rem;
+        height:0.46rem;
+        position: absolute;
+        right:0.46rem;
+        top:0.25rem;
+        
+    }
+
+
+    .detail1_box .but_top .but_top2{
+        display: block;
+        width:0.48rem;
+        height:0.46rem;
+    }
 
     .activedetail_box_big{
         width:100%;

@@ -35,7 +35,8 @@
                 backpage: '',
                 issue_id:'',
                 active_id:'',
-                active_info:[]
+                active_info:[],
+                order_id:10
             }
         },
         created() {
@@ -86,6 +87,15 @@
                 },
 
             to_pay(){
+                let _this=this
+                //  let issue_nums=localStorage.getItem('issue_nums');
+                // let id=localStorage.getItem('active_id');
+                // if(issue_nums==0){
+                //     _this.$router.push({ path: '/activedetailshort',query:{id:id}}) // -> /user
+                // }else{
+                //     _this.$router.push({ path: '/activedetail',query:{id:id}}) // -> /user
+                // }
+           
                var code= this.getUrlParam().code
                console.log(code)
                if(!code){
@@ -100,6 +110,7 @@
 
             tosing(code){
                 let _this=this
+               
                             _this.$axios.post("/activity-users",
                                 {
                                     "act_id": localStorage.getItem('active_id'),
@@ -110,11 +121,38 @@
                                     }
                                 }).then(res=>{
                                 if(res.status==200){
-                                    _this.hidea=true;
-                                    _this.hide_tip='报名成功';
-                                    setTimeout(function(){
-                                        _this.hidea=false;
-                                    },1500)
+                                    _this.order_id=res.data.data.order_id
+                                if (typeof WeixinJSBridge == "undefined"){
+                                    console.log(res)
+                                        if( document.addEventListener ){
+                                            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                                        }else if (document.attachEvent){
+                                            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+                                            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                                        }
+                                    }else{
+                                              console.log(res.data.data.appId)
+                                       WeixinJSBridge.invoke(
+                                            'getBrandWCPayRequest', {
+                                                "appId":res.data.data.appId,    //公众号名称，由商户传入     
+                                                "timeStamp":res.data.data.timeStamp,         //时间戳，自1970年以来的秒数     
+                                                "nonceStr":res.data.data.nonceStr, //随机串     
+                                                "package":res.data.data.package,     
+                                                "signType":res.data.data.signType,         //微信签名方式：     
+                                                "paySign":res.data.data.paySign //微信签名 
+                                            },
+                                            function(res){
+                                                console.log("ccc")
+                                            if(res.err_msg == "get_brand_wcpay_request:ok" ){
+                                                    //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                                                   _this.order_get()
+
+                                                  
+                                            } 
+                                        }); 
+                                    }
+
+                                   
                                 }else{
                                     _this.showa=true;
                                     _this.show_tip=res.data.message;
@@ -126,6 +164,39 @@
 
 
             },
+
+
+            order_get(){
+                let _this=this
+                _this.$axios.get("/paid-orders/"+ _this.order_id,{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+                    },
+                    params:{
+                    }
+                }).then(res=>{
+                    if(res.status==201){
+                        console.log(res)
+                        _this.hidea=true;
+                        _this.hide_tip='报名成功';
+                        setTimeout(function(){
+                            _this.hidea=false;
+                            _this.$router.push({path: '/myactive'})
+                        },1500)
+                    }else{
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                        return
+                    }
+                })
+                    .catch(err=>{
+
+                    })
+            },
+
+
+
+            
 
             active_detail(){
                 let _this=this

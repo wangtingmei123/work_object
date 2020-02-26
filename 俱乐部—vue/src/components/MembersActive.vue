@@ -3,9 +3,9 @@
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="member_list_boxs">
             <div class="member_list_box">
-                <div class="member_list" style="justify-content:left;color: #989898;font-size: 0.26rem;height:0.9rem">
+                <!-- <div class="member_list" style="justify-content:left;color: #989898;font-size: 0.26rem;height:0.9rem">
                     本次活动共计2人报名，1人打卡，1人未打，参与率50%
-                </div>
+                </div> -->
                 <div class="member_list" v-for="(item,index) in member_list" :key="index">
                     <div class="member1">
                         <img :src="item.user.avatar" alt="">
@@ -65,16 +65,17 @@
                         "act_id":localStorage.getItem('active_id'),
                     }
                 }).then(res=>{
+                    console.log(res)
 
                     if(res.status==200){
-                        if(res.data.length<_this.GLOBAL.page_total){
+                        if(res.data.data.length<_this.GLOBAL.page_total){
                             _this.page_end=false
                         }
                         let member_list=_this.member_list;
                         if(member_list.length==0){
-                            member_list=res.data
+                            member_list=res.data.data
                         }else{
-                            member_list.push.apply(member_list,res.data);
+                            member_list.push.apply(member_list,res.data.data);
                         }
 
                         _this.member_list=member_list;

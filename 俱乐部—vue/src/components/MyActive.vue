@@ -1,6 +1,9 @@
 <template>
     <div style="background: #f0f0f0;min-height: 100vh;overflow: hidden;">
-        <Header :title="title" :show="show" :backpage="backpage"></Header>
+        <header>
+            <div @click="goback" class="goback"><img :src="back" alt=""> </div>
+            <div class="title">报名的活动</div>
+        </header> 
         <div class="active_tap">
             <div class="act" :class="{'act_selece':act_selece==''}" @click="select('')">全部</div>
             <!--<div class="act" :class="{'act_selece':act_selece==1}" @click="select(1)">报名中</div>-->
@@ -58,7 +61,8 @@
                 empty_img:'./static/img/empty_img.png',
                 title: '报名的活动',
                 show: true,
-                backpage: '',
+                back:'./static/img/03back_03.png',
+                backpage: 'personalcenter',
                 club_img:'./static/img/03index_37.png',
                 act_img:'./static/img/03index_29.png',
                 act_selece:0,
@@ -84,6 +88,11 @@
 
         },
         methods: {
+
+            goback(){
+                    this.$router.push({ path: '/personalcenter'}) // -> /user
+             
+            },
             to_detail(issue_nums,id){
 
                 localStorage.setItem('active_id',id)
@@ -214,6 +223,43 @@
 </script>
 
 <style scoped>
+  header{
+        width:7.5rem;
+        height:0.88rem;
+        position: fixed;
+        top:0;
+        left:0;
+        right:0;
+        margin:auto;
+        background: #fff;
+        z-index: 99;
+
+
+
+    }
+    header>.title{
+        width:100%;
+        height:100%;
+        font-size:0.32rem;
+        line-height:0.88rem;
+        text-align: center;
+        color: #000;
+        letter-spacing:0.01rem;
+        font-weight: bold;
+    }
+    header>.goback{
+        position: absolute;
+        width:0.18rem;
+        height:0.3rem;
+        top:0;
+        bottom:0;
+        margin:auto;
+        left:0.3rem;
+    }
+    header>.goback>img{
+        display: block;
+        width:100%;
+    }
 
     .active_tap{
         width:7.2rem;

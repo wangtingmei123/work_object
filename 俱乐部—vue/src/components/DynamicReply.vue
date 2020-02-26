@@ -112,6 +112,7 @@
             },
             nofall(){
                 this.showa=false;
+                  this.showa=false;
             },
 
         }

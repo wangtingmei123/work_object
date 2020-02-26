@@ -13,7 +13,7 @@
             <div class="apply_list_box" v-show="audit_list.length>0" ref="opBottomEcharts2" @scroll="gotoScroll()">
                 <div class="apply_list" v-for="(item,index) in audit_list" :key="index">
                     <div class="apply_user">
-                        <div class="apply_name">{{item.user_name}}</div>
+                        <div class="apply_name">{{item.user.user_name}}</div>
                         <div class="apply_menber">{{item.user.department}}</div>
                     </div>
                     <div class="apply_time">申请时间：<span>{{item.created_at}}</span></div>
@@ -30,7 +30,7 @@
                 <!--<div class="empty_tip"></div>-->
             </div>
 
-            <div class="creat_club_box" v-show="audit_list.length>0" @click="to_apply">
+            <div class="creat_club_box" v-show="audit_list.length>0" @click="to_apply" >
                 <div class="creat_club">确定</div>
             </div>
             <Eject  type='alert' @took='okfall' :showstate='showa'>
@@ -83,7 +83,7 @@
         },
         created() {
             this.club_id=this.$route.query.club_id;
-           this.request()
+           this.requesta()
 
         },
         mounted() {
@@ -104,51 +104,13 @@
                         let page = _this.page+1;
                         _this.page=page;
                         console.log(_this.page)
-                        _this.request()
+                        _this.requesta()
                     }
 
 
                 }
             },
-            request(){
-                let _this=this;
-
-                if(_this.loadFlag){
-                _this.$axios.get("/club-users",{
-                    headers: {
-                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
-                    },
-                    params: {
-                        "club_id":_this.club_id,
-                        "is_verified":0,
-                         "last_id":_this.page
-                    }
-                }).then(res=>{
-                    console.log(res)
-                    if(res.status==200){
-                        if(res.data.data.length<_this.GLOBAL.page_total){
-                            _this.page_end=false
-                        }
-                        let audit_list=_this.audit_list;
-                        if(audit_list.length==0){
-                            audit_list=res.data.data
-                        }else{
-                            audit_list.push.apply(audit_list,res.data.data);
-                        }
-                        _this.audit_list=audit_list;
-                        _this.loadFlag=false;
-
-                    }else {
-                        _this.showa=true;
-                        _this.show_tip=res.data.message;
-                    }
-                })
-                    .catch(err=>{
-                        console.log(err)
-                    })
-                }
-
-            },
+        
             getpagedata(){
                 console.log(this.page)
             },
@@ -195,7 +157,8 @@
             },
 
             to_apply(){
-                let _this=this;
+                  let _this=this;
+               
                 let select_lista=_this.select_list.join(",");
                 this.$axios.patch("/club-users ",{
 //                    "club_id": _this.club_id,
@@ -205,13 +168,18 @@
                 }})
                     .then(res=>{
                         if(res.status==200){
+                        
                             _this.hidea=true;
                             _this.hide_tip='加入成功';
+                          
                             setTimeout(function(){
                                 _this.hidea=false;
-                                _this.audit_list=[];
+                                 _this.audit_list=[];
                                 _this.page=0;
-                                _this.request()
+                                 _this.loadFlag=true
+                                console.log(")00000")
+                                _this.requesta()
+                                
                             },1500)
                         }else{
                             _this.showa=true;
@@ -221,6 +189,46 @@
                     })
                     .catch(err=>{
                     })
+            },
+
+            requesta(){
+                let _this=this;
+
+                if(_this.loadFlag){
+                _this.$axios.get("/club-users",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "club_id":_this.club_id,
+                        "is_verified":0,
+                         "last_id":_this.page
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        if(res.data.data.length<_this.GLOBAL.page_total){
+                            _this.page_end=false
+                        }
+                        let audit_list=_this.audit_list;
+                        if(audit_list.length==0){
+                            audit_list=res.data.data
+                        }else{
+                            audit_list.push.apply(audit_list,res.data.data);
+                        }
+                        _this.audit_list=audit_list;
+                        _this.loadFlag=false;
+
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+                }
+
             },
             okfall(){
                 this.showa=false;

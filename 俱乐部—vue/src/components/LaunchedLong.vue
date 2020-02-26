@@ -35,8 +35,8 @@
                     <input type="number" placeholder="请设置本次活动的活动期数" v-model="active_issue" @blur="blurEvent">
                 </div>
                 <div class="rank_item">
-                    <div class="rank_item_tit">截止时间</div>
-                    <input style="background: none;width:3.5rem" type="datetime-local" placeholder="请选择本次活动的截止时间" v-model="jiezhi_time" @blur="blurEvent">
+                    <div class="rank_item_tit">报名截止时间</div>
+                    <input style="background: none;width:4rem" type="datetime-local" placeholder="请选择本次活动的截止时间" v-model="jiezhi_time" @blur="blurEvent">
                 </div>
 
                 <div class="rank_item">
@@ -125,7 +125,7 @@
             return {
                 hide_tip:'',
                 hidea:false,
-                back:'./static/img/03index_03.png',
+                back:'./static/img/03back_03.png',
                 dingwei:'./static/img/dingwei1.png',
                 showa:false,
                 show_tip:'',
@@ -440,8 +440,8 @@
     }
     .address_box_search header>.goback{
         position: absolute;
-        width:0.24rem;
-        height:0.44rem;
+        width:0.18rem;
+        height:0.3rem;
         top:0;
         bottom:0;
         margin:auto;

@@ -8,7 +8,7 @@
                         <img v-if="item.user.avatar==''" :src="photo" alt="">
                         <img v-if="item.user.avatar!=''" :src="item.user.avatar" alt="">
                         <div class="member2">
-                            <div class="member2_name">{{item.user_name}}</div>
+                            <div class="member2_name">{{item.user.user_name}}</div>
                             <div class="member2_bumen">{{item.user.department}}</div>
                         </div>
                     </div>

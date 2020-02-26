@@ -124,9 +124,7 @@
             this.$axios.post("/invitationCodes",{
                 "type":"company", // 邀请类型
                 "id":_this.company_id// 可选
-            },{headers: {
-                'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
-            }})
+            })
                 .then(res=>{
                     if(res.status==200){
                         _this.club_name=res.data.company_name;
@@ -198,7 +196,7 @@
                             console.log(res)
                             //验证码倒计时
                             var timer_number = this.time_limit;
-                            this.is_sending_code = 1;
+                            _this.is_sending_code = 1;
                             var timer = setInterval(function () {
 
                                 timer_number -= 1;
@@ -206,7 +204,7 @@
                                 if (timer_number <= 0) {
                                     _this.sendCodeButtonTxt='获取验证码';
                                     _this.timer_number=0;
-                                    this.is_sending_code = 0;
+                                    _this.is_sending_code = 0;
                                     return clearInterval(timer);
                                 }
                                 _this.sendCodeButtonTxt=timer_number + '秒';
@@ -238,9 +236,9 @@
                     this.show_tip='姓名不能为空'
                     return
                 }
-                if (this.name.length >5){
+                if (this.name.length >16){
                     this.showa=true;
-                    this.show_tip='姓名不能超过五个字符'
+                    this.show_tip='姓名不能超过十六个字符'
                     return
                 }
                 if (this.name.length <2){
@@ -288,9 +286,7 @@
                     "verify_key": _this.verify_key,
                     "invite_code": _this.invite_code,
                     "department": _this.member
-                }, {headers: {
-                  'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
-                }})
+                })
                     .then(res=>{
                         if(res.status==201){
                             _this.hidea=true;
@@ -439,9 +435,9 @@
     .form-item>input{
         display: block;
         width:5.6rem;
-        height:0.30rem;
+        height:0.60rem;
         font-size: 0.28rem;
-        line-height:0.30rem;
+        line-height:0.60rem;
         border:none;
     }
 

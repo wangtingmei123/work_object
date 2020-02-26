@@ -1,7 +1,7 @@
 <template>
     <div style="background: #f0f0f0;min-height: 100vh">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
-        <div class="rank_list_box" v-show="club_list.length>0" :class="{'rank_list_box_root':is_root==false}" ref="opBottomEcharts1"  @scroll="gotoScroll()" >
+        <div class="rank_list_box" v-show="club_list.length>0"  ref="opBottomEcharts1"  @scroll="gotoScroll()" >
             <div class="rank_list" >
                 <div class="club_main"  v-for="(item,index) in club_list" :key="index">
                     <div class="club_main_left" @click="to_clubindex(item.is_joined,item.id,item.is_admin,item.name)">
@@ -26,7 +26,7 @@
             <!--<div class="empty_tip">目前还没有俱乐部哦</div>-->
         </div>
         <!--<div class="creat_club" @click="creat_club">创建俱乐部</div>-->
-        <div class="creat_club_box" v-if="is_root">
+        <div class="creat_club_box" v-show="is_root===true">
             <div class="creat_club" @click="creat_club">创建俱乐部</div>
         </div>
         <Eject  type='alert' @tocancel="nofall" @took='okfall' :showstate='showa'  :cancel='cancel'>
@@ -71,20 +71,44 @@
                 club_id:'',
                 is_joined:'',
                 club_index:'',
-                no_empty:false
+                no_empty:false,
+                is_root:false
 
             }
         },
         created() {
-            this.is_root=localStorage.getItem('is_root')
+         
             this.real_show()
+            this.user_get()
 
         },
         mounted() {
+            //    this.is_root=localStorage.getItem('is_root')
+            console.log(this.is_root)
 
             this.$refs.opBottomEcharts1.addEventListener('scroll',this.gotoScroll)
         },
         methods: {
+           user_get(){
+                let _this=this;
+                this.$axios.get("/user",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        _this.is_root=res.data.data.is_root;
+                    
+                    }else {
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            },
 
             real_show(){
                 console.log(this.page)
@@ -227,14 +251,14 @@
     }
     .rank_list_box{
         width:7.2rem;
-        height:calc(100vh - 2.08rem);
+        /* height:calc(100vh - 2.08rem); */
         margin:auto;
         /*margin-top:0.88rem;*/
         /*overflow: hidden;*/
-        /*padding-bottom:1.3rem;*/
-        position: absolute;
-        top:0.88rem;
-        bottom:1.2rem;
+        padding-bottom:1.3rem;
+        /* position: absolute; */
+        margin-top:0.88rem;
+        /* bottom:1.2rem; */
         left:0;right:0;
         overflow: scroll;
 

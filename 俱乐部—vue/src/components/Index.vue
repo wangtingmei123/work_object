@@ -238,11 +238,14 @@
                             _this.active_list_new()
                             _this.banner()
                         }else {
+                             localStorage.clear()
+                          _this.$router.push({path: '/codelog'}) // -> /user
 
                         }
                     })
                         .catch(err=>{
-                            console.log(err)
+                             localStorage.clear()
+                          _this.$router.push({path: '/codelog'}) // -> /user
                         })
 
       

@@ -1,6 +1,9 @@
 <template>
     <div style="min-height: 100vh;overflow: hidden">
-        <Header :title="title" :show="show" :backpage="backpage"></Header>
+        <header>
+            <div @click="goback" class="goback"><img :src="back" alt=""> </div>
+            <div class="title">我的</div>
+        </header> 
         <div class="personal_box">
             <div class="personal_top">
                 <div class="personal_user">
@@ -77,6 +80,7 @@
         data() {
             return {
                 show_share:false,
+                back:'./static/img/03back_03.png',
                 activity_count:0,
                 club_count:0,
                 hide_tip:'',
@@ -196,6 +200,11 @@
 
         },
         methods: {
+            goback(){
+                    this.$router.push({ path: '/'}) // -> /user
+             
+            },
+          
             okfall(){
                 this.showa=false
             },
@@ -258,6 +267,44 @@
 </script>
 
 <style scoped>
+ header{
+        width:7.5rem;
+        height:0.88rem;
+        position: fixed;
+        top:0;
+        left:0;
+        right:0;
+        margin:auto;
+        background: #fff;
+        z-index: 99;
+
+
+
+    }
+    header>.title{
+        width:100%;
+        height:100%;
+        font-size:0.32rem;
+        line-height:0.88rem;
+        text-align: center;
+        color: #000;
+        letter-spacing:0.01rem;
+        font-weight: bold;
+    }
+    header>.goback{
+        position: absolute;
+        width:0.18rem;
+        height:0.3rem;
+        top:0;
+        bottom:0;
+        margin:auto;
+        left:0.3rem;
+    }
+    header>.goback>img{
+        display: block;
+        width:100%;
+    }
+
 
     .share_box{
         width:100%;

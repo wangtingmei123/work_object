@@ -160,7 +160,7 @@
                             console.log(res)
                             //验证码倒计时
                             var timer_number = this.time_limit;
-                            this.is_sending_code = 1;
+                            _this.is_sending_code = 1;
                             var timer = setInterval(function () {
 
                                 timer_number -= 1;
@@ -168,7 +168,7 @@
                                 if (timer_number <= 0) {
                                     _this.sendCodeButtonTxt='获取验证码';
                                     _this.timer_number=0;
-                                    this.is_sending_code = 0;
+                                    _this.is_sending_code = 0;
                                     return clearInterval(timer);
                                 }
                                 _this.sendCodeButtonTxt=timer_number + '秒';

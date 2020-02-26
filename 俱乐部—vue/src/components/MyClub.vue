@@ -1,7 +1,7 @@
 <template>
     <div style="background: #f0f0f0;min-height: 100vh">
         <Header :title="title" :show="show" :backpage="backpage"></Header>
-        <div class="rank_list_box" v-show="club_list.length>0" :class="{'rank_list_box_root':is_root==false}" ref="opBottomEcharts1"  @scroll="gotoScroll()" >
+        <div class="rank_list_box" v-show="club_list.length>0" ref="opBottomEcharts1"  @scroll="gotoScroll()" >
             <div class="rank_list" >
                 <div class="club_main"  v-for="(item,index) in club_list" :key="index">
                     <div class="club_main_left" @click="to_clubindex(item.club.id,item.club.name)">
@@ -194,14 +194,14 @@
     }
     .rank_list_box{
         width:7.2rem;
-        height:calc(100vh - 2.08rem);
+        height:calc(100vh - 1.08rem);
         margin:auto;
         /*margin-top:0.88rem;*/
         /*overflow: hidden;*/
         /*padding-bottom:1.3rem;*/
         position: absolute;
         top:0.88rem;
-        bottom:1.2rem;
+        bottom:0.2rem;
         left:0;right:0;
         overflow: scroll;
 

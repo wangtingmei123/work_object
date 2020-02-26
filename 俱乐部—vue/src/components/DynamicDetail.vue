@@ -408,6 +408,7 @@
             },
             nofall(){
                 this.showa=false;
+                 this.showa1=false;
             },
         }
 
