@@ -9,7 +9,7 @@
                     <div class="detail1b">活动开始时间：<span>{{active_info.start_date}}</span></div>
                     <div class="detail1c">活动结束时间：<span>{{active_info.end_date}}</span></div>
                     <div class="detail1d">活动地点：{{active_info.address}}</div>
-                    <div class="detail1d">俱乐部：{{club_name}}</div>
+                    <div class="detail1d" @click="to_clubindex" >俱乐部：{{club_name}}</div>
                 </div>
                 <div class="but_top" v-if="is_authorized==1" @click="to_editactive(active_info.id,active_info.issue_nums)">
                      <img class="but_top2" :src="but_top2" alt="">
@@ -192,6 +192,12 @@
 
         },
         methods: {
+
+             to_clubindex(){
+                let id=localStorage.getItem('club_id')
+                this.$router.push({ path: '/clubindex',query:{id:id}}) // -> /user
+
+            },
             authentication(){
 
                  let _this=this;

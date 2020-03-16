@@ -68,6 +68,9 @@
             ServiceMobile:""
         };
         $scope.brand = [];
+  
+
+
 
         function  _touchChoos() {
 

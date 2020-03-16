@@ -89,7 +89,7 @@
 
         .evaluatcon_title{
             width:100%;
-            height:1.8rem;
+            height:auto;
             overflow: hidden;
         }
         .evaluatcon_title>.evaluation_img{
@@ -116,7 +116,7 @@
 
         .evaluatcon_title>.evaluation_user>.evalu_phone{
              width:100%;
-            height:1rem;
+            height:auto;
             font-size: 0.28rem;
 
             color: #1a1a1a;
@@ -130,7 +130,7 @@
         }
         .evaluatcon_title>.evaluation_user>.evalu_phone>.evalu_phone_right{
             font-size: 0.22rem;
-            height:0.28rem;
+            height:0.38rem;
             width:100%;
             color: #808080;
             line-height:0.28rem;
@@ -141,7 +141,7 @@
 
         .evaluatcon_title>.evaluation_user>.evalu_score{
             width: 100%;
-            height:0.68rem;
+            height:0.48rem;
         }
 
         .evaluatcon_title>.evaluation_user>.evalu_score>.evalu_score_left{
@@ -168,7 +168,7 @@
             float: right;
             width:1.45rem;
             height:100%;
-            line-height:0.68rem;
+            line-height:0.48rem;
             font-size: 0.24rem;
             color: #bfbfbf;
             margin-right:0.1rem;
@@ -183,6 +183,7 @@
             color: #4d4d4d;
             padding: 0 0.15rem;
             box-sizing: border-box;
+            margin-top:0.2rem;
 
         }
 
@@ -237,8 +238,8 @@
                     <div class="evaluation_img"><img src="image/pj_photo_03.jpg" alt=""></div>
                     <div class="evaluation_user">
                         <div class="evalu_phone">
-                            <div class="evalu_phone_left">{{comment.author.telphone}}</div>
-                            <div class="evalu_phone_right">{{comment.goods_attr.property}}</div>
+                            <div class="evalu_phone_left">{{comment.author.username}}</div>
+                            <div class="evalu_phone_right" ng-show="comment.goods_attr.property!=''">{{comment.goods_attr.property}}</div>
                         </div>
                         <div class="evalu_score">
                             <div class="evalu_score_left">

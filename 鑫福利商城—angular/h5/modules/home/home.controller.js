@@ -405,29 +405,28 @@
                 };
 
                 wx.config({
-                    debug: GLOBAL_CONFIG.DEBUG, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                     appId: wechat.app_id, // 必填，公众号的唯一标识
                     timestamp: wechat.timestamp, // 必填，生成签名的时间戳
                     nonceStr: wechat.nonceStr, // 必填，生成签名的随机串
                     signature: wechat.signature,// 必填，签名，见附录1
-                    jsApiList: ['chooseWXPay',
+                    jsApiList: [
                         'onMenuShareAppMessage',
                         'onMenuShareTimeline',
-                        'onMenuShareAppMessage',
                         'onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
                 });
                 console.log(wechat)
 
 
 
-                var shared_link = url;
+                var shared_link='http://shop.xindongguoji.com/h5/'+'?#/home'
 
                 wx.ready( function() {
                     wx.onMenuShareTimeline({
-                        title: '首页', // 分享标题
-                        desc:'',
+                        title: '鑫福利商城', // 分享标题
+                        desc: '鑫福利商城·员工身边的商城', // 分享描述
                         link: shared_link, // 分享链接
-                        imgUrl: '', // 分享图标
+                        imgUrl: 'http://shop.xindongguoji.com/h5/image/company_logo_new.png?v=2', // 分享图标
                         success: function () {
                             // 用户确认分享后执行的回调函数
                         },
@@ -437,10 +436,10 @@
                     });
 
                     wx.onMenuShareAppMessage({
-                        title: '首页', // 分享标题
-                        desc:'',
+                        title: '鑫福利商城', // 分享标题
+                        desc:'鑫福利商城·员工身边的商城',
                         link: shared_link, // 分享链接
-                        imgUrl: '', // 分享图标
+                        imgUrl: 'http://shop.xindongguoji.com/h5/image/company_logo_new.png?v=2', // 分享图标
                         success: function () {
                             // 用户确认分享后执行的回调函数
                         },
@@ -450,10 +449,10 @@
                     });
 
                     wx.onMenuShareQQ({
-                        title: '首页', // 分享标题
-                        desc: '', // 分享描述
+                        title: '鑫福利商城', // 分享标题
+                        desc: '鑫福利商城·员工身边的商城', // 分享描述
                         link: shared_link, // 分享链接
-                        imgUrl: '', // 分享图标
+                        imgUrl: 'http://shop.xindongguoji.com/h5/image/company_logo_new.png?v=2', // 分享图标
                         success: function () {
                             // 用户确认分享后执行的回调函数
                         },
@@ -461,18 +460,7 @@
                             // 用户取消分享后执行的回调函数
                         }
                     });
-                    wx.onMenuShareWeibo({
-                        title: '首页', // 分享标题
-                        desc: '', // 分享描述
-                        link: shared_link, // 分享链接
-                        imgUrl: '', // 分享图标
-                        success: function () {
-                            // 用户确认分享后执行的回调函数
-                        },
-                        cancel: function () {
-                            // 用户取消分享后执行的回调函数
-                        }
-                    });
+                   
 
                 });
 

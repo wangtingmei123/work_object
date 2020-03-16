@@ -275,7 +275,8 @@
                     isShowProgressTips: 0, // 默认为1，显示进度提示  
                     success: function (res) {                                        
                         let mediaId = res.serverId;     
-                        _this.imgList.push(mediaId)           
+                        _this.imgList.push(mediaId)     
+                              
                     
                     },  
                     fail: function (error) {  
@@ -328,7 +329,8 @@
                 this.$axios.post("dynamics", {
                     "club_id": localStorage.getItem('club_id'),
                     "contents": _this.text_tribal,
-                    "image_tmps": imgList
+                    "image_tmps": imgList,
+                    "media_ids":imgList
                 },{
                     headers: {
                         'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
@@ -337,12 +339,14 @@
                     _this.lode_end=false;
                     console.log(res)
                     if(res.status==201){
-                        _this.hidea=true;
-                        _this.hide_tip='发表成功，待审核';
-                        setTimeout(function(){
-                            _this.hidea=false;
-                            _this.$router.go(-1);
-                        },1500)
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                        // _this.hidea=true;
+                        // _this.hide_tip='发表成功，待审核';
+                        // setTimeout(function(){
+                        //     _this.hidea=false;
+                        //     _this.$router.go(-1);
+                        // },1500)
 
                     }else {
                         _this.showa=true;
@@ -351,7 +355,8 @@
                 })
                     .catch(err=>{
                         _this.lode_end=false;
-                        console.log(err)
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
                     })
 
 

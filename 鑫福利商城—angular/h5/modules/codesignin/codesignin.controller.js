@@ -6,9 +6,9 @@
     .module('app')
     .controller('CodesigninController', CodesigninController);
 
-    CodesigninController.$inject = ['$scope', '$http', '$window', '$location', '$state', '$rootScope', 'API', 'ENUM','ConfigModel', '$interval'];
+    CodesigninController.$inject = ['$scope', '$http', '$window', '$location', '$state', '$rootScope','CONSTANTS','AppAuthenticationService', 'API', 'ENUM','ConfigModel', '$interval'];
 
-    function CodesigninController($scope, $http, $window, $location, $state, $rootScope, API, ENUM, ConfigModel, $interval) {
+    function CodesigninController($scope, $http, $window, $location, $state, $rootScope, CONSTANTS, AppAuthenticationService,API, ENUM, ConfigModel, $interval) {
 
     	$scope.username = "";
     	$scope.code = "";
@@ -144,6 +144,135 @@
             var wechat = config['wechat.web'];
             return wechat && $rootScope.isWeixin();
         }
+
+
+
+
+        function _reload() {
+          
+			ConfigModel.fetch().then(function(){
+				var config = ConfigModel.getConfig();
+	            var wechat = config['wechat.web'];
+				// if(wechat && CONSTANTS.FOR_WEIXIN && !AppAuthenticationService.getOpenId()){
+				// 	if ($rootScope.isWeixin()) {
+				// 		$state.go('wechat-authbase', {});
+				// 		return;
+				// 	}
+				// }
+				_initShared();
+			});
+            
+
+			// $scope.cartModel.reloadIfNeeded();
+		}
+	
+
+		function _initConfig(wechat){
+                if ( !wechat ) {
+                    console.log("888")
+                    return;
+                };
+
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: wechat.app_id, // 必填，公众号的唯一标识
+                    timestamp: wechat.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: wechat.nonceStr, // 必填，生成签名的随机串
+                    signature: wechat.signature,// 必填，签名，见附录1
+                    jsApiList: [
+                        'onMenuShareAppMessage',
+                        'onMenuShareTimeline',
+                        'onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                });
+                console.log(wechat)
+
+
+
+                var shared_link='http://shop.xindongguoji.com/h5/'+'?#/home'
+
+
+                wx.ready( function() {
+                    wx.onMenuShareTimeline({
+                        title: '鑫福利商城', // 分享标题
+                        desc: '鑫福利商城·员工身边的商城', // 分享描述
+                        link: shared_link, // 分享链接
+                        imgUrl: 'http://shop.xindongguoji.com/h5/image/company_logo_new.png?v=2', // 分享图标
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+
+                    wx.onMenuShareAppMessage({
+                        title: '鑫福利商城', // 分享标题
+                        desc:'鑫福利商城·员工身边的商城',
+                        link: shared_link, // 分享链接
+                        imgUrl: 'http://shop.xindongguoji.com/h5/image/company_logo_new.png?v=2', // 分享图标
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+
+                    wx.onMenuShareQQ({
+                        title: '鑫福利商城', // 分享标题
+                        desc: '鑫福利商城·员工身边的商城', // 分享描述
+                        link: shared_link, // 分享链接
+                        imgUrl: 'http://shop.xindongguoji.com/h5/image/company_logo_new.png?v=2', // 分享图标
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                  
+
+                });
+
+                wx.error(function(res){
+                    if(GLOBAL_CONFIG.DEBUG){
+                        $rootScope.toast(JSON.stringify(res));
+                    }
+                });
+
+		}
+
+        function _initShared(){
+
+          
+            API.bonus.get().then(function (bonus_info) {
+            	ConfigModel.fetch().then(function(){
+	                var config = ConfigModel.getConfig();
+	                var wechat = config['wxpay.web'];
+					_initConfig(wechat);
+	                return true;
+               	});
+            });
+
+            setTimeout(function(){
+                $(".jiazia-box").css("display","none")
+			},100)
+           if(!AppAuthenticationService.getToken()){
+                return;
+            }
+        }
+
+		_reload();
+
+
+
+
+
+
+
+
+
+
     }
 
 })();

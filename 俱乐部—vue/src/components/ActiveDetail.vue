@@ -6,7 +6,7 @@
                 <img :src="detail_banner" alt="">
                 <div class="detail1">
                     <div class="detail1a">{{active_info.name}}</div>
-                    <div class="detail1b">俱乐部：{{club_name}}</div>
+                    <div class="detail1b" @click="to_clubindex()">俱乐部：{{club_name}}</div>
                     <!--<div class="detail1c">活动地点：{{}}</div>-->
                 </div>
                 <div class="but_top" v-if="is_authorized==1" @click="to_editactive(active_info.id,active_info.issue_nums)">
@@ -199,6 +199,13 @@
 
         },
         methods: {
+
+
+            to_clubindex(){
+                let id=localStorage.getItem('club_id')
+                this.$router.push({ path: '/clubindex',query:{id:id}}) // -> /user
+
+            },
             authentication(){
                  let _this=this;
                 this.$axios.get("/activity-authentication",{
