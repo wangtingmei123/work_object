@@ -164,14 +164,14 @@
 
                     if(res.status==200){
 
-                        _this.active_name=res.data.name;
-                        _this.statre_time=res.data.start_date.substring(0,16).replace(' ','T');
-                        _this.end_time=res.data.end_date.substring(0,16).replace(' ','T');
-                        _this.active_address=res.data.address;
-                        _this.clock_scope=res.data.sign_range;
-                        _this.active_point.lat=res.data.latitude;
-                        _this.active_point.lng=res.data.longitude;
-                        _this.active_details=res.data.explanation;
+                        _this.active_name=res.data.data.name;
+                        _this.statre_time=res.data.data.start_date.substring(0,16).replace(' ','T');
+                        _this.end_time=res.data.data.end_date.substring(0,16).replace(' ','T');
+                        _this.active_address=res.data.data.address;
+                        _this.clock_scope=res.data.data.sign_range;
+                        _this.active_point.lat=res.data.data.latitude;
+                        _this.active_point.lng=res.data.data.longitude;
+                        _this.active_details=res.data.data.explanation;
 
                     }else{
                         _this.showa=true;
@@ -309,8 +309,8 @@
                 data_all.name=this.active_name;
                 data_all.act_id=this.active_id;
                 data_all.cur_issue=this.issue_id;
-                data_all.start_date=this.statre_time.replace('T',' ')+':00';
-                data_all.end_date=this.end_time.replace('T',' ')+':00';
+                data_all.start_date=this.statre_time.replace('T',' ');
+                data_all.end_date=this.end_time.replace('T',' ');
                 data_all.sign_range=this.clock_scope;
                 data_all.explanation=this.active_details;
                 data_all.address=this.active_address;
@@ -346,7 +346,7 @@
                         'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
                     }})
                         .then(res=>{
-                            if(res.status==200){
+                            if(res.status==201){
                                 _this.hidea=true;
                                 _this.hide_tip='创建成功';
                                 setTimeout(function(){

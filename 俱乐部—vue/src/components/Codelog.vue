@@ -88,6 +88,12 @@
         },
         created() {
 
+             if(localStorage.getItem('access_token')!=null){
+                  this.$router.push({ path: '/'}) // -> /user
+
+                    return
+             }
+
             if(this.$route.query.company_id!=undefined){
                 this.zhuc=true
 

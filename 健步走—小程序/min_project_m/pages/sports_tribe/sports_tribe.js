@@ -195,9 +195,11 @@ Page({
         url: api.getPraise,
         dataType: 'json',
         data: {
+          active_id: wx.getStorageSync('activity_id'),
           article_id: article_id,
           user_id: wx.getStorageSync('user_id'),
-          praise_status: praise_status
+          praise_status: praise_status,
+
         },
         success: function (res) {
 

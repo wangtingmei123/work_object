@@ -402,9 +402,9 @@
                 data_all.issue_nums=0;
                 data_all.num_max=this.active_num;
                 data_all.choos_lx_data=this.choos_lx_data;
-                data_all.start_date=this.statre_time.replace('T',' ')+':00';
-                data_all.end_date=this.end_time.replace('T',' ')+':00';
-                data_all.apply_stoped=this.jiezhi_time.replace('T',' ')+':00';
+                data_all.start_date=this.statre_time.replace('T',' ');
+                data_all.end_date=this.end_time.replace('T',' ');
+                data_all.apply_stoped=this.jiezhi_time.replace('T',' ');
                 data_all.entry_fees=parseFloat(this.registration)*100;
                 data_all.cash_pledges=parseFloat(this.margin)*100;
                 data_all.not_sign=parseFloat(this.refund_rules)*100;
@@ -416,6 +416,8 @@
                 data_all.latitude=this.active_point.lat;
                 console.log(data_all)
                 console.log(this.active_point.lat,this.active_point.lng)
+
+
 
 
                 if(_this.active_id!=''){
@@ -441,10 +443,11 @@
                         .catch(err=>{
                         })
                 }else{
-                    _this.$axios.post("/activities ",data_all, {headers: {
+                    _this.$axios.post("/activities",data_all, {headers: {
                         'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
                     }})
                         .then(res=>{
+                       
                             if(res.status==201){
                                 _this.hidea=true;
                                 _this.hide_tip='创建成功';
@@ -460,6 +463,7 @@
                             }
                         })
                         .catch(err=>{
+                           
                         })
                 }
 

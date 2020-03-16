@@ -52,7 +52,9 @@
                 show_tip:'',
                 share_logo:'./static/img/41yaoqing_07.jpg',
                 share_address:'./static/img/41yaoqing_11.png',
-                club_info:[]
+                club_info:[],
+                club_id:"",
+                company_id:""
             
 
             }

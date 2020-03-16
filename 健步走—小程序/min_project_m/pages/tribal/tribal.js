@@ -87,8 +87,6 @@ Page({
   //上传图片
   chooseimg: function () {
     
-
-
     let _this = this;
     let len = 0;
     if (_this.data.tempFilePaths != null) {
@@ -99,16 +97,19 @@ Page({
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
+
+        console.log(res)
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         var tempFilePaths = res.tempFilePaths
         console.log(tempFilePaths)
         wx.showLoading({
           title: '图片校验中...',
         })
-        for (let c = 0; c < tempFilePaths.length; c++){
 
-         
 
+        getData(0, tempFilePaths.length)
+
+        function getData(c, length) {
           wx.getImageInfo({
             src: tempFilePaths[c],
             success: function (res) {
@@ -164,7 +165,11 @@ Page({
                             tempFilePaths: tempFilePathsimgs
                           })
 
+                          if(++c<length){
+                            getData(c, tempFilePaths.length)
+                          }
 
+                        
 
                         } else {
                           wx.showModal({
@@ -199,17 +204,14 @@ Page({
                     wx.hideLoading()
                   }
                 })
-              }, 500))    //留一定的时间绘制canvas
+              }, 400))    //留一定的时间绘制canvas
               // fail: function (res) {
               //   console.log(res.errMsg)
               // }
              }
             })
 
-       
-
         }
-
 
         console.log(_this.data.tempFilePaths)
   
@@ -259,10 +261,6 @@ Page({
       })
     }
  
-
-    
-
-
   },
 
   confun:function(){
@@ -322,63 +320,69 @@ Page({
     let tempFilePaths = _this.data.tempFilePaths
     var arr_url=[]
     return new Promise(function (resolve, reject) {
+      submit(0)
+       function submit(a){
+         let last = tempFilePaths[a].lastIndexOf('.')
+         let lasta = tempFilePaths[a].slice(last + 1)
+         FSM.readFile({
+           filePath: tempFilePaths[a],
+           encoding: "base64",
+           success: function (data) {
+             var tems = data.data
 
 
-      for (let a=0; a <tempFilePaths.length; a++) {
-        let last = tempFilePaths[a].lastIndexOf('.')
-        let lasta = tempFilePaths[a].slice(last + 1)
-                  FSM.readFile({
-                    filePath: tempFilePaths[a],
-                    encoding: "base64",
-                    success: function (data) {
-                      var tems = data.data
-                      console.log(tempFilePaths[a])
+             wx.request({
+               url: api.uploadImage,
+               header: {
+                 'content-type': 'application/x-www-form-urlencoded' // 默认值
+               },
+               method: 'post',
+               data: {
+                 user_id: wx.getStorageSync('user_id'),
+                 image: "data:image/" + lasta + ";base64," + tems,
+               },
+               success: function (res) {
+                 console.log(res)
+                 console.log(a)
+                 if (res.data.data[0].code == 0) {
+                   arr_url.push(res.data.data[0].image_url)
+                   if (arr_url.length == tempFilePaths.length) {
 
-                      wx.request({
-                        url: api.uploadImage,
-                        header: {
-                          'content-type': 'application/x-www-form-urlencoded' // 默认值
-                        },
-                        method: 'post',
-                        data: {
-                          user_id: wx.getStorageSync('user_id'),
-                          image: "data:image/" + lasta + ";base64," + tems,
-                        },
-                        success: function (res) {
-                          console.log(res)
+                     _this.setData({
+                       arr_url: arr_url
+                     })
 
-                          if (res.data.data[0].code == 0) {
-                            arr_url.push(res.data.data[0].image_url)
-                            if (arr_url.length == tempFilePaths.length) {
+                     return resolve(arr_url.length)
 
-                              _this.setData({
-                                arr_url: arr_url
-                              })
+                   }
 
-                              return resolve(arr_url.length)
+                   if (++a < tempFilePaths.length){
+                     submit(a)
+                   }
+                 } else {
+                   wx.hideLoading()
+                   wx.showModal({
+                     title: '错误提示',
+                     content: res.data.data[0].desc,
+                     showCancel: false,
+                     success: function (res) { }
+                   })
+                 }
 
-                            }
-                          } else {
-                            wx.hideLoading()
-                            wx.showModal({
-                              title: '错误提示',
-                              content: res.data.data[0].desc,
-                              showCancel: false,
-                              success: function (res) { }
-                            })
-                          }
+               }
 
-                        }
 
-          
 
-                      })
+             })
 
-                    }
-                  });
+           }
+         });
+       }
+
+      
 
     
-      }
+ 
 
     })
   },

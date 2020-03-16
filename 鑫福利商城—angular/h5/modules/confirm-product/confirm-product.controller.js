@@ -334,6 +334,7 @@
 
 
 			$scope.selectedGoods.push(card_good);
+			console.log($scope.selectedGoods[0].product.id)
             //加载卡卷
             _getUserAccount();
 		}
@@ -863,6 +864,11 @@
 
 			API.product.purchase(params)
 				.then(function (order) {
+					if(order==null){
+						$scope.nameTipshowa = true;
+					    $scope.tip_a = '超出限购数量，请重新选择';
+					   return
+					}
 					if (order) {
 						ConfirmProductService.clear();
 						ExpressSelectService.clear();

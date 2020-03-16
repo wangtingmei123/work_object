@@ -53,7 +53,7 @@
   body{
     overflow:auto;   /* 用于 android4+，或其他设备 */
     -webkit-overflow-scrolling:touch;    /* 用于 ios5+ */
-    background: #f0f0f0 !important;
+    background: #faf7f7 !important;
 
   }
 

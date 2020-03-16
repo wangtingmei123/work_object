@@ -4,10 +4,10 @@
 
         <div class="active_box" ref="opBottomEcharts" @scroll="gotoScroll()">
             <div class="active">
-                <div class="act_main" @click="to_detail(item.issue_nums,item.id,item.club_id)" v-for="(item,index) in act_list" :key="index">
+                <div class="act_main" @click="to_detail(item.issue_nums,item.id,item.club_id,item.name,item.club.name)" v-for="(item,index) in act_list" :key="index">
                     <div class="act_main_left">
-                        <img :src="item.logo_url" alt="">
-                        <!--<div  class="act_time">29:28:40</div>-->
+                        <img v-show="item.logo_url!=''" v-lazy="item.logo_url" :src="lazyimg" alt="">
+                        <img v-show="item.logo_url==''"  :src="lazyimg" alt="">                        <!--<div  class="act_time">29:28:40</div>-->
                         <!--<div class="act_time_tip">距离活动开始</div>-->
                         <!--<div v-show="item.status==0" class="act_buta">报名中</div>-->
                         <!--<div v-show="item.status==1" class="act_buta">即将开始</div>-->
@@ -67,7 +67,9 @@
                 stare:'',
                 is_apply:0,
                 is_signee:0,
-                is_ended:0
+                is_ended:0,
+                lazyimg:'./static/img/lazyimg.png',
+
 
 
             }
@@ -79,12 +81,13 @@
 
         },
         methods: {
-            to_detail(issue_nums,id,club_id){
+            to_detail(issue_nums,id,club_id,name,club_name){
 
                 localStorage.setItem('active_id',id)
                 localStorage.setItem('active_name',name)
                 localStorage.setItem('issue_nums',issue_nums)
                 localStorage.setItem('club_id',club_id)
+                     localStorage.setItem('club_name',club_name)
 
                 if(issue_nums==0){
                     this.$router.push({ path: '/activedetailshort',query:{id:id}}) // -> /user
@@ -105,7 +108,7 @@
                             "near_days":3,
                             "user_id":localStorage.getItem('user_id'),
                             "is_apply":0,
-                            "is_signee":1,
+                            "is_signee":0,
                             "is_ended":0,
                             "last_id":_this.page
                         }

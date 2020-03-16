@@ -36,13 +36,13 @@
                     </div>
                     <img :src="percen_right" alt="">
                 </div>
-                <div class="percen" @click="to_applyrefund">
+                <!-- <div class="percen" @click="to_applyrefund">
                     <div class="percen_left">
                         <img style="width: 0.39rem;height:0.33rem;" :src="percen_left2" alt="">
                         <div class="percen_left_title">申请退款</div>
                     </div>
                     <img :src="percen_right" alt="">
-                </div>
+                </div> -->
                 <div class="percen">
                     <div class="percen_left">
                         <img style="width: 0.33rem;height:0.36rem;" :src="percen_left3" alt="">
@@ -115,7 +115,7 @@
                     console.log(res)
                     if(res.status==200){
                         console.log(res)
-                        _this.name=res.data.data.name;
+                        _this.name=res.data.data.user_name;
                         _this.department=res.data.data.department;
                         _this.company_name=res.data.data.company.name;
                         if(res.data.data.avatar!=''){

@@ -380,6 +380,125 @@
         margin-left:0.15rem;
 
     }
+
+
+
+
+
+
+
+    .tishi_tip_box{
+        width:100%;
+        height:100vh;
+        position: fixed;
+        z-index: 999999999;
+        top:0;left:0;
+        background: rgba(0,0,0,0.8);
+    }
+
+
+
+    .t_tip_box_w>img{
+        display: block;
+        width:0.56rem;
+        height:0.56rem;
+        margin:auto;
+        margin-top:0.44rem;
+    }
+
+    .tishi_tip_box .t_tip_box .dabiao_tip{
+        width:100%;
+        height:0.9rem;
+        font-size: 0.3rem;
+        color: #fff;
+        text-align: center;
+        line-height:0.9rem;
+        background: #feb312;
+        font-weight: bold;
+        letter-spacing:0.04rem;
+    }
+
+    .tishi_tip_box .t_tip_box .to_choujiang{
+        width:3.65rem;
+        height:0.76rem;
+        background: #feb312;
+        border-radius: 0.76rem;
+        font-size: 0.28rem;
+        text-align: center;
+        line-height:0.76rem;
+        position: absolute;
+        left:0;right:0;
+        margin:auto;
+        bottom:0.55rem;
+        box-shadow: 0 0.04rem 0.14rem #fac49d;
+        color: #fff;
+        letter-spacing:0.02rem;
+        outline: none;
+    }
+
+
+    .tishi_tip_box .t_tip_box{
+        position: absolute;
+        top:0;left:0;right:0;bottom:0;
+        width:5.4rem;
+        height:4.2rem;
+        margin:auto;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 0.2rem;
+    }
+
+    .tishi_tip_box  .t_tip_boxa{
+        height:1.8rem;
+        font-size:0.3rem;
+        text-align: center;
+    }
+    .tishi_tip_box  .t_tip_boxa p{
+        width:100%;
+        height:0.6rem;
+        line-height:0.6rem;
+        text-align: center;
+    }
+
+    .tishi_tip_box  .t_tip_boxa .shiian{
+        font-size: 0.22rem;
+    }
+
+    .tishi_tip_box  .t_tip_boxa p:nth-child(1){
+        margin-top:0.35rem;
+    }
+
+
+
+    .tishi_tip_box .t_tip_box .t_tip{
+       width:100%;
+        box-sizing: border-box;
+        height:1rem;
+        margin:auto;
+        margin-top:0.6rem;
+        overflow: auto;
+    }
+
+
+    .tishi_tip_box .t_tip_box .t_tip .tip_big{
+        text-indent:0;
+        text-align: center;
+        font-size:0.32rem;
+        margin-top:0.25rem;
+
+    }
+
+    .tishi_tip_box .t_tip_box .t_tip .rexian{
+        margin-top:0.25rem;
+        font-size:0.26rem;
+    }
+
+
+
+
+
+
+
 </style>
 <div ng-controller="SearchResultController" style="min-height: 100vh">
 
@@ -464,7 +583,7 @@
         <ul class="proList" ng-if="products && products.length" style="overflow:hidden;padding-top:0.2rem;margin-top:0">
             <li ng-repeat="product in products track by $index" ng-click="touchProduct(product)" style="position: relative">
                 <a style="display: block;">
-                <div class="img"><img ng-src="image/default-photo.png" lazy-img="{{product.original_photo.large}}"></div>
+                <div class="img"><img ng-src="{{product.original_photo.large}}" ></div>
                 <!--<div class="tags">新季 | 欧洲专柜直采 | 专柜直供</div>-->
                 <!--<p>BURBERRY</p>-->
                 <p>{{product.name}}</p>
@@ -593,15 +712,46 @@
         </div>
     </div>
 
+
+
+    <div class="tishi_tip_box" ng-show="currentCategory==1950 || category_id1==1950 || category_id2==1950 ">
+
+        <div class="t_tip_box">
+           <div class="dabiao_tip">温馨提示</div>
+            <div class="t_tip">
+                <p class="tip_big">因疫情原因，场馆暂时无法预订</p>
+               
+            </div>
+            <div class="to_choujiang" >知道了</div>
+        </div>
+    
+    </div>
+
     <div class="to_top"><img ng-src="image/to_top.png" alt=""></div>
     <div class="pages_box" ng-if="page_index>0 && page_all>0">
         <div class="pages">{{page_index}}</div>
         <div class="pages_all">{{page_all}}</div>
     </div>
 
+
+
+    
+
+
+
+
 </div>
 
+
+
+
+
 <script>
+
+
+  $(".to_choujiang").click(function(){
+      $(".tishi_tip_box").css("display","none")
+  })
 
     //页面滚动
 

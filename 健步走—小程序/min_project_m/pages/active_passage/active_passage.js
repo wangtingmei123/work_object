@@ -39,7 +39,9 @@ Page({
     })
 
    let _this=this
-
+    _this.setData({
+      activity_id: wx.getStorageSync('activity_id')
+    })
 
 
 
@@ -306,6 +308,9 @@ Page({
           })
         }
 
+
+
+
         _this.setData({
           activity: res.data.data
         })
@@ -421,6 +426,13 @@ Page({
     let _this=this
     wx.navigateTo({
       url: '/pages/scratch/scratch?is_standard='+_this.data.is_standard,
+    })
+  },
+
+  to_tribe: function () {
+    console.log("****")
+    wx.switchTab({
+      url: '/pages/sports_tribe/sports_tribe',
     })
   },
 

@@ -36,11 +36,11 @@
                 </div>
                 <div class="form_edit1">
                     <div class="form_edit1_tit">身高:</div>
-                    <input type="number" placeholder="请输入身高" v-model="edit_height" @blur="blurEvent">
+                    <input type="number" placeholder="请输入身高（单位cm）" v-model="edit_height" @blur="blurEvent">
                 </div>
                 <div class="form_edit1">
                     <div class="form_edit1_tit">体重:</div>
-                    <input type="number" placeholder="请输入体重" v-model="edit_width" @blur="blurEvent">
+                    <input type="number" placeholder="请输入体重  (单位kg)" v-model="edit_width" @blur="blurEvent">
                 </div>
                 <div class="form_edit1">
                     <div class="form_edit1_tit">紧急联系人:</div>
@@ -133,7 +133,7 @@
             }).then(res=>{
                 if(res.status==200){
                     console.log(res)
-                    _this.edit_name=res.data.data.name;
+                    _this.edit_name=res.data.data.user_name;
                     _this.edit_bumen=res.data.data.department;
                     _this.edit_data=res.data.data.birthday;
                     if(res.data.data.profile.weight!=0){
@@ -274,6 +274,7 @@
                             _this.hide_tip='修改成功';
                             setTimeout(function(){
                                 _this.hidea=false;
+                                _this.$router.go(-1);
                             },1500)
                         }else{
                             _this.showa=true;

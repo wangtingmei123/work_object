@@ -485,7 +485,7 @@
             display: block;
             width:0.64rem !important;
             height:0.64rem !important;
-            line-height:0.64rem !important;
+            line-height:0.6rem !important;
             font-size: 0.44rem !important;
             background: none !important;
             border:none !important;
@@ -497,7 +497,7 @@
             display: block;
             width:0.64rem !important;
             height:0.64rem !important;
-            line-height:0.64rem !important;
+            line-height:0.6rem !important;
             font-size: 0.44rem !important;
             background: none !important;
             border:none !important;
@@ -527,6 +527,7 @@
             border:none !important;
             margin:0 !important;
             font-size: 0.28rem !important;
+            font-weight: bold;
 
             /*border-top: 1px solid #ccc !important;*/
             /*border-bottom: 1px solid #ccc !important;*/
@@ -537,6 +538,19 @@
         .proslide img{
             height:100%;
         }
+
+
+
+        .yuding>.yud>.yud3{
+            background: #ccc;
+
+        }
+
+
+
+
+
+        
     </style>
 
 
@@ -697,18 +711,20 @@
         <div class="proFoot">
             <div class="proFootFixed">
                 <div class="proFootBox">
-                    <div  class="toBuy"  ng-click="toAkucun()"  ng-show="product.is_show_discount==0">立即购买</div>
-                    <div  class="addBus"  ng-click="toAkucun()"  ng-show="product.is_show_discount==0">加入购物车</div>
+                    <div  class="toBuy"  ng-click="toAkucun()"  ng-show="product.is_show_discount==0&&product.id!=22467">立即购买</div>
+                    <div  class="addBus"  ng-click="toAkucun()"  ng-show="product.is_show_discount==0&&product.id!=22467">加入购物车</div>
 
                <!--精品专区-->
+                    <div  class="toBuy toBuys" style="width:60%;" ng-click="toAkucun()" ng-show="product.is_show_discount==0&&product.id==22467">立即购买</div>
+
                     <div  class="toBuy toBuys" style="width:60%;" ng-click="toAkucun()" ng-show="product.is_show_discount>0">立即购买</div>
 
-                    <ul class="others"  ng-if="product.is_show_discount==0">
+                    <ul class="others"  ng-show="product.is_show_discount==0&&product.id!=22467">
                         <li class="kefu" ng-click="kefu()">
                             <span class="icon i1"></span>
                             <p>客服</p>
                         </li>
-                        <li ng-click="touchLike()" ng-class="{active: product.is_liked}" ng-if="user.company.id!=47">
+                        <li ng-click="touchLike()" ng-class="{active: product.is_liked}" ng-show="user.company.id!=47">
                             <!--<img src="image/favorite-off.png" ng-if="!product.is_liked"/>-->
                             <!--<img src="image/favorite-on.png" ng-if="product.is_liked"/>-->
                             <span class="icon i2"></span>
@@ -723,7 +739,20 @@
                         </li>
                     </ul>
 
-                    <ul class="others" style=""  ng-if="product.is_show_discount>0">
+                    <ul class="others"  ng-show="product.is_show_discount==0&&product.id==22467">
+                        <li style="width:50%;"  class="kefu" ng-click="kefu()">
+                            <span class="icon i1"></span>
+                            <p>客服</p>
+                        </li>
+                        <li style="width:50%;" ng-click="touchLike()" ng-class="{active: product.is_liked}">
+                            <!--<img src="image/favorite-off.png" ng-if="!product.is_liked"/>-->
+                            <!--<img src="image/favorite-on.png" ng-if="product.is_liked"/>-->
+                            <span class="icon i2"></span>
+                            <p>收藏</p>
+                        </li>
+                    </ul>
+
+                    <ul class="others" style=""  ng-show="product.is_show_discount>0">
                         <li style="width:50%;"  class="kefu" ng-click="kefu()">
                             <span class="icon i1"></span>
                             <p>客服</p>
@@ -772,7 +801,8 @@
                             <span class="label" style="font-size:0.3rem;margin-left:0;height:100%;line-height: 0.6rem">数量</span>
                             <div class="cont contsa"  ng-class="{active: canPurchase}" style="height:0.64rem;line-height:0.64rem;margin-left:0.9rem;">
                                 <span class="minuse"  ng-class="{'': input.currentAmount > 1}" ng-click="touchAmountSub()">-</span>
-                                <input class="num" type="number" ng-class="{'': input.currentAmount > 0}" ng-model="input.currentAmount"  ng-change="refreshAmount()">
+                                <input ng-show="product.id!=22467" class="num" type="number" ng-class="{'': input.currentAmount > 0}" ng-model="input.currentAmount"  ng-change="refreshAmount()">
+                                <div ng-show="product.id==22467" disabled class="num" type="number" ng-class="{'': input.currentAmount > 0}" ng-model="input.currentAmount"  ng-change="refreshAmount()" style="line-height: 0.52rem;">{{input.currentAmount}}</div>
                                 <span class="plus" ng-class="{'': input.currentAmount > 0}" ng-click="touchAmountAdd()">+</span>
                             </div>
                         </div>
@@ -788,9 +818,13 @@
 
 
             </div>
-            <div class="buyBtn-box" style="display: none" ng-show="product.is_show_discount==0">
+            <div class="buyBtn-box" style="display: none" ng-show="product.is_show_discount==0&&product.id!=22467">
                 <div class="buyBtn add_cart" style="background: #191919" ng-class="{'buyBtnGray': !canCartPurchase}" ng-click="touchAddCart()">加入购物车</div>
                 <div class="buyBtn add_buy" ng-class="{'buyBtnGray': !canPurchase}" ng-click="touchPurchase()">立即购买</div>
+            </div>
+            <div class="buyBtn-box" style="display: none" ng-show="product.is_show_discount==0&&product.id==22467">
+                <div  class="buyBtn add_buy" style="width:100%;" ng-class="{'buyBtnGray': !canPurchase}" ng-click="touchPurchase()" >立即购买</div>
+
             </div>
             <div class="buyBtn-box" style="display: none" ng-show="product.is_show_discount>0">
                 <div  class="buyBtn add_buy" style="width:100%;" ng-class="{'buyBtnGray': !canPurchase}" ng-click="touchPurchase()" >立即购买</div>
@@ -888,6 +922,12 @@
     </div>
 
 
+
+
+    
+
+
+
     <!--场馆预定-->
   <div ng-show="is_yd==1">
         <img class="flex_top" ng-src="image/jinpingact2.png" alt="" ng-if="product.is_bested==1">
@@ -955,13 +995,16 @@
         <div class="yuding" ng-show="is_yd_h">
             <div class="yud" ng-show="product.gold_shop!=''&&product.gold_shop!=undefined&&product.gold_shop!='0.00'" style="border-bottom:1px solid #e6e6e6;">
                 <div class="yud1">黄金时间段:</div>
-                <div class="yud3 toBuy" ng-click="toAkucun(product.gold_shop,1)">预定</div>
+                <!-- <div class="yud3 toBuy" ng-click="toAkucun(product.gold_shop,1)">预定</div> -->
+                <div class="yud3" >预定</div>
+
                 <div class="yud2">{{product.gold_shop| currency:"￥"}}  <span>/小时</span>  </div>
 
             </div>
             <div class="yud" ng-show="currentSelectedPrice!=''&&currentSelectedPrice!=undefined&&currentSelectedPrice!='0.00'">
                 <div class="yud1">非黄金时间段:</div>
-                <div class="yud3 toBuy" ng-click="toAkucun(currentSelectedPrice,0)">预定</div>
+                <!-- <div class="yud3 toBuy" ng-click="toAkucun(currentSelectedPrice,0)">预定</div> -->
+                <div class="yud3" >预定</div>
                 <div class="yud2">{{currentSelectedPrice| currency:"￥"}} <span>/小时</span>  </div>
 
             </div>
@@ -970,7 +1013,8 @@
       <div class="yuding" ng-show="is_yd_h==false&&is_yd_h_son&&currentSelectedPrice!=''&&currentSelectedPrice!=undefined&&currentSelectedPrice!='0.00'">
           <div class="yud">
               <div class="yud1">单人价格:</div>
-              <div class="yud3 toBuy" ng-click="toAkucun(currentSelectedPrice)">预定</div>
+              <!-- <div class="yud3 toBuy" ng-click="toAkucun(currentSelectedPrice)">预定</div> -->
+              <div class="yud3" >预定</div>
               <div class="yud2" style="margin-right:1.5rem">{{currentSelectedPrice| currency:"￥"}}</div>
 
           </div>
@@ -979,7 +1023,8 @@
       <div class="yuding" ng-show="is_yd_h==false&&is_yd_h_son==false&&currentSelectedPrice!=''&&currentSelectedPrice!=undefined&&currentSelectedPrice!='0.00'">
           <div class="yud">
               <div class="yud1">每小时价格:</div>
-              <div class="yud3 toBuy" ng-click="toAkucun(currentSelectedPrice)">预定</div>
+              <!-- <div class="yud3 toBuy" ng-click="toAkucun(currentSelectedPrice)">预定</div> -->
+              <div class="yud3" >预定</div>
               <div class="yud2" style="margin-right:1.3rem">{{currentSelectedPrice| currency:"￥"}}</div>
 
           </div>

@@ -40,17 +40,19 @@
                   <div class="title_center">最新活动</div>
                   <img class="right_tip" :src="right_tip" alt="">
               </div>
-              <div class="act_new_main_box" v-if="act_list_new.length>0">
+              <div class="act_new_main_box" >
                   <div class="act_new_main_float" >
-                      <div class="act_new_main"  :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id,item.club_id)" v-for="(item,index) in act_list_new" :key="index">
+                      <div class="act_new_main"  :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id,item.club_id,item.name,item.club.name)" v-for="(item,index) in act_list_new" :key="index">
                           <div class="act_new_main_img">
-                              <img :src="item.logo_url" alt="">
+                              <img v-show="item.logo_url!=''" v-lazy="item.logo_url" :src="lazyimg" alt="">
+                              <img v-show="item.logo_url==''"  :src="lazyimg" alt="">
+
                           </div>
 
                           <div class="act_new_main_tit">{{item.name}}</div>
                           <div class="act_new_main_tap">
                               <!--<div class="club_main_right2_tap1">lv18</div>-->
-                              <div class="club_main_right2_tap1">类型</div>
+                              <div class="club_main_right2_tap1">{{item.club.type_name}}</div>
                               <div class="club_main_right2_peoper">{{item.members}}人</div>
                           </div>
 
@@ -70,9 +72,10 @@
                   <img class="right_tip" :src="right_tip" alt="">
               </div>
               <div style="padding-bottom: 0.5rem" v-if="act_list.length>0">
-                <div class="act_main" :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id,item.club_id)" v-for="(item,index) in act_list" :key="index">
+                <div class="act_main" :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id,item.club_id,item.name,item.club.name)" v-for="(item,index) in act_list" :key="index">
                   <div class="act_main_left">
-                      <img :src="item.logo_url" alt="">
+                       <img v-show="item.logo_url!=''" v-lazy="item.logo_url" :src="lazyimg" alt="">
+                       <img v-show="item.logo_url==''"  :src="lazyimg" alt="">
                       <!--<div  class="act_time">29:28:40</div>-->
                       <!--<div class="act_time_tip">距离活动开始</div>-->
                       <!--<div v-show="item.status==0" class="act_buta">报名中</div>-->
@@ -113,7 +116,8 @@
               <div style="padding-bottom: 0.5rem" v-if="club_list.length>0">
                    <div class="club_main" :class="{club_main_a1:index==0}"  v-for="(item,index) in club_list" :key="index">
                         <div class="club_main_left" @click="to_clubindex(item.club.id,item.club.name)">
-                            <img :src="item.club.logo" alt="">
+                               <img v-show="item.club.logo!=''" v-lazy="item.club.logo" :src="lazyimg" alt="">
+                               <img v-show="item.club.logo==''" :src="lazyimg" alt="">
                         </div>
                         <div class="club_main_right">
                             <div class="club_main_right1" @click="to_clubindex(item.club.id,item.club.name)">{{item.club.name}}</div>
@@ -178,6 +182,7 @@
                 act_img:'./static/img/03index_29.png',
                 club_img:'./static/img/03index_37.png',
                 select_img:'./static/img/03selectw_03.png',
+                lazyimg:'./static/img/lazyimg.png',
                 swiperOption: {
                     initialSlide: 0,
                     autoplay: {
@@ -311,7 +316,7 @@
                         "near_days":3,
                         "user_id":_this.user_id,
                         "is_apply":0,
-                        "is_signee":1,
+                        "is_signee":0,
                         "is_ended":0,
                         "last_id":0
                     }
@@ -337,6 +342,11 @@
                     'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
                 },
                 params: {
+
+                         "is_apply":1,
+                        "is_signee":0,
+                        "is_ended":0,
+                        "last_id":0
 
                 }
             }).then(res=>{
@@ -383,12 +393,13 @@
             this.$router.push({ path: '/clubindex',query:{id:id}}) // -> /user
 
         },
-        to_detail(issue_nums,id,club_id){
+        to_detail(issue_nums,id,club_id,name,club_name){
 
             localStorage.setItem('active_id',id)
             localStorage.setItem('active_name',name)
             localStorage.setItem('issue_nums',issue_nums)
             localStorage.setItem('club_id',club_id)
+            localStorage.setItem('club_name',club_name)
 
             if(issue_nums==0){
                 this.$router.push({ path: '/activedetailshort',query:{id:id}}) // -> /user
@@ -524,15 +535,24 @@
 
     .act_new_main_box>.act_new_main_float{
         width:14rem;
-        display: flex;
-        justify-content: space-between;
+        height:100%;
+        overflow: hidden;
+        /* display: flex;
+        justify-content: flex-start; */
     }
 
     .act_new_main_box .act_new_main{
         width:2.6rem;
         height:3.5rem;
-        /*float: left;*/
+        float: left;
+        margin-left:0.25rem;
+
     }
+
+      .act_new_main_box .act_new_main:nth-child(1){
+                  margin-left:0;
+
+      }
 
     .act_new_main_img{
         display: block;

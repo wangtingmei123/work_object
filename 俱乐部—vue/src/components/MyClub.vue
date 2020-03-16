@@ -71,7 +71,9 @@
                 club_id:'',
                 is_joined:'',
                 club_index:'',
-                no_empty:false
+                no_empty:false,
+                lazyimg:'./static/img/lazyimg.png',
+
 
             }
         },

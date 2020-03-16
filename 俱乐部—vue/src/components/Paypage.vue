@@ -3,7 +3,7 @@
          <Header :title="title" :show="show" :backpage="backpage"></Header>
         
         
-         <div class='jine'> <span>￥</span> {{active_info.entry_fees/100}}</div>
+         <div class='jine'> <span>￥</span> {{active_info.need_pays/100}}</div>
          <div class='zhifu' @click="to_pay()">确认支付</div>
 
 

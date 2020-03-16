@@ -267,6 +267,15 @@
     </div>
     <div class="category">
         <ul class="cate_box">
+    
+        <li>
+            <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2390&navTitle=%E9%98%B2%E6%8A%A4%E9%98%B2%E7%96%AB&navStyle=default')">
+                <img ng-src="image/category/cc12.png">
+                <p>防护防疫</p>
+            </a>
+        </li>
+
+
             <li>
                 <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=1950&navTitle=%E5%9C%BA%E9%A6%86%E9%A2%84%E8%AE%A2&navStyle=default')">
                     <img ng-src="image/category/c1.png">
@@ -309,12 +318,12 @@
                 </a>
             </li>
 
-            <li>
+            <!-- <li>
                 <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2313&navTitle=%E5%8A%B3%E4%BF%9D%E6%B6%88%E9%98%B2&navStyle=default')">
                     <img ng-src="image/category/laobao.png">
                     <p>劳保消防</p>
                 </a>
-            </li>
+            </li> -->
 
 
 
@@ -366,7 +375,7 @@
     </div>
 
     <!--精品专区-->
-    <div ng-if="activityList && activityList.length">
+    <div ng-if="activityList && activityList.length && user.company.id!=74">
         <div class="jingpin"  ng-click="touchActivity(list)" ng-if="list.cate_id == 7" ng-repeat="list in activityList track by $index">
             <img src="image/jpzq_img.gif" alt="">
         </div>

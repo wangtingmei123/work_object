@@ -343,7 +343,7 @@
                 data_all.issue_nums=parseInt(this.active_issue);
                 data_all.num_max=this.active_num;
                 data_all.choos_lx_data=this.choos_lx_data;
-                data_all.apply_stoped=this.jiezhi_time.replace('T',' ')+':00';
+                data_all.apply_stoped=this.jiezhi_time.replace('T',' ');
                 data_all.entry_fees=parseFloat(this.registration)*100;
                 data_all.cash_pledges=parseFloat(this.margin)*100;
                 data_all.not_sign=parseFloat(this.refund_rules)*100;

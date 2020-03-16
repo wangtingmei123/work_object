@@ -7,7 +7,7 @@ import Axios from 'axios'
 import lrz from 'lrz'
 Vue.prototype.$axios = Axios;
 import global from './assets/public/Global'//引用文件
-
+import VueLazyload from 'vue-lazyload'
 Axios.defaults.baseURL = '/api';
 Axios.defaults.headers.post['Content-Type'] = 'application/json';
 Vue.config.productionTip = false;
@@ -32,6 +32,12 @@ Vue.directive('title', {
     inserted: function (el, binding) {
         document.title = '俱乐部'
     }
+})
+
+
+Vue.use(VueLazyload, {
+  error: 'dist/error.png',
+  loading: 'dist/loading.gif',// 懒加载使用的图片
 })
 /* eslint-disable no-new */
 new Vue({

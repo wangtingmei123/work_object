@@ -227,7 +227,8 @@ width:auto;
 
   overflow: hidden;
   color: #989898;
-  font-size: 28rpx;
+  font-size: 32rpx;
+
 }
 
 .sports_like>.spo_like{
@@ -249,13 +250,13 @@ width:auto;
 .sports_like>.spo_like>image{
   width:28rpx;
   height:26rpx;
-  margin-top:6rpx;
 
 
 }
 
 .sports_like>.spo_like>text{
   margin-left:8rpx;
+  font-size: 30rpx;
 }
 .sports_like>.spo_comm{
   width:auto;
@@ -271,7 +272,7 @@ width:auto;
 .sports_like>.spo_comm>image{
   width:28rpx;
   height:26rpx;
-  margin-top:6rpx;
+  margin-top:4rpx;
 
 }
 

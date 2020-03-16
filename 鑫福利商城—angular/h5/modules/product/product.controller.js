@@ -133,6 +133,12 @@
           return;
       }
 
+// 指定商品数量限制
+      if($scope.product.id==22467 && $scope.input.currentAmount>=2){
+        return;
+      }
+
+
         if ( !_checkCanPurchase() )
           return;
 

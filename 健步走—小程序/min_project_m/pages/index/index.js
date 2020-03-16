@@ -194,7 +194,9 @@ Page({
 
   //执行画布的动画操作
   __drwCanvas : function(that){
-  
+
+    // var percent = 1;
+
     var percent = (that.data.current_step / that.data.target_walk).toFixed(2);
     //console.log('当前已走步数战圆圈的百分比', percent)
     percent = percent >= 1 ? 1 : percent;
@@ -250,7 +252,6 @@ Page({
 
 
   getWechatRunData : function () {
-    //return false;
     var that = this;
     var res = wx.getSystemInfoSync();
     if(!wx.getWeRunData || !res.SDKVersion || res.SDKVersion < '1.2.0') {
@@ -271,8 +272,7 @@ Page({
             encryptedData: encodeURIComponent(res.encryptedData),
             iv: encodeURIComponent(res.iv),
             is_encode : 1,
-            // activity_id: wx.getStorageSync('activity_id'),
-            // company_id: wx.getStorageSync('company_id'),
+         
           },
           success: function (res) {
             // console.log('调用微信解密接口',res);

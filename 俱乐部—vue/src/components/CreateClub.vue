@@ -303,7 +303,7 @@
                     data_all.city_id=_this.city;
                     data_all.dist_id=_this.area;
 
-                    this.$axios.post("/clubs ",data_all, {headers: {
+                    this.$axios.post("/clubs",data_all, {headers: {
                         'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
                     }})
                         .then(res=>{

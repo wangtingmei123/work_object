@@ -365,7 +365,7 @@
         width:100%;
         height:auto;
         margin-top:1rem;
-        background: #f5f5f5;
+        background: #f0f0f0;
 
     }
 

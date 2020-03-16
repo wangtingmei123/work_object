@@ -11,7 +11,7 @@
                     <div class="detail1d">活动地点：{{active_info.address}}</div>
                     <div class="detail1d">俱乐部：{{club_name}}</div>
                 </div>
-                <div class="but_top" v-if="is_authorized==1&&(active_info.status==0 ||active_info.status==1)" @click="to_editactive(active_info.id,active_info.issue_nums)">
+                <div class="but_top" v-if="is_authorized==1" @click="to_editactive(active_info.id,active_info.issue_nums)">
                      <img class="but_top2" :src="but_top2" alt="">
                 </div>
             </div>
@@ -106,7 +106,7 @@
         <!-- <div class="creat_club_box" v-if="is_authorized==1&&(active_info.status==0 ||active_info.status==1)" @click="to_editactive(active_info.id,active_info.issue_nums)">
             <div class="creat_club">编辑</div>
         </div> -->
-        <div class="creat_club_box" v-if="active_info.status==3&&is_hide" @click="to_commentfb">
+        <div class="creat_club_box" v-if="is_hide" @click="to_commentfb">
             <div class="creat_club">发表评价</div>
         </div>
         <div class="creat_club_box"  @click="to_hitcard" v-show="active_info.status==2&&is_hide==false&&need_signee">
@@ -117,7 +117,7 @@
             <div class="creat_club">取消报名</div>
         </div>
         <div class="detail_but" v-if="active_info.status==0&&is_applyed==false">
-            <div class="detail_but1"><span>￥</span>{{active_info.entry_fees/100}}</div>
+            <div class="detail_but1"><span>￥</span>{{active_info.need_pays/100}}</div>
             <div class="detail_but2" @click="tosing()">报名缴费</div>
         </div>
         <!--<div class="creat_clubbut" style="display:flex;justify-content: space-around;align-items: center;">-->
@@ -181,7 +181,6 @@
         },
         created() {
             let _this=this;
-            _this.is_authorized=localStorage.getItem('is_authorized')
             _this.club_name=localStorage.getItem('club_name')
             _this.active_id=localStorage.getItem('active_id');
             this.authis()
@@ -240,6 +239,12 @@
                         _this.is_joined=res.data.data.is_joined;
                         _this.is_signed=res.data.data.is_signed;
                         _this.is_verified=res.data.data.is_verified;
+                        localStorage.setItem('is_authorized',res.data.data.is_authorized)
+                        localStorage.setItem('is_joined',res.data.data.is_joined)
+                        localStorage.setItem('is_signed',res.data.data.is_signed)
+                        localStorage.setItem('is_verified',res.data.data.is_verified)
+
+
 
                     }else {
 
@@ -270,7 +275,7 @@
 
                 if(_this.is_joined==true && _this.is_verified==true){
 
-                    if(_this.active_info.entry_fees==0){
+                    if(_this.active_info.need_pays==0){
 
                             _this.$axios.post("/activity-users",
                                 {
@@ -280,11 +285,16 @@
                                         'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
                                     }
                                 }).then(res=>{
-                                if(res.status==200){
-                                    _this.order_id=res.data.data.order_id
-                                    _this.order_get()
+                                if(res.status==201){
+                                    // _this.order_id=res.data.data.order_id
+                                    // _this.order_get()
 
-
+                                    _this.hidea=true;
+                                    _this.hide_tip='报名成功';
+                                    setTimeout(function(){
+                                        _this.hidea=false;
+                                        _this.$router.push({path: '/myactive'})
+                                    },1500)
                             
                                 }else{
                                     _this.showa=true;

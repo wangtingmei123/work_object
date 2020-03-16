@@ -235,7 +235,7 @@
                             <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERING" ng-click="touchConfirm(order.id,goods.order_goods_id)">
                                 确认收货
                             </div>
-                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERING && goods.is_zx_order==0" ng-click="torefundTip($event)">
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERING && goods.is_zx_order==0 && order.company_id!=51 && order.company_id!=52 && order.company_id!=70" ng-click="torefundTip($event)">
                                 申请退货
                             </div>
 
@@ -250,7 +250,7 @@
                             <div class="footer-button dark" ng-if="goods.is_reviewed==false" ng-click="touchComment(order,goods,$event)">
                                 评价
                             </div>
-                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED && goods.is_zx_order==0 && order.company_id!=51 && order.company_id!=52" ng-click="touchToRefund(order.id,goods.order_goods_id)">
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED && goods.is_zx_order==0 && order.company_id!=51 && order.company_id!=52 && order.company_id!=70" ng-click="touchToRefund(order.id,goods.order_goods_id)">
                                 申请退货
                             </div>
                             <!--<div class="lo_wl" ng-click="touchlogisitics(order.consignee.regions,order.consignee.address,goods.order_goods_id,$event)">查看物流</div>-->
@@ -271,7 +271,7 @@
 
                    <!--申请退款-->
 
-                   <div ng-if="order.company_id!=40 && order.company_id!=51 && order.company_id!=52 && goods.is_zx_order==0">
+                   <div ng-if="order.company_id!=70 && order.company_id!=40 && order.company_id!=51 && order.company_id!=52 && goods.is_zx_order==0">
                         <div class="but_tip" ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.PAID || goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERY">
                             <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.PAID || goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERY" ng-click="touchToRefund(order.id,goods.order_goods_id,$event)">
                                 申请退款

@@ -35,6 +35,7 @@
           <image class="act_logo2" src="../../static/images/images/05active_logo_04.png"></image> -->
 
     </view>
+   
    <view class="active_btn">
         <view class="active_btn1 {{act_lebgth==1?'act_lebgth':''}}" bindtap='to_ranklist' wx:if="{{active_but1==true}}">  
              <image wx:if="{{act_lebgth==1}}" src="../../static/images/images/05cat_length_09.png"></image>
@@ -53,6 +54,10 @@
          </view>
       
        </view>
+
+    <view wx:if="{{activity_id==86}}" class="fencai_but" bindtap="to_tribe" >  
+        <image  src="../../static/images/images/fencai_03.png"></image>
+    </view>
 </view>
 
 
@@ -93,13 +98,15 @@
               
   <view class="today_bushu">今日步数：<text>{{current_step}}</text> 步</view><text></text>
 
-    
+  
+
    <view class="active_btn" wx:if="{{active_but4==true}}">
         <view class="active_btn1 active_btn1a" bindtap='to_quest' >  
              <image  src="../../static/images/images/05cat_length_09.png"></image>
-            <view class="btn_falo">点亮21天</view>
+             <view class="btn_falo">点亮21天</view>
          </view>
     </view>
+
 
 
 

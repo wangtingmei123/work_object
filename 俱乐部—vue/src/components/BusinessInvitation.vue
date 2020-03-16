@@ -293,6 +293,9 @@
                             _this.hide_tip='加入成功，待审核';
                             setTimeout(function(){
                                 _this.hidea=false;
+                                _this.$router.push({ path: '/codelog'}) // -> /user
+
+
                             },1500)
                         }else{
                             _this.showa=true;

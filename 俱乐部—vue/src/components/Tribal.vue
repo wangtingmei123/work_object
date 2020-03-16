@@ -9,23 +9,9 @@
         <div class="write_box">
             <textarea class="textarea"  maxlength="150"  placeholder='请输入动态内容，最多150个字'  @input="write_tribal" v-model="text_tribal" @blur="blurEvent" ></textarea>
             <div class="area_tip"><span :class="{color:num_text==150}">{{num_text}} </span>/ 150</div>
-            <!--<div class='torefund_box2'>-->
-                <!--&lt;!&ndash; <div class='tfleft2'>上传图片:</div> &ndash;&gt;-->
-                <!--<div class='tfright2' >-->
-                    <!--<div class="tfrboxsc"  v-for="(item,index) in imgList">-->
-                        <!--<img :src="item.file.src" class="tfrboxscimg" src="" alt="" >-->
-                        <!--<img class="del_img"  :src="del_img" alt=""  @click="fileDel(index)">-->
-                    <!--</div>-->
+        
 
-                    <!--<div class="tfrboxsc tfrboxsca" v-if="this.imgList.length < 6" @click="fileClick()">-->
-                        <!--<img  class="jia" :src="jia_img" alt="">-->
-
-                    <!--</div>-->
-
-                <!--</div>-->
-            <!--</div>-->
-
-            <div class="upload_warp torefund_box2">
+            <!-- <div class="upload_warp torefund_box2">
                 <div class="upload_warp_img tfright2">
                     <div class="upload_warp_img_div tfrboxsc" v-for="(item,index) in imgList" :key="index">
                         <div class="upload_warp_img_div_top del_img">
@@ -33,15 +19,37 @@
                         </div>
                         <img class="tfrboxscimg" :src="item" >
                     </div>
-                    <div class="upload_warp_left tfrboxsc tfrboxsca" id="upload_warp_left" @click="fileClick()" v-if="this.imgList.length < 6">
+                    <div class="upload_warp_left tfrboxsc tfrboxsca" id="upload_warp_left" @click="fileClick()" v-if="imgList.length < 9">
+                        <img  class="jia" :src="jia_img" alt="">
+                    </div>
+                </div>
+            </div> -->
+
+
+             <div class="torefund_box2">
+                <div class="tfright2">
+                    <div class="tfrboxsc" v-for="(item,index) in images" :key="index">
+                        <div class="del_img">
+                            <img :src="del_img" class="upload_warp_img_div_del" @click="remove(index)">
+                        </div>
+                        <img class="tfrboxscimg" :src="item" >
+                    </div>
+                    <div class="upload_warp_left tfrboxsc tfrboxsca" id="upload_warp_left" @click="add($event)" v-if="images.length < 9">
                         <!--<img src="../assets/upload.png">-->
                         <img  class="jia" :src="jia_img" alt="">
                         <!--<img src="../assets/img/添加图片.png" class="imgs"/>-->
                     </div>
                 </div>
             </div>
-            
+
+
+
+         
+
         </div>
+
+
+
 
         <div class="creat_club" @click="to_uplode()">发布</div>
         <Eject  type='alert'  @took='okfall' :showstate='showa'  >
@@ -53,18 +61,29 @@
         <div class="lode_img" v-show="lode_end">
             <img :src="lode_img" alt="">
         </div>
+
+
+
+
+
     </div>
 </template>
 
 
 <script>
+
+
     import Header from './Header'
     import Eject from './eject'
     export default {
-        components: { Header,Eject },
+        components: { Header,Eject,
+          
+        
+        },
         name: '',
         data() {
             return {
+                url:'https://club.xindongguoji.com/api/dynamics',
                 lode_img:'./static/img/loding.gif',
                 lode_end:false,
                 showa:false,
@@ -79,14 +98,25 @@
                 jia_img:'./static/img/24write_03.jpg',
                 del_img:'./static/img/del_write.png',
                 imgList: [],
+                imgLista:[],
                 datas: new FormData(),
                 files:0,
                 size:0,
                 file_src:[],
                 text_tribal:'',
-                num_text:0
+                num_text:0,
+                ready:false,
+                images:[],
+                maxSize:9,
+                jia_imgs:''
+       
             }
         },
+
+
+         computed:{
+ 
+       },
         created() {
         
             
@@ -94,19 +124,183 @@
         },
         mounted() {
 
+
+   
+
+
+
+            // wx.config({
+            //         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            //         appId: 'wx1831b622b7904e1a', // 必填，公众号的唯一标识
+            //         timestamp:'1584090087', // 必填，生成签名的时间戳
+            //         nonceStr: 'KNG631yKxN', // 必填，生成签名的随机串
+            //         signature: '0538c4686261278c8c643ffbb880c14c2cc0cfd1',// 必填，签名
+            //             jsApiList: ['chooseImage','uploadImage','getLocalImgData','downloadImage'],
+            // });
+
+            //     wx.ready(function () {
+            //     // 在这里调用 API
+            //     wx.checkJsApi({
+            //     jsApiList: [
+            //         'chooseImage',
+            //         'uploadImage',
+            //         'getLocalImgData',
+            //         'downloadImage'
+            //     ],
+            //     success: function (res) {
+            //         console.log(JSON.stringify(res));
+            //     }
+
+            //     })
+
+
+
+
+               
+     
+
+            this.$axios.post("wx-share",{
+                  url:'https://club.xindongguoji.com/'
+              },{headers: {
+                'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
+            }})
+                .then(res=>{
+                    if(res.status==200){
+                            console.log(res)
+                            // console.log(Base64.decode(res.data.data))
+                            wx.config({
+                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                appId: res.data.appId, // 必填，公众号的唯一标识
+                                timestamp:res.data.timestamp, // 必填，生成签名的时间戳
+                                nonceStr: res.data.nonceStr, // 必填，生成签名的随机串
+                                signature: res.data.signature,// 必填，签名
+                                 jsApiList: ['chooseImage','uploadImage','getLocalImgData','downloadImage'],
+                        });
+
+                          wx.ready(function () {
+                            // 在这里调用 API
+                            wx.checkJsApi({
+                            jsApiList: [
+                                'chooseImage',
+                                'uploadImage',
+                                'getLocalImgData',
+                                'downloadImage'
+                            ],
+                            success: function (res) {
+                                console.log(JSON.stringify(res));
+                            }
+
+                            })
+                      });
+                            
+                
+                            
+
+
+                  }else{
+                  }
+            
+                })
+                .catch(err=>{
+                    console.log(err)
+                      this.ready = false
+                })
+
+        
+                     
+
         },
         methods: {
+           
 
-            // choosimg(){
-            //     wx.chooseImage({
-            //     count: 1, // 默认9
-            //     sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-            //     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            //     success: function (res) {
-            //     var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-            //     }
-            //     });
-            // },
+
+           // 通过localId读取对应的图片数据，同时通过【window.__wxjs_is_wkwebview】判断是否IOS微信6.5.3以上的版本，然后把localId转为Base64图片格式。另外通过$emit把读到的文件数据传给画面组件。
+            add (e) {
+
+                let _this=this
+                  let count = 9-_this.images.length
+                  wx.chooseImage({  
+                    count: count,  
+                    needResult: 1,  
+                    sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有  
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
+                    success: function (data) { 
+                        let localIds=data.localIds
+                        if(window.__wxjs_is_wkwebview) {    //判断ios是不是用的 wkwebview 内核
+                         _this.iosPreview(localIds);       
+                        // ios 转为 base 64
+                        } else {
+                            localIds.forEach((item,index) => {
+                                _this.images.push(item);
+                                _this.uploadImg(item,index);
+                            })
+                         }
+                },  
+                fail: function (res) {            
+                    alterShowMessage("操作提示", JSON.stringify(res), "1", "确定", "", "", "");  
+                    }    
+                });  
+       
+               
+
+            },
+
+
+            iosPreview(localIds){
+                let _this=this
+                for(let i = 0; i < localIds.length; i++) {
+                      _this.uploadImg(localIds[i],i); // 这个不用管
+                       wx.getLocalImgData({
+                        localId: localIds[i],
+                        success: function(res) {
+                            let localData = res.localData;
+                            localData = localData.replace('jgp', 'jpeg');
+                            _this.images.push(localData);
+                        
+                        },
+                        fail: function() {
+                            // 这个是ui组件的弹出框，不用管
+                            Toast.text({duration: 700, message: '选择多张失败'});
+                        }
+                    })
+                    // _this.readImage(localIds[i]);
+                }
+            },
+
+
+            uploadImg(e,i) {
+                let _this=this
+                wx.uploadImage({  
+                    localId: e, // 需要上传的图片的本地ID，由chooseImage接口获得  
+                    isShowProgressTips: 0, // 默认为1，显示进度提示  
+                    success: function (res) {                                        
+                        let mediaId = res.serverId;     
+                        _this.imgList.push(mediaId)           
+                    
+                    },  
+                    fail: function (error) {  
+                        picPath = '';  
+                        localIds = '';  
+                        alert(Json.stringify(error));          
+                    }          
+                });  
+            },  
+
+
+
+           remove(index){
+               this.images.splice(index, 1);
+               this.imgList.splice(index, 1);
+
+
+           },
+
+          
+            
+
+
+
+
             okfall() {
                 this.showa = false;
             },
@@ -123,7 +317,7 @@
             },
             to_uplode(){
                 let _this=this;
-                _this.lode_end=true;
+                // _this.lode_end=true;
                 let imgList=this.imgList;
                 if(imgList.length==0&&_this.text_tribal==''){
                     _this.showa=true;
@@ -314,6 +508,12 @@
 
 
             },
+
+
+             fileDela(index) {
+//                this.size = this.size - this.imgList[index].file.size;//总大小
+                this.images.splice(index, 1);
+            },
             fileDel(index) {
 //                this.size = this.size - this.imgList[index].file.size;//总大小
                 this.imgList.splice(index, 1);
@@ -353,8 +553,13 @@
     }
 </script>
 
+
+
 <style scoped>
+
+
     .creat_club{
+    
         width:7.1rem;
         height:0.9rem;
         position: fixed;

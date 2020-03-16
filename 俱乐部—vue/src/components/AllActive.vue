@@ -11,7 +11,8 @@
             <div class="active">
                 <div class="act_main" @click="to_detail(item.issue_nums,item.id)" v-for="(item,index) in act_list" :key="index">
                     <div class="act_main_left">
-                        <img :src="item.logo_url" alt="">
+                        <img v-show="item.logo_url!=''" v-lazy="item.logo_url" :src="lazyimg" alt="">
+                        <img v-show="item.logo_url==''"  :src="lazyimg" alt="">
                         <!--<div  class="act_time">29:28:40</div>-->
                         <!--<div class="act_time_tip">距离活动开始</div>-->
                         <!--<div v-show="item.status==0" class="act_buta">报名中</div>-->
@@ -72,7 +73,9 @@
                 stare:'',
                 is_apply:0,
                 is_signee:0,
-                is_ended:0
+                is_ended:0,
+                lazyimg:'./static/img/lazyimg.png',
+
 
 
             }

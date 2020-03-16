@@ -16,7 +16,9 @@
                     </div>
 
                     <div class="member5">
-                      <span>已打卡</span>
+                      <span v-if="signed_num>0">已打卡</span>
+                      <span v-else>未打卡</span>
+
                     </div>
                 </div>
 

@@ -11,6 +11,21 @@ page{
 }
 
 
+.fencai_but{
+  width:600rpx;
+  height:100rpx;
+  position: absolute;
+  left:0;right:0;margin:auto;
+  bottom:35rpx;
+}
+
+.fencai_but>image{
+  display: block;
+  width:100%;
+  height:100%;
+
+}
+
 .active_home{
   width:100%;
   height:auto;

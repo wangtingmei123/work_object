@@ -1,6 +1,6 @@
 <!--pages/tribal/tribal.wxml-->     
 <view class="write_box">
- <textarea class="textarea" auto-focus  show-confirm-bar="{{confirm_bar}}"  bindinput="textarea_num"  maxlength='150'  placeholder='一起运动，一起健康，秀出您的运动生活吧！'></textarea>
+ <textarea class="textarea" auto-focus  show-confirm-bar="{{confirm_bar}}"  bindinput="textarea_num"  maxlength='150'  placeholder='这一刻的想法......'></textarea>
  <view class="area_tip"><text style='color:{{color}}'> {{font_num}} </text>/ 150</view>
  <view class='torefund_box2'>
             <!-- <view class='tfleft2'>上传图片:</view> -->

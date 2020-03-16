@@ -62,12 +62,10 @@
                 </div>
             </div>
             <!--球队首页-->
-            <div v-if="club_info.type_id==1" class="club_announ_box" >
+            <!-- <div v-if="club_info.type_id==1" class="club_announ_box" >
                 <div class="club_announ">
                     <div class="active_title" style="border-bottom:1px solid #e6e6e6;justify-content: left;">
-                        <!-- <img style="width:0.38rem;height:0.4rem;" class="active_title1 active_title2" :src="active_title2" alt=""> -->
                         <div class="title_center" style="margin-left:0.1rem">球队首页:</div>
-                        <!--<img class="right_tip" :src="right_tip" alt="">-->
                     </div>
                     <div class="club_announ_mainzq" @click="to_soccer">
                         <img class="zq_logo" :src="zq_logo" alt="">
@@ -75,12 +73,10 @@
                         <img class="zq_jiant" :src="right_tipa" alt="">
                         
                     </div>
-
-
                 </div>
-            </div>
+            </div> -->
             <!--俱乐部成员-->
-            <div v-if="club_info.type_id==0" class="club_announ_box">
+            <div  class="club_announ_box">
                 <div class="club_announ" @click="to_members">
                     <div class="active_title" >
                         <!-- <img style="width:0.41rem;height:0.34rem;" class="active_title1 active_title3" :src="active_title3" alt=""> -->
@@ -95,7 +91,7 @@
                             </div>
 
                         </div>
-                        <div class="club_members_num">共<span> 24232 </span>人 <img class="right_tipa" :src="right_tip" alt="" ></div>
+                        <div class="club_members_num">共<span> {{club_info.members}} </span>人 <img class="right_tipa" :src="right_tip" alt="" ></div>
                     </div>
 
                 </div>
@@ -150,7 +146,8 @@
                     <div class="club_dynamic_main"  v-for="(item,index) in dynamic_info" :key="index">
                         <div class="dynamic_main1"  @click="to_dynamicdetail(item.id)">
                              <div class="dynamic_main1_user">
-                                 <img :src="club_members" alt="">
+                                <img v-show="item.user.avatar!=''" :src="item.user.avatar" alt="">
+                                <img v-show="item.user.avatar==''" :src="club_members" alt="">
                              </div>
                              <div class="dynamic_main1_center">
                                  <div class="dynamic_m1c1">{{item.user.real_name}}</div>
@@ -184,8 +181,8 @@
                             </div>
                             <div class="dynamic_m4b">
                                 <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==0">审核中</div>
-                                <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==1">已审核</div>
-                                <div class="dynamic_m44" v-if="item.is_self_release==1" @click="touch_del(index,item.id)">删除</div>
+                                <div class="dynamic_m44" v-if="item.is_self_release==1&&tap_selece==1" @click="touch_del(index,item.id)">删除</div>
+
                             </div>
                         </div>
                     </div>
@@ -311,6 +308,14 @@
         methods: {
             to_apply(){
 
+
+                 if(localStorage.getItem('access_token')==null){
+                    _this.showa1=true;
+                    _this.show_tip1='您还没有登录,是否去登录？'
+                    _this.apply=2;
+                    return
+                 }
+
             // if(){
                     this.showa1=true;
                     this.show_tip1='确定加入俱乐部吗？'
@@ -386,7 +391,8 @@
                 this.showa=false;
                 this.showa1=false;
                 if(this.apply==2){
-                      this.$router.go(-1);
+                    this.is_joined=false
+                    //   this.$router.go(-1);
                 }
             },
             touch_like(index,dynamic_praise_id,id){

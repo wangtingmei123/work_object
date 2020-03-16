@@ -5,7 +5,9 @@
             <div class="rank_list" >
                 <div class="club_main"  v-for="(item,index) in club_list" :key="index">
                     <div class="club_main_left" @click="to_clubindex(item.is_joined,item.id,item.is_admin,item.name)">
-                        <img :src="item.logo" alt="">
+                        <img v-show="item.logo!=''" v-lazy="item.logo" :src="lazyimg" alt="">
+                        <img v-show="item.logo==''" :src="lazyimg" alt="">
+
                     </div>
                     <div class="club_main_right">
                         <div class="club_main_right1" @click="to_clubindex(item.is_joined,item.id,item.is_admin,item.name)">{{item.name}}</div>
@@ -72,7 +74,8 @@
                 is_joined:'',
                 club_index:'',
                 no_empty:false,
-                is_root:false
+                is_root:false,
+                lazyimg:'./static/img/lazyimg.png',
 
             }
         },

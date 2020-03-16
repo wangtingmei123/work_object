@@ -1,5 +1,9 @@
 <template>
     <div style="background:#f7f7f7;min-height: 100vh;overflow: hidden;">
+
+        <div class="but_top" v-if="is_authorized==1" @click="to_issoue(issuesactive.id)">
+            <img class="but_top2" :src="but_top2" alt="">
+        </div>
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="scoll_box">
             <!--活动时间-->
@@ -14,6 +18,8 @@
                         <div class="detail2b2_right" style="font-size: 0.26rem;line-height: 0.62rem">{{issuesactive.start_date}} - {{issuesactive.end_date}}</div>
                     </div>
                 </div>
+
+              
             </div>
             <!--活动地点-->
             <div class="detail2_box">
@@ -63,10 +69,10 @@
         </div>
 
 
-        <div class="creat_club_box" v-if="is_authorized==1&&(issuesactive.status==1||issuesactive.status==0)" @click="to_issoue(issuesactive.id)">
+        <!-- <div class="creat_club_box" v-if="is_authorized==1" @click="to_issoue(issuesactive.id)">
             <div class="creat_club">编辑</div>
-        </div>
-        <div class="creat_club_box" v-show="issuesactive.status==3&&is_hide" @click="to_commentfb">
+        </div> -->
+        <div class="creat_club_box" v-show="is_hide" @click="to_commentfb">
             <div class="creat_club">发表评价</div>
         </div>
         <div class="creat_club_box" v-show="issuesactive.status==2&&is_hide==false&&need_signee" @click="to_hitcard">
@@ -98,6 +104,7 @@
                 detail8:'./static/img/22active_detail_23.png',
                 right_tip:'./static/img/22right_15.png',
                 righta:'./static/img/22righta_23.png',
+                but_top2:'./static/img/07club_index_05.png',
                 issue_id:'',
                 issuesactive:'',
                 is_authorized:'',
@@ -127,7 +134,7 @@
             }).then(res=>{
 
                 if(res.status==200){
-                    _this.issuesactive=res.data;
+                    _this.issuesactive=res.data.data;
 
                 }else{
                     _this.showa=true;
@@ -233,6 +240,28 @@
 </script>
 
 <style scoped>
+
+   .but_top{
+        width:0.8rem;
+        height:0.8rem;
+        position: fixed;
+        right:0.46rem;
+        bottom:1.65rem;
+        border-radius: 0.5rem;
+        background: #f7282f;
+
+        
+    }
+
+
+   .but_top .but_top2{
+        display: block;
+        width:0.48rem;
+        height:0.46rem;
+        margin:auto;
+        margin-top:0.17rem;
+    }
+
 
     .scoll_box{
         width:100%;

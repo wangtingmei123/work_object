@@ -78,6 +78,12 @@
         },
         created() {
 
+               if(localStorage.getItem('access_token')!=null){
+                  this.$router.push({ path: '/'}) // -> /user
+
+                    return
+             }
+
         },
         mounted() {
 

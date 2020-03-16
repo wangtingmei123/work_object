@@ -102,10 +102,10 @@
                 <div class="item-info-button">
                     订单编号：#{{order.sn}}-{{goods.order_goods_id}}
 
-                    <a ng-if="(goods.order_status == ENUM.ORDER_GOODS_STATUS.PAID && goods.company_id!=40 && goods.company_id!=51 && goods.company_id!=52 && goods.is_zx_order==0) || (goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERY && goods.company_id!=40 && goods.is_zx_order==0)" ng-click="touchToRefund(goods.order_goods_id)">申请退款</a>
+                    <a ng-if="(goods.order_status == ENUM.ORDER_GOODS_STATUS.PAID && goods.company_id!=70  && goods.company_id!=40 && goods.company_id!=51 && goods.company_id!=52 && goods.is_zx_order==0) || (goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERY && goods.company_id!=40 && goods.is_zx_order==0)" ng-click="touchToRefund(goods.order_goods_id)">申请退款</a>
                     <a ng-if="(goods.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_REFUND && goods.company_id!=40 && goods.company_id!=51 && goods.company_id!=52) || (goods.order_status == ENUM.ORDER_GOODS_STATUS.REFUNDED && goods.company_id!=40)" ng-click="touchToRefundInfo(goods.order_goods_id)">退款详情</a>
 
-                    <a ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED && goods.is_zx_order==0 && goods.company_id!=51 && goods.company_id!=52 " ng-click="touchToRefund(goods.order_goods_id)">申请退货</a>
+                    <a ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED && goods.is_zx_order==0 && goods.company_id!=70 && goods.company_id!=51 && goods.company_id!=52 " ng-click="touchToRefund(goods.order_goods_id)">申请退货</a>
                     <a ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_RETURN || goods.order_status == ENUM.ORDER_GOODS_STATUS.RETURNING || goods.order_status == ENUM.ORDER_GOODS_STATUS.RETURNED" ng-click="touchToRefundInfo(goods.order_goods_id)">退货详情</a>
                     <a ng-if="(goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED ||goods.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_RETURN || goods.order_status == ENUM.ORDER_GOODS_STATUS.RETURNING || goods.order_status == ENUM.ORDER_GOODS_STATUS.RETURNED)&& goods.is_reviewed==false" ng-click="touchComment(goods.id)">评价</a>
                     <a ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERING" ng-click="touchConfirm(goods.order_goods_id)">确认收货</a>

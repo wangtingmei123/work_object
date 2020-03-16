@@ -340,7 +340,6 @@ height:auto;
 .comm_like>image{
   width: 28rpx;
   height:26rpx;
-  margin-top:6rpx;
 
 }
 
@@ -423,7 +422,7 @@ height:auto;
 .comm_pin>image{
   width: 28rpx;
   height:26rpx;
-    margin-top:6rpx;
+    margin-top:2rpx;
 
 }
 

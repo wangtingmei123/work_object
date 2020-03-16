@@ -9,6 +9,8 @@
 		"coverView": true,
 		"nodeModules": false,
 		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": false,
 		"uploadWithSourceMap": true,
@@ -19,7 +21,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.3",
+	"libVersion": "2.10.2",
 	"appid": "wxf3d3817db251ccb5",
 	"projectname": "%E5%81%A5%E6%AD%A5%E8%B5%B02.0",
 	"isGameTourist": false,

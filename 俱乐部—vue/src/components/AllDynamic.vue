@@ -47,8 +47,8 @@
                     </div>
                     <div class="dynamic_m4b">
                         <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==0">审核中</div>
-                        <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==1">已审核</div>
-                        <div class="dynamic_m44" v-if="item.is_self_release==1" @click="touch_del(index,item.id)">删除</div>
+                        <!-- <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==1">已审核</div> -->
+                        <div class="dynamic_m44" v-if="item.is_self_release==1&&tap_selece==1" @click="touch_del(index,item.id)">删除</div>
                     </div>
                 </div>
                 <!--<div class="dynamic_main5">-->

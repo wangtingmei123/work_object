@@ -31,7 +31,7 @@
   "window": {
       "backgroundTextStyle": "dark",
       "navigationBarBackgroundColor": "#fff",
-      "navigationBarTitleText": "企业员工健步走",
+      "navigationBarTitleText": "企业员工风采展示",
       "navigationBarTextStyle": "black",
         "enablePullDownRefresh": false,
         "onReachBottomDistance": 100

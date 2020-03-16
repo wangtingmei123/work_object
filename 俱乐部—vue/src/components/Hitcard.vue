@@ -24,7 +24,7 @@
                 <div class="dakad">
                     <img :src="daka_adress" style='display:block;width:0.24rem;height:0.26rem;'>
                     <div class="daka_tip">请前往打卡地点</div>
-                    <div class="didian"  @click="to_hitcardaddress()">  &gt;  {{address_name}}  &lt;   </div>
+                    <div class="didian"  @click="to_hitcardaddress()">  &lt;  {{address_name}}  &gt;   </div>
                 </div>
             </div>
         </div>
@@ -185,12 +185,13 @@
                         'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
                     }}).then(res=>{
 
-                    if(res.status==200){
+                    if(res.status==200 || res.status==201){
                         _this.hidea=true;
                         _this.hide_tip='打卡成功';
                         _this.hit_nn=false;
                         setTimeout(function(){
                             _this.hidea=false;
+                            _this.$router.go(-1);
 
                         },1500)
 
@@ -204,7 +205,7 @@
                     .catch(err=>{
                         _this.hit_nn=false;
                         _this.showa=true;
-                        _this.show_tip='打卡失败！如有疑问，请联系客服';
+                        _this.show_tip='打卡失败，如有疑问，请联系客服';
                         return
 
                     })
