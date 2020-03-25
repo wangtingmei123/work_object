@@ -1,5 +1,11 @@
 <template>
-  <div class="hello" style="min-height: 100vh">
+  <div class="hello" style="min-height: 100vh"
+
+  
+  >
+
+
+
       <Header :title="title" :show="show" :backpage="backpage"></Header>
       <div class="banner">
           <section class="my-swiper">
@@ -134,7 +140,7 @@
       </div>
 <!--精选好物-->
       <div class="selection_tit">
-          <div class="active_title" @click="to_siginactive">
+          <div class="active_title">
               <!--<img class="active_title1" :src="active_title1" alt="">-->
               <div class="title_center">精选好物</div>
           </div>
@@ -195,28 +201,31 @@
                     paginationClickable: true,
                     loop: true,
                 },
-                swiperList: ['./static/img/03index_03.png', './static/img/03index_03.png', './static/img/03index_03.png'], // 轮播图数组对象
+                swiperList: ['./static/img/bannera.png', './static/img/bannerb.png'], // 轮播图数组对象
                 user_id:'',
                 club_list:[],
                 act_list:[],
                 act_list_new:[],
                 banners:[],
-                authorizations:null
+                authorizations:null,
+
+
+                   top: 0,
+                state: 0,
+                startY: 0,  //保存开始滑动时，y轴位置
+                touching: false,
+                infiniteLoading: false,
+                refreshShow: true,
+                infiniteState: true,
+                showLoad: false,
+                  isFirstEnter:false // 是否第一次进入，默认false
             }
         },
 
     created() {
-
+         this.isFirstEnter=true;
         
-        var access_token = localStorage.getItem("access_token")
-        var expires_in = localStorage.getItem("expires_in")
-
-          if (access_token == null || expires_in == null) {
-                this.$router.push({path: '/codelog'}) // -> /user
-            }else{
-                    this.authtion()
-            }
-
+       
     },
 
 
@@ -266,19 +275,19 @@
                     params: {
                   
                     }
-                }).then(res=>{
-                    console.log(res)
-                    if(res.status==200){
-                        _this.banners=res.data.data;
-                    }else {
-                        _this.showa=true;
-                        _this.show_tip=res.data.message;
-                    }
-                })
-                    .catch(err=>{
-                        console.log(err)
-                    })
-         },
+                        }).then(res=>{
+                            console.log(res)
+                            if(res.status==200){
+                                _this.banners=res.data.data;
+                            }else {
+                                _this.showa=true;
+                                _this.show_tip=res.data.message;
+                            }
+                        })
+                            .catch(err=>{
+                                console.log(err)
+                            })
+                },
 
         user_get(){
                 let _this=this;
@@ -298,6 +307,8 @@
                         localStorage.setItem('is_root',res.data.data.is_root);
                         localStorage.setItem('user_id',res.data.data.id);
                         localStorage.setItem('company_id',res.data.data.company_id);
+                        localStorage.setItem('mobile',res.data.data.mobile);
+
                     }else {
                     }
                 })
@@ -441,13 +452,112 @@
 //            this.$router.push({ path: '/test2',query:{name:'router跳转',tip:this.tip}}) // -> /user
             this.$router.push('/test2') // -> /user
 
-        }
+        },
+
+
+          touchStart(e) {
+            // console.log(1)
+            //记录手指触摸位置y轴位置
+            this.startY = e.targetTouches[0].pageY
+            this.startScroll = this.$el.scrollTop || 0
+            //开启滑动记录
+            this.touching = true
+            },
+            touchMove(e) {
+            // console.log(2)
+            // console.log(e.preventDefault)
+            // this.$el.scrollTop = 0 时代表复原在顶部
+            // 这里控制是否可以上下拉    代表正在滑动 
+            if (this.$el.scrollTop > 0 || !this.touching) {
+                return
+            }
+            //  获取拉取的间隔差   当前移动的y点      初始的y点        初始顶部距离
+            let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
+            //如果是往上滑的话，就取消事件
+            if (diff > 0) e.preventDefault()
+            // 对状态进行处理，看是否处于刷新中
+            this.top = Math.pow(diff, 0.8) + (this.state === 2 ? this.offset : 0)
+            if (this.state === 2) { // in refreshing
+                return
+            }
+            if (this.top >= this.offset) {
+                this.state = 1
+            } else {
+                this.state = 0
+            }
+            },
+            touchEnd(e) {
+            // console.log(e)
+       
+            this.touching = false
+            if (this.state === 2) { // in refreshing
+                this.state = 2
+                this.top = this.offset
+                return
+            }
+            if (this.top >= this.offset) { // do refresh
+                this.authtion()
+            } else { // cancel refresh
+                this.state = 0
+                this.top = 0
+            }
+            },
+
+
+
+
+
+        
     },
        destroyed(){
         if (this.authorizations) {
             clearInterval(this.authorizations);
         }
-    }
+    },
+
+        beforeRouteEnter(to, from, next) {
+      // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+      // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+      // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+      // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+    //   if(from.name=='AllClub'){
+    //       to.meta.isBack=true;
+    //       //判断是从哪个路由过来的，
+    //       //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+    //   }
+    // if(from.name=='PersonalCenter'){
+    //       to.meta.keepAlive=true;
+    //       to.meta.isBack=false;
+    //       //判断是从哪个路由过来的，
+    //       //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+    //   }
+
+      next();
+    },
+
+    activated() {
+        let  _this=this
+      if(!this.$route.meta.isBack || this.isFirstEnter){
+         // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+         // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+        // 把数据清空，可以稍微避免让用户看到之前缓存的数据
+        var access_token = localStorage.getItem("access_token")
+        var expires_in = localStorage.getItem("expires_in")
+
+          if (access_token == null || expires_in == null) {
+                _this.$router.push({path: '/codelog'}) // -> /user
+            }else{
+                    _this.authtion()
+            }
+       
+     }
+     // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+     this.$route.meta.isBack=false
+     // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+     this.isFirstEnter=false;
+
+        
+        },
 
 }
 </script>
@@ -595,7 +705,7 @@
         font-size: 0.22rem;
         height:0.32rem;
         line-height:0.32rem;
-        background:#f7282f;
+        background:#ff5a57;
         border-radius: 0.06rem;
         padding:0 0.1rem;
         float: left;
@@ -669,7 +779,7 @@
     .club_main>.club_main_right .to_join{
         width:1.3rem;
         height:0.5rem;
-        background: #f7282f;
+        background: #ff5a57;
         color: #fff;
         text-align: center;
         line-height:0.5rem;
@@ -707,7 +817,7 @@
         font-size: 0.22rem;
         height:0.32rem;
         line-height:0.32rem;
-        background:#f7282f;
+        background:#ff5a57;
         border-radius: 0.06rem;
         padding:0 0.1rem;
         float: left;
@@ -737,7 +847,7 @@
         margin-top:0.3rem;
         line-height:0.4rem;
         font-size: 0.22rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         overflow: hidden;
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -833,7 +943,7 @@
     .act_main>.act_main_left>.act_buta{
         width:1.5rem;
         height:0.48rem;
-        background: #f7282f;
+        background: #ff5a57;
         color: #fff;
         font-size: 0.28rem;
         text-align: center;
@@ -850,7 +960,7 @@
         text-align: center;
         line-height:0.42rem;
         font-size: 0.48rem;
-        color: #f7282f;
+        color: #ff5a57;
         font-weight: bold;
         font-family: 'DINCondensedC';
     }
@@ -861,7 +971,7 @@
         text-align: center;
         line-height:0.24rem;
         font-size: 0.24rem;
-        color: #f7282f;
+        color: #ff5a57;
     }
     .act_main>.act_main_right{
         width:4.6rem;
@@ -887,7 +997,7 @@
         height:0.36rem;
         font-size: 0.24rem;
         line-height:0.36rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         margin-top:0.18rem;
         overflow: hidden;
         text-overflow:ellipsis;
@@ -902,7 +1012,7 @@
         height:0.36rem;
         font-size: 0.24rem;
         line-height:0.36rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         margin-top:0.05rem;
         overflow: hidden;
         text-overflow:ellipsis;
@@ -1044,4 +1154,24 @@
         font-size:0.3rem;
         text-align: center;
     }
+</style>
+
+
+
+<style>
+
+ .swiper-pagination-bullet{
+     width:0.5rem !important;
+     height:2px !important;
+     margin:0 0 !important;
+     border-radius: 2px !important;
+
+ }
+
+ .swiper-pagination-bullet-active{
+   background: #fff !important;
+   opacity: 0.8 !important;
+ }
+
+
 </style>

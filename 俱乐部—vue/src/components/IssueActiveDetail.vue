@@ -1,7 +1,7 @@
 <template>
     <div style="background:#f7f7f7;min-height: 100vh;overflow: hidden;">
 
-        <div class="but_top" v-if="is_authorized==1" @click="to_issoue(issuesactive.id)">
+        <div class="but_top" v-if="is_authorized==1&&issuesactive.status<3" @click="to_issoue(issuesactive.id)">
             <img class="but_top2" :src="but_top2" alt="">
         </div>
         <Header :title="title" :show="show" :backpage="backpage"></Header>
@@ -75,7 +75,7 @@
         <div class="creat_club_box" v-show="is_hide" @click="to_commentfb">
             <div class="creat_club">发表评价</div>
         </div>
-        <div class="creat_club_box" v-show="issuesactive.status==2&&is_hide==false&&need_signee" @click="to_hitcard">
+        <div class="creat_club_box" v-show="issuesactive.status==2&&is_hide==false&&need_signee&&is_applyed" @click="to_hitcard">
             <div class="creat_club">签到打卡</div>
         </div>
 
@@ -248,7 +248,7 @@
         right:0.46rem;
         bottom:1.65rem;
         border-radius: 0.5rem;
-        background: #f7282f;
+        background: #ff5a57;
 
         
     }

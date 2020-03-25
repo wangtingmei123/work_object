@@ -292,7 +292,7 @@
            width:auto;
            height:0.4rem;
            border-radius: 0.4rem;
-           background: #f7282f;
+           background: #ff5a57;
            color: #fff;
            padding:0 0.22rem;
            font-size: 0.24rem;

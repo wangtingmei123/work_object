@@ -73,18 +73,17 @@
                 club_index:'',
                 no_empty:false,
                 lazyimg:'./static/img/lazyimg.png',
-
+               isFirstEnter:false
 
             }
         },
         created() {
-            this.is_root=localStorage.getItem('is_root')
-            this.real_show()
+                 this.isFirstEnter=false;
+
 
         },
         mounted() {
 
-            this.$refs.opBottomEcharts1.addEventListener('scroll',this.gotoScroll)
         },
         methods: {
 
@@ -160,7 +159,73 @@
 
 
 
-        }
+        },
+
+
+          beforeRouteEnter(to, from, next) {
+ 
+
+      next();
+    },
+
+    activated() {
+              let _this=this;
+                          console.log("888")
+      if(!this.$route.meta.isBack || this.isFirstEnter){
+         // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+         // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+        // 把数据清空，可以稍微避免让用户看到之前缓存的数据
+                  _this.is_root=localStorage.getItem('is_root')
+
+                 _this.clientHeight=''
+                _this.scrollHeight=''
+                _this.scrollTop=''
+                _this.page_end=true
+                _this.loadFlag=true
+                _this.page=0
+        
+
+                let user_id=localStorage.getItem('user_id')
+
+                 if(_this.loadFlag){
+                    _this.$axios.get("/user-clubs/"+user_id,{
+                        headers: {
+                            'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                        },
+                        params: {
+//                            last_id:_this.page
+                        }
+                    }).then(res=>{
+                        console.log(res)
+                        if(res.status==200){
+                            if(res.data.data.length<_this.GLOBAL.page_total){
+                                _this.page_end=false
+                            }
+                            let club_list=_this.club_list;
+                             club_list=res.data.data
+
+                            _this.club_list=club_list;
+                            _this.loadFlag=false
+                        }else {
+                            _this.showa=true;
+                            _this.show_tip=res.data.message;
+                        }
+                    })
+                        .catch(err=>{
+                            console.log(err)
+                        })
+                }
+
+     }
+     // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+     this.$route.meta.isBack=false
+     // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+     this.isFirstEnter=false;
+
+        
+        },
+
+
 
     }
 </script>
@@ -293,7 +358,7 @@
         font-size: 0.22rem;
         height:0.32rem;
         line-height:0.32rem;
-        background:#f7282f;
+        background:#ff5a57;
         border-radius: 0.06rem;
         padding:0 0.1rem;
         float: left;
@@ -323,7 +388,7 @@
         margin-top:0.3rem;
         line-height:0.4rem;
         font-size: 0.22rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         overflow: hidden;
         display: -webkit-box;
         -webkit-box-orient: vertical;

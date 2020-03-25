@@ -14,7 +14,7 @@
                         <div class="club_main_right2" @click="to_clubindex(item.is_joined,item.id,item.is_admin,item.name)">
                             <!--<div class="club_main_right2_tap1">lv18</div>-->
                             <div class="club_main_right2_tap1">{{item.type_name}}</div>
-                            <div class="club_main_right2_peoper">{{item.num_max}}</div>
+                            <div class="club_main_right2_peoper">{{item.members}}</div>
                         </div>
                         <div class="club_main_right3" @click="to_clubindex(item.is_joined,item.id,item.is_admin,item.name)">{{item.explanation}}</div>
                         <div v-if="item.is_joined==0" class="to_join" @click="to_apply(item.id,index)">申请加入</div>
@@ -76,13 +76,12 @@
                 no_empty:false,
                 is_root:false,
                 lazyimg:'./static/img/lazyimg.png',
-
+                isFirstEnter:false
             }
         },
         created() {
          
-            this.real_show()
-            this.user_get()
+           this.isFirstEnter=true;
 
         },
         mounted() {
@@ -116,7 +115,9 @@
             real_show(){
                 console.log(this.page)
                 let _this=this;
+                console.log("8888")
                 if(_this.loadFlag){
+                    console.log("====")
                 this.$axios.get("/clubs",{
                     headers: {
                         'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
@@ -219,7 +220,87 @@
                 this.apply=1;
             }
 
-        }
+        },
+
+        beforeRouteEnter(to, from, next) {
+      // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+      // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+      // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+      // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+    //   if(from.name=='ClubIndex'){
+    //       to.meta.isBack=true;
+    //       //判断是从哪个路由过来的，
+    //       //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+    //   }
+    // if(from.name=='CreateClub'){
+    //       to.meta.keepAlive=true;
+    //       to.meta.isBack=false;
+    //       //判断是从哪个路由过来的，
+    //       //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+    //   }
+
+      next();
+    },
+
+    activated() {
+              let _this=this;
+      if(!this.$route.meta.isBack || this.isFirstEnter){
+         // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+         // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+        // 把数据清空，可以稍微避免让用户看到之前缓存的数据
+                 _this.clientHeight=''
+                _this.scrollHeight=''
+                _this.scrollTop=''
+                _this.page_end=true
+                _this.loadFlag=true
+                _this.page=0
+        
+                _this.user_get()
+
+
+  
+                if(_this.loadFlag){
+                _this.$axios.get("/clubs",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        last_id:_this.page
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        if(res.data.data.length<_this.GLOBAL.page_total){
+                            _this.page_end=false
+                        }
+                        let club_list=_this.club_list;
+                         club_list=res.data.data
+                   
+                        _this.club_list=club_list;
+                        _this.loadFlag=false
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+                }
+
+
+
+
+
+ 
+     }
+     // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+     this.$route.meta.isBack=false
+     // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+     this.isFirstEnter=false;
+
+        
+        },
 
     }
 </script>
@@ -244,7 +325,7 @@
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #f7282f;
+        background: #ff5a57;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -300,7 +381,7 @@
         width:100%;
         height: 100%;
        object-fit: cover;
-       background: palegoldenrod;
+       /* background: palegoldenrod; */
        border:none;
        border-radius: 0.1rem;
     }
@@ -313,7 +394,7 @@
     .club_main>.club_main_right .to_join{
         width:1.3rem;
         height:0.5rem;
-        background: #f7282f;
+        background: #ff5a57;
         color: #fff;
         text-align: center;
         line-height:0.5rem;
@@ -351,7 +432,7 @@
         font-size: 0.22rem;
         height:0.32rem;
         line-height:0.32rem;
-        background:#f7282f;
+        background:#ff5a57;
         border-radius: 0.06rem;
         padding:0 0.1rem;
         float: left;
@@ -381,7 +462,7 @@
         margin-top:0.3rem;
         line-height:0.4rem;
         font-size: 0.22rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         overflow: hidden;
         display: -webkit-box;
         -webkit-box-orient: vertical;

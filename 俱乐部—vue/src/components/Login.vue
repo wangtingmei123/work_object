@@ -119,7 +119,11 @@
             },
             //判断验证码
             passwordinput(e){
-
+  
+                if (this.password != '') {
+                    this.password_tip= ""
+                    return
+                }
             },
             submit(){
                 let _this=this

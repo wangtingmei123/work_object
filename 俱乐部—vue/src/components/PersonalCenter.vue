@@ -1,9 +1,6 @@
 <template>
     <div style="min-height: 100vh;overflow: hidden">
-        <header>
-            <div @click="goback" class="goback"><img :src="back" alt=""> </div>
-            <div class="title">我的</div>
-        </header> 
+       
         <div class="personal_box">
             <div class="personal_top">
                 <div class="personal_user">
@@ -23,6 +20,10 @@
                         <div class="my_club">我报名的活动</div>
                     </div>
                 </div>
+                 <header style="background:none">
+                    <div @click="goback" class="goback"><img :src="back" alt=""> </div>
+                    <div class="title">我的</div>
+                 </header> 
                 <div class="invited_posit">
                     <img @click="to_businessinvitation" :src="invited_posit1" class="invited_posit1" alt="">
                     <img @click="to_editinformation" :src="invited_posit2" class="invited_posit2" alt="">
@@ -36,13 +37,22 @@
                     </div>
                     <img :src="percen_right" alt="">
                 </div>
-                <!-- <div class="percen" @click="to_applyrefund">
+                <div class="percen" @click="to_applyrefund">
                     <div class="percen_left">
                         <img style="width: 0.39rem;height:0.33rem;" :src="percen_left2" alt="">
-                        <div class="percen_left_title">申请退款</div>
+                        <div class="percen_left_title">查看退款</div>
                     </div>
                     <img :src="percen_right" alt="">
-                </div> -->
+                </div>
+
+                <div class="percen" @click="to_changepassword">
+                    <div class="percen_left">
+                        <img style="width: 0.35rem;height:0.38rem;" :src="percen_left4" alt="">
+                        <div class="percen_left_title">修改密码</div>
+                    </div>
+                    <img :src="percen_right" alt="">
+                </div>
+
                 <div class="percen">
                     <div class="percen_left">
                         <img style="width: 0.33rem;height:0.36rem;" :src="percen_left3" alt="">
@@ -80,7 +90,7 @@
         data() {
             return {
                 show_share:false,
-                back:'./static/img/03back_03.png',
+                back:'./static/img/my_backa.png',
                 activity_count:0,
                 club_count:0,
                 hide_tip:'',
@@ -99,46 +109,21 @@
                 percen_right:'./static/img/40my_17.png',
                 invited_posit1:'./static/img/40my_fenxiang.png',
                 invited_posit2:'./static/img/40my_05.png',
+                percen_left4:'./static/img/xiumi.png',
                 share_a:'./static/img/share_ap.png',
-                company_name:''
+                company_name:'',
+                isFirstEnter:false
             }
         },
         created() {
-            let _this=this;
-            this.$axios.get("/user",{
-                headers: {
-                    'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
-                },
-                params: {
-                }
-            }).then(res=>{
-                    console.log(res)
-                    if(res.status==200){
-                        console.log(res)
-                        _this.name=res.data.data.user_name;
-                        _this.department=res.data.data.department;
-                        _this.company_name=res.data.data.company.name;
-                        if(res.data.data.avatar!=''){
-                            _this.user_img=res.data.data.avatar
-                        }
-                        _this.activity_count=res.data.data.activity_count;
-                        _this.club_count=res.data.data.club_count;
-
-                    }else {
-                        _this.showa=true;
-                        _this.show_tip=res.data.message;
-                    }
-                })
-                .catch(err=>{
-                   console.log(err)
-                })
+             this.isFirstEnter=true;
 
         },
         mounted() {
             let _this=this;
                var company_id= localStorage.getItem('company_id');
             
-               var link='https://club.xindongguoji.com/'+'?#/businessinvitation?company_id='+company_id
+               var link='https://club.xindongguoji.com/'+'?#/commpanyshare?company_id='+company_id
               this.$axios.post("wx-share",{
                   url:'https://club.xindongguoji.com/'
               },{headers: {
@@ -244,9 +229,9 @@
                 this.$router.push({ path: '/enterpriseaudit'}) // -> /user
             },
             to_businessinvitation(){
-                this.show_share=true
-          
-            // this.$router.push({ path: '/businessinvitation',query:{company_id:company_id}}) // -> /user
+                // this.show_share=true
+              let company_id= localStorage.getItem('company_id')
+            this.$router.push({ path: '/commpanyshare',query:{company_id:company_id}}) // -> /user
 
             },
             to_applyrefund(){
@@ -260,8 +245,65 @@
             },
             to_editinformation(){
                 this.$router.push({ path: '/editinformation'}) //
+            },
+            to_changepassword(){
+                this.$router.push({ path: '/changepassword'}) //
+
             }
-        }
+
+        },
+
+
+         beforeRouteEnter(to, from, next) {
+ 
+
+      next();
+    },
+
+    activated() {
+              let _this=this;
+                          console.log("888")
+      if(!this.$route.meta.isBack || this.isFirstEnter){
+         // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+         // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+        // 把数据清空，可以稍微避免让用户看到之前缓存的数据
+
+            _this.$axios.get("/user",{
+                headers: {
+                    'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                },
+                params: {
+                }
+            }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        _this.name=res.data.data.user_name;
+                        _this.department=res.data.data.department;
+                        _this.company_name=res.data.data.company.name;
+                        if(res.data.data.avatar!=''){
+                            _this.user_img=res.data.data.avatar
+                        }
+                        _this.activity_count=res.data.data.activity_count;
+                        _this.club_count=res.data.data.club_count;
+
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                .catch(err=>{
+                   console.log(err)
+                })
+
+     }
+     // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+     this.$route.meta.isBack=false
+     // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+     this.isFirstEnter=false;
+
+        
+        },
 
     }
 </script>
@@ -276,7 +318,7 @@
         right:0;
         margin:auto;
         background: #fff;
-        z-index: 99;
+        z-index: 9;
 
 
 
@@ -287,14 +329,13 @@
         font-size:0.32rem;
         line-height:0.88rem;
         text-align: center;
-        color: #000;
+        color: #fff;
         letter-spacing:0.01rem;
-        font-weight: bold;
     }
     header>.goback{
         position: absolute;
-        width:0.18rem;
-        height:0.3rem;
+        width:0.32rem;
+        height:0.32rem;
         top:0;
         bottom:0;
         margin:auto;
@@ -338,7 +379,7 @@
     .vscon{
         width:100%;
         height:0.2rem;
-        background: #f7f7f7;
+        background: #faf7f7;
         position: fixed;
         left:0;
         right:0;
@@ -354,7 +395,7 @@
     .creat_club_box{
         width:100%;
         height:1.3rem;
-        background: #f7f7f7;
+        background: #faf7f7 !important;
         position: fixed;
         left:0;
         right:0;
@@ -383,8 +424,9 @@
         justify-content: space-between;
         align-items: center;
         position: absolute;
-        top:0.3rem;
+        top:0.14rem;
         right:0.32rem;
+        z-index: 9999
     }
 
     .invited_posit>.invited_posit1{
@@ -534,7 +576,8 @@
      height:3.7rem;
      background:linear-gradient(135deg, #ff5a55 0%, #ff7f42 100%);
      margin: auto;
-     margin-top:0.88rem;
+     padding-top:0.58rem;
+
      overflow: hidden;
      position: relative;
  }

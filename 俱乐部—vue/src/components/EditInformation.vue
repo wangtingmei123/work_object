@@ -54,10 +54,12 @@
                     <div class="form_edit1_tit">所在城市:</div>
                     <div class="rank_item_con" @click="choos_adress">
                         <span class="club_name" v-show="agentArea==''">请选择所在地区</span>
-                        <span class="club_name_select" v-show="agentArea!=''">{{agentArea}}</span>
+                        <span class="club_name_select" style="color:#212121" v-show="agentArea!=''">{{agentArea}}</span>
                         <span class="club_name_tip"></span>
                     </div>
                 </div>
+
+
                 <div class="address_box" v-show="popupVisible">
                     <div class="address"  style="height:8rem;position: fixed;width:100%;bottom:0;left:0">
                         <v-distpicker class="picker" type="mobile" @selected='selected' style="height:100%;">
@@ -335,13 +337,15 @@
         display: table-cell;
         vertical-align: middle;
         line-height:0.36rem;
-        color: #4d4d4d;
+        color:#c0c0c0;
+        font-size: 0.3rem;
 
     }
 
-    /* .rank_item_con>img{
-
-    } */
+    .rank_item_con>span{
+        color:#c0c0c0;
+        font-size: 0.3rem;
+    }
 
     .club_name{
         color: #a6a6a6;
@@ -398,19 +402,25 @@
 
     }
     .form_edit1>.form_edit1_tit{
-        width:1.87rem;
+        width:2.27rem;
         height:auto;
-        font-size: 0.28rem;
-        color: #1a1a1a;
+        font-size: 0.3rem;
+        color: #212121;
+        font-weight: bold;
+
     }
 
     .form_edit1_tit input{
         height:0.6rem;
+        font-size: 0.3rem;
+        color: #212121;
+     
     }
 
     .form_edit1>label>input{
         width:0.4rem;
         outline: none;
+        
 
     }
     .form_edit1>label:last-child{
@@ -418,14 +428,15 @@
     }
 
     .form_edit1>input{
-        width:4.63rem;
-        color: #a6a6a6;
+        width:4.43rem;
+        color: #212121;
         border:none;
         outline: none;
         height:0.6rem;
+        font-size: 0.3rem;
     }
     .form_edit1>input::placeholder{
-        color: #a6a6a6;
+        color: #c0c0c0;
     }
     .form_edit1>input:focus{
         outline: none;
@@ -494,12 +505,12 @@
         height:0.3rem;
         margin-top:0.15rem;
         font-size:0.3rem;
-        color: #1a1a1a;
+        color: #212121;
         line-height: 0.3rem;
     }
 
     .editation_bt_xinxi_name>span{
-        color: #a6a6a6;
+        color: #212121;
     }
 
     .editation_bt_xinxi_name>input{

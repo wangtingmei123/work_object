@@ -8,7 +8,11 @@
                         <img v-if="item.user.avatar==''" :src="photo" alt="">
                         <img v-if="item.user.avatar!=''" :src="item.user.avatar" alt="">
                         <div class="member2">
-                            <div class="member2_name">{{item.user.user_name}}</div>
+                            <div class="member2_name">
+                                <div class="member2_name1">{{item.user.user_name}}</div>
+                                <div class="member2_name2" v-show="item.is_authorized==1">管理员</div>
+                                 
+                            </div>
                             <div class="member2_bumen">{{item.user.department}}</div>
                         </div>
                     </div>
@@ -241,7 +245,7 @@
   }
 
   .member_list>.member1{
-      width:2.28rem;
+      width:3.28rem;
       height:0.78rem;
       border-radius: 0.78rem;
       display: flex;
@@ -269,6 +273,26 @@
       line-height:0.3rem;
       margin-top:0.08rem;
   }
+
+    .member_list .member2>.member2_name>.member2_name1{
+        width:auto;
+        float: left;
+
+    }
+
+    .member_list .member2>.member2_name>.member2_name2{
+        width:0.9rem;
+        float: left;
+        height:100%;
+        font-size: 0.22rem;
+        color: #fff;
+        background: #ff5a57;
+        border-radius: 0.06rem;
+        margin-left:0.1rem;
+        line-height:0.3rem;
+        text-align: center
+        
+    }
   .member_list .member2>.member2_bumen{
       font-size: 0.24rem;
       color: #a6a6a6;

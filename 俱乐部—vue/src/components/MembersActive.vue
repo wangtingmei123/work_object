@@ -24,6 +24,11 @@
 
             </div>
         </div>
+
+          <div class="empty_box" v-show="member_list.length==0">
+            <img :src="empty_img" alt="">
+            <!--<div class="empty_tip"></div>-->
+        </div>
     </div>
 </template>
 
@@ -46,7 +51,9 @@
                 page:0,
                 page_end:true,
                 loadFlag:true,
-                member_list:[]
+                member_list:[],
+                empty_img:'./static/img/empty_img.png',
+
             }
         },
         created() {

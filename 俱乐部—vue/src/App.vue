@@ -1,6 +1,18 @@
 <template>
   <div id="app"  style="">
-    <router-view/>
+
+
+
+    <keep-alive>
+        <router-view v-if="$route.meta.keepAlive">
+            <!-- 这里是会被缓存的视图组件，比如 page1,page2 -->
+        </router-view>
+    </keep-alive>
+    
+    <router-view v-if="!$route.meta.keepAlive">
+        <!-- 这里是不被缓存的视图组件，比如 page3 -->
+    </router-view>
+
 
   </div>
 </template>
@@ -162,6 +174,19 @@
 
   .creat_club_box{
     background: #f0f0f0 !important;
+     box-shadow: 0 0 0.08rem #ccc !important;
+
   }
+
+ .creat_club{
+          border-radius: 0.9rem !important;
+          height:1rem !important;
+          margin-top:0.15rem !important;
+          line-height:1rem !important;
+          background: #ff5a57 !important;
+  }
+
+
+
   
 </style>

@@ -9,7 +9,7 @@
                     <div class="detail1b" @click="to_clubindex()">俱乐部：{{club_name}}</div>
                     <!--<div class="detail1c">活动地点：{{}}</div>-->
                 </div>
-                <div class="but_top" v-if="is_authorized==1" @click="to_editactive(active_info.id,active_info.issue_nums)">
+                <div class="but_top" v-if="is_authorized==1&&active_info.status<3" @click="to_editactive(active_info.id,active_info.issue_nums)">
                      <img class="but_top2" :src="but_top2" alt="">
                 </div>
             </div>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="detail2b"  @click="menbersactive">
                     <div class="detail2b1" style="justify-content: space-between;">
-                        <div>5人报名</div>
+                        <div>{{active_info.members}}人报名</div>
                         <img style="display: block;width:0.11rem;height:0.19rem" :src="right_tip" alt="">
                     </div>
 
@@ -283,7 +283,7 @@
                             _this.hide_tip='报名成功';
                             setTimeout(function(){
                                 _this.hidea=false;
-                                _this.$router.push({path: '/myactive'})
+                               _this.authentication()
                             },1500)
 
 
@@ -324,7 +324,7 @@
                         _this.hide_tip='报名成功';
                         setTimeout(function(){
                             _this.hidea=false;
-                            _this.$router.push({path: '/myactive'})
+                            _this.authentication()
                         },1500)
                     }else{
                         _this.showa=true;
@@ -519,7 +519,7 @@
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #f7282f;
+        background: #ff5a57;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -545,7 +545,7 @@
     }
     .detail_but>.detail_but1{
         background: #fff;
-        color: #f7282f;
+        color: #ff5a57;
         font-size: 0.55rem;
         display: flex;align-items: end;
         justify-content: center;
@@ -561,7 +561,7 @@
         line-height: 1.16rem;
     }
     .detail_but>.detail_but2{
-        background: #f7282f;
+        background: #ff5a57;
         color: #fff;
         font-size: 0.3rem;
 

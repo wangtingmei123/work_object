@@ -127,11 +127,12 @@
                 is_joined:'',
                 is_signed:'',
                 is_verified:'',
+                isFirstEnter:false
             }
         },
         created() {
-            this.active_list()
-            this.authis()
+            this.isFirstEnter=true;
+
 
         },
         mounted() {
@@ -357,6 +358,75 @@
             },
 
         },
+
+ beforeRouteEnter(to, from, next) {
+ 
+
+      next();
+    },
+
+    activated() {
+              let _this=this;
+                          console.log("888")
+      if(!this.$route.meta.isBack || this.isFirstEnter){
+         // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+         // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+        // 把数据清空，可以稍微避免让用户看到之前缓存的数据
+      
+                 _this.clientHeight=''
+                _this.scrollHeight=''
+                _this.scrollTop=''
+                _this.page_end=true
+                _this.loadFlag=true
+                _this.page=0
+        
+                _this.authis()
+
+                  if(_this.loadFlag){
+                _this.$axios.get("dynamics",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                        "club_id":localStorage.getItem('club_id'),
+                        "is_self":_this.tap_selece,
+                        "page":_this.page
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                        if(res.data.data.length<10){
+                            _this.page_end=false
+                        }
+                        let dynamic_list=_this.dynamic_list;
+                        dynamic_list=res.data.data
+
+                        
+                        _this.dynamic_list=dynamic_list;
+                        _this.loadFlag=false
+                    }else {
+                        _this.showa=true;
+                        _this.show_tip=res.data.message;
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+            }
+      }
+            // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+            this.$route.meta.isBack=false
+            // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+            this.isFirstEnter=false;
+
+        
+        },
+
+
+
+
+
         destroyed(){
             console.log(this.$refs.opBottomEcharts)
             window.removeEventListener('scroll', this.gotoScroll);
@@ -387,7 +457,6 @@
         text-align: center;
         line-height:0.9rem;
         font-size: 0.3rem;
-        font-weight: bold;
         border-radius: 0.1rem;
 
     }

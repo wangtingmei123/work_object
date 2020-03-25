@@ -11,7 +11,7 @@
                     <div class="detail1d">活动地点：{{active_info.address}}</div>
                     <div class="detail1d" @click="to_clubindex" >俱乐部：{{club_name}}</div>
                 </div>
-                <div class="but_top" v-if="is_authorized==1" @click="to_editactive(active_info.id,active_info.issue_nums)">
+                <div class="but_top" v-if="is_authorized==1&&active_info.status<3" @click="to_editactive(active_info.id,active_info.issue_nums)">
                      <img class="but_top2" :src="but_top2" alt="">
                 </div>
             </div>
@@ -109,7 +109,7 @@
         <div class="creat_club_box" v-if="is_hide" @click="to_commentfb">
             <div class="creat_club">发表评价</div>
         </div>
-        <div class="creat_club_box"  @click="to_hitcard" v-show="active_info.status==2&&is_hide==false&&need_signee">
+        <div class="creat_club_box"  @click="to_hitcard" v-show="active_info.status==2&&is_hide==false&&need_signee&&is_applyed">
             <div class="creat_club">签到打卡</div>
         </div>
 
@@ -299,7 +299,7 @@
                                     _this.hide_tip='报名成功';
                                     setTimeout(function(){
                                         _this.hidea=false;
-                                        _this.$router.push({path: '/myactive'})
+                                        _this.authentication()
                                     },1500)
                             
                                 }else{
@@ -344,7 +344,7 @@
                         _this.hide_tip='报名成功';
                         setTimeout(function(){
                             _this.hidea=false;
-                            _this.$router.push({path: '/myactive'})
+                            _this.authentication()
                         },1500)
                     }else{
                         _this.showa=true;
@@ -549,7 +549,7 @@
         height:0.9rem;
         margin:auto;
         margin-top:0.2rem;
-        background: #f7282f;
+        background: #ff5a57;
         color: #fff;
         text-align: center;
         line-height:0.9rem;
@@ -574,7 +574,7 @@
     }
     .detail_but>.detail_but1{
         background: #fff;
-        color: #f7282f;
+        color: #ff5a57;
         font-size: 0.55rem;
         display: flex;align-items: end;
         justify-content: center;
@@ -589,7 +589,7 @@
         line-height: 1.16rem;
     }
     .detail_but>.detail_but2{
-        background: #f7282f;
+        background: #ff5a57;
         color: #fff;
         font-size: 0.3rem;
         /*font-weight: bold;*/

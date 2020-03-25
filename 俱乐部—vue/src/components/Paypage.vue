@@ -1,8 +1,95 @@
 <template>
-    <div  style="background: #f0f0f0;min-height: 100vh">
+    <div  style="min-height: 100vh;  overflow: hidden">
          <Header :title="title" :show="show" :backpage="backpage"></Header>
         
         
+                <div class="detail2b"  style="margin-top:1.1rem;" v-show="active_info.issue_nums>0">
+                     <!-- <div class="detail2b1">
+                        <div class="detail2b2_left">活动开始时间:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.start_date}}</div>
+                    </div>
+                     <div class="detail2b1">
+                        <div class="detail2b2_left">活动结束时间:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.end_date}}</div>
+                    </div>
+                         <div class="detail2b1">
+                        <div class="detail2b2_left">活动地点:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.address}}</div>
+                    </div> -->
+                    <div class="detail2b1">
+                        <div class="detail2b2_left">报名费:</div>
+                        <div class="detail2b2_right" style="color: #000;font-family:DINCondensedC;font-size: 0.32rem">￥{{active_info.entry_fees/100}}</div>
+                    </div>
+                    <div class="detail2b1">
+                        <div class="detail2b2_left">保证金:</div>
+                        <div class="detail2b2_right" style="color: #000;font-family:DINCondensedC;font-size: 0.32rem">￥{{active_info.cash_pledges/100}}</div>
+                    </div>
+                    <div class="detail2b1" style="align-items: normal;height:auto;line-height: 0.62rem">
+                        <div class="detail2b2_left">退费规则:</div>
+                        <div class="detail2b2_right" style="width:5.08rem;line-height:0.4rem;margin-top:0.11rem">报名费不退,未签到一次扣除保证金{{active_info.not_sign/100}}元</div>
+                    </div>
+
+                     <div class="detail2b1">
+                        <div class="detail2b2_left">报名截止日期:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.apply_stoped}}</div>
+                    </div>
+                     <div class="detail2b1">
+                        <div class="detail2b2_left">参与人数上限:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.num_max}}</div>
+                    </div>
+                    <!-- <div class="detail2b1">
+                        <div class="detail2b2_left">打卡有效距离:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.sign_range}}</div>
+                    </div> -->
+                </div>
+
+
+                  <div class="detail2b"  style="margin-top:1.1rem;" v-show="active_info.issue_nums==0">
+                     <div class="detail2b1">
+                        <div class="detail2b2_left">活动开始时间:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.start_date}}</div>
+                    </div>
+                     <div class="detail2b1">
+                        <div class="detail2b2_left">活动结束时间:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.end_date}}</div>
+                    </div>
+                         <div class="detail2b1">
+                        <div class="detail2b2_left">活动地点:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.address}}</div>
+                    </div>
+                    <div class="detail2b1">
+                        <div class="detail2b2_left">报名费:</div>
+                        <div class="detail2b2_right" style="color: #000;font-family:DINCondensedC;font-size: 0.32rem">￥{{active_info.entry_fees/100}}</div>
+                    </div>
+                    <div class="detail2b1">
+                        <div class="detail2b2_left">保证金:</div>
+                        <div class="detail2b2_right" style="color: #000;font-family:DINCondensedC;font-size: 0.32rem">￥{{active_info.cash_pledges/100}}</div>
+                    </div>
+                    <div class="detail2b1" style="align-items: normal;height:auto;line-height: 0.62rem">
+                        <div class="detail2b2_left">退费规则:</div>
+                        <div class="detail2b2_right" style="width:5.08rem;line-height:0.4rem;margin-top:0.11rem">报名费不退,未签到一次扣除保证金{{active_info.not_sign/100}}元</div>
+                    </div>
+
+                     <div class="detail2b1">
+                        <div class="detail2b2_left">报名截止日期:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.apply_stoped}}</div>
+                    </div>
+                     <div class="detail2b1">
+                        <div class="detail2b2_left">参与人数上限:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.num_max}}</div>
+                    </div>
+                    <div class="detail2b1">
+                        <div class="detail2b2_left">打卡有效距离:</div>
+                        <div class="detail2b2_right" style="color: #000">{{active_info.sign_range}}</div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
          <div class='jine'> <span>￥</span> {{active_info.need_pays/100}}</div>
          <div class='zhifu' @click="to_pay()">确认支付</div>
 
@@ -40,9 +127,12 @@
             }
         },
         created() {
+
+
             let _this=this;      
             _this. active_id=localStorage.getItem('active_id')
-                _this.active_detail()
+            _this.authentication()
+            _this.active_detail()
     
 
         },
@@ -56,6 +146,37 @@
 
         },
         methods: {
+
+
+            authentication(){
+                let _this=this;
+                this.$axios.get("/activity-authentication",{
+                    headers: {
+                        'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                    },
+                    params: {
+                         "act_id": localStorage.getItem('active_id')
+                    }
+                }).then(res=>{
+                    console.log(res)
+                    if(res.status==200){
+                        console.log(res)
+                      if(res.data.data.is_applyed){
+                         _this.$router.go(-3);
+
+                      }
+
+                    }else {
+
+                    }
+                })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+
+            },
+
+
              getUrlParam () {
                   var url = location.search
                 this.winUrl = url
@@ -88,13 +209,7 @@
 
             to_pay(){
                 let _this=this
-                //  let issue_nums=localStorage.getItem('issue_nums');
-                // let id=localStorage.getItem('active_id');
-                // if(issue_nums==0){
-                //     _this.$router.push({ path: '/activedetailshort',query:{id:id}}) // -> /user
-                // }else{
-                //     _this.$router.push({ path: '/activedetail',query:{id:id}}) // -> /user
-                // }
+            
            
                var code= this.getUrlParam().code
                console.log(code)
@@ -181,7 +296,15 @@
                         _this.hide_tip='报名成功';
                         setTimeout(function(){
                             _this.hidea=false;
-                            _this.$router.push({path: '/myactive'})
+                            // _this.$router.push({path: '/myactive'})
+                                let issue_nums=localStorage.getItem('issue_nums');
+                                let id=localStorage.getItem('active_id');
+                                if(issue_nums==0){
+                                    _this.$router.push({ path: '/activedetailshort',query:{id:id}}) // -> /user
+                                }else{
+                                    _this.$router.push({ path: '/activedetail',query:{id:id}}) // -> /user
+                                }
+
                         },1500)
                     }else{
                         _this.showa=true;
@@ -231,29 +354,94 @@
 
 <style scoped>
 
+  .detail2b{
+        width: 7.1rem;
+        height:auto;
+        padding:0.08rem 0.25rem 0.2rem 0.25rem;
+        box-sizing: border-box;
+        background: #fff;
+        border-radius: 0.2rem;
+        margin:auto;
+    
+
+    }
+    .detail2b>.detail2b1{
+        width:100%;
+        height:0.62rem;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        color: #1a1a1a;
+    }
+    .detail2b>.detail2b15:nth-child(1){
+        margin-top:0.1rem;
+    }
+
+    .detail2b>.detail2b15{
+        margin-top:0.3rem;
+        justify-content: space-between;
+    }
+    .detail2b>.detail2b15>.detail2b1_1{
+        width:1.2rem;
+    }
+    .detail2b>.detail2b15>.detail2b1_2{
+        width:3.52rem;
+        color: #989898;
+        margin-right: 0.4rem;
+    }
+    .detail2b>.detail2b15>.detail2b1_3{
+        width:1.44rem;
+        color: #989898;
+        text-align: right;
+
+    }
+    .detail2b>.detail2b15>img{
+        display: block;
+        width:0.11rem;
+        height:0.19rem;
+        margin-left:0.1rem;
+
+    }
+
+    .detail2b>.detail2b1 .detail2b2_left{
+        color: #1a1a1a;
+    }
+    .detail2b>.detail2b1 .detail2b2_right{
+        color: #a6a6a6;
+        margin-left:0.16rem;
+    }
+
+
+
   .jine{
       width:100%;
       height:0.8rem;
       font-size: 0.8rem;
       color: #1a1a1a;
       text-align: center;
-      margin-top:30vh;
+      /* margin-top:30vh; */
+      margin-top:1rem;
       font-weight: bold;
+      font-family: DINCondensedC;
 
   }
+    .jine>span{
+              font-family: DINCondensedC;
+    }
 
   .zhifu{
       width:5rem;
       height:1rem;
-      background: #f7282f;
+      background: #ff5a57;
       border-radius: 0.1rem;
       margin:auto;
-      margin-top:15vh;
+      margin-top:1rem;
       color: #fff;
       font-weight: bold;
       text-align: center;
       line-height: 1rem;
       font-size: 0.36rem;
+      margin-bottom:0.2rem;
 
   }
 

@@ -1,6 +1,6 @@
 <template>
     <div style="background: #f0f0f0;min-height: 100vh;overflow:hidden;">
-        <Header :title="title" :show="show" :backpage="backpage"></Header>
+        <!-- <Header :title="title" :show="show" :backpage="backpage"></Header> -->
         <div style="" class="club_big_box" >
             <!--俱乐部banner-->
             <div class="club_banner_box">
@@ -23,6 +23,13 @@
                                 <div class="club_main_right4">{{club_info.created_at}}创建</div>
                             </div>
                         </div>
+
+                    <header style="background:none">
+                        <div @click="goback" class="goback"><img :src="back" alt=""> </div>
+                        <div class="title">俱乐部首页</div>
+                    </header> 
+
+
                         <div class="but_top">
                             <img v-if="is_authorized==1" @click="to_invited" class="but_top3" :src="but_top3" alt="">
                             <img v-if="is_authorized==1" @click="to_clubaudit" class="but_top1" :src="but_top1" alt="">
@@ -39,9 +46,9 @@
                             </div>
                             <div class="sign_but">通过每日签到为俱乐部积攒积分</div>
                           
-                            <div class="sign_right" v-if="is_joined&&is_signed==false" @click="sign()">签到</div>
-                            <div class="sign_right1" v-if="is_joined&&is_signed" >已签到</div>
-                            <div class="sign_right1" v-if="is_joined==false"></div>
+                            <div class="sign_right" v-if="is_joined&&is_verified&&is_signed==false" @click="sign()">签到</div>
+                            <div class="sign_right1" v-if="is_joined&&is_verified&&is_signed" >已签到</div>
+                            <div class="sign_right1" v-if="is_joined==false || is_verified==false"></div>
                         </div>
                     </div>
             </div>
@@ -127,9 +134,9 @@
                             </div>
 
                             <div class="act_main_right5">
-                                <span>已报名:{{item.members}}人</span>
-                                <span>报名费：￥{{item.entry_fees/100}}</span>
-                                <span>保证金：￥{{item.cash_pledges/100}}</span>
+                                <span>已报名:{{item.members}}</span>
+                                <span>报名费:{{item.entry_fees/100}}</span>
+                                <span>保证金:{{item.cash_pledges/100}}</span>
                             </div>
                         </div>
                     </div>
@@ -181,7 +188,6 @@
                             </div>
                             <div class="dynamic_m4b">
                                 <div class="dynamic_m43" v-if="item.is_self_release==1&&item.is_audited==0">审核中</div>
-                                <div class="dynamic_m44" v-if="item.is_self_release==1&&tap_selece==1" @click="touch_del(index,item.id)">删除</div>
 
                             </div>
                         </div>
@@ -221,6 +227,7 @@
         name: '',
         data() {
             return {
+                                back:'./static/img/my_backa.png',
                 cancel:true,
                 showa:false,
                 show_tip:'',
@@ -270,35 +277,14 @@
                 is_verified:'',
                 dynamic_info:[],
                 can_show:true,
-                apply:0
+                apply:0,
+                isFirstEnter:false
 
             }
         },
         created() {
 
-            let _this=this;
-             _this.club_id=_this.$route.query.id;
-             if(_this.$route.query.id!=undefined){
-                localStorage.setItem('club_id',_this.$route.query.id) 
-             }
-
-             if(_this.$route.query.company_id!=undefined){
-                 localStorage.setItem('company_id',_this.$route.query.company_id) 
-             }
-
-
-             if(localStorage.getItem('access_token')==null){
-                    _this.showa1=true;
-                    _this.show_tip1='您还没有登录,是否去登录？'
-                    _this.apply=2;
-                    return
-             }
-          
-            _this.authis()
-            _this.club_detail()
-            _this.members()
-            _this.active_list()
-            _this.dynamic_list()
+           this.isFirstEnter=true;
 
 
         },
@@ -306,6 +292,13 @@
 
         },
         methods: {
+
+
+           goback(){
+                   this.$router.go(-1);
+             
+            },
+
             to_apply(){
 
 
@@ -664,17 +657,114 @@
             to_dynamicdetail(id){
                 this.$router.push({ path: '/dynamicdetail',query:{dynamic_id:id}}) // -> /user
             },
-        }
+        },
+
+           beforeRouteEnter(to, from, next) {
+      // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+      // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+      // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+      // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+    //   if(from.name=='ClubIndex'){
+    //       to.meta.isBack=true;
+    //       //判断是从哪个路由过来的，
+    //       //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+    //   }
+    // if(from.name=='CreateClub'){
+    //       to.meta.keepAlive=true;
+    //       to.meta.isBack=false;
+    //       //判断是从哪个路由过来的，
+    //       //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+    //   }
+
+      next();
+    },
+
+    activated() {
+        let  _this=this
+      if(!this.$route.meta.isBack || this.isFirstEnter){
+         // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+         // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+        // 把数据清空，可以稍微避免让用户看到之前缓存的数据
+                    let _this=this;
+             _this.club_id=_this.$route.query.id;
+             if(_this.$route.query.id!=undefined){
+                localStorage.setItem('club_id',_this.$route.query.id) 
+             }
+
+             if(_this.$route.query.company_id!=undefined){
+                 localStorage.setItem('company_id',_this.$route.query.company_id) 
+             }
+
+
+             if(localStorage.getItem('access_token')==null){
+                    _this.showa1=true;
+                    _this.show_tip1='您还没有登录,是否去登录？'
+                    _this.apply=2;
+                    return
+             }
+          
+            _this.authis()
+            _this.club_detail()
+            _this.members()
+            _this.active_list()
+            _this.dynamic_list()
+     }
+     // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+     this.$route.meta.isBack=false
+     // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+     this.isFirstEnter=false;
+
+        
+        },
 
     }
 </script>
 
 <style scoped>
 
+
+header{
+        width:7.5rem;
+        height:0.88rem;
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        margin:auto;
+        background: #fff;
+        z-index: 9;
+
+
+
+    }
+    header>.title{
+        width:100%;
+        height:100%;
+        font-size:0.32rem;
+        line-height:0.88rem;
+        text-align: center;
+        color: #fff;
+        letter-spacing:0.01rem;
+    }
+    header>.goback{
+        position: absolute;
+        width:0.32rem;
+        height:0.32rem;
+        top:0;
+        bottom:0;
+        margin:auto;
+        left:0.3rem;
+    }
+    header>.goback>img{
+        display: block;
+        width:100%;
+    }
+
+
     .club_big_box{
         width:100%;
-        height:calc(100vh - 2.28rem);
-        margin-top:0.88rem;
+        height:calc(100vh - 1.40rem);
+        /* padding-top:0.38rem; */
         overflow: scroll;
         padding-bottom:1.4rem;
 
@@ -713,7 +803,7 @@
     }
 
     .creat_club_box1 .creat_club{
-        background: #bfbfbf;
+        background: #bfbfbf !important;
     }
 
     .club_dynamic_main{
@@ -1075,7 +1165,7 @@
         margin-top:0.1rem;
         line-height:0.34rem;
         font-size: 0.24rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         overflow: hidden;
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -1225,7 +1315,7 @@
         height:0.36rem;
         font-size: 0.24rem;
         line-height:0.36rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         margin-top:0.18rem;
         overflow: hidden;
         text-overflow:ellipsis;
@@ -1240,7 +1330,7 @@
         height:0.36rem;
         font-size: 0.24rem;
         line-height:0.36rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         margin-top:0.05rem;
         overflow: hidden;
         text-overflow:ellipsis;
@@ -1344,7 +1434,7 @@
     .sign_box>.sign_right{
         width:1.3rem;
         height:0.5rem;
-        background: #f7282f;
+        background: #ff5a57;
         color: #fff;
         text-align: center;
         line-height: 0.5rem;
@@ -1373,7 +1463,7 @@
     .banner_img_a{
         display: block;
         width:100%;
-        height:3.78rem;
+        height:4.18rem;
     }
 
     .banner_img{
@@ -1400,10 +1490,11 @@
         height:0.5rem;
         position: absolute;
         right:0.46rem;
-        top:0.25rem;
+        top:0.15rem;
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        z-index: 9999
     }
 
     .banner_box .but_top .but_top1{
@@ -1427,8 +1518,8 @@
 
     .club_main{
         width:100%;
-        height:2.87rem;
-        padding:0.75rem 0.35rem 0.44rem 0.35rem;
+        height:3.27rem;
+        padding:1.15rem 0.35rem 0.44rem 0.35rem;
         box-sizing: border-box;
         display: flex;
         align-items: center;
@@ -1495,7 +1586,7 @@
         font-size: 0.22rem;
         height:0.32rem;
         line-height:0.32rem;
-        background: #f7282f;
+        background: #ff5a57;
         border-radius: 0.1rem;
         padding:0 0.14rem;
         float: left;

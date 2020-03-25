@@ -41,6 +41,9 @@ import Hitcard from '@/components/Hitcard'
 import HitcardAddress from '@/components/HitcardAddress'
 import Paypage from '@/components/Paypage'
 import ClubShare from '@/components/ClubShare'
+import CommpanyShare from '@/components/CommpanyShare'
+
+import ChangePassword from '@/components/ChangePassword'
 
 Vue.use(Router)
 export default new Router({
@@ -50,7 +53,10 @@ export default new Router({
       name: 'Index',
       component: Index,
         meta: {
-            title: '俱乐部'
+            title: '俱乐部',
+            keepAlive: true, // 此组件需要被缓存
+            isBack:false, //用于判断上一个页面是哪个
+
         }
 
     },
@@ -72,18 +78,32 @@ export default new Router({
     {
       path: '/allclub',
       name: 'AllClub',
-      component: AllClub
+      component: AllClub,
+      meta: {
+        keepAlive: true, // 此组件需要被缓存
+        isBack:false, //用于判断上一个页面是哪个
+
+      }
     },
     {
       path: '/createclub',
       name: 'CreateClub',
-      component: CreateClub
+      component: CreateClub,
+      meta: {
+        keepAlive: false, // 此组件不需要被缓存
+    }
+
     },
 
     {
       path: '/clubindex',
       name: 'ClubIndex',
-      component: ClubIndex
+      component: ClubIndex,
+      meta: {
+        keepAlive: true, // 此组件需要被缓存
+        isBack:false, //用于判断上一个页面是哪个
+    }
+
     },
     {
       path: '/invited',
@@ -113,7 +133,12 @@ export default new Router({
     {
       path: '/allactive',
         name: 'AllActive',
-      component: AllActive
+      component: AllActive,
+      meta: {
+        keepAlive: true, // 此组件需要被缓存
+        isBack:false, //用于判断上一个页面是哪个
+
+      }
     },
     {
       path: '/evaluation',
@@ -129,7 +154,12 @@ export default new Router({
     {
       path: '/alldynamic',
       name: 'AllDynamic',
-      component: AllDynamic
+      component: AllDynamic,
+      meta: {
+        keepAlive: true, // 此组件需要被缓存
+        isBack:false, //用于判断上一个页面是哪个
+
+      }
     },
 
     {
@@ -196,23 +226,43 @@ export default new Router({
       {
           path: '/myclub',
           name: 'MyClub',
-          component: MyClub
+          component: MyClub,
+          meta: {
+            keepAlive: true, // 此组件需要被缓存
+            isBack:false, //用于判断上一个页面是哪个
+    
+          }
       },
       {
           path: '/myactive',
           name: 'MyActive',
-          component: MyActive
+          component: MyActive,
+          meta: {
+            keepAlive: true, // 此组件需要被缓存
+            isBack:false, //用于判断上一个页面是哪个
+    
+          }
       },
       {
           path: '/applyrefund',
           name: 'ApplyRefund',
-          component: ApplyRefund
+          component: ApplyRefund,
+          meta: {
+            keepAlive: true, // 此组件需要被缓存
+            isBack:false, //用于判断上一个页面是哪个
+    
+          }
       },
 
       {
           path: '/personalcenter',
           name: 'PersonalCenter',
-          component: PersonalCenter
+          component: PersonalCenter,
+          meta: {
+            keepAlive: true, // 此组件需要被缓存
+            isBack:false, //用于判断上一个页面是哪个
+    
+          }
       },
       {
           path: '/businessinvitation',
@@ -232,12 +282,22 @@ export default new Router({
       {
           path: '/signinactive',
           name: 'SigninActive',
-          component: SigninActive
+          component: SigninActive,
+          meta: {
+            keepAlive: true, // 此组件需要被缓存
+            isBack:false, //用于判断上一个页面是哪个
+    
+          }
       },
       {
           path: '/newactive',
           name: 'NewActive',
-          component: NewActive
+          component: NewActive,
+          meta: {
+            keepAlive: true, // 此组件需要被缓存
+            isBack:false, //用于判断上一个页面是哪个
+    
+          }
       },
       {
           path: '/hitcard',
@@ -258,6 +318,17 @@ export default new Router({
       path: '/clubshare',
       name: 'ClubShare',
       component: ClubShare
-  },
+    },
+
+    {
+      path: '/commpanyshare',
+      name: 'CommpanyShare',
+      component: CommpanyShare
+    },
+    {
+      path: '/changepassword',
+      name: 'ChangePassword',
+      component: ChangePassword
+    },
   ]
 })

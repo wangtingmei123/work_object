@@ -11,7 +11,7 @@
                     <div class="rank_item_tit">俱乐部类型</div>
                     <div class="rank_item_con" @click="show_lx_data">
                         <span class="club_name"  v-show="choos_lx_data==''">请选择俱乐部类型</span>
-                        <span class="club_name_select" v-show="choos_lx_data!=''">{{choos_lx_data}}</span>
+                        <span class="club_name_select" style="color:#212121" v-show="choos_lx_data!=''">{{choos_lx_data}}</span>
                         <span class="club_name_tip"></span>
                     </div>
                     <div class="float_choos float_choos_time" v-show="show_lx">
@@ -24,7 +24,7 @@
 
                     <div class="rank_item_con">
                         <span class="club_name" v-if="base64_logo==''">请选择并上传俱乐部logo</span>
-                        <span class="club_name" v-if="base64_logo!=''">已上传</span>
+                        <span class="club_name" style="color:#212121" v-if="base64_logo!=''">已上传</span>
                         <img class="right_tip" :src="right_tip" alt="" >
                     </div>
                     <input type="file" name="file" ref="files1" accept="image/*" @change="uploadImg1" />
@@ -43,7 +43,7 @@
                     <div class="rank_item_tit">所在地区</div>
                     <div class="rank_item_con" @click="choos_adress">
                         <span class="club_name" v-show="agentArea==''">请选择俱乐部所在地区</span>
-                        <span class="club_name_select" v-show="agentArea!=''">{{agentArea}}</span>
+                        <span class="club_name_select" style="color:#212121" v-show="agentArea!=''">{{agentArea}}</span>
                         <span class="club_name_tip"></span>
                     </div>
                 </div>
@@ -55,9 +55,9 @@
                     </div>
                 </div>
 
-                <div class="rank_item">
+                <div class="rank_item" style="border:none">
                     <div class="rank_item_tit">加入人数上限</div>
-                    <input type="number" placeholder="请设置俱乐部加入人数上限" v-model="club_num" @blur="blurEvent">
+                    <input type="number" style="width:4rem;" placeholder="请设置俱乐部加入人数上限" v-model="club_num" @blur="blurEvent">
                 </div>
 
                 <div class="rank_item" style="height:3.2rem;align-items: normal;border:none">
@@ -477,13 +477,15 @@
         display: table-cell;
         vertical-align: middle;
         line-height:0.36rem;
-        color: #4d4d4d;
+        color: #c0c0c0;
+        font-size: 0.3rem;
 
     }
 
 
     .club_name{
-        color: #a6a6a6;
+        color: #c0c0c0;
+                font-size: 0.3rem;
     }
 
     .rank_item_con .club_name_tip{
@@ -538,8 +540,9 @@
 
     .rank_item>.rank_item_tit{
         width:auto;
-        font-size: 0.26rem;
-        color: #4d4d4d;
+        font-size: 0.3rem;
+        color: #212121;
+        font-weight: bold;
     }
 
     .rank_item>.rank_item_textarea{
@@ -547,17 +550,18 @@
         height:2.44rem;
         border:none;
         background: #f7f7f7f7;
-        margin-top:0.34rem;
+        margin-top:0.24rem;
         padding:0.2rem;
         box-sizing: border-box;
         border-radius: 0.1rem;
-        color: #4d4d4d;
+        color: #212121;
         resize: none;
+        font-size: 0.3rem;
 
     }
 
     .rank_item>.rank_item_textarea::placeholder{
-        color: #a6a6a6;
+        color: #c0c0c0;
 
     }
     .rank_item>.rank_item_textarea:focus{
@@ -566,17 +570,17 @@
 
     .rank_item>input{
         width:5.1rem;
-        font-size: 0.26rem;
+        font-size: 0.3rem;
         text-align: right;
         border:none;
-        color: #4d4d4d;
+        color: #212121;
     }
     .rank_item>input:focus{
         border:none;
         outline: none;
     }
     .rank_item>input::placeholder{
-        color: #a6a6a6;
+        color: #c0c0c0;
     }
 
 

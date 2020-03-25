@@ -11,7 +11,7 @@
             <div class="area_tip"><span :class="{color:num_text==150}">{{num_text}} </span>/ 150</div>
         
 
-            <!-- <div class="upload_warp torefund_box2">
+            <div class="upload_warp torefund_box2">
                 <div class="upload_warp_img tfright2">
                     <div class="upload_warp_img_div tfrboxsc" v-for="(item,index) in imgList" :key="index">
                         <div class="upload_warp_img_div_top del_img">
@@ -23,10 +23,10 @@
                         <img  class="jia" :src="jia_img" alt="">
                     </div>
                 </div>
-            </div> -->
+            </div>
 
 
-             <div class="torefund_box2">
+             <!-- <div class="torefund_box2">
                 <div class="tfright2">
                     <div class="tfrboxsc" v-for="(item,index) in images" :key="index">
                         <div class="del_img">
@@ -35,12 +35,10 @@
                         <img class="tfrboxscimg" :src="item" >
                     </div>
                     <div class="upload_warp_left tfrboxsc tfrboxsca" id="upload_warp_left" @click="add($event)" v-if="images.length < 9">
-                        <!--<img src="../assets/upload.png">-->
                         <img  class="jia" :src="jia_img" alt="">
-                        <!--<img src="../assets/img/添加图片.png" class="imgs"/>-->
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
 
@@ -190,7 +188,7 @@
                                 console.log(JSON.stringify(res));
                             }
 
-                            })
+                          })
                       });
                             
                 
@@ -249,7 +247,7 @@
             iosPreview(localIds){
                 let _this=this
                 for(let i = 0; i < localIds.length; i++) {
-                      _this.uploadImg(localIds[i],i); // 这个不用管
+                      _this.uploadImg(localIds[i],i);
                        wx.getLocalImgData({
                         localId: localIds[i],
                         success: function(res) {
@@ -276,6 +274,7 @@
                     success: function (res) {                                        
                         let mediaId = res.serverId;     
                         _this.imgList.push(mediaId)     
+                        alert(mediaId)
                               
                     
                     },  
@@ -330,7 +329,7 @@
                     "club_id": localStorage.getItem('club_id'),
                     "contents": _this.text_tribal,
                     "image_tmps": imgList,
-                    "media_ids":imgList
+                    // "media_ids":imgList
                 },{
                     headers: {
                         'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
@@ -339,14 +338,13 @@
                     _this.lode_end=false;
                     console.log(res)
                     if(res.status==201){
-                        _this.showa=true;
-                        _this.show_tip=res.data.message;
-                        // _this.hidea=true;
-                        // _this.hide_tip='发表成功，待审核';
-                        // setTimeout(function(){
-                        //     _this.hidea=false;
-                        //     _this.$router.go(-1);
-                        // },1500)
+         
+                        _this.hidea=true;
+                        _this.hide_tip='发表成功';
+                        setTimeout(function(){
+                            _this.hidea=false;
+                            _this.$router.go(-1);
+                        },1500)
 
                     }else {
                         _this.showa=true;
@@ -356,7 +354,7 @@
                     .catch(err=>{
                         _this.lode_end=false;
                         _this.showa=true;
-                        _this.show_tip=res.data.message;
+                        _this.show_tip=err;
                     })
 
 
@@ -415,19 +413,23 @@
                 );
             },
             fileChange(el) {
-
+                let _this=this
                 this.files=$("#upload_file").get(0).files;
                 console.log(this.files.length);
+                if(this.files.length > 9 - this.imgList.length){
+                           _this.hidea=true;
+                        _this.hide_tip='最多能选择9张图片哦';
+                        setTimeout(function(){
+                            _this.hidea=false;
+                        },1500)
+                }
+
 
                 for(let i=0;i<this.files.length;i++){
                     this.datas.append("file",this.files[i]);
                 }
                 this.show1=false;
-                console.log(typeof this.files);
-                console.log(this.files);
-                console.log("***")
-                console.log(this.datas)
-                // if()
+              
                 if (!el.target.files[0].size) return;
                 this.fileList(el.target);
                 el.target.value = ''
@@ -480,6 +482,9 @@
                     }).then(function(rst) {
                             //成功时执行
                             _this.imgList.push(rst.base64);
+                            var imgsl=_this.imgList
+                            _this.imgList=imgsl.slice(0,9);
+
                         }).catch(function(error) {
                         //失败时执行
                         _this.imgList.push(file.src);
@@ -499,6 +504,8 @@
                         }).then(function(rst) {
                                 //成功时执行
                                 _this.imgList.push(rst.base64);
+                            var imgsl=_this.imgList
+                            _this.imgList=imgsl.slice(0,9);
                             }).catch(function(error) {
                             //失败时执行
                             _this.imgList.push(file.src);

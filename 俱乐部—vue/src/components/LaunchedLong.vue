@@ -3,15 +3,16 @@
         <Header :title="title" :show="show" :backpage="backpage"></Header>
         <div class="rank_list_box">
             <div class="rank_list">
+
                 <div class="rank_item">
                     <div class="rank_item_tit">活动名称</div>
-                    <input type="text" placeholder="请填写俱乐部名称,最多18个字" maxlength="18" v-model="active_name" @blur="blurEvent">
+                    <input type="text" placeholder="填写俱乐部名称,最多18个字" maxlength="18" v-model="active_name" @blur="blurEvent">
                 </div>
                 <div class="rank_item">
                     <div class="rank_item_tit">俱乐部</div>
                     <div class="rank_item_con">
                         <!--<span class="club_name"  v-show="choos_lx_data==''">请选择俱乐部</span>-->
-                        <span class="club_name_select" >{{choos_lx_data}}</span>
+                        <span class="club_name_select" style="color:#212121">{{choos_lx_data}}</span>
                         <!--<span class="club_name_tip"></span>-->
                     </div>
                     <!--<div class="float_choos float_choos_time" v-show="show_lx">-->
@@ -23,8 +24,8 @@
                     <div class="rank_item_tit">活动logo</div>
 
                     <div class="rank_item_con">
-                        <span class="club_name" v-show="base64_logo==''">请选择并上传活动logo</span>
-                        <span class="club_name" v-show="base64_logo!=''">已上传</span>
+                        <span class="club_name" v-show="base64_logo==''">选择并上传活动logo</span>
+                        <span class="club_name" style="color:#212121" v-show="base64_logo!=''">已上传</span>
                         <img class="right_tip" :src="right_tip" alt="" >
                     </div>
                     <input type="file" name="file" ref="files1" accept="image/*" @change="uploadImg4" />
@@ -32,28 +33,29 @@
 
                 <div class="rank_item">
                     <div class="rank_item_tit">活动期数</div>
-                    <input type="number" placeholder="请设置本次活动的活动期数" v-model="active_issue" @blur="blurEvent">
+                    <input type="number" placeholder="设置本次活动的活动期数" v-model="active_issue" @blur="blurEvent">
                 </div>
-                <div class="rank_item">
+              <div class="rank_item  time_sty">
                     <div class="rank_item_tit">报名截止时间</div>
-                    <input style="background: none;width:4rem" type="datetime-local" placeholder="请选择本次活动的截止时间" v-model="jiezhi_time" @blur="blurEvent">
+                    <div class="rank_item_con jie_times"  :class="{'color' :color3}">{{jiezhi_time}}</div>
+                    <input class="jie_times" style="background: none;width:4rem"   type="datetime-local" placeholder="选择活动的截止时间" v-model="jie_times" @blur="blurEvent">
                 </div>
 
                 <div class="rank_item">
                     <div class="rank_item_tit">报名费用</div>
-                    <input type="number" placeholder="请填写本次活动报名费用,最多9999元,不退费" v-model="registration" @blur="blurEvent">
+                    <input type="number" placeholder="填写活动报名费用,最多9999元,不退费" v-model="registration" @blur="blurEvent">
                 </div>
                 <div class="rank_item">
                     <div class="rank_item_tit">保证金</div>
-                    <input type="number" placeholder="请填写本次活动保证金,最多9999元,不退费" v-model="margin" @blur="blurEvent">
+                    <input type="number" placeholder="填写活动保证金,最多9999元,不退费" v-model="margin" @blur="blurEvent">
                 </div>
                 <div class="rank_item">
                     <div class="rank_item_tit">退费规则</div>
-                    <input type="text" placeholder="请填写未签到一次时扣除多少保证金费用" v-model="refund_rules" @blur="blurEvent">
+                    <input type="number" placeholder="填写未签到一次时扣除多少保证金费用" v-model="refund_rules" @blur="blurEvent">
                 </div>
                 <div class="rank_item">
                     <div class="rank_item_tit">活动人数</div>
-                    <input type="number" placeholder="请设置本次活动的最多参与人数，最多9999人" v-model="active_num" @blur="blurEvent">
+                    <input type="number" placeholder="设置活动的最多参与人数，最多9999人" v-model="active_num" @blur="blurEvent">
                 </div>
 
                 <div class="rank_item" style="height:3.2rem;align-items: normal;border:none;">
@@ -134,6 +136,7 @@
                 statre_time:'',
                 end_time:'',
                 jiezhi_time:'',
+                 jie_times:'',
                 registration:'',
                 margin:'',
                 refund_rules:'',
@@ -163,6 +166,18 @@
                 data_br:[],
                 show_search:false,
                 active_point:{},
+                 color3:false
+
+            }
+        },
+
+         watch: {
+          
+            jie_times(curVal, oldVal) {
+                console.log(curVal)
+                // 实现input连续输入，只发一次请求
+               this.jiezhi_time=curVal.substring(0,16).replace('T',' ');
+               this.color3=true
 
             }
         },
@@ -171,7 +186,35 @@
             let _this=this;
                 this.active_id=this.$route.query.id;
 
+
+
+             let timestamp = new Date().getTime();
+          
+                 let timestamp3 = timestamp + 1 * 60 * 60 * 1000;
+              let myDate3 = new Date(timestamp3);
+            let month3=myDate3.getMonth()+1;
+            if(month3>0&&month3<10){
+                month3='0'+month3
+            }
+           let day3=myDate3.getDate();
+            if(day3>0&&day3<10){
+                day3='0'+day3
+            }
+            let hours3=myDate3.getHours();
+            if(hours3>0&&hours3<10){
+                hours3='0'+hours3
+            }
+            let minutes3=myDate3.getMinutes();
+            if(minutes3>0&&minutes3<10){
+                minutes3='0'+minutes3
+            }
+
+     
+            this.jiezhi_time=myDate3.getFullYear()+'-'+month3+'-'+day3+' '+hours3+':'+minutes3;
+
             if(this.active_id!=0){
+                 $(".jie_times").css("color","#212121")
+
                 _this.$axios.get("/activities/"+ _this.active_id,{
                     headers: {
                         'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
@@ -181,7 +224,7 @@
                 }).then(res=>{
                     if(res.status==200){
                         _this.active_name=res.data.data.name;
-                        _this.jiezhi_time=res.data.data.apply_stoped.substring(0,16).replace(' ','T');
+                        _this.jiezhi_time=res.data.data.apply_stoped.substring(0,16).replace('T',' ');
                         _this.registration=res.data.data.entry_fees/100;
                         _this.margin=res.data.data.cash_pledges/100;
                         _this.refund_rules=res.data.data.not_sign/100;
@@ -193,7 +236,7 @@
                         _this.active_details=res.data.data.explanation;
                         _this.base64_logo=res.data.data.logo_url;
                        _this.active_issue=res.data.data.issue_nums;
-
+                        _this.color3=true
                     }else{
                         _this.showa=true;
                         _this.show_tip=res.data.message;
@@ -286,6 +329,18 @@
                     return
                 }
 
+                 if(this.active_name.length<5){
+                    this.showa=true;
+                    this.show_tip='活动名称不得少于5个字符'
+                    return
+                }
+
+                
+                 if(this.active_name.length>18){
+                    this.showa=true;
+                    this.show_tip='活动名称不超过18个字符'
+                    return
+                }
 
                 if(this.base64_logo==''){
                     this.showa=true;
@@ -300,14 +355,22 @@
                     return
                 }
 
-                var timestamp=new Date().getTime();
-                var jiezhi_time_c=new Date(_this.jiezhi_time).getTime();
-
+                 var myDate = new Date();
+                var month=myDate.getMonth()+1;
+                if(month>0&&month<10){
+                    month='0'+month
+                }
+                var timestamp=myDate.getFullYear()+'-'+month+'-'+myDate.getDate()+'T'+myDate.getHours()+':'+myDate.getMinutes();
+                var jiezhi_time_c=this.jiezhi_time.substring(0,16).replace(' ','T');
+           if(_this.active_id==''){
                 if(jiezhi_time_c<=timestamp){
                     this.showa=true;
                     this.show_tip='截止时间不得小于当前时间'
                     return
                 }
+             }
+
+
 
                 if(this.active_issue==''){
                     this.showa=true;
@@ -343,7 +406,7 @@
                 data_all.issue_nums=parseInt(this.active_issue);
                 data_all.num_max=this.active_num;
                 data_all.choos_lx_data=this.choos_lx_data;
-                data_all.apply_stoped=this.jiezhi_time.replace('T',' ');
+                data_all.apply_stoped=this.jiezhi_time.substring(0,16).replace('T',' ');
                 data_all.entry_fees=parseFloat(this.registration)*100;
                 data_all.cash_pledges=parseFloat(this.margin)*100;
                 data_all.not_sign=parseFloat(this.refund_rules)*100;
@@ -357,7 +420,7 @@
                 console.log(timestemp)
 
 
-                if(_this.active_id!=''){
+                if(_this.active_id!='' &&_this.active_id!=0){
                     data_all.id=this.active_id;
                     _this.$axios.patch("/activities ",data_all, {headers: {
                         'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
@@ -416,6 +479,33 @@
 
 <style scoped>
 
+
+ .time_sty{
+     position: relative
+ }
+
+    .time_sty>input{
+        opacity: 0;
+        position: absolute;
+        top:0;
+        bottom:0;
+        margin:auto;
+        right:0
+    }
+
+      .time_sty> .rank_item_con{
+         width:4rem;
+         height:0.6rem;
+         color: #c0c0c0;
+         line-height:0.6rem;
+         text-align: right;
+         font-size: 0.3rem;
+      }
+
+
+        .time_sty>.color{
+          color:#212121;
+      }
     .address_box_search header{
         width:100%;
         height:0.88rem;
@@ -665,6 +755,11 @@
 
     }
 
+        .rank_item_con>span{
+            font-size: 0.3rem;
+            color: #c0c0c0;
+        }
+
 
 
     .club_name{
@@ -699,7 +794,7 @@
         margin:auto;
         margin-top:0.88rem;
         overflow: hidden;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1.4rem;
     }
 
     .rank_list{
@@ -729,8 +824,9 @@
 
     .rank_item>.rank_item_tit{
         width:auto;
-        font-size: 0.26rem;
-        color: #4d4d4d;
+        font-size: 0.3rem;
+        color: #212121;
+        font-weight: bold;
     }
 
     .rank_item>.rank_item_textarea{
@@ -738,17 +834,18 @@
         height:2.44rem;
         border:none;
         background: #f7f7f7f7;
-        margin-top:0.34rem;
+        margin-top:0.24rem;
         padding:0.2rem;
         box-sizing: border-box;
         border-radius: 0.1rem;
-        color: #4d4d4d;
+        color: #212121;
         resize: none;
+        font-size: 0.3rem;
 
     }
 
     .rank_item>.rank_item_textarea::placeholder{
-        color: #a6a6a6;
+        color: #c0c0c0;
 
     }
     .rank_item>.rank_item_textarea:focus{
@@ -756,11 +853,11 @@
     }
 
     .rank_item>input{
-        width:5.6rem;
-        font-size: 0.26rem;
+        width:5.4rem;
+        font-size: 0.3rem;
         text-align: right;
         border:none;
-        color: #4d4d4d;
+        color: #212121;
         height: 0.6rem;
     }
     .rank_item>input:focus{
@@ -768,7 +865,7 @@
         outline: none;
     }
     .rank_item>input::placeholder{
-        color: #a6a6a6;
+        color: #c0c0c0;
     }
 
 

@@ -7,7 +7,7 @@
         <input id="upload_file" type="file" style="display: none;" accept='image/*' name="file" capture="camera"  @change="fileChange($event)"/>
         <baidu-map class="map" :center="center" :zoom="zoom">
             <bm-marker :position="center" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
-                <bm-label :content="address_name" :labelStyle="{color: 'red', fontSize : '12px'}" :offset="{width: -35, height: 30}"/>
+                <bm-label  :content="address_name" :labelStyle="{color: 'red', fontSize : '16px',padding:'4px'}" :offset="{width: -35, height: 30}"/>
             </bm-marker>
         </baidu-map>
 
@@ -24,13 +24,13 @@
                 <div class="dakad">
                     <img :src="daka_adress" style='display:block;width:0.24rem;height:0.26rem;'>
                     <div class="daka_tip">请前往打卡地点</div>
-                    <div class="didian"  @click="to_hitcardaddress()">  &lt;  {{address_name}}  &gt;   </div>
+                    <div class="didian"  @click="to_hitcardaddress()">  &lt;{{address_name}}&gt;   </div>
                 </div>
             </div>
         </div>
 
 
-        <div class='torefund_box2' v-if="hit_nn">
+        <div class='torefund_box2' >
             <div class='tfright2' >
                 <div class="tfrboxsc" v-if="imgList.length >=1">
                     <img class="tfrboxscimg" :src="imgList[0]" style='width:100%;height:auto' >
@@ -125,7 +125,7 @@
                         _this.enable_card_distance=res.data.data.sign_range/1000;
                         _this.center.lng=res.data.data.longitude;
                         _this.center.lat=res.data.data.latitude;
-
+                       _this.get_position()
                     }else{
                         _this.showa=true;
                         _this.show_tip=res.data.message;
@@ -150,7 +150,7 @@
                         _this.enable_card_distance=res.data.data.sign_range/1000;
                         _this.center.lng=res.data.data.longitude;
                         _this.center.lat=res.data.data.latitude;
-
+                       _this.get_position()
                     }else{
 
                     }
@@ -173,14 +173,19 @@
                     return
                 }
 
-                _this.$axios.post("activity-signes", {
+                let data={}
 
-                    "act_id":localStorage.getItem('active_id'),
-                    "issue_id":_this.issue_id,
-                    "longitude":_this.getLongitude,
-                    "latitude":_this.getLatitude,
-                    "image_tmp":_this.imgList[0]
-                },
+                   data.act_id=localStorage.getItem('active_id')
+                   data.longitude=_this.getLongitude
+                   data.latitude=_this.getLatitude
+                   data.image_tmp=_this.imgList[0]
+
+                if(_this.issue_id>0){
+                   data.issue_id=_this.issue_id
+
+                }
+
+                _this.$axios.post("activity-signes", data,
                 { headers: {
                         'Authorization': localStorage.getItem('token_type') + localStorage.getItem('access_token'),
                     }}).then(res=>{
@@ -277,13 +282,26 @@
            to_hitcard(){
                let _this = this;
                 var distance_clock = setInterval(function () {
+                    _this.get_position()
 //                    console.log("000")
 //                    let getitude = _this.gcj02_to_bd09(39.8381360800, 116.2796287400)
 //                    console.log(getitude)
-                    if (navigator.geolocation) {
+                
+                },2000)
+             this.distance_timer=distance_clock;
+            },
+
+
+
+             get_position(){
+                 let  _this=this
+                   if (navigator.geolocation) {
+                       console.log("0000")
                         navigator.geolocation.getCurrentPosition(
+                            
                             //locationSuccess 获取成功的话
                             function (position) {
+                                      
                                 var enable_card_distance = _this.enable_card_distance;
                                  enable_card_distance = enable_card_distance <= 0 ? 0.5 : enable_card_distance;
                                   let getitude=_this.gcj02_to_bd09(position.coords.longitude,position.coords.latitude)
@@ -315,9 +333,10 @@
                     }else{
                         _this.card_message ='获取不到位置信息'
                     }
-                },3000)
-             this.distance_timer=distance_clock;
-            },
+             },
+
+
+
            to_hitcardaddress(){
                 this.$router.push({ path: '/hitcardaddress',query:{lng:this.center.lng,lat:this.center.lat,address_name:this.address_name}}) // -> /user
             },
@@ -516,6 +535,9 @@
     }
 </script>
 
+
+
+
 <style scoped>
 
     /**index.wxss**/
@@ -531,7 +553,7 @@
         position: fixed;
         top:0;
         left:0;
-        z-index: 99999999;
+        z-index: 999;
         background: rgba(0, 0, 0, 0.6)
 
     }
@@ -694,7 +716,7 @@
         position:absolute;
         top:0.88rem;
         width:100%;
-        height:5.20rem;
+        height:4.20rem;
         left:0;right:0;
         margin:auto;
         z-index: 100;
@@ -710,26 +732,26 @@
 
     .sign__box{
         width:100%;
-        height:4.80rem;
+        height:5.20rem;
         position: absolute;
         top:0;
         left:0;
     }
     .sign__btn{
-        width:2.28rem;
-        height:2.28rem;
+        width:1.8rem;
+        height:1.8rem;
         margin:auto;
-        margin-top:0.50rem;
+        margin-top:0.40rem;
         background: #ff5a57;
-        border:0.22rem solid #f8d0ce;
-        border-radius: 2.28rem;
+        border:0.2rem solid #f8d0ce;
+        border-radius: 1.8rem;
     }
 
     .sign__btn .word{
-        font-size:0.50rem;
+        font-size:0.40rem;
         font-family:PingFangSC-Semibold;
         color:#fff;
-        line-height:2.28rem;
+        line-height:1.8rem;
         width:100%;
         height:100%;
         text-align: center;
@@ -753,7 +775,7 @@
         font-size:0.24rem;
         font-family:PingFangSC-Medium;
         color:#666;
-        margin-top:0.35rem;
+        margin-top:0.3rem;
 
     }
 
@@ -764,7 +786,7 @@
         text-align: center;
         line-height:0.42rem;
         font-size: 0.28rem;
-        margin-top:0.23rem;
+        margin-top:0.14rem;
         display: flex;
         justify-content: center;
         align-items: center;

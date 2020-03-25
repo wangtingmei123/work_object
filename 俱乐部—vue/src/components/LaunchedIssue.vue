@@ -4,33 +4,35 @@
         <div class="rank_list_box">
             <div class="rank_list">
 
-                <div class="rank_item">
+                  <div class="rank_item  time_sty">
                     <div class="rank_item_tit">开始时间</div>
-                    <input style="background: none;width:4rem" type="datetime-local" placeholder="请选择本次活动的开始时间" v-model="statre_time" @blur="blurEvent">
-                    <!--<div class="rank_item_con">-->
-                    <!--<span class="club_name">请选择本次活动的开始时间</span>-->
-                    <!--<img class="right_tip" :src="right_tip" alt="" >-->
-                    <!--</div>-->
+                    <div class="rank_item_con statre_times" :class="{'color' :color1}">{{statre_time}}</div>
+                    <input class="statre_times" style="background: none;width:4rem" type="datetime-local" placeholder="请选择活动的开始时间"   v-model="statre_times"  value="statre_time"  @blur="blurEvent">
                 </div>
-                <div class="rank_item">
+                <div class="rank_item  time_sty" >
                     <div class="rank_item_tit">结束时间</div>
-                    <input style="background: none;width:4rem" type="datetime-local" placeholder="请选择本次活动的开始时间" v-model="end_time" @blur="blurEvent">
-                    <!--<div class="rank_item_con">-->
-                    <!--<span class="club_name">请选择本次活动的结束时间</span>-->
-                    <!--<img class="right_tip" :src="right_tip" alt="" >-->
-                    <!--</div>-->
+                    <div class="rank_item_con end_times" :class="{'color' :color1}">{{end_time}}</div>
+                    <input class="end_times" style="background: none;width:4rem; " type="datetime-local" placeholder="选择活动的开始时间" v-model="end_times" value="end_time" @blur="blurEvent">
                 </div>
-                <div class="rank_item">
+
+                <div class="rank_item" style="border:none">
                     <div class="rank_item_tit">活动地点</div>
                     <div class="rank_item_con" @click="searcher">
                         <span class="club_name" v-show="active_address==''">请设置本次活动的场地</span>
-                        <span class="club_name" v-show="active_address!=''" style="color: #4d4d4d;">{{active_address}}</span>
+                        <span class="club_name" v-show="active_address!=''" style="color: #212121;">{{active_address}}</span>
                         <img class="right_tip" :src="right_tip" alt="" >
                     </div>
                 </div>
-                <div class="rank_item">
+
+                  <baidu-map style="width:100%;height:3rem" class="map" :center="center" :zoom="15">
+                    <bm-marker :position="center" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
+                    <bm-label content="" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
+                    </bm-marker>
+                </baidu-map>
+
+                <div class="rank_item" style="border:none">
                     <div class="rank_item_tit">设置打卡范围</div>
-                    <input style="width:5.1rem;" type="number" placeholder="请设置打卡范围" v-model="clock_scope" @blur="blurEvent">
+                    <input style="width:4rem;" type="number" placeholder="请设置打卡范围" v-model="clock_scope" @blur="blurEvent">
                 </div>
                 <div class="rank_item" style="height:3.2rem;align-items: normal;border:none;">
                     <div class="rank_item_tit" style="margin-top:0.34rem;">活动详情</div>
@@ -55,10 +57,15 @@
             </header>
             <label><input placeholder="请输入地点关键字" v-model="keyword"></label>
             <!--<label>地区：<input placeholder="请输入省份" v-model="location"></label>-->
-            <baidu-map >
-                <bm-view class="map" style="width: 100%;height:5rem;" :zoom="15"></bm-view>
-                <bm-local-search style="height:0;overflow: hidden" :keyword="keyword" :auto-viewport="true" :location="location" :page-capacity="30" @searchcomplete="searchcomplete"></bm-local-search>
+                <baidu-map class="map" :center="center" :zoom="15"   style="width:100%;height:4rem">
+                                    <bm-marker :position="center" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
+                                    <bm-label content="" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
+                                    </bm-marker>
+                                    <bm-local-search style="height:0;overflow: hidden" :keyword="keyword" :auto-viewport="true" :location="location" :page-capacity="30" @searchcomplete="searchcomplete"></bm-local-search>
+
             </baidu-map>
+
+ 
 
             <div class="data_br">
                 <div class="data_br_li" v-for="(item,index) in data_br" @click="to_address(item.title,item.marker.point)" :key="index">
@@ -82,6 +89,10 @@
 
 
 <script>
+    var x_PI = 3.14159265358979324 * 3000.0 / 180.0
+    var PI = 3.1415926535897932384626
+    var a = 6378245.0
+    var ee = 0.00669342162296594323
     import {BaiduMap ,BmView ,BmLocalSearch } from 'vue-baidu-map'
     import Header from './Header'
     import Eject from './eject'
@@ -107,7 +118,9 @@
                 msg:"",
                 active_name:'',
                 statre_time:'',
-                end_time:'2019-12-17 20:20:00',
+                end_time:'',
+                statre_times:'',
+                end_times:'',
                 registration:'',
                 margin:'',
                 refund_rules:'',
@@ -139,9 +152,33 @@
                 active_id:'',
                 issue:'',
                 is_edit:'',
-                issue_id:''
+                issue_id:'',
+                   center:{lng: 116.404, lat: 39.915},
+                showq:true,
+                   color1:false,
+                  color2:false,
 
             }
+        },
+
+         watch: {
+            statre_times(curVal, oldVal) {
+                console.log(curVal)
+                // 实现input连续输入，只发一次请求
+               this.statre_time=curVal.substring(0,16).replace('T',' ');
+               this.color1=true
+
+     
+            },
+
+             end_times(curVal, oldVal) {
+        
+                // 实现input连续输入，只发一次请求
+               this.end_time=curVal.substring(0,16).replace('T',' ');
+                               this.color2=true
+            },
+
+        
         },
         created() {
             this.active_name=localStorage.getItem('active_name');
@@ -150,8 +187,56 @@
             this.issue_id=this.$route.query.issue_id;
             console.log( this.active_id)
             this.is_edit=this.$route.query.is_edit;
-            if(this.is_edit==1){
 
+          let timestamp = new Date().getTime();
+              let timestamp1 = timestamp + 3 * 60 * 60 * 1000;
+              let myDate1 = new Date(timestamp1);
+            let month1=myDate1.getMonth()+1;
+            if(month1>0&&month1<10){
+                month1='0'+month1
+            }
+             let day1=myDate1.getDate();
+            if(day1>0&&day1<10){
+                day1='0'+day1
+            }
+            let hours1=myDate1.getHours();
+            if(hours1>0&&hours1<10){
+                hours1='0'+hours1
+            }
+            let minutes1=myDate1.getMinutes();
+            if(minutes1>0&&minutes1<10){
+                minutes1='0'+minutes1
+            }
+
+
+             let timestamp2 = timestamp + 15 * 60 * 60 * 1000;
+              let myDate2 = new Date(timestamp2);
+            let month2=myDate2.getMonth()+1;
+            if(month2>0&&month2<10){
+                month2='0'+month2
+            }
+
+          let day2=myDate2.getDate();
+            if(day2>0&&day2<10){
+                day2='0'+day2
+            }
+            let hours2=myDate2.getHours();
+            if(hours2>0&&hours2<10){
+                hours2='0'+hours2
+            }
+            let minutes2=myDate2.getMinutes();
+            if(minutes2>0&&minutes2<10){
+                minutes2='0'+minutes2
+            }
+
+            this.statre_time=myDate1.getFullYear()+'-'+month1+'-'+day1+' '+hours1+':'+minutes1;
+            this.end_time=myDate2.getFullYear()+'-'+month2+'-'+day2+' '+hours2+':'+minutes2;
+
+
+
+
+            if(this.is_edit==1){
+            
                 let _this=this;
                 _this.$axios.get("/activity-issues/"+this.issue_id,{
                     headers: {
@@ -165,14 +250,15 @@
                     if(res.status==200){
 
                         _this.active_name=res.data.data.name;
-                        _this.statre_time=res.data.data.start_date.substring(0,16).replace(' ','T');
-                        _this.end_time=res.data.data.end_date.substring(0,16).replace(' ','T');
+                        _this.statre_time=res.data.data.start_date.substring(0,16).replace('T',' ');
+                        _this.end_time=res.data.data.end_date.substring(0,16).replace('T',' ');
                         _this.active_address=res.data.data.address;
                         _this.clock_scope=res.data.data.sign_range;
                         _this.active_point.lat=res.data.data.latitude;
                         _this.active_point.lng=res.data.data.longitude;
                         _this.active_details=res.data.data.explanation;
-
+                       _this.color1=true
+                        _this.color2=true
                     }else{
                         _this.showa=true;
                         _this.show_tip=res.data.message;
@@ -183,13 +269,21 @@
                     })
             }
 
-
+          this.get_position()
 
         },
         mounted() {
 
         },
         methods: {
+
+                infoWindowClose () {
+                this.showq = false
+                },
+                infoWindowOpen () {
+                this.showq = true
+                },
+
             searcher(){
                 this.show_search=true
             },
@@ -204,6 +298,7 @@
                 this.active_point=point;
                 this.show_search=false;
                 this.keyword='';
+                     this.center=point
 
 
             },
@@ -275,19 +370,32 @@
                     return
                 }
 
-                var timestamp=new Date().getTime();
-                var statre_time_c=new Date(_this.statre_time).getTime();
+                 var myDate = new Date();
+                var month=myDate.getMonth()+1;
+                if(month>0&&month<10){
+                    month='0'+month
+                }
+                var timestamp=myDate.getFullYear()+'-'+month+'-'+myDate.getDate()+'T'+myDate.getHours()+':'+myDate.getMinutes();
+                var statre_time_c=this.statre_time.substring(0,16).replace(' ','T');
+                var end_time_c=this.end_time.substring(0,16).replace(' ','T');
+                console.log(timestamp)
+                console.log(statre_time_c)
+
+
+        
+            if(_this.is_edit!=1){        
                 if(statre_time_c<=timestamp){
                     this.showa=true;
                     this.show_tip='开始时间不得小于当前时间'
                     return
                 }
-
-                if(this.statre_time>=this.end_time){
+           }
+                if(statre_time_c>=end_time_c){
                     this.showa=true;
                     this.show_tip='开始时间必须早于结束时间'
                     return
                 }
+
 
                 if(this.address==''){
                     this.showa=true;
@@ -309,8 +417,8 @@
                 data_all.name=this.active_name;
                 data_all.act_id=this.active_id;
                 data_all.cur_issue=this.issue_id;
-                data_all.start_date=this.statre_time.replace('T',' ');
-                data_all.end_date=this.end_time.replace('T',' ');
+                data_all.start_date=this.statre_time.substring(0,16).replace('T',' ');
+                data_all.end_date=this.end_time.substring(0,16).replace('T',' ');
                 data_all.sign_range=this.clock_scope;
                 data_all.explanation=this.active_details;
                 data_all.address=this.active_address;
@@ -369,6 +477,38 @@
             okfall(){
                 this.showa=false;
             },
+
+               gcj02_to_bd09(lng, lat) {
+
+                var lat = +lat
+                var lng = +lng
+                var z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * x_PI)
+                var theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * x_PI)
+                var bd_lng = z * Math.cos(theta) + 0.0065
+                var bd_lat = z * Math.sin(theta) + 0.006
+                return [bd_lng, bd_lat]
+            },
+              get_position(){
+                 let  _this=this
+                   if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            //locationSuccess 获取成功的话
+                            function (position) {
+                                  let getitude=_this.gcj02_to_bd09(position.coords.longitude,position.coords.latitude)      
+                                _this.center={lng: getitude[0], lat: getitude[1]}
+                            },
+                            //locationError  获取失败的话
+                            function (error) {
+                                var errorType = ['您拒绝共享位置信息', '获取不到位置信息', '获取位置信息超时'];
+                                // _this.card_message = errorType[error.code - 1]
+//                                alert(errorType[error.code - 1]);
+
+                            }
+                        );
+                    }else{
+                        // _this.card_message ='获取不到位置信息'
+                    }
+             },
         }
 
     }
@@ -377,6 +517,33 @@
 
 
 <style scoped>
+
+    .time_sty{
+        position: relative
+    }
+
+    .time_sty>input{
+        opacity: 0;
+        position: absolute;
+        top:0;
+        bottom:0;
+        margin:auto;
+        right:0
+    }
+
+      .time_sty> .rank_item_con{
+         width:4rem;
+         height:0.6rem;
+         color: #c0c0c0;
+         line-height:0.6rem;
+         text-align: right;
+         font-size: 0.3rem;
+      }
+
+      
+        .time_sty>.color{
+          color:#212121;
+      }
 
     .address_box_search header{
         width:100%;
@@ -464,7 +631,7 @@
 
     .data_br{
         width:100%;
-        height:calc(100vh - 5.9rem);
+        height:calc(100vh - 4.9rem);
         padding:0.2rem;
         box-sizing: border-box;
         overflow: scroll;
@@ -630,7 +797,13 @@
 
 
     .club_name{
-        color: #a6a6a6;
+        color: #c0c0c0;
+                font-size: 0.3rem;
+    }
+
+    .rank_item_con>span{
+        font-size: 0.3rem;
+        color: #c0c0c0;
     }
 
     .rank_item_con .club_name_tip{
@@ -658,7 +831,7 @@
     .rank_list_box{
         width:7.1rem;
         margin:auto;
-        height:calc(100vh - 4.35rem);
+        height:calc(100vh - 2.35rem);
         margin-top:0.88rem;
         overflow: scroll;
     }
@@ -668,7 +841,7 @@
         height:auto;
         background: #fff;
         margin-top:0.1rem;
-        padding-bottom: 0.2rem;
+        margin-bottom: 0.2rem;
     }
 
     .rank_item{
@@ -690,8 +863,9 @@
 
     .rank_item>.rank_item_tit{
         width:auto;
-        font-size: 0.26rem;
-        color: #4d4d4d;
+        font-size: 0.3rem;
+        color: #212121;
+        font-weight: bold;
     }
 
     .rank_item>.rank_item_textarea{
@@ -699,17 +873,18 @@
         height:2.44rem;
         border:none;
         background: #f7f7f7f7;
-        margin-top:0.34rem;
+        margin-top:0.24rem;
         padding:0.2rem;
         box-sizing: border-box;
         border-radius: 0.1rem;
-        color: #4d4d4d;
+        color: #212121;
         resize: none;
+        font-size: 0.3rem;
 
     }
 
     .rank_item>.rank_item_textarea::placeholder{
-        color: #a6a6a6;
+        color: #c0c0c0;
 
     }
     .rank_item>.rank_item_textarea:focus{
@@ -717,11 +892,11 @@
     }
 
     .rank_item>input{
-        width:5.6rem;
-        font-size: 0.26rem;
+        width:5.4rem;
+        font-size: 0.3rem;
         text-align: right;
         border:none;
-        color: #4d4d4d;
+        color: #212121;
         height:0.6rem;
     }
     .rank_item>input:focus{
@@ -729,7 +904,7 @@
         outline: none;
     }
     .rank_item>input::placeholder{
-        color: #a6a6a6;
+        color: #c0c0c0;
     }
 
 

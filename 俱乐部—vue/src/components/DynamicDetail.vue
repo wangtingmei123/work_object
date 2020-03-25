@@ -36,7 +36,7 @@
                     </div>
                     <div class="dynamic_m4b">
                         <div class="dynamic_m43" v-if="dynamic.is_self_release==1&&dynamic.is_audited==0">审核中</div>
-                        <div class="dynamic_m43" v-if="dynamic.is_self_release==1&&dynamic.is_audited==1">已审核</div>
+                        <!-- <div class="dynamic_m43" v-if="dynamic.is_self_release==1&&dynamic.is_audited==1">已审核</div> -->
                         <div class="dynamic_m44" v-if="dynamic.is_self_release==1" @click="touch_del(dynamic.id)">删除</div>
                     </div>
 

@@ -28,8 +28,8 @@
                         <!--<div class="act_main_right4">已报名:20人</div>-->
                         <div class="act_main_right5">
                             <span>已报名:{{item.members}}人</span>
-                            <span>报名费:￥{{item.entry_fees/100}} </span>
-                            <span>保证金:￥{{item.cash_pledges/100}}</span>
+                            <span>报名费:{{item.entry_fees/100}} </span>
+                            <span>保证金:{{item.cash_pledges/100}}</span>
                         </div>
                     </div>
                 </div>
@@ -69,13 +69,14 @@
                 is_signee:0,
                 is_ended:0,
                 lazyimg:'./static/img/lazyimg.png',
+                isFirstEnter:false
 
 
 
             }
         },
         created() {
-            this.active_list()
+            this.isFirstEnter=true
         },
         mounted() {
 
@@ -160,6 +161,79 @@
             },
 
         },
+
+  beforeRouteEnter(to, from, next) {
+ 
+
+      next();
+    },
+
+    activated() {
+              let _this=this;
+                          console.log("888")
+      if(!this.$route.meta.isBack || this.isFirstEnter){
+         // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+         // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+        // 把数据清空，可以稍微避免让用户看到之前缓存的数据
+      
+                 _this.clientHeight=''
+                _this.scrollHeight=''
+                _this.scrollTop=''
+                _this.page_end=true
+                _this.loadFlag=true
+                _this.page=0
+        
+
+
+            if(_this.loadFlag){
+
+                    _this.$axios.get("/activities",{
+                        headers: {
+                            'Authorization': localStorage.getItem('token_type') + ' '+localStorage.getItem('access_token'),
+                        },
+                        params: {
+                            "near_days":3,
+                            "user_id":localStorage.getItem('user_id'),
+                            "is_apply":0,
+                            "is_signee":0,
+                            "is_ended":0,
+                            "last_id":_this.page
+                        }
+                    }).then(res=>{
+                        console.log(res)
+                        if(res.status==200){
+                            if(res.data.data.length<_this.GLOBAL.page_total){
+                                _this.page_end=false
+                            }
+                            let act_list=_this.act_list;
+                            act_list=res.data.data
+
+                       
+                            _this.act_list=act_list;
+                            _this.loadFlag=false;
+
+                        }else {
+                            _this.showa=true;
+                            _this.show_tip=res.data.message;
+                        }
+                    })
+                        .catch(err=>{
+                            console.log(err)
+                        })
+
+                }
+
+     }
+        // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+        this.$route.meta.isBack=false
+        // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+        this.isFirstEnter=false;
+
+        
+        },
+
+
+
         destroyed(){
             console.log(this.$refs.opBottomEcharts)
             window.removeEventListener('scroll', this.gotoScroll);
@@ -318,7 +392,7 @@
         height:0.36rem;
         font-size: 0.24rem;
         line-height:0.36rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         margin-top:0.18rem;
         overflow: hidden;
         text-overflow:ellipsis;
@@ -333,7 +407,7 @@
         height:0.36rem;
         font-size: 0.24rem;
         line-height:0.36rem;
-        color: #4d4d4d;
+        color: #a6a6a6;
         margin-top:0.05rem;
         overflow: hidden;
         text-overflow:ellipsis;
