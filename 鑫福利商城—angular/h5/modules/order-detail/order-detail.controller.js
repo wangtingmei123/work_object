@@ -39,7 +39,18 @@
 
 		$scope.paymentModel = PaymentModel;
 		$scope.orderExpressModel = OrderExpressModel;
+        $scope.touchlogisitics = _touchlogisitics;
 
+
+		   //  查看物流
+		function _touchlogisitics(region,address,order_goods_id,$event){
+			$event.stopPropagation();
+			$state.go('logistics', {
+				region: region,
+				address: address,
+				order_goods_id: order_goods_id,
+			});
+		}
 		function _touchPay() {
 			if (!$scope.order)
 				return;

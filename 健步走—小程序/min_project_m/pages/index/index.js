@@ -290,6 +290,7 @@ Page({
                 logo_location: res.data.data.logo_location,
                 company_name: res.data.data.title,
                 target_walk: res.data.data.target_walk,
+                activity_id: res.data.data.activity_id
                 
               })
               wx.setStorageSync('activity_id', res.data.data.activity_id);

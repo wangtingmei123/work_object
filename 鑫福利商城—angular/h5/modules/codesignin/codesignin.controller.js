@@ -24,6 +24,8 @@
         $scope.nameTipshowa = false;
         $scope.torefundTipa = _torefundTipa;
         $scope.tip_a = '';
+
+
         function _torefundTipa() {
             $scope.nameTipshowa = false;
         }
@@ -52,7 +54,23 @@
 			.then(function(success){
                 if (success) {
                     $scope.toast('登录成功');
-                    $scope.goHome();
+                    if(sessionStorage.getItem("show_toc")==null){
+                        if(AppAuthenticationService.getUser().company.id==75){
+                           
+                            window.location.href='http://shop.xindongguoji.com/h5/?#/productcs/?product='+ENUM.PRODUCTSCC.CICD2
+
+                        }else{
+                            $scope.goHome();
+
+                        }
+
+                    }else{
+                        
+                        window.location.href='http://shop.xindongguoji.com/h5/?#/productcs/?product='+sessionStorage.getItem("productId")
+
+                    }
+
+
                 }
                 else{
                     $scope.nameTipshowa = true;

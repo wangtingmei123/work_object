@@ -42,8 +42,8 @@ import HitcardAddress from '@/components/HitcardAddress'
 import Paypage from '@/components/Paypage'
 import ClubShare from '@/components/ClubShare'
 import CommpanyShare from '@/components/CommpanyShare'
-
 import ChangePassword from '@/components/ChangePassword'
+import VideoPlayer from '@/components/VideoPlayer'
 
 Vue.use(Router)
 export default new Router({
@@ -329,6 +329,11 @@ export default new Router({
       path: '/changepassword',
       name: 'ChangePassword',
       component: ChangePassword
+    },
+    {
+      path: '/videoplayer',
+      name: 'VideoPlayer',
+      component: VideoPlayer
     },
   ]
 })

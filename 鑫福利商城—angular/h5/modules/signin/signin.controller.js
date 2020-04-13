@@ -45,7 +45,26 @@
                 .then(function(success){
                     if (success) {
                         $scope.toast('登录成功');
-                        $scope.goHome();
+                        if(sessionStorage.getItem("show_toc")==null){
+                            if(AppAuthenticationService.getUser().company.id==75){
+                                // $state.go('productcs', {
+                                //     product: ENUM.PRODUCTSCC.CICD2
+                                // });
+                                window.location.href='http://shop.xindongguoji.com/h5/?#/productcs/?product='+ENUM.PRODUCTSCC.CICD2
+                            }else{
+                                $scope.goHome();
+    
+                            }
+    
+                        }else{
+                            // $state.go('productcs', {
+                            //     product: sessionStorage.getItem("productId")
+                            // });
+                        
+                            window.location.href='http://shop.xindongguoji.com/h5/?#/productcs/?product='+sessionStorage.getItem("productId")
+
+                        }
+
                     }
                     else{
                         $scope.toast('手机号或密码错误');

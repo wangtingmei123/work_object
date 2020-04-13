@@ -25,6 +25,15 @@
 		$scope.touchSubmit = _touchSubmit;
 		$scope.touchDetail = _touchDetail;
 		$scope.goOrder = _goOrder;
+
+		$scope.nameTipshowa = false;
+		$scope.tip_a = '';
+		$scope.torefundTipa = _torefundTipa;
+		function _torefundTipa() {
+			$scope.nameTipshowa = false;
+		}
+
+
 		function _goOrder(){
 			$state.go('my-order', {
 				tab: 'all'
@@ -46,7 +55,10 @@
 
 		function _touchSubmit() {
 			if (!$scope.selectedType) {
+				$scope.nameTipshowa = true;
+				$scope.tip_a = '请选择支持方式';
 				$scope.toast('请选择支持方式');
+
 				return;
 			}
 

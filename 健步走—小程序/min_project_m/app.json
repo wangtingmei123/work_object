@@ -56,7 +56,7 @@
           "pagePath": "pages/sports_tribe/sports_tribe",
           "iconPath": "static/images/images/03index_3.png",
           "selectedIconPath": "static/images/images/03index_3_select_03.png",
-          "text":"运动部落"
+          "text":"风采展示"
         },
         {
           "pagePath": "pages/me/me",

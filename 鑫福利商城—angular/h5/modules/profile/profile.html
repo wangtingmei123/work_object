@@ -1,4 +1,4 @@
-<div class="bg" ng-controller="ProfileController">
+<div class="bg" ng-controller="ProfileController" style="min-height: 100vh;">
     <header ng-if="user.company.id==47" class="head headBorder0">
         <div class="headBox">
             <a href="javascript:;" class="back" ng-click="tozxlist()"></a>
@@ -78,19 +78,26 @@
                 <span class="label">收货地址</span>
             </a>
         </li>
-        <li ng-if="user.company.id==47">
-            <a href="javascript:void(0);" class="box" style="background: none">
-                <span class="label">客服热线：400-670-0690</span>
-            </a>
-        </li>
+ 
         <li ng-click="touchPassword()" ng-if="user.company.id!=47">
             <a href="javascript:void(0);" class="box">
                 <span class="label">修改密码</span>
             </a>
         </li>
+        <li  ng-show="guanzhu">
+            <a href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzU4NDI3ODQ0Ng==#wechat_redirect" class="box">
+                <span class="label">关注我们</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="javascript:void(0);" class="box">
+                <span class="label">客服电话：4006700690</span>
+            </a>
+        </li>
     </ul>
-    <div class="exitLogin"><div class="exitBtn" ng-click="touchSignout()" ng-if="isSignIn()&&user.company.id!=47">退出登录</div></div>
-    <footer class="nav" ng-if="user.company.id!=47">
+    <div style="margin-top: 0.2rem;" class="exitLogin"><div class="exitBtn" ng-click="touchSignout()" ng-if="isSignIn()&&user.company.id!=47">退出登录</div></div>
+    <footer class="nav" ng-if="user.company.id!=47&&user.company.id!=75">
         <div class="navFixed">
             <ul class="navBox">
                 <li class="nhome" ng-click="goHome()"><a href="javascript:void(0);">

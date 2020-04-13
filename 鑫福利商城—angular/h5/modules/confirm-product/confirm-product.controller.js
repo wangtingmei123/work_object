@@ -9,7 +9,8 @@
 	ConfirmController.$inject = ['$scope', '$state', '$rootScope', '$stateParams', 'API', 'ConfirmProductService','ENUM','ExpressSelectService', 'InvoiceSelectService', 'PaymentModel','AppAuthenticationService', '$interval'];
 
 	function ConfirmController($scope, $state, $rootScope, $stateParams, API, ConfirmProductService,ENUM,ExpressSelectService, InvoiceSelectService, PaymentModel,AppAuthenticationService, $interval) {
-
+		$scope.sgproduct_id_c=ENUM.PRODUCTSCC.CICD1;
+		$scope.sgproduct_id_c1=ENUM.PRODUCTSCC.CICD2;
         $scope.buzu = false;
 		$scope.isSubmitIng = false;
         $scope.show_cup = false;
@@ -686,9 +687,50 @@
 			}
             _refreshOrderPrice();
 
-        }
+		}
+		
+
+
+	
+
+
 
 		function _touchSubmit() {
+
+
+		    	var sgproduct_id=$scope.selectedGoods[0].product.id
+
+				//    var stime='2020-4-7 00:30'
+				//    var etime='2020-4-7 01:00'
+				// 	// 转换时间格式，并转换为时间戳
+				// 	function tranDate (time) {
+				// 	  return new Date(time.replace(/-/g, '/')).getTime();
+				// 	}
+				// 	// 开始时间
+				// 	let startTime = tranDate(stime);
+				// 	// 结束时间
+				// 	let endTime = tranDate(etime);
+				// 	let thisDate = new Date();
+				// 	// 获取当前时间，格式为 2018-9-10 20:08
+				// 	let currentTime = thisDate.getFullYear() + '-' + (thisDate.getMonth() + 1) + '-' + thisDate.getDate() + ' ' + thisDate.getHours() + ':' + thisDate.getMinutes();
+				// 	let nowTime = tranDate(currentTime);
+				// 	// 如果当前时间处于时间段内，返回true，否则返回false
+				
+				// 	if (nowTime < startTime && sgproduct_id==$scope.sgproduct_id_c) {
+				// 		$scope.nameTipshowa = true;
+				// 		$scope.tip_a = '该商品购买时间4月7号0点开始';
+				// 	  return false;
+				// 	}
+
+				// 	if (nowTime > endTime && sgproduct_id==$scope.sgproduct_id_c) {
+				// 		$scope.nameTipshowa = true;
+				// 		$scope.tip_a = '购买已结束';
+				// 	  return false;
+				// 	}
+				
+
+
+
 
 			var consignee = $scope.consignee;
 			if (!consignee && ConfirmProductService.product.is_real == 1) {
@@ -698,15 +740,24 @@
 				return;
 			}
 
+
+
+
+			if(ConfirmProductService.product.is_real == 1 && consignee.regions[2].id!=37 && (sgproduct_id==23223 || sgproduct_id==23224 || sgproduct_id==23225 || sgproduct_id==9694)){
+				$scope.nameTipshowa = true;
+				$scope.tip_a = '该商品仅限北京地区购买';
+				return
+			}
+
 			// 场馆预定新增上线之前放开
 
-			if ($scope.is_yd && ($scope.input.name == ''||$scope.input.name == null)) {
+			if ($scope.is_yd && ($scope.input.name == '' || $scope.input.name == null)) {
 				$scope.nameTipshowa = true;
 				$scope.tip_a = '请输入您的姓名';
 				return;
 			}
 
-			if($scope.is_yd && ($scope.input.name != ''||$scope.input.name != null)){
+			if($scope.is_yd && ($scope.input.name != '' || $scope.input.name != null)){
 				let name=$scope.input.name
 				let reg =/^[\u4e00-\u9fa5]+$/;
 				if(!reg.test(name)){
@@ -738,7 +789,7 @@
 				return;
 			}
 
-			if ($scope.is_yd && $scope.is_yd_h && ($scope.time == ''||$scope.time2 == '')) {
+			if ($scope.is_yd && $scope.is_yd_h && ($scope.time == ''|| $scope.time2 == '')) {
 				$scope.nameTipshowa = true;
 				$scope.tip_a = '请选择时间段';
 				return;
@@ -863,12 +914,14 @@
 			}
 
 			API.product.purchase(params)
-				.then(function (order) {
-					if(order==null){
+				.then(function (res) {
+					console.log(res)
+					if(ENUM.ERROR_CODE.OK != res.data.error_code){
 						$scope.nameTipshowa = true;
-					    $scope.tip_a = '超出限购数量，请重新选择';
+					    $scope.tip_a = res.data.error_desc;
 					   return
 					}
+					var order=res.data.order;
 					if (order) {
 						ConfirmProductService.clear();
 						ExpressSelectService.clear();

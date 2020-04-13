@@ -187,6 +187,7 @@
             }
         },
         created() {
+            $("body,html").scrollTop(0);
             let _this=this
             _this.club_name=localStorage.getItem('club_name')
             _this.active_id=_this.$route.query.id;

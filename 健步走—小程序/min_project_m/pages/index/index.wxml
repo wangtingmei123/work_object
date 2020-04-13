@@ -13,7 +13,12 @@
 
       </view>
 
-    <view class="title"  >{{company_name}}</view>
+    <view class="title"  wx:if="{{activity_id!=87}}">{{company_name}}</view>
+    <view class="title"  wx:if="{{activity_id==87}}">
+      <text> “坚持抗疫 坚守健康”</text>  
+      <text>中信银行北京分行春季线上健步走</text>
+    </view>
+
 
     <view class="circle-box">
           <canvas class="canvas1" canvas-id="canvasArc" style="width:{{width_c}}px;height:{{height_c}}px;"></canvas>

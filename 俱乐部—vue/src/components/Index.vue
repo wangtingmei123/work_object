@@ -1,12 +1,6 @@
 <template>
-  <div class="hello" style="min-height: 100vh"
-
-  
-  >
-
-
-
-      <Header :title="title" :show="show" :backpage="backpage"></Header>
+  <div class="hello" style="min-height: 100vh;background:#fff" >
+      <!-- <Header :title="title" :show="show" :backpage="backpage"></Header> -->
       <div class="banner">
           <section class="my-swiper">
               <swiper :options="swiperOption">
@@ -23,18 +17,22 @@
               <div class="tab_select" @click="to_allclub">
                   <img :src="tap1" alt="">
                   <div class="tap_span">俱乐部</div>
+                  <div class="tap_span_ele">Club</div>
               </div>
               <a class="tab_select" style="display: block;text-decoration: none" href="http://shop.xindongguoji.com/h5/">
                   <img :src="tap2" alt="">
                   <div class="tap_span">商城</div>
+                  <div class="tap_span_ele">Shopping</div>
               </a>
               <div class="tab_select" @click="to_ranklist">
                   <img :src="tap3" alt="">
                   <div class="tap_span">排行</div>
+                  <div class="tap_span_ele">Ranking</div>
               </div>
               <div class="tab_select" @click="to_my">
                   <img :src="tap4" alt="">
                   <div class="tap_span">我的</div>
+                  <div class="tap_span_ele">My</div>
               </div>
           </div>
       </div>
@@ -46,19 +44,20 @@
                   <div class="title_center">最新活动</div>
                   <img class="right_tip" :src="right_tip" alt="">
               </div>
-              <div class="act_new_main_box" >
+              <div class="act_new_main_box" v-if="act_list_new.length>0">
                   <div class="act_new_main_float" >
-                      <div class="act_new_main"  :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id,item.club_id,item.name,item.club.name)" v-for="(item,index) in act_list_new" :key="index">
+                      <div class="act_new_main"  @click="to_detail(item.issue_nums,item.id,item.club_id,item.name,item.club.name)" v-for="(item,index) in act_list_new" :key="index">
                           <div class="act_new_main_img">
                               <img v-show="item.logo_url!=''" v-lazy="item.logo_url" :src="lazyimg" alt="">
                               <img v-show="item.logo_url==''"  :src="lazyimg" alt="">
 
                           </div>
 
-                          <div class="act_new_main_tit">{{item.name}}</div>
                           <div class="act_new_main_tap">
                               <!--<div class="club_main_right2_tap1">lv18</div>-->
                               <div class="club_main_right2_tap1">{{item.club.type_name}}</div>
+                              <div class="act_new_main_tit">{{item.name}}</div>
+
                               <div class="club_main_right2_peoper">{{item.members}}人</div>
                           </div>
 
@@ -70,49 +69,33 @@
           </div>
       </div>
 <!--即将减到的活动-->
-      <div class="active_box">
+      <div class="active_box" style="margin-top:0.92rem">
           <div class="active">
               <div class="active_title" @click="to_siginactive">
                   <!--<img class="active_title1" :src="active_title1" alt="">-->
                   <div class="title_center">即将签到的活动 <span>3天内开始的活动会在这里</span></div>
                   <img class="right_tip" :src="right_tip" alt="">
               </div>
-              <div style="padding-bottom: 0.5rem" v-if="act_list.length>0">
-                <div class="act_main" :class="{act_main_a1:index==0}" @click="to_detail(item.issue_nums,item.id,item.club_id,item.name,item.club.name)" v-for="(item,index) in act_list" :key="index">
+              <div v-if="act_list.length>0">
+                <div class="act_main act_main_am" @click="to_detail(item.issue_nums,item.id,item.club_id,item.name,item.club.name)" v-for="(item,index) in act_list" :key="index">
                   <div class="act_main_left">
                        <img v-show="item.logo_url!=''" v-lazy="item.logo_url" :src="lazyimg" alt="">
                        <img v-show="item.logo_url==''"  :src="lazyimg" alt="">
-                      <!--<div  class="act_time">29:28:40</div>-->
-                      <!--<div class="act_time_tip">距离活动开始</div>-->
-                      <!--<div v-show="item.status==0" class="act_buta">报名中</div>-->
-                      <!--<div v-show="item.status==1" class="act_buta">即将开始</div>-->
-                      <!--<div v-show="item.status==2" class="act_buta">签到中</div>-->
-                      <!--<div v-show="item.status==3" class="act_buta">已结束</div>-->
                   </div>
                   <div class="act_main_right">
                       <div class="act_main_right1">{{item.name}}</div>
-                      <div class="act_main_right2">地点:
-                          <span v-if="item.address!=''&&item.address!=undefined">{{item.address}}</span>
-                          <span v-if="item.address==''||item.address==undefined">长期活动详情可见</span>
-                      </div>
-                      <div class="act_main_right3">开始时间:
-                          <span v-if="item.start_date!=''&&item.start_date!=undefined">{{item.start_date}}</span>
-                          <span v-if="item.start_date==''||item.start_date==undefined">长期活动详情可见</span>
-                          <!--<span>16:00-18:00</span>-->
-                      </div>
-                      <!--<div class="act_main_right4">已报名:20人</div>-->
-                      <div class="act_main_right5">
-                          <span>已报名:{{item.members}}人</span>
-                          <span>报名费:￥{{item.entry_fees/100}} </span>
-                          <span>保证金:￥{{item.cash_pledges/100}}</span>
-                      </div>
+                      <div class="act_main_right4"> {{item.members}}人</div>
+                      <div class="act_main_right6">立即进入</div>
                   </div>
-              </div>
+                </div>
+
+              
+
             </div>
           </div>
       </div>
 <!--我加入的俱乐部-->
-      <div class="club_box">
+      <div class="club_box" style="margin-top:0.92rem">
           <div class="club">
               <div class="active_title" @click="myclub">
                   <!--<img class="active_title1 active_title2" :src="active_title2" alt="">-->
@@ -120,20 +103,28 @@
                   <img class="right_tip" :src="right_tip" alt="">
               </div>
               <div style="padding-bottom: 0.5rem" v-if="club_list.length>0">
-                   <div class="club_main" :class="{club_main_a1:index==0}"  v-for="(item,index) in club_list" :key="index">
-                        <div class="club_main_left" @click="to_clubindex(item.club.id,item.club.name)">
-                               <img v-show="item.club.logo!=''" v-lazy="item.club.logo" :src="lazyimg" alt="">
-                               <img v-show="item.club.logo==''" :src="lazyimg" alt="">
-                        </div>
-                        <div class="club_main_right">
-                            <div class="club_main_right1" @click="to_clubindex(item.club.id,item.club.name)">{{item.club.name}}</div>
-                            <div class="club_main_right2" @click="to_clubindex(item.club.id,item.club.name)">
-                                <!--<div class="club_main_right2_tap1">lv18</div>-->
-                                <div class="club_main_right2_tap1">{{item.club.type_name}}</div>
-                                <div class="club_main_right2_peoper">{{item.club.members}}人</div>
+                   <div class="club_main"  >
+                       <div class="club_new_main_float">
+
+                            <div class="club_main_left"  v-for="(item,index) in club_list" :key="index" @click="to_clubindex(item.club.id,item.club.name)" >
+                                <div class="img_box">
+                            
+                                    <img v-show="item.club.logo!=''" v-lazy="item.club.logo" :src="lazyimg" alt="">
+                                    <img v-show="item.club.logo==''" :src="lazyimg" alt="">
+                                </div>
+                                <div class="club_main_left_fl">
+                                        <div class="club_main_right2_tap1">{{item.club.type_name}}</div>
+                                </div>
+                                <div class="club_main_right">
+                                    <div class="club_main_right1" @click="to_clubindex(item.club.id,item.club.name)">{{item.club.name}}</div>
+                                    <div class="club_main_right2" @click="to_clubindex(item.club.id,item.club.name)">
+                                        {{item.club.members}}人
+                                    </div>
+                                </div>
                             </div>
-                            <div class="club_main_right3" @click="to_clubindex(item.club.id,item.club.name)">{{item.club.explanation}}</div>
-                        </div>
+
+                           
+                       </div>
                     </div>
              </div>
           </div>
@@ -148,6 +139,7 @@
 
       <div class="selection_box">
           <div class="selection">
+              <div class="selection_fl"></div>
               <div class="select_img">
                   <img :src="select_img" alt="">
               </div>
@@ -155,6 +147,7 @@
               <div class="select_price"><span class="span1">￥</span>245.00 <span class="span2">￥248.00</span>    </div>
           </div>
           <div class="selection">
+              <div class="selection_fl"></div>
               <div class="select_img">
                   <img :src="select_img" alt="">
               </div>
@@ -178,10 +171,10 @@
                 title: '首页',
                 show: false,
                 backpage: '/index',
-                tap1:'./static/img/03index_07.png',
-                tap2:'./static/img/03index_09.png',
-                tap3:'./static/img/03index_11.png',
-                tap4:'./static/img/03index_13.png',
+                tap1:'./static/img/home_img/mhomea_07.png',
+                tap2:'./static/img/home_img/mhomea_09.png',
+                tap3:'./static/img/home_img/mhomea_11.png',
+                tap4:'./static/img/home_img/mhomea_13.png',
                 active_title1:'./static/img/03index_22.png',
                 active_title2:'./static/img/03index_33.png',
                 right_tip:'./static/img/03index_25.png',
@@ -201,7 +194,7 @@
                     paginationClickable: true,
                     loop: true,
                 },
-                swiperList: ['./static/img/bannera.png', './static/img/bannerb.png'], // 轮播图数组对象
+                swiperList: ['./static/img/home_img/mhomea_03.jpg', './static/img/bannerb.png'], // 轮播图数组对象
                 user_id:'',
                 club_list:[],
                 act_list:[],
@@ -572,7 +565,6 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        margin-top:0.1rem;
         margin-bottom:0.2rem;
     }
     .selection_box>.selection{
@@ -581,6 +573,18 @@
         background: #fff;
         border-radius: 0.2rem;
         overflow: hidden;
+        position: relative;
+        margin-bottom: 0.2rem;
+    }
+
+    .selection_fl{
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background: rgba(0,0,0,0.02);
+
     }
 
     .selection>.select_img{
@@ -627,7 +631,7 @@
 
     .selection_tit{
         width:7.2rem;
-        height:1.1rem;
+        height:0.98rem;
         background: #fff;
         border-radius: 0.1rem;
         margin:auto;
@@ -637,25 +641,27 @@
     }
 
     .act_new_main_box{
-        width:100%;
-        height:3.5rem;
-        overflow: scroll;
+        width:7.2rem;
+        height:4.2rem;
+        overflow-x: scroll;
+        overflow-y: hidden;
     }
 
 
     .act_new_main_box>.act_new_main_float{
-        width:14rem;
+        width:auto;
         height:100%;
-        overflow: hidden;
+        white-space:nowrap;
         /* display: flex;
         justify-content: flex-start; */
     }
 
     .act_new_main_box .act_new_main{
-        width:2.6rem;
-        height:3.5rem;
-        float: left;
-        margin-left:0.25rem;
+        width:5.67rem;
+        height:4.2rem;
+        display: inline-block;
+        margin-left:0.3rem;
+        position: relative;
 
     }
 
@@ -663,80 +669,93 @@
                   margin-left:0;
 
       }
+       .act_new_main_box .act_new_main:last-child{
+                  margin-right:0.3rem;
+
+      }
+
 
     .act_new_main_img{
         display: block;
-        width:2.6rem;
-        height:2rem;
-        border-radius: 0.1rem;
+          width:5.67rem;
+        height:4.2rem;
+        border-radius: 0.2rem;
     }
     .act_new_main_box .act_new_main_img>img{
         display: block;
         width:100%;
         height:100%;
         object-fit:cover;
-        border-radius: 0.1rem;
+        border-radius: 0.2rem;
     }
 
-    .act_new_main_box .act_new_main .act_new_main_tit{
-        width:2.6rem;
-        height:0.7rem;
-        font-size: 0.3rem;
-        color: #222;
-        line-height: 0.75rem;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
-    }
+  
 
 
     .act_new_main_box .act_new_main .act_new_main_tap{
         width:100%;
-        height:0.32rem;
-        font-size: 0.22rem;
-        line-height:0.32rem;
-        color: #999;
+        height:4.2rem !important;
+        position: absolute;
+        top:0;
+        left:0;
+        border-radius: 0.2rem;
+        background: rgba(0,0,0,0.0.05);
+        overflow: hidden;
+
     }
 
-
+  .act_new_main_box .act_new_main .act_new_main_tap .act_new_main_tit{
+        width:5rem;
+        height:0.44rem;
+        font-size: 0.34rem;
+        color: #fff;
+        line-height: 0.44rem;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        margin-left:0.28rem;
+        margin-top:0.1rem;
+        display: block;
+        float:unset;
+        margin-top:0.18rem;
+        font-weight: bold;
+    }
 
     .act_new_main_box .act_new_main>.act_new_main_tap .club_main_right2_tap1{
-        width:auto;
-        font-size: 0.22rem;
-        height:0.32rem;
-        line-height:0.32rem;
+        width:0.78rem;
+        font-size: 0.26rem;
+        height:0.4rem;
+        line-height:0.42rem;
         background:#ff5a57;
-        border-radius: 0.06rem;
-        padding:0 0.1rem;
-        float: left;
-        margin-left:0.14rem;
+        border-radius: 0.04rem;
+        margin-left:0.28rem;
+        margin-top:2.4rem;
         color: #fff;
+        text-align: center;
+
         /*margin-top:0.01rem;*/
 
     }
 
-    .act_new_main_box .act_new_main>.act_new_main_tap .club_main_right2_tap1:nth-child(1){
-        margin-left:0;
-    }
+
 
     .act_new_main_box .act_new_main>.act_new_main_tap .club_main_right2_peoper{
         width:auto;
-        font-size: 0.22rem;
-        color: #999;
-        margin-left:0.2rem;
-        height:100%;
+        font-size: 0.3rem;
+        color: #fff;
+        margin-left:0.28rem;
+        height:auto;
         line-height:0.32rem;
-        float: left;
+        margin-top:0.18rem;
+        font-weight: bold;
+
     }
 
 
     .club_box{
-        width:7.2rem;
+        width:6.9rem;
         margin:auto;
-        margin-top:0.2rem;
-        margin-bottom:0.2rem;
         background: #fff;
-        border-radius: 0.1rem;
 
     }
     .club{
@@ -746,37 +765,99 @@
     }
 
     .club .club_main{
-        width:100%;
-        height:2rem;
+        width:7.2rem;
+        height:5rem;
         box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top:0.5rem;
-    }
-    .club .club_main_a1{
-        margin-top:0;
+        overflow-x: scroll;
+        overflow-y:hidden;
     }
 
-    .club_main>.club_main_left{
-        width:2.2rem;
-        height: 2rem;
+
+    .club .club_main .club_new_main_float{
+        width:auto;
+        height:100%;
+        white-space:nowrap;
+
+
 
     }
-    .club_main>.club_main_left>img{
-        width:2.2rem;
-        height: 2rem;
+
+    
+    .club_main .club_main_left:nth-child(1){
+        margin-left:0;
+    }
+    .club_main .club_main_left:last-child{
+        margin-right:0.3rem;
+    }
+
+    .club_main .club_main_left{
+        width:5.64rem;
+        height: 4.64rem;
+        border:1px solid #f0f0f0;
+        border-radius: 0.1rem;
+        position: relative;
+        margin-left:0.28rem;
+        display: inline-block;
+
+
+    }
+    .club_main .club_main_left>.img_box{
+        width:100%;
+        height: 3.8rem;
         background: palegoldenrod;
         border:none;
         border-radius: 0.1rem;
     }
-    .club_main>.club_main_right{
-        width:4.56rem;
-        height: 2rem;
-        position: relative;
+    .club_main .club_main_left>.img_box>img{
+        display: block;
+        width:100%;
+        height:100%;
+        object-fit: cover;
+        border-radius: 0.1rem;
+
     }
 
-    .club_main>.club_main_right .to_join{
+
+     .club .club_main .club_main_left .club_main_left_fl{
+         width:100%;
+        height: 3.8rem;
+         position:absolute;
+         top:0;
+         left:0;
+         border-radius: 0.1rem;
+         background: rgba(0,0,0,0.05);
+     }
+
+     .club .club_main .club_main_left_fl .club_main_right2_tap1{
+            width: 0.78rem;
+            font-size: 0.26rem;
+            height: 0.4rem;
+            line-height: 0.42rem;
+            background: #ff5a57;
+            border-radius: 0.04rem;
+            margin-left: 0.25rem;
+            margin-top: 0.28rem;
+            color: #fff;
+            text-align: center;
+     }
+
+
+    .club_main .club_main_right{
+        width:5.64rem;
+        height: 0.84rem;
+        display: flex;
+        padding:0 0.28rem 0.16rem 0.28rem;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+
+
+    }
+
+    .club_main .club_main_right .to_join{
         width:1.3rem;
         height:0.5rem;
         background: #ff5a57;
@@ -790,29 +871,25 @@
         right:0;
 
     }
-    .club_main>.club_main_right>.club_main_right1{
-        width:100%;
-        height:0.36rem;
-        font-size: 0.3rem;
-        line-height:0.36rem;
-        font-weight: bold;
-        margin-top:0.08rem;
+    .club_main .club_main_right>.club_main_right1{
+        width:4rem;
+        font-size: 0.32rem;
         color: #1a1a1a;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
+        margin-top:0.05rem;
     }
 
-    .club_main>.club_main_right>.club_main_right2{
-        width:100%;
-        height:0.32rem;
-        font-size: 0.22rem;
-        line-height:0.32rem;
-        color: #999;
-        margin-top:0.1rem;
+    .club_main .club_main_right>.club_main_right2{
+        width:auto;
+        font-size: 0.3rem;
+        color: #bcbcbc;
+        margin-top:0.05rem;
+
     }
 
-    .club_main>.club_main_right>.club_main_right2>.club_main_right2_tap1{
+    .club_main .club_main_right>.club_main_right2>.club_main_right2_tap1{
         width:auto;
         font-size: 0.22rem;
         height:0.32rem;
@@ -827,11 +904,11 @@
 
     }
 
-    .club_main>.club_main_right>.club_main_right2>.club_main_right2_tap1:nth-child(1){
+    .club_main .club_main_right>.club_main_right2>.club_main_right2_tap1:nth-child(1){
         margin-left:0;
     }
 
-    .club_main>.club_main_right>.club_main_right2>.club_main_right2_peoper{
+    .club_main .club_main_right>.club_main_right2>.club_main_right2_peoper{
         width:auto;
         font-size: 0.22rem;
         color: #999;
@@ -841,7 +918,7 @@
         float: left;
     }
 
-    .club_main>.club_main_right>.club_main_right3{
+    .club_main .club_main_right>.club_main_right3{
         height:auto;
         width:100%;
         margin-top:0.3rem;
@@ -858,10 +935,10 @@
     }
 
     .active_box{
-        width:7.2rem;
+        width:6.9rem;
         height:auto;
         margin:auto;
-        margin-top:0.2rem;
+        margin-top:0.54rem;
         background: #fff;
         border-radius: 0.1rem;
 
@@ -875,7 +952,7 @@
     .active_title .title_center{
         color: #1a1a1a;
         margin-right:0.56rem;
-        font-size: 0.32rem;
+        font-size: 0.36rem;
         font-weight: bold;
 
     }
@@ -887,7 +964,7 @@
 
   .active_title{
         width:100%;
-        height:1.1rem;
+        height:0.98rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -915,19 +992,22 @@
 
     .act_main{
         width:100%;
-        height:2rem;
+        height:4rem;
         box-sizing: border-box;
-        display: flex;
-        justify-content: space-between;
-        margin-top:0.5rem;
+        border-radius: 0.1rem;
+        overflow: hidden;
+        position: relative;
+        margin-top:0.1rem;
+    
     }
-    .act_main_a1{
+    .act_main:nth-child(1){
         margin-top:0;
     }
+  
 
     .act_main>.act_main_left{
-        width:2.2rem;
-        height:2rem;
+        width:100%;
+        height:100%;
 
     }
 
@@ -974,21 +1054,28 @@
         color: #ff5a57;
     }
     .act_main>.act_main_right{
-        width:4.6rem;
+        width:100%;
         height:100%;
+        position:absolute;
+        top:0;left:0;
+        background: rgba(0,0,0,0.0.05);
 
     }
     .act_main>.act_main_right>.act_main_right1{
-        width:100%;
-        height:0.36rem;
-        font-size: 0.3rem;
-        line-height:0.36rem;
+        width:80%;
+        height:0.78rem;
+        font-size: 0.52rem;
+        line-height:0.78rem;
         font-weight: bold;
-        color: #333333;
-        margin-top:0.08rem;
+        color: #fff;
+        margin:auto;
+        margin-top:1.3rem;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
+        font-weight: bold;
+        text-align: center;
+
 
     }
 
@@ -1026,11 +1113,12 @@
 
     .act_main>.act_main_right>.act_main_right4{
         width:100%;
-        height:0.36rem;
-        font-size: 0.24rem;
-        line-height:0.36rem;
-        color: #a6a6a6;
-        margin-top:0.16rem;
+        height:0.7rem;
+        font-size: 0.32rem;
+        line-height:0.7rem;
+        color: #fff;
+        text-align: center;
+        font-weight: bold;
 
     }
     .act_main>.act_main_right>.act_main_right5{
@@ -1053,56 +1141,80 @@
         color: #a6a6a6;
     }
 
+    .act_main>.act_main_right>.act_main_right6{
 
+        width:1.76rem;
+        height:0.62rem;
+        border-radius: 0.62rem;
+        background: #fff;
+        font-size: 0.26rem;
+        color: #1a1a1a;
+        text-align: center;
+        line-height:0.64rem;
+        margin:auto;
+        margin-top:0.22rem;
+        font-weight: bold;
+
+
+
+    }
 
 
     .tab_box{
-        width:7.2rem;
-        height:2rem;
+        width:100%;
+        height:2.24rem;
         background: #fff;
         border-radius: 0.2rem;
         margin:auto;
-        margin-top:0.2rem;
+        margin-top:0.78rem;
     }
     .tab{
-        width:7.2rem;
+        width:6.58rem;
         height:100%;
         margin:auto;
-        padding:0.28rem 0.28rem;
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;
-        align-items: center;
     }
     .tab_select{
-        width:0.88rem;
+        width:1.3rem;
         height:100%;
 
     }
     .tab_select>img{
         display: block;
-        width:0.88rem;
-        height:0.88rem;
+        width:1.3rem;
+        height:1.3rem;
         background: palegoldenrod;
-        border-radius: 0.88rem;
+        border-radius: 1.3rem;
 
     }
     .tab_select>.tap_span{
         width:100%;
         height:auto;
-        font-size: 0.26rem;
-        color: #545454;
+        font-size: 0.3rem;
+        color: #1a1a1a;
         text-align: center;
         margin-top:0.22rem;
     }
 
+    .tab_select>.tap_span_ele{
+        width:100%;
+        height:auto;
+        font-size: 0.26rem;
+        color: #a6a6a6;
+        text-align: center;
+    }
+
 
     .banner{
-        width:7.2rem;
-        height:3.5rem;
+        width:6.8rem;
+        height:4rem;
         position: relative;
         margin:auto;
-        margin-top:1.08rem;
+        margin-top:0.48rem;
+        border-radius: 0.1rem;
+        overflow: hidden;
     }
 
     .my-swiper{
@@ -1110,17 +1222,17 @@
         height:100%;
     }
     .swiper-container{
-        height:3.5rem;
+        height:4rem;
     }
     .swiper-slide{
         width:100%;
-        height:3.5rem;
+        height:4rem;
     }
 
     .swiper-slide>img{
         display: block;
         width:100%;
-        height:3.5rem;
+        height:4rem;
 
     }
 

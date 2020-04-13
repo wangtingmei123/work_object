@@ -66,7 +66,7 @@
 		}
 	</style>
     <div class="navbar fixed-top">
-        <div class="navbar-left hide-weixin" ng-click="goHome()">
+        <div class="navbar-left hide-weixin" ng-click="goBack()">
             <img class="button-icon" src="image/nav-left.png"/>
             <div class="button-text">取消</div>
         </div>
@@ -89,7 +89,7 @@
 			<div class="signin-field signin-field-code">
 				<img class="field-icon" src="image/ind-password.png"/>
 				<input class="field-input" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" placeholder="请输入验证码.." ng-model="mobile_code"/>
-				<div class="{{paraclass}}" ng-click="sendSigninCode()">{{paracont}}</div>
+				<div class="{{paraclass}}" style="outline: none;" ng-click="sendSigninCode()">{{paracont}}</div>
 			</div>
 		</div>
 		<div class="signin-submit" ng-click="touchCodeSignin()">

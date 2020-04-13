@@ -9,11 +9,32 @@
 		.module('app')
 		.controller('WeChatAuthBaseController', WeChatAuthBaseController);
 
-	WeChatAuthBaseController.$inject = ['$scope', '$http', '$window', '$location', '$timeout'];
+	WeChatAuthBaseController.$inject = ['$scope', '$http', '$window', '$location', '$timeout','AppAuthenticationService','ENUM'];
 
-	function WeChatAuthBaseController($scope, $http, $window, $location, $timeout) {
+	function WeChatAuthBaseController($scope, $http, $window, $location, $timeout,AppAuthenticationService,ENUM) {
 
-		var callbackUrl = encodeURIComponent($window.location.protocol+"//"+$window.location.host+$window.location.pathname);
+		var url=''
+		if(sessionStorage.getItem("show_toc")==null){
+		  if(AppAuthenticationService.getUser().company.id==75){
+			 
+			  url='http://shop.xindongguoji.com/h5/?#/productcs/?product='+ENUM.PRODUCTSCC.CICD2
+  
+		  }else{
+			  url=$window.location.protocol+"//"+$window.location.host+$window.location.pathname
+  
+		  }
+  
+	  }else{
+		  url='http://shop.xindongguoji.com/h5/?#/productcs/?product='+sessionStorage.getItem("productId")
+  
+  
+	  }
+  
+		  var callbackUrl = encodeURIComponent(url);
+		  
+
+
+
 
 		var scope = "snsapi_base";
 

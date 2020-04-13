@@ -12,6 +12,12 @@
 
     //mm新增
 
+    if(AppAuthenticationService.getUser().company.id==75){
+        $state.go('productcs', {
+            product: ENUM.PRODUCTSCC.CICD2
+        });
+    }
+
 
 		var MAX_BANNERS = 10;
 		var MAX_NOTICES = 5;
@@ -41,6 +47,9 @@
 		$scope.two_cate_id = 2;
 		$scope.three_cate_id = 3;
 		$scope.four_cate_id = 4;
+
+
+
 
 
 		// var emptyCategory = {};
@@ -76,6 +85,35 @@
 		$scope.reload = _reload;
 		$scope.loadMore = _loadMore;
         $scope.touchProduct =_touchProduct;
+        
+        $scope.touchmoreshow=_touchmoreshow;
+        $scope.touchreach=_touchreach;
+
+        function _touchreach(category,navTitle){
+            $state.go('search-result', {
+                sortKey: 5,
+                sortValue: 0,
+                keyword: null,
+                category: category,
+                navTitle: navTitle,
+                navStyle: 'default',
+              
+            });
+        }
+
+
+        if(sessionStorage.getItem("moreshow")==1){
+            $scope.moreshow=false
+        }else{
+            $scope.moreshow=true
+            sessionStorage.setItem("moreshow", '1');//保存点击的状态
+
+        }
+
+       function _touchmoreshow(){
+        $scope.moreshow=false
+        }
+
 		// $scope.cartModel = CartModel;
         $scope.user = AppAuthenticationService.getUser();
 
@@ -415,7 +453,6 @@
                         'onMenuShareTimeline',
                         'onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
                 });
-                console.log(wechat)
 
 
 

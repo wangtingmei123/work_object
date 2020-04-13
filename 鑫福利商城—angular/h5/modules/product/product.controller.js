@@ -13,7 +13,8 @@
       var MAX_COMMENTS = 3;
       var productId = $stateParams.product;
       $scope.tip_a = '';
-
+      $scope.sgproduct_id_c=ENUM.PRODUCTSCC.CICD1;
+      $scope.sgproduct_id_c1=ENUM.PRODUCTSCC.CICD2;
 	  $scope.noAttrNumber = null;   //默认检查库存
 	  $scope.clickAttrId = null;   //当前点击的ID检测是否第一排
       $scope.currentStock = null; //当前库存
@@ -60,8 +61,32 @@
 
       $scope.torefundTipb = _torefundTipb;
       $scope.nameTipshowb = false;
-
+      $scope.tobrand = _tobrand;
       $scope.tograde = _tograde;
+
+      $scope.scrollpro = _scrollpro;
+      
+      function _scrollpro(){
+ 
+          var top=$(window).scrollTop()
+          $(".banner_product").css({top:-(top/1.8)+"px"});
+
+
+      }
+
+      function _tobrand(brand_id){
+        $state.go('search-result', {
+            sortKey: ENUM.SORT_KEY.DATE,
+            sortValue: ENUM.SORT_VALUE.DESC,
+            keyword: null,
+            category: null,
+            brand_id:brand_id,
+            brand_type:1,
+            navTitle: null,
+            navStyle: 'default'
+        });
+      }
+
 
       function _tograde(product_id,review_rate){
           $state.go('grade-detail', {
@@ -78,7 +103,6 @@
 
       function _torefundTipb() {
           $scope.nameTipshowb = false;
-          $scope.goBack()
       }
 
       function _torefundTipa() {
@@ -116,7 +140,6 @@
       function _refreshAmount(){
 
           var amount = $scope.input.currentAmount;
-          console.log(amount)
           // if (amount <=0 ) {
           //     $scope.input.currentAmount = 1;
           // }
@@ -134,9 +157,7 @@
       }
 
 // 指定商品数量限制
-      if($scope.product.id==22467 && $scope.input.currentAmount>=2){
-        return;
-      }
+
 
 
         if ( !_checkCanPurchase() )
@@ -230,8 +251,7 @@
                  for(let b=0;b<$scope.product.photos.length;b++){
                      if(color_name==$.trim($scope.product.photos[b].name)){
                          let index = $scope.product.photos.indexOf($scope.product.photos[b])
-                         console.log("****")
-                         console.log($scope.flashSwiper)
+                        
                          $scope.flashSwiper[0].slideTo(index,0);
                          $(".img_ss>img").attr('src',$scope.product.photos[b].thumb);
                          $scope.product.default_photo.large=$scope.product.photos[b].large;
@@ -498,6 +518,46 @@
         }
       }
 
+
+
+   //飞入购物车动画
+   function fly() {
+
+    var globalLeft = $('.jgouwc').offset().left+25;
+    var globalTop = $('.jgouwc').offset().top - $(document).scrollTop() +20;
+
+    // var img =$scope.product.photos[0].large; //获取当前点击图片链接
+    var img=$(".img_ss>img").attr('src');
+    var flyer = $('<img class="flyer-img" src="' + img + '">'); //抛物体对象
+    // layer.msg('成功加入购物车！');
+    flyer.fly({
+        start: {
+            left: 325,
+            top: 200
+        },
+        end: {
+            top: globalTop,
+            left: globalLeft,
+            width: 10,
+            height: 10,
+        },
+
+        autoPlay: true, //是否直接运动,默认true
+        speed: 1.5, //越大越快，默认1.2
+        vertex_Rtop:20,//运动轨迹最高点top值，默认20
+        onEnd: function () {
+            $(flyer).remove();
+        }
+
+      })
+    }
+
+
+
+
+
+
+
       function _touchAddCart() {
           if( $(".add_cart").html()=='已售罄'){
               $scope.nameTipshowa = true;
@@ -560,8 +620,9 @@
         .add(productId, attrs, amount, pro_id)
         .then(function(succeed){
             if ( succeed ) {
-                $scope.nameTipshowa = true;
-                $scope.tip_a = '已添加到购物车';
+                // $scope.nameTipshowa = true;
+                // $scope.tip_a = '已添加到购物车';
+                fly()
               // $scope.toast('已添加到购物车');
             }
         });

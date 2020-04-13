@@ -334,6 +334,15 @@
         right:0.2rem;
     }
 
+    .flex_top1{
+        display: block;
+        width:0.65rem;
+        height:0.65rem;
+        position: absolute;
+        top:0;
+        left:0;
+    }
+
     .tipp_box{
         width:100%;
         height:100vh;
@@ -441,7 +450,7 @@
         position: absolute;
         top:0;left:0;right:0;bottom:0;
         width:5.4rem;
-        height:4.2rem;
+        height:4.8rem;
         margin:auto;
         overflow: hidden;
         background: #fff;
@@ -473,10 +482,11 @@
     .tishi_tip_box .t_tip_box .t_tip{
        width:100%;
         box-sizing: border-box;
-        height:1rem;
+        height:2.5rem;
         margin:auto;
-        margin-top:0.6rem;
+        margin-top:0.4rem;
         overflow: auto;
+        padding: 0 0.2rem;
     }
 
 
@@ -485,6 +495,7 @@
         text-align: center;
         font-size:0.32rem;
         margin-top:0.25rem;
+        line-height: 0.5rem;
 
     }
 
@@ -495,11 +506,10 @@
 
 
 
-
-
-
-
 </style>
+
+
+
 <div ng-controller="SearchResultController" style="min-height: 100vh">
 
 
@@ -524,11 +534,11 @@
     <div class="slidearrow_agin">
         <div ng-if="brandItem" style="overflow: hidden">
             <div class="probanner">
-                 <img ng-src="image/default-photo.png" lazy-img="{{brandItem.banner.large}}">
+                 <img ng-src="{{brandItem.banner.large}}" >
                 <span class="back" ng-click="goBack()"></span>
             </div>
             <div class="trandTag">
-                <div class="logo"><img ng-src="image/default-photo.png" lazy-img="{{brandItem.logo.thumb}}"></div>
+                <div class="logo"><img ng-src="{{brandItem.logo.thumb}}" ></div>
                 <div class="name">
                     <h3>{{brandItem.name}}</h3>
                     <p>在售商品</p>
@@ -568,7 +578,7 @@
         <li class="sortT2" ng-click="touchChoos()">筛选</li>
     </ul>
 
-    <div infinite-scroll='loadMore()' style="height:auto;margin-top:0.2rem">
+    <div  infinite-scroll='loadMore()' style="height:auto;margin-top:0.2rem">
         <ul class="sort" ng-if="brandItem" style="height:45px">
             <li class="sortT1 active"  ng-click="touchSortDefault()">综合</li>
             <li class="sortT3"  ng-click="touchSortPrice()">
@@ -583,7 +593,7 @@
         <ul class="proList" ng-if="products && products.length" style="overflow:hidden;padding-top:0.2rem;margin-top:0">
             <li ng-repeat="product in products track by $index" ng-click="touchProduct(product)" style="position: relative">
                 <a style="display: block;">
-                <div class="img"><img ng-src="{{product.original_photo.large}}" ></div>
+                <div class="img"><img src="{{product.original_photo.large}}" ></div>
                 <!--<div class="tags">新季 | 欧洲专柜直采 | 专柜直供</div>-->
                 <!--<p>BURBERRY</p>-->
                 <p>{{product.name}}</p>
@@ -597,6 +607,8 @@
                 </a>
                 <!--精品专区-->
                 <img class="flex_top" ng-if="product.is_bested==1" ng-src="image/jinpingact2.png" alt="">
+                <img class="flex_top1" ng-if="product.is_newed==1"  src="image/newxinp.png" alt="">
+
             </li>
         </ul>
 
@@ -719,7 +731,7 @@
         <div class="t_tip_box">
            <div class="dabiao_tip">温馨提示</div>
             <div class="t_tip">
-                <p class="tip_big">因疫情原因，场馆暂时无法预订</p>
+                <p class="tip_big">疫情期间，北京场馆暂时无法预定。其他区域场馆预定以客服最终确认为准。</p>
                
             </div>
             <div class="to_choujiang" >知道了</div>
@@ -747,6 +759,7 @@
 
 
 <script>
+
 
 
   $(".to_choujiang").click(function(){

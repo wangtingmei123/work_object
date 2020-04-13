@@ -47,39 +47,39 @@
         </div>
 
   <!--场馆预定-->
-        <div class="order-summury" style="padding-bottom:0.2rem;padding-top:0" ng-if="!order.is_real&&is_yd">
-            <div class="summury-detail">
+        <div class="order-summury"  ng-if="!order.is_real&&is_yd">
+            <div class="summury-total">
                 预订人姓名 <span class="total-price">{{bookcon.name}}</span>
             </div>
-            <div class="summury-detail">
+            <div class="summury-total">
                 预订日期 <span class="total-price">{{bookcon.book_date}}</span>
             </div>
-            <div class="summury-detail" ng-if="is_yd_h">
+            <div class="summury-total" ng-if="is_yd_h">
                 预订时段 <span class="total-price">{{bookcon.start_hour}}:00-{{bookcon.end_hour}}:00</span>
             </div>
-            <div class="summury-detail" ng-if="is_yd_h">
+            <div class="summury-total" ng-if="is_yd_h">
                下场人数 <span class="total-price">{{bookcon.people_num}}</span>
             </div>
-            <div class="summury-detail" ng-if="!is_yd_h">
+            <div class="summury-total" ng-if="!is_yd_h">
                 下场人数 <span class="total-price">{{order.goods[0].total_amount}}</span>
             </div>
-            <div class="summury-detail" ng-if="is_yd_h">
+            <div class="summury-total" ng-if="is_yd_h">
                 预订片数 <span class="total-price">1</span>
             </div>
         </div>
 
-        <div class="order-summury" style="padding-bottom:0.2rem;padding-top:0" ng-if="!order.is_real&&is_yd">
-            <div class="summury-detail">
-                留言 <span class="total-price" style="font-size: 0.24rem;">{{bookcon.note}}</span>
+        <div class="order-summury"  ng-if="!order.is_real&&is_yd">
+            <div class="summury-total">
+                留言 <span class="total-price" >{{bookcon.note}}</span>
             </div>
-            <div class="summury-detail" >
+            <div class="summury-total" >
                 接收短信手机 <span class="total-price">{{bookcon.telphone}}</span>
             </div>
 
         </div>
 
         <!-- Goods -->
-        <div class="order-goods">
+        <!-- <div class="order-goods">
             <div class="goods-item detail-goods-item" ng-repeat="goods in order.goods track by $index">
                 <div class="item-photo">
                     <img ng-show="goods.is_zx_order==0" ng-src="image/default-photo.png" lazy-img="{{goods.product.default_photo.thumb}}" ng-click="touchProduct(goods.product)"/>
@@ -111,24 +111,164 @@
                     <a ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERING" ng-click="touchConfirm(goods.order_goods_id)">确认收货</a>
                 </div>
             </div>
+        </div> -->
+
+
+
+
+
+
+        <div class="order-list" >
+            <div class="list-item" >
+                
+                <div class="order-goods" ng-click="touchOrder(order,currentTab)">
+                    <div class="goods-item" ng-repeat="goods in order.goods track by $index">
+                        <div class="item-header">
+                            <div class="header-sn">#{{order.sn}}</div>
+                           
+                        </div>
+                        <div class="item-photo">
+                            <img ng-src="{{goods.product.default_photo.thumb}}" />
+                        </div>
+                        <div class="item-info">
+                            <div class="info-name">
+                                {{goods.product.name}}【{{goods.order_status_text}}】
+                            </div>
+                            <div class="info-attr">
+                                {{goods.property}}
+
+                            </div>
+                            <div class="info-price">
+                                <span>￥</span>{{goods.product_price}}
+                            </div>
+                            <div class="info-amount">
+                                x{{goods.total_amount}}
+                            </div>
+                        </div>
+                   <!--确认收货-->
+                        <div class="but_tip" ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERING">
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERING" ng-click="touchConfirm(goods.order_goods_id)">
+                                确认收货
+                            </div>
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERING && goods.is_zx_order==0 && order.company_id!=51 && order.company_id!=52 && order.company_id!=70 && goods.id!=23225 && goods.id!=23224 && goods.id!=23223 && goods.id!=9694" ng-click="touchToRefund(goods.order_goods_id)">
+                                申请退货
+                            </div>
+
+                            <div class="lo_wl" ng-click="touchlogisitics(order.consignee.regions,order.consignee.address,goods.order_goods_id,$event)">查看物流</div>
+                        </div>
+
+
+
+
+                   <!--申请退货-->
+                        <div class="but_tip" ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED">
+                            <div class="footer-button dark" ng-if="goods.is_reviewed==false" ng-click="touchComment(goods.id)">
+                                评价
+                            </div>
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERIED && goods.is_zx_order==0 && order.company_id!=51 && order.company_id!=52 && order.company_id!=70 && goods.id!=23225 && goods.id!=23224 && goods.id!=23223 && goods.id!=9694" ng-click="touchToRefund(goods.order_goods_id)">
+                                申请退货
+                            </div>
+                            <!--<div class="lo_wl" ng-click="touchlogisitics(order.consignee.regions,order.consignee.address,goods.order_goods_id,$event)">查看物流</div>-->
+                        </div>
+                   <!--退货详情-->
+                        <div class="but_tip" ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_RETURN || goods.order_status == ENUM.ORDER_GOODS_STATUS.RETURNING || goods.order_status == ENUM.ORDER_GOODS_STATUS.RETURNED">
+                            <div class="footer-button dark" ng-if="goods.is_reviewed==false" ng-click="touchComment(goods.id)">
+                                评价
+                            </div>
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_RETURN || goods.order_status == ENUM.ORDER_GOODS_STATUS.RETURNING || goods.order_status == ENUM.ORDER_GOODS_STATUS.RETURNED" ng-click="touchToRefundInfo(goods.order_goods_id)">
+                                退货详情
+                            </div>
+                            <!--<div class="lo_wl" ng-click="touchlogisitics(order.consignee.regions,order.consignee.address,goods.order_goods_id,$event)">查看物流</div>-->
+                        </div>
+
+
+
+
+                   <!--申请退款-->
+
+                   <div ng-if="order.company_id!=70 && order.company_id!=40 && order.company_id!=51 && order.company_id!=52 && goods.is_zx_order==0 && goods.id!=23225 && goods.id!=23224 && goods.id!=23223 && goods.id!=9694">
+                        <div class="but_tip" ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.PAID || goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERY">
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.PAID || goods.order_status == ENUM.ORDER_GOODS_STATUS.DELIVERY" ng-click="touchToRefund(goods.order_goods_id)">
+                                申请退款
+                            </div>
+                        </div>
+                   <!--退款详情-->
+                        <div class="but_tip" ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_REFUND || goods.order_status == ENUM.ORDER_GOODS_STATUS.REFUNDED">
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_REFUND || goods.order_status == ENUM.ORDER_GOODS_STATUS.REFUNDED" ng-click="touchToRefundInfo(goods.order_goods_id)">
+                                退款详情
+                            </div>
+                        </div>
+                   </div>
+
+                   <div ng-if="goods.id==23225 || goods.id==23224 || goods.id==23223 || goods.id==9694">
+                        <div class="but_tip" ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.PAID">
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.PAID" ng-click="touchToRefund(goods.order_goods_id)">
+                                申请退款
+                            </div>
+                        </div>
+                <!--退款详情-->
+                        <div class="but_tip" ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_REFUND || goods.order_status == ENUM.ORDER_GOODS_STATUS.REFUNDED">
+                            <div class="footer-button dark"  ng-if="goods.order_status == ENUM.ORDER_GOODS_STATUS.APPLY_REFUND || goods.order_status == ENUM.ORDER_GOODS_STATUS.REFUNDED" ng-click="touchToRefundInfo(goods.order_goods_id)">
+                                退款详情
+                            </div>
+                        </div>
+                    </div>
+
+
+                  </div>
+                </div>
+                <div class="item-footer">
+                    <div class="footer-sum">
+
+                        <span class="sum">
+                            实付款:¥
+
+                        </span>
+                        <span class="sunprice">
+                            {{order.total}}
+                        </span>
+                       
+                    </div>
+
+                   
+
+
+                    <!--
+
+                    <div class="footer-button" ng-if="order.status == ENUM.ORDER_STATUS.DELIVERING" ng-click="touchExpress(order)">
+                        查看物流
+                    </div>
+                    <div class="footer-button" ng-if="order.status == ENUM.ORDER_STATUS.DELIVERIED" ng-click="touchExpress(order)">
+                        查看物流
+                    </div>
+                    <div class="footer-button" ng-if="order.status == ENUM.ORDER_STATUS.FINISHED" ng-click="touchExpress(order)">
+                        查看物流
+                    </div>
+                    -->
+                </div>
+            </div>
         </div>
+
+
+
+
 
         <!-- Total -->
         <div class="order-summury">
-            <div class="summury-detail" style="height:28px;line-height: 28px">
-                运费金额 <span class="total-price">+ {{order.shipping.price| currency:"￥"}}</span>
+            <div class="summury-total" >
+                运费金额   <span > {{order.shipping.price}}</span> <span class="total-price">+ ¥</span> 
             </div>
-            <div class="summury-total" style="height:28px;line-height: 28px">
-                订单总价 <span class="total-price">= {{order.total| currency:"￥"}}</span>
+            <div class="summury-total" >
+                订单总价    <span >{{order.total}}</span> <span class="total-price">= ¥</span>
             </div>
-            <div class="summury-total" ng-if="order.balance_paid > 0" style="height:28px;line-height: 28px">
-                账户抵扣金额 <span class="total-price">- {{order.balance_paid| currency:"￥"}}</span>
+            <div class="summury-total" ng-if="order.balance_paid > 0" >
+                账户抵扣金额   <span >{{order.balance_paid}}</span> <span class="total-price">- ¥</span>
             </div>
-            <div class="summury-total" ng-if="order.money_paid > 0" style="height:28px;line-height: 28px">
-                现金支付金额 <span class="total-price">- {{order.money_paid| currency:"￥"}}</span>
+            <div class="summury-total" ng-if="order.money_paid > 0" >
+                现金支付金额  <span >{{order.money_paid}}</span> <span class="total-price">- ¥</span>
             </div>
-            <div class="summury-total" style="height:28px;line-height: 28px">
-                优惠券 <span class="total-price">- {{order.coupon_deduction_price| currency:"￥"}}</span>
+            <div class="summury-total" >
+                优惠券   <span >{{order.coupon_deduction_price}}</span>  <span class="total-price">- ¥</span>
             </div>
         </div>
 
@@ -142,25 +282,25 @@
         <!-- Info -->
         <div class="order-info">
             <div class="info-text">
-                订单编号：#{{order.sn}}
+                订单编号：<span>#{{order.sn}}</span>     
             </div>
             <div class="info-text">
-                创建时间：{{order.created_at | localTime}}
+                创建时间： <span>{{order.created_at | localTime}}</span>
             </div>
             <div class="info-text" ng-if="order.updated_at">
-                更新时间：{{order.updated_at | localTime}}
+                更新时间： <span>{{order.updated_at | localTime}}</span>
             </div>
             <div class="info-text" ng-if="order.paied_at">
-                支付时间：{{order.paied_at | localTime}}
+                支付时间：<span>{{order.paied_at | localTime}}</span> 
             </div>
             <div class="info-text" ng-if="order.shipping_at">
-                发货时间：{{order.shipping_at | localTime}}
+                发货时间： <span>{{order.shipping_at | localTime}}</span> 
             </div>
             <div class="info-text" ng-if="order.finish_at">
-                完成时间：{{order.finish_at | localTime}}
+                完成时间：<span>{{order.finish_at | localTime}}</span> 
             </div>
             <div class="info-text" ng-if="order.canceled_at">
-                取消时间：{{order.canceled_at | localTime}}
+                取消时间：<span>{{order.canceled_at | localTime}}</span> 
             </div>
             <!--<div class="info-text" ng-repeat="goods in order.goods track by $index" ng-if="goods.shipping_sn">-->
                 <!--{{goods.shipping_name}}：{{goods.shipping_sn}}-->
@@ -223,30 +363,23 @@
 
 
 <style>
+     @import "../../libs/font/stylesheet.css";
 
     .order-goods .goods-item .item-photo{
         border:0;
     }
 
-    .order-goods .goods-item .item-info .info-name{
-        overflow:hidden;
-        text-overflow:ellipsis;
-        display:-webkit-box;
-        -webkit-box-orient:vertical;
-        -webkit-line-clamp:2;
-        font-size: 14px;
-        line-height:17px;
-    }
+
     body{
         background: #f4f4f4;
     }
 
     .order-address{
-        width:7.2rem;
+        width:100%;
         margin:auto;
-        border-radius: 0.2rem;
+        border-radius: 0.3rem;
         border:none;
-        margin-top:0.15rem;
+        margin-top:0.2rem;
     }
 
     .order-goods{
@@ -271,21 +404,23 @@
         /*border-bottom: #f4f4f4 1px solid;*/
     }
     .order-info{
-        width:7.2rem;
+        width:100%;
         margin:auto;
-        border-radius: 0.2rem;
+        border-radius: 0.3rem;
         border:none;
-        margin-top:0.15rem;
+        margin-top:0.2rem;
         overflow: hidden;
+        padding-left: 0.35rem;
+        padding-right: 0.35rem;
+        padding-top:0.3rem;
+        padding-bottom: 0.3rem;
+        box-sizing: border-box;
     }
     .order-submit{
         background: #fff;
         border:none;
     }
-    .order-info{
-        padding-top:0.1rem;
-        padding-bottom:0.1rem;
-    }
+   
     .order-summury{
         padding-top:0.1rem;
         padding-bottom:0.1rem;
@@ -324,4 +459,456 @@
         font-size: 0.24rem;
         text-align: center;
     }
+
+    @import "../../libs/font/stylesheet.css";
+
+.order-filter .filter-item{
+    outline: none;
+    height:100%;
+    line-height:1.12rem;
+    position: relative;
+
+}
+
+.order-filter .filter-item .text{
+    font-size: 0.3rem;
+    line-height:1.12rem;
+    color: #808080;
+}
+
+
+.order-filter .filter-item.active .text{
+    border-bottom:none;
+    color: #1a1a1a;
+}
+
+
+.order-filter .filter-item.active .filter_active{
+    position: absolute;
+    bottom:0.2rem;
+    left:0;right:0;margin:auto;
+    width:0.6rem;
+    height: 0.06rem;
+    background: #d0021b;
+}
+.order-goods .goods-item .item-photo{
+    border:0;
+    
+}
+
+.order-goods .goods-item .item-info{
+    position: relative;
+    display: block;
+    /* height: 100%; */
+    height: 1.6rem;
+    box-sizing: border-box;
+    margin-left: 2.1rem;
+    overflow: hidden;
+    width:100%;
+}
+
+
+.order-goods .goods-item .item-info .info-name{
+    width: 3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.3rem;
+    height:0.42rem;
+    line-height:0.42rem;
+    margin-top:0.36rem;
+    color: #1a1a1a;
+}
+
+.order-goods .goods-item .item-info .info-attr{
+    position: relative;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 3.4rem;
+    height:0.4rem;
+    margin-top: 0.15rem;
+    box-sizing: border-box;
+    color: #a6a6a6;
+    font-size: 0.28rem;
+    font-weight: normal;
+    text-align: left;
+    line-height: 0.4rem;
+}
+
+.order-goods .goods-item .item-info .info-price{
+    position: absolute;
+    top: 0.4rem;
+    width: 1.5rem;
+     display: block;
+    height:0.4rem;
+    box-sizing: border-box;
+    color: #404245;
+    font-size: 0.34rem;
+    font-weight: normal;
+    font-family: 'DINCondensedC';
+    text-align: unset;
+    left:3.1rem;
+    bottom: unset;
+    line-height:0.45rem;
+    text-align: right;
+
+}
+
+
+.order-goods .goods-item .item-info .info-price span{
+    font-size: 0.28rem;
+
+}
+
+.order-goods .goods-item .item-info .info-amount{
+    position: absolute;
+    left:3.1rem;
+    bottom: 0.3rem;
+    width: 1.5rem;
+    display: block;
+    box-sizing: border-box;
+    color: #888888;
+    font-size: 0.28rem;
+    font-weight: normal;
+    text-align: right;
+
+}
+
+body{
+    background: #f7f7f7;
+}
+
+
+.order-filter{
+    border:none;
+    height:1.12rem;
+    font-size: 0.3rem;
+    line-height:1.12rem;
+
+}
+
+.order-list .list-item{
+    background: #fff;
+    border-radius: 0.3rem;
+    width:100%;
+    margin:auto;
+    margin-top:0.2rem;
+    border:none;
+}
+.order-goods .goods-item{
+    border-bottom:#f4f4f4 0 solid;
+}
+.order-list .list-item .item-header{
+    border-bottom:none;
+    color: #1a1a1a;
+    font-size: 0.32rem;
+    height:0.32rem;
+    box-sizing: border-box;
+    margin-top:0.2rem;
+    margin-bottom:0.2rem;
+    width:100%;
+    padding:0;
+}
+
+.order-list .list-item .item-header .header-sn{
+    color: #1a1a1a;
+    font-size: 0.32rem;
+    height:0.32rem;
+    line-height:0.32rem;
+}
+
+.order-list .list-item .item-footer{
+    position: relative;
+    display: block;
+    padding-right: 0.35rem;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    overflow: hidden;
+    color: #1a1a1a;
+    margin-top:0.4rem;
+    padding-bottom:0.2rem;
+}
+
+.order-list .list-item .item-footer .footer-sum{
+    position: relative;
+    display: block;
+    height: 0.5rem;
+    overflow: hidden;
+    color: #1a1a1a;
+    font-size: 0.28rem;
+    font-weight: normal;
+    text-align: right;
+    line-height: 0.5rem;
+    clear: both;
+}
+
+.order-list .list-item .item-footer .footer-sum .sum{
+    font-size: 0.28rem;
+    font-weight: normal;
+    line-height: 0.5rem;
+
+}
+
+.order-list .list-item .item-footer .footer-sum .sunprice{
+    font-family: 'DINCondensedC';
+    font-size: 0.4rem;
+    font-weight: normal;
+    line-height: 0.5rem;
+
+}
+.order-list .list-item .item-footer .footer-button{
+    border-radius: 0.1rem;
+    font-size: 0.28rem;
+    outline: none;
+}
+
+.order-goods .goods-item .footer-button.dark{
+    border-radius: 0.1rem;
+    outline: none;
+    background-color: #D0021B;
+    color: #ffffff;
+    position: relative;
+    display: block;
+    float: right;
+    width: 1.5rem;
+    height: 0.5rem;
+    margin-right: 0.2rem;
+    margin-top: 0.2rem;
+    overflow: hidden;
+    font-size: 0.28rem;
+    font-weight: normal;
+    text-align: center;
+    line-height: 0.5rem;
+    border-radius: 0.1rem;
+}
+
+
+
+
+
+
+
+
+
+.refundTip-box{
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    position: fixed;
+    top:0;
+    left:0;
+}
+.refundTip{
+    width:70%;
+    height:3rem;
+    background: #fff;
+    border-radius: 0.08rem;
+    box-shadow: 0 0 0.04rem 0.01rem #ccc;
+    position: absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    margin:auto;
+}
+
+.refundcon{
+    width:80%;
+    height:2rem;
+    margin:auto;
+    color: #000;
+    font-size:0.26rem;
+    text-align: center;
+    line-height:0.5rem;
+    padding-top:0.6rem;
+    box-sizing: border-box;
+}
+
+.refundbtn{
+    width: 100%;
+    height:1rem;
+    text-align: center;
+    line-height: 1rem;
+    font-weight:bold;
+    color: #0085d0;
+    border-top:1px solid #f0f0f0;
+
+}
+.refundbtn_left{
+    width: 50%;
+    height:100%;
+    text-align: center;
+    line-height: 1rem;
+    font-weight:bold;
+    color: #0085d0;
+    border-right:1px solid #f0f0f0;
+    box-sizing: border-box;
+    float: left;
+}
+.refundbtn_left:nth-child(2){
+    border-right:none;
+}
+
+
+.but_tip{
+    width:100%;
+    height:0.6rem;
+    margin-top:0.15rem;
+    /*border-top:1px solid #e2e2e2;*/
+
+}
+
+.order-goods{
+    width:100%;
+    padding:0 0.35rem;
+    box-sizing: border-box;
+}
+
+.order-goods .goods-item{
+    height:auto;
+    margin-top:0.1rem;
+}
+
+.order-goods .goods-item .item-photo{
+    top:0.8rem;
+    left:0;
+    width:1.6rem;
+    height:1.6rem;
+}
+
+
+
+.lo_wl{
+    color: #1a1a1a;
+    position: relative;
+    display: block;
+    float: right;
+    width: 1.5rem;
+    height: 0.5rem;
+    margin-right: 0.2rem;
+    margin-top: 0.2rem;
+    overflow: hidden;
+    font-size: 0.28rem;
+    font-weight: normal;
+    text-align: center;
+    line-height: 0.5rem;
+    border-radius: 0.1rem;
+    background: #ccc;
+
+}
+
+.with-navbar .navbar{
+    border-bottom:0;
+    box-shadow: none;
+}
+
+
+.order-address .address-contact{
+
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0.35rem 0.35rem 0.2rem 0.35rem;
+    box-sizing: border-box;
+    color: #404245;
+    font-size: 0.3rem;
+    font-weight: normal;
+    text-align: left;
+    font-weight: bold;
+}
+
+.order-address .address-detail{
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0 0.35rem 0.35rem 0.35rem;
+    box-sizing: border-box;
+    color: #888888;
+    font-size: 0.28rem;
+    font-weight: normal;
+    text-align: left;
+    line-height: 0.34rem;
+}
+
+.order-summury{
+    width: 100%;
+    margin: auto;
+    border-radius: 0.3rem;
+    border: none;
+    margin-top: 0.2rem;
+    overflow: hidden;
+    padding:0.35rem;
+    box-sizing: border-box;
+    padding-top: 0.3rem;
+    padding-bottom:0.3rem;
+}
+
+.order-summury .summury-total{
+    display: block;
+    height: 0.6rem;
+    overflow: hidden;
+    color: #404245;
+    font-size: 0.28rem;
+    font-weight: normal;
+    line-height: 0.6rem;
+    padding-left: 0;
+}
+
+.order-summury .summury-total span{
+
+    float: right;
+    display: block;
+    height: 0.6rem;
+    overflow: hidden;
+    color: #1a1a1a;
+    font-size: 0.32rem;
+    font-weight: normal;
+    line-height: 0.7rem;
+    padding-right: 0;
+    font-family: 'DINCondensedC';
+    /* font-weight: bold; */
+    margin-right:0.05rem;
+
+
+  
+   
+}
+
+
+.order-summury .summury-total .total-price{
+    float: right;
+    display: block;
+    height: 0.6rem;
+    overflow: hidden;
+    color: #1a1a1a;
+    font-size: 0.28rem;
+    font-weight: normal;
+    line-height: 0.7rem;
+    padding-right: 0;
+}
+
+
+.order-info .info-text{
+    display: block;
+    height: 0.6rem;
+    overflow: hidden;
+    color: #404245;
+    font-size: 0.28rem;
+    font-weight: normal;
+    line-height: 0.6rem;
+    padding-left: 0;
+    margin:0 0;
+
+}
+
+.order-info .info-text span{
+    color: #1a1a1a;
+    font-size: 0.28rem;
+    font-weight: bold;
+}
+
+
+
 </style>

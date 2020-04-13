@@ -36,7 +36,11 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
-
+  
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0"> 
+  
   <!-- build:css css/app.base.css -->
   <link rel="stylesheet" href="css/reset.css" type="text/css" />
   <!-- <link rel="stylesheet" href="libs/assets/animate.css/animate.css" type="text/css" /> -->
@@ -53,7 +57,18 @@
   <!-- endbuild -->
   <link rel="stylesheet" href="css/default-skin.css">
   <link rel="stylesheet" href="css/photoswipe.css">
+  <link rel="stylesheet" href="libs/font/stylesheet.css">
 
+
+  <style>
+         @import "libs/font/stylesheet.css";
+
+    body{
+      overflow:auto;   /* 用于 android4+，或其他设备 */
+      -webkit-overflow-scrolling:touch;    /* 用于 ios5+ */
+
+    }
+  </style>
 
 </head>
 
@@ -81,6 +96,7 @@
   <script src="libs/security/hmac.js?v=11"></script>
   <script src="libs/security/xxtea.js?v=11"></script>
   <script src="libs/jquery/js/jquery.js?v=11"></script>
+  <script src="libs/jquery/js/jquery.fly.min.js"></script>
   <script src="libs/jquery/js/swiper.min.js?v=11"></script>
   <script src="libs/angular/angular/angular.js?v=11"></script>
   <script src="libs/angular/angular-animate/angular-animate.js?v=11"></script>
@@ -105,13 +121,13 @@
 
   <!-- build:js js/app.base.js -->
   <!-- app -->
-  <script src="app/app.js?v=11"></script>
-  <script src="app/app.main.js?v=11"></script>
-  <script src="app/app.router.js?v=11"></script>
-  <script src="app/app.constants.js?v=11"></script>
+  <script src="app/app.js?v=15"></script>
+  <script src="app/app.main.js?v=15"></script>
+  <script src="app/app.router.js?v=15"></script>
+  <script src="app/app.constants.js?v=15"></script>
   <!-- service -->
-  <script src="app/app.authentication.js?v=11"></script>
-  <script src="app/app.network.js?v=11"></script>
+  <script src="app/app.authentication.js?v=15"></script>
+  <script src="app/app.network.js?v=15"></script>
   <!-- api -->
   <script src="app/network/API/api.access.service.js?v=11"></script>
   <script src="app/network/API/api.areacode.service.js?v=11"></script>
@@ -177,10 +193,10 @@
 
 
   <!-- modules -->
-  <script src="modules/signin/signin.controller.js?v=110"></script>
-  <script src="modules/signin/signin.js?v=110"></script>
-  <script src="modules/codesignin/codesignin.controller.js?v=110"></script>
-  <script src="modules/codesignin/codesignin.js?v=111"></script>
+  <script src="modules/signin/signin.controller.js?v=18"></script>
+  <script src="modules/signin/signin.js?v=16"></script>
+  <script src="modules/codesignin/codesignin.controller.js?v=18"></script>
+  <script src="modules/codesignin/codesignin.js?v=16"></script>
   <script src="modules/signup/signup.controller.js?v=11"></script>
   <script src="modules/signup/signup.js?v=11"></script>
   <script src="modules/forget/forget.controller.js?v=11"></script>
@@ -200,32 +216,49 @@
   <script src="modules/cart/cart.controller.js?v=11"></script>
   <script src="modules/cart/cart.js?v=11"></script>
   <script src="modules/cart-select/cart-select.js?v=11"></script>
-  <script src="modules/profile/profile.controller.js?v=2"></script>
-  <script src="modules/profile/profile.js?v=2"></script>
+  <script src="modules/profile/profile.controller.js?v=5"></script>
+  <script src="modules/profile/profile.js?v=5"></script>
   <script src="modules/search/search.service.js?v=11"></script>
   <script src="modules/search/search.controller.js?v=11"></script>
   <script src="modules/search/search.js?v=11"></script>
-  <script src="modules/search-result/search-result.controller.js?v=11"></script>
-  <script src="modules/search-result/search-result.js?v=11"></script>
+  <script type="text/javascript">
+    document.write("<script type='text/javascript' src='modules/search-result/search-result.controller.js?v=" + Math.random() + "'><\/script>")
+  </script>
+
+  <script src="modules/search-result/search-result.js?v=13"></script>
   <script src="modules/brand-all/brand-all.controller.js?v=11"></script>
   <script src="modules/brand-all/brand-all.js?v=11"></script>
-  <script src="modules/product/product.controller.js?v=11"></script>
-  <script src="modules/product/product.js?v=11"></script>
+
+
+  <script type="text/javascript">
+    document.write("<script type='text/javascript' src='modules/product/product.controller.js?v=" + Math.random() + "'><\/script>")
+  </script>
+  <script src="modules/product/product.js?v=12"></script>
+
+
   <script src="modules/comment/comment.controller.js?v=11"></script>
   <script src="modules/comment/comment.js?v=11"></script>
   <script src="modules/confirm-cart/confirm-cart.service.js?v=12"></script>
-  <script src="modules/confirm-cart/confirm-cart.controller.js?v=12"></script>
-  <script src="modules/confirm-cart/confirm-cart.js?v=12"></script>
+
+  <script type="text/javascript">
+    document.write("<script type='text/javascript' src='modules/confirm-cart/confirm-cart.controller.js?v=" + Math.random() + "'><\/script>")
+  </script>
+  <script src="modules/confirm-cart/confirm-cart.js?v=13"></script>
+
+
   <script src="modules/confirm-product/confirm-product.service.js?v=15"></script>
-  <script src="modules/confirm-product/confirm-product.controller.js?v=15"></script>
+  <script type="text/javascript">
+    document.write("<script type='text/javascript' src='modules/confirm-product/confirm-product.controller.js?v=" + Math.random() + "'><\/script>")
+  </script>
   <script src="modules/confirm-product/confirm-product.js?v=15"></script>
-  <script src="modules/payment/payment.model.js?v=11"></script>
-  <script src="modules/payment/payment.controller.js?v=11"></script>
-  <script src="modules/payment/payment.js?v=11"></script>
-  <script src="modules/payment-success/payment-success.controller.js?v=11"></script>
-  <script src="modules/payment-success/payment-success.js?v=11"></script>
-  <script src="modules/payment-failed/payment-failed.controller.js?v=11"></script>
-  <script src="modules/payment-failed/payment-failed.js?v=11"></script>
+
+  <script src="modules/payment/payment.model.js?v=14"></script>
+  <script src="modules/payment/payment.controller.js?v=14"></script>
+  <script src="modules/payment/payment.js?v=14"></script>
+  <script src="modules/payment-success/payment-success.controller.js?v=14"></script>
+  <script src="modules/payment-success/payment-success.js?v=14"></script>
+  <script src="modules/payment-failed/payment-failed.controller.js?v=14"></script>
+  <script src="modules/payment-failed/payment-failed.js?v=14"></script>
   <script src="modules/invoice-select/invoice-select.service.js?v=11"></script>
   <script src="modules/invoice-select/invoice-select.controller.js?v=11"></script>
   <script src="modules/invoice-select/invoice-select.js?v=11"></script>
@@ -238,27 +271,27 @@
   <script src="modules/address-select/address-select.model.js?v=11"></script>
   <script src="modules/address-select/address-select.controller.js?v=11"></script>
   <script src="modules/address-select/address-select.js?v=11"></script>
-  <script src="modules/address-edit/address-edit.model.js?v=11"></script>
-  <script src="modules/address-edit/address-edit.controller.js?v=11"></script>
-  <script src="modules/address-edit/address-edit.js?v=11"></script>
-  <script src="modules/my-order/my-order.model.js?v=11"></script>
-  <script src="modules/my-order/my-order.controller.js?v=11"></script>
-  <script src="modules/my-order/my-order.js?v=11"></script>
-  <script src="modules/order-detail/order-detail.controller.js?v=13"></script>
-  <script src="modules/order-detail/order-detail.js?v=13"></script>
+  <script src="modules/address-edit/address-edit.model.js?v=12"></script>
+  <script src="modules/address-edit/address-edit.controller.js?v=12"></script>
+  <script src="modules/address-edit/address-edit.js?v=12"></script>
+  <script src="modules/my-order/my-order.model.js?v=12"></script>
+  <script src="modules/my-order/my-order.controller.js?v=13"></script>
+  <script src="modules/my-order/my-order.js?v=12"></script>
+  <script src="modules/order-detail/order-detail.controller.js?v=17"></script>
+  <script src="modules/order-detail/order-detail.js?v=15"></script>
   <script src="modules/order-review/order-review.controller.js?v=11"></script>
   <script src="modules/order-review/order-review.js?v=11"></script>
   <script src="modules/order-express/order-express.model.js?v=11"></script>
   <script src="modules/order-express/order-express.controller.js?v=11"></script>
   <script src="modules/order-express/order-express.js?v=11"></script>
-  <script src="modules/wechat-auth/wechat-auth.controller.js?v=11"></script>
-  <script src="modules/wechat-auth/wechat-auth.js?v=11"></script>
-  <script src="modules/wechat-pay/wechat-pay.controller.js?v=11"></script>
-  <script src="modules/wechat-pay/wechat-pay.js?v=11"></script>
-  <script src="modules/wechat-authbase/wechat-authbase.controller.js?v=11"></script>
-  <script src="modules/wechat-authbase/wechat-authbase.js?v=11"></script>
-  <script src="modules/alipay-wap/alipay-wap.controller.js?v=11"></script>
-  <script src="modules/alipay-wap/alipay-wap.js?v=11"></script>
+  <script src="modules/wechat-auth/wechat-auth.controller.js?v=13"></script>
+  <script src="modules/wechat-auth/wechat-auth.js?v=13"></script>
+  <script src="modules/wechat-pay/wechat-pay.controller.js?v=12"></script>
+  <script src="modules/wechat-pay/wechat-pay.js?v=12"></script>
+  <script src="modules/wechat-authbase/wechat-authbase.controller.js?v=13"></script>
+  <script src="modules/wechat-authbase/wechat-authbase.js?v=13"></script>
+  <script src="modules/alipay-wap/alipay-wap.controller.js?v=12"></script>
+  <script src="modules/alipay-wap/alipay-wap.js?v=12"></script>
   <script src="modules/my-address/my-address.model.js?v=11"></script>
   <script src="modules/my-address/my-address.controller.js?v=11"></script>
   <script src="modules/my-address/my-address.js?v=11"></script>
@@ -327,6 +360,9 @@
   <script src="modules/coupons/coupons.js?v=11"></script>
   <script src="modules/zx-list/zx-list.controller.js?v=11"></script>
   <script src="modules/zx-list/zx-list.js?v=11"></script>
+
+  <script src="modules/productcs/productcs.controller.js?v=7"></script>
+  <script src="modules/productcs/productcs.js?v=1"></script>
 
 
 

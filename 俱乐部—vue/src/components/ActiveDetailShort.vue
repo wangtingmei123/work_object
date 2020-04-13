@@ -181,6 +181,8 @@
         },
         created() {
             let _this=this;
+
+             $("body,html").scrollTop(0);
             _this.club_name=localStorage.getItem('club_name')
             _this.active_id=localStorage.getItem('active_id');
             this.authis()

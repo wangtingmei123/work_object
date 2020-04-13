@@ -403,8 +403,8 @@
                 console.log(e)
 
                 if(e!=undefined){
-                    if(e.Br.length>=0 && e.Br!=undefined){
-                        this.data_br=e.Br
+                    if(e.Ir.length>=0 && e.Ir!=undefined){
+                        this.data_br=e.Ir
                     }
                 }
                 if(this.keyword==''){

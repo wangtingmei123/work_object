@@ -403,6 +403,18 @@ ul {
     background: url(../image/newicon/icon_back.png) center center no-repeat;
     background-size: 9px 15px;
 }
+
+.back_product{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 44px;
+    height: 44px;
+    z-index: 99;
+    background: url(../image/newicon/icon_back.png) center center no-repeat;
+    background-size: 9px 15px;
+}
+
 .head .headBox .txt {
     position: absolute;
     right: 0;

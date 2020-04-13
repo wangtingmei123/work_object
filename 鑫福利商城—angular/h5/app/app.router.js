@@ -19,17 +19,23 @@
 
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             var url=window.location.href
-            var urla='http://test.ecshop.com/h5/#/zx-list'
-            if (toState.needAuth && !AppAuthenticationService.getToken()) {
-                if(url.indexOf(urla)==-1){
-                    $timeout(function () {
-                        $rootScope.codesignin();
-                    }, 1);
-				}else{
+			var urla='zx-list'
+			var urlb='productcs'
 
+			console.log(url.indexOf(urlb))
+
+			if(url.indexOf(urla)!=-1 ||url.indexOf(urlb)!=-1){
+				return
+			}else{
+				if (toState.needAuth && !AppAuthenticationService.getToken()) {
+					$timeout(function () {
+						$rootScope.codesignin();
+					}, 1);
+				
+	
 				}
-
-            }
+			}
+           
 		});
 
 		$rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
@@ -44,23 +50,22 @@
 
 		$rootScope.$on('$stateNotFound', function (event, toState, toParams, fromState, fromParams) {
             var url=window.location.href
-            var urla='http://test.ecshop.com/h5/#/zx-list'
-            if (toState.needAuth && !AppAuthenticationService.getToken()) {
+			var urla='zx-list'
+			var urlb='productcs'
+			if(url.indexOf(urla)!=-1 ||url.indexOf(urlb)!=-1){
+				return
+			}else{
 
-                if(url.indexOf(urla)==-1){
-                    $timeout(function () {
-                        $rootScope.codesignin();
-                    }, 1);
-                }else{
+				if (toState.needAuth && !AppAuthenticationService.getToken()) {
 
-                }
-                // $timeout(function () {
-                //     $rootScope.codesignin();
-                // }, 1);
-            }else{
-                $state.go('home', {});
+					$timeout(function () {
+						$rootScope.codesignin();
+					}, 1);
+				}else{
+					$state.go('home', {});
 
-            }
+				}
+			}
 		});
 
 	}

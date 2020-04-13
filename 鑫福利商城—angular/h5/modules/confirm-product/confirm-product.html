@@ -706,7 +706,7 @@
                 <li ng-repeat="card_good in selectedGoods track by $index"
                     ng-click="touchProduct(card_good)">
                     <div class="listItem">
-                        <div class="img"><img ng-src="image/default-photo.png" lazy-img="{{card_good.product.default_photo.large}}"></div>
+                        <div class="img"><img ng-src="{{card_good.product.default_photo.large}}" ></div>
                         <div class="info">
                             <h5 class="name">{{card_good.product.name}}</h5>
                             <p>{{card_good.property}}</p>
@@ -804,7 +804,7 @@
               <div class="item-contnet" style="width:auto;float:right;font-size: 0.28rem;color: #000;">   {{telphone}}</div>
           </div>
       </div>
-        <div class="item" style="margin-top:0.1rem" ng-if="selectedGoods[0].product.id!=22467">
+        <div class="item" style="margin-top:0.1rem" ng-show='selectedGoods[0].product.id!=sgproduct_id_c && selectedGoods[0].product.id!=sgproduct_id_c1'>
             <div class="itemBox" style=" background: url(image/jiantou_03.png) right center no-repeat;background-size: 0.16rem 0.28rem">
                 <span ng-if="user.company.id!=47" class="label">福利卡</span>
                 <span ng-if="user.company.id==47" class="label">余额</span>
@@ -819,7 +819,7 @@
             </div>
         </div>
 
-      <div class="item" style="margin-top:0.1rem" ng-if="selectedGoods[0].product.id!=22467">
+      <div class="item" style="margin-top:0.1rem" ng-show='selectedGoods[0].product.id!=sgproduct_id_c && selectedGoods[0].product.id!=sgproduct_id_c1'>
           <div class="itemBox" style=" background: url(image/jiantou_03.png) right center no-repeat;background-size: 0.16rem 0.28rem">
               <span class="label">优惠券</span>
               <div class="cont">
@@ -832,8 +832,8 @@
         <div class="priceInfo">
             <p><span>+ {{priceInfo.product_price| currency:"￥"}}</span>商品金额</p>
             <p><span>+ {{(priceInfo.shipping_price | currency:"￥")||( express.fee | currency:"￥")}}</span>运费</p>
-            <p class="p3" ng-if="selectedGoods[0].product.id!=22467"><span>- {{priceInfo.use_balance | currency:"￥"}}</span>抵扣金额</p>
-            <p class="p3" ng-if="selectedGoods[0].product.id!=22467"><span>- {{priceInfo.coupon_discount_price | currency:"￥"}}</span>优惠券</p>
+            <p class="p3" ng-show='selectedGoods[0].product.id!=sgproduct_id_c && selectedGoods[0].product.id!=sgproduct_id_c1'><span>- {{priceInfo.use_balance | currency:"￥"}}</span>抵扣金额</p>
+            <p class="p3" ng-show='selectedGoods[0].product.id!=sgproduct_id_c && selectedGoods[0].product.id!=sgproduct_id_c1'><span>- {{priceInfo.coupon_discount_price | currency:"￥"}}</span>优惠券</p>
         </div>
     </div>
     <div class="shopBusFoot">
@@ -846,7 +846,7 @@
             </div>
         </div>
     </div>
-    <div class="layer" ng-show="selectedGoods[0].product.id!=22467">
+    <div class="layer" ng-show='selectedGoods[0].product.id!=sgproduct_id_c && selectedGoods[0].product.id!=sgproduct_id_c1'>
         <div class="layerBox layerCard">
             <div class="layerCardBox">
                 <div class="cardtit">

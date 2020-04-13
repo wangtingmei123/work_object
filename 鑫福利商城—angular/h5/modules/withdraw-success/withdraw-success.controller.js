@@ -14,6 +14,13 @@
 		$scope.member_memo  = $stateParams.member_memo;
 
 
+      $scope.goOrder = _goOrder;
+		function _goOrder(){
+			$state.go('my-order', {
+				tab: 'all'
+			});
+		}
+
 	}
 
 })();

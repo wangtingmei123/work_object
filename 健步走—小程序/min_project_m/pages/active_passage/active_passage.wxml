@@ -37,11 +37,18 @@
     </view>
    
    <view class="active_btn">
-        <view class="active_btn1 {{act_lebgth==1?'act_lebgth':''}}" bindtap='to_ranklist' wx:if="{{active_but1==true}}">  
+        <view class="active_btn1 {{act_lebgth==1?'act_lebgth':''}}" bindtap='to_ranklist' wx:if="{{active_but1==true && activity_id!=87}}">  
              <image wx:if="{{act_lebgth==1}}" src="../../static/images/images/05cat_length_09.png"></image>
             <image wx:else  src="../../static/images/images/05ac_home_03.png"></image>
             <view class="btn_falo">活动排名</view>
          </view>
+
+          <view class="active_btn1 {{act_lebgth==1?'act_lebgth':''}}" bindtap='to_ranklist' wx:if="{{active_but1==true  && activity_id==87 }}">  
+             <image wx:if="{{act_lebgth==1}}" src="../../static/images/images/rankpaim.png"></image>
+            <image wx:else  src="../../static/images/images/05ac_home_03.png"></image>
+         </view>
+
+
          <view class="active_btn1  {{act_lebgth==1?'act_lebgth':''}}" bindtap='to_hitcard' wx:if="{{active_but2==true}}">  
             <image wx:if="{{act_lebgth==1}}" src="../../static/images/images/05cat_length_03.png"></image>
             <image wx:else src="../../static/images/images/05ac_home_08.png"></image>

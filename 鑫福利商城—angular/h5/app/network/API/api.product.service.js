@@ -127,7 +127,7 @@
 
         function _purchase(params) {
             return this.fetch( '/v2/ecapi.product.purchase', params, false, function(res){
-                return ENUM.ERROR_CODE.OK == res.data.error_code ? res.data.order : null;
+                return res;
             });
         }
 

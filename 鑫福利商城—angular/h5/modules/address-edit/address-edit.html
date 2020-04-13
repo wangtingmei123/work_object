@@ -116,6 +116,20 @@
       $('body').on('touchmove,touchstart', function (event) {
         event.preventDefault();
       });
+
+
+      function customizeInputBack() {
+        var customizeInputTop = $(window).scrollTop()+1;
+        $(window).scrollTop(customizeInputTop);
+    }
+
+    $(document).on('blur','input',function(){
+        customizeInputBack();
+    });
+
+
+
+
     </script>
 
 

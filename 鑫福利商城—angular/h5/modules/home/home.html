@@ -243,6 +243,57 @@
 
     }
 
+    .more_zq_box{
+        width:100%;
+        height:100vh;
+        position:fixed;
+        top:0;
+        left:0;
+        background: rgba(0,0,0,0.6);
+        z-index: 9999;
+    }
+
+    .more_zq{
+        width:6rem;
+        height:8.05rem;
+        position:absolute;
+        left:0;right:0;top:0;bottom:0;margin:auto;
+ 
+
+    }
+
+    .more_zq .mo_cen{
+        display: block;
+        width:100%;
+        height:7rem;
+        border-radius: 0.2rem;
+        overflow: hidden;
+
+
+    }
+
+    .more_zq .mo_cen>img{
+        display: block;
+        width:100%;
+        height:100%;
+
+    }
+
+    .more_zq .mo_close{
+        width:0.5rem;
+        height:0.5rem;
+        margin:auto;
+        margin-top:0.5rem;
+        
+    }
+
+    
+    .more_zq .mo_close>img{
+        display: block;
+        width:100%;
+        height:100%;
+    }
+
 </style>
 
 <div ng-controller="HomeController">
@@ -269,53 +320,53 @@
         <ul class="cate_box">
     
         <li>
-            <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2390&navTitle=%E9%98%B2%E6%8A%A4%E9%98%B2%E7%96%AB&navStyle=default')">
+            <div  ng-click="touchreach('2390','防护防疫')">
                 <img ng-src="image/category/cc12.png">
                 <p>防护防疫</p>
-            </a>
+            </div>
         </li>
 
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=1950&navTitle=%E5%9C%BA%E9%A6%86%E9%A2%84%E8%AE%A2&navStyle=default')">
+                <div ng-click="touchreach('1950','场馆预订')">
                     <img ng-src="image/category/c1.png">
                     <p>场馆预订</p>
-                </a>
+                </div>
             </li>
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2103&navTitle=%E8%BF%90%E5%8A%A8%E6%9C%8D%E9%A5%B0&navStyle=default')">
+                <div ng-click="touchreach('2103','运动服饰')">
                     <img src="image/category/c2.png">
                     <p>运动服饰</p>
-                </a>
+                </div>
             </li>
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2136&navTitle=%E8%BF%90%E5%8A%A8%E8%A3%85%E5%A4%87&navStyle=default')">
+                <div ng-click="touchreach('2136','运动装备')">
                     <img ng-src="image/category/c3.png">
                     <p>运动装备</p>
-                </a>
+                </div>
             </li>
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2095&navTitle=%E7%94%9F%E6%B4%BB%E6%9C%8D%E5%8A%A1&navStyle=default')">
+                <div ng-click="touchreach('2095','生活服务')">
                     <img src="image/category/c4.png">
                     <p>生活服务</p>
-                </a>
+                </div>
             </li>
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2155&navTitle=%E5%81%A5%E5%BA%B7%E9%A3%9F%E5%93%81&navStyle=default')">
+                <div ng-click="touchreach('2155','健康食品')">
                     <img src="image/category/c5.png">
                     <p>健康食品</p>
-                </a>
+                </div>
             </li>
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2231&navTitle=%E5%9B%A2%E9%98%9F%E6%9C%8D%E5%8A%A1&navStyle=default')">
+                <div ng-click="touchreach('2231','团队服务')">
                     <img ng-src="image/category/c8.png">
                     <p>团队服务</p>
-                </a>
+                </div>
             </li>
 
             <!-- <li>
@@ -329,43 +380,43 @@
 
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2172&navTitle=%E5%AE%B6%E5%B1%85%E6%97%A5%E7%94%A8&navStyle=default')">
+                <div ng-click="touchreach('2172','家居日用')">
                     <img src="image/category/c6.png">
                     <p>家居日用</p>
-                </a>
+                </div>
             </li>
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2192&navTitle=%E6%95%B0%E7%A0%81%E7%94%B5%E5%99%A8&navStyle=default')">
+                <div ng-click="touchreach('2192','数码电器')">
                     <img src="image/category/c7.png">
                     <p>数码电器</p>
-                </a>
+                </div>
             </li>
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2249&navTitle=%E7%AE%B1%E5%8C%85%E9%92%9F%E8%A1%A8&navStyle=default')">
+                <div ng-click="touchreach('2249','箱包钟表')">
                     <img ng-src="image/category/zhongbiao.png">
                     <p>箱包钟表</p>
-                </a>
+                </div>
             </li>
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2245&navTitle=%E4%B8%AA%E6%8A%A4%E6%B8%85%E6%B4%81&navStyle=default')">
+                <div ng-click="touchreach('2245','个护清洁')">
                     <img ng-src="image/category/gehu.png">
                     <p>个护清洁</p>
-                </a>
+                </div>
             </li>
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2320&navTitle=%E6%AF%8D%E5%A9%B4%E7%94%A8%E5%93%81&navStyle=default')">
+                <div ng-click="touchreach('2320','母婴用品')">
                     <img ng-src="image/category/muyin.png">
                     <p>母婴用品</p>
-                </a>
+                </div>
             </li>
 
             <li>
-                <a ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=0&category=2257&navTitle=%E6%B1%BD%E8%BD%A6%E7%94%A8%E5%93%81&navStyle=default')">
+                <div ng-click="touchreach('2257','汽车用品')">
                     <img ng-src="image/category/qiche.png">
                     <p>汽车用品</p>
-                </a>
+                </div>
             </li>
         </ul>
     </div>
@@ -485,6 +536,21 @@
     <!--<div class="jiazia-box">-->
         <!--<div class="jiazia"><img src="image/jiazai.gif" alt=""></div>-->
     <!--</div>-->
+    <div class="more_zq_box" ng-show="moreshow">
+        <div class="more_zq">
+            <a class="mo_cen"   ng-click="jump('http://shop.xindongguoji.com/h5/#/search-result/?sortKey=5&sortValue=2&category=2391&navTitle=防疫专区&navStyle=default&category_id1=2390&category_id2=2391')"    >
+               <img src="image/homebounced/toukzao.jpg?v=444" alt="">
+            </a>
+            <div class="mo_close" ng-click="touchmoreshow()">
+                <img ng-src="image/6home_tc_close_03.png" alt="">
+
+            </div>
+        </div>
+    </div>
+
+
+
+   
 </div>
     <script>
         var swiper2 = new Swiper('.homehotlist', {
@@ -500,6 +566,11 @@
         });
 
         })
+
+
+        // $(".mo_close").click(function(){
+        //     $(".more_zq_box").css("display","none")
+        // })
 
 
     </script>

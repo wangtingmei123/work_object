@@ -12,7 +12,12 @@
     WeChatPayController.$inject = ['$scope', '$http','$rootScope', '$window','$state', '$location', '$stateParams', 'WeixinService', 'API', 'ENUM','ConfigModel'];
 
     function WeChatPayController($scope, $http,$rootScope, $window, $state, $location, $stateParams, WeixinService, API, ENUM,ConfigModel) {
-
+        $scope.goOrder = _goOrder;
+		function _goOrder(){
+			$state.go('my-order', {
+				tab: 'all'
+			});
+		}
         var orderId = $stateParams.order;
         if ( !orderId ) {
             $state.go('payment-failed', {

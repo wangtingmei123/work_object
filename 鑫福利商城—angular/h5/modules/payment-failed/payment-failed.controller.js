@@ -12,6 +12,13 @@
 
 		var orderId = $stateParams.order;
 
+		$scope.goOrder = _goOrder;
+		function _goOrder(){
+			$state.go('my-order', {
+				tab: 'all'
+			});
+		}
+
 		$scope.reason = $stateParams.reason;
 		$scope.touchDetail = function () {
 			$state.go('order-detail', {

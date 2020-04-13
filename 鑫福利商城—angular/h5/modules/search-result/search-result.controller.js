@@ -513,19 +513,25 @@
 		}
 
         function _loadMore() {
+
+            sessionStorage.setItem("offsetTop", $(window).scrollTop());
+
             var scrollTop = $(window).scrollTop();
             var docHeight = $(document).height();
             var windowHeight = $(window).height();
             var scrollHeight=document.body.scrollHeight;
+           
 
-
-            if(scrollTop + windowHeight != docHeight) {
+            if(scrollTop + windowHeight < docHeight - 10) {
                     return;
             }
-			if ($scope.isLoading)
-				return;
-			if ($scope.isLastPage)
-				return;
+
+            if ($scope.isLoading)
+                return;
+
+            if ($scope.isLastPage)
+                return;
+
             if ($scope.isEmpty)
                 return;
 
@@ -533,7 +539,9 @@
 				_fetch(Math.ceil(($scope.products.length / PER_PAGE) + 1), PER_PAGE);
 			} else {
 				_fetch(1, PER_PAGE);
-			}
+            }
+
+          
             //if(sessionStorage.offsetTop){
             //    setTimeout(function(){
             //        $(".app").scrollTop(parseInt(sessionStorage.offsetTop));
@@ -599,6 +607,7 @@
                     sessionStorage.setItem('tatle',$scope.tatle);
                     console.log(sessionStorage.getItem('tatle'))
 
+
                     $scope.page_all = Math.ceil($scope.tatle/perPage);
                     sessionStorage.setItem('page_all', $scope.page_all);
                     $(".tipp_box").css("display","block")
@@ -607,6 +616,8 @@
                     },2000)
 
                 }
+
+               
 
 			    if(data.products.length>0){
                     $scope.page_index =data.paged.page;
@@ -618,16 +629,25 @@
 				$scope.products = $scope.products ? $scope.products.concat(products) : products;
 				$scope.isEmpty = ($scope.products && $scope.products.length) ? false : true;
 				$scope.isLoaded = true;
-                //$scope.isLoading = false;
 
 				$scope.isLastPage = (products && products.length < perPage) ? !$scope.isEmpty : false;
-                if($scope.isLastPage && $scope.isLoaded){
-                    $scope.isLoading = false;
+                $scope.isLoading = false;
+
+                // if($scope.isLastPage && $scope.isLoaded){
+                //     $scope.isLoading = false;
+                // }else{
+                //     setTimeout(function(){
+                //         $scope.isLoading = false;
+                //     },2000);
+                // }
+                var offset = sessionStorage.getItem("offsetTop");
+                if (offset > 0) {
                 }else{
-                    setTimeout(function(){
-                        $scope.isLoading = false;
-                    },2000);
+                    console.log("______")
+                    $('html,body').animate({'scrollTop': 10}, 100);
+    
                 }
+                
                 sessionStorage.setItem('sto_products',JSON.stringify($scope.products));
 			});
 		}
@@ -673,7 +693,12 @@
             });
         }
 
-		_reload();
+        _reload();
+        
+
+
+
+
 	}
 
 })();

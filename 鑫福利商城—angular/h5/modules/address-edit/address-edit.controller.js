@@ -44,7 +44,7 @@
 		var consignee = $scope.addressEditModel.consignee;
 		if (consignee && consignee.id) {
 			$scope.name = consignee.name;
-			$scope.mobile = consignee.mobile;
+			$scope.mobile = consignee.p_mobile;
 			$scope.regions = consignee.regions;
 			$scope.address = consignee.address;
 			$scope.isDefault = consignee.is_default;

@@ -33,7 +33,16 @@
 		$scope.touchAccount 	= _touchAccount;
         $scope.tozxlist =    _tozxlist;
         $scope.touchcoupons = _touchcoupons;
-        $scope.couponslength=0;
+		$scope.couponslength=0;
+		$scope.guanzhu=false
+		
+
+		if(sessionStorage.getItem("show_toc")!=null){
+
+            $scope.guanzhu=true;
+
+		}
+
 
         function _touchcoupons() {
             $state.go('coupons')
