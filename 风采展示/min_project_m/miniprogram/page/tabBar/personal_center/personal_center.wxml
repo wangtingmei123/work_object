@@ -1,0 +1,56 @@
+<!--pages/me/me.wxml-->
+
+
+
+<view class="login_box">
+      <image src="../images/04me_but_img_02.png"></image>
+
+      <view class="login_info">
+
+            <view class="loinfo_left" wx:if="{{user==null&&user_id==0}}" bindtap='to_login'>
+                <image src="../images/26_me_03.png"></image>
+                <view class="loinfo_left_tx">授权登录</view>
+            </view>
+
+            <view class="loinfo_left" wx:if="{{user==null&&user_id==1}}" bindtap='to_login_l'>
+                <image src="../images/26_me_03.png"></image>
+                <view class="loinfo_left_tx">去登录</view>
+            </view>
+
+
+
+            <view class="loinfo_left" wx:if="{{user!=null}}" bindtap='to_login'>
+                <!-- <image src="{{user.avatarUrl}}"></image> -->
+                  <open-data class="image" type="userAvatarUrl"></open-data>
+
+                <!-- <text>{{user.nickName}}</text> -->
+                  <open-data class="loinfo_left_tx"  type="userNickName"></open-data>
+
+            </view>
+        
+        
+      </view>
+
+
+</view>
+
+<view class="shaws" bindtap="sports_tribe">
+      <image class="shaw_text_img" src="../images/04me_but_img_05.png"></image>
+      <view class="shaw_text">我的风采</view>
+      <image class="shaw_text_but" src="../images/26_me_11.jpg"></image>
+</view>
+<!-- <view class="shaws" bindtap="sports_tribe">
+      <image class="shaw_text_img" src="../images/04me_but_img_08.png"></image>
+      <view class="shaw_text">我的作品</view>
+      <image class="shaw_text_but" src="../images/26_me_11.jpg"></image>
+</view>
+<view class="shaws" bindtap="sports_tribe">
+      <image class="shaw_text_img" src="../images/04me_but_img_10.png"></image>
+      <view class="shaw_text">我的素材</view>
+      <image class="shaw_text_but" src="../images/26_me_11.jpg"></image>
+</view> -->
+<view class="shaws" bindtap="luck_list" wx:if="{{is_prize==1}}" >
+      <image class="shaw_text_img" src="../images/04me_but_img_12.png"></image>
+      <view class="shaw_text">我的中奖纪录</view>
+      <image class="shaw_text_but" src="../images/26_me_11.jpg"></image>
+</view>

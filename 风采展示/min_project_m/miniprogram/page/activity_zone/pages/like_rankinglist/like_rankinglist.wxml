@@ -1,0 +1,110 @@
+<!--index.wxml-->
+
+
+
+
+<view class="rank_box">
+
+  
+  <view class="tap_box_con">
+   <view class="tap_box">
+        <view class="tap {{tap_m=='1'?'tap1':''}}" bindtap='chage_tap' data-info='1'>获赞排名
+        </view>
+        <view class="tap {{tap_m=='2'?'tap1':''}}" bindtap='chage_tap' data-info='2'>参与率排名
+        </view>
+    </view>
+  </view>
+    
+
+
+
+     <view class="sercher_box"  wx:if="{{tap_m=='1'}}">
+          <view class="sercher">
+          <input type="text" placeholder="请输入姓名" confirm-type="search" bindconfirm="search_us" bindinput="input_name" value="{{us_name}}" />
+          <image src="../../static/images/images/act_seach_03.png" bindtap="search_us"></image>
+          </view>
+     </view>
+
+   
+    
+
+   <!-- 获赞排名  -->
+        <view class="tabcont11" wx:if="{{tap_m=='1'}}">
+ 
+            <view wx:for="{{request_list}}"  wx:for-index="idx" wx:key="key" wx:for-item="user_info" style="margin:auto"  >
+                  <view class="tabcont_item" >
+                    <view class="cont_item_left" bindtap="to_detail" data-info="{{user_info.article_id}}">
+                         <image class="num_img" wx:if="{{user_info.order==1}}"  src="../../static/images/images/06pai_15.png"></image>
+                         <image class="num_img" wx:if="{{user_info.order==2}}"  src="../../static/images/images/06pai_26.png"></image>
+                         <image class="num_img" wx:if="{{user_info.order==3}}"  src="../../static/images/images/06pai_31.png"></image>
+
+                         <text class="item_num" wx:if="{{user_info.order>3}}">{{user_info.order}}</text>
+                          <image class="photo_img" src="{{user_info.head_img}}" wx:if="{{user_info.head_img!=''}}"></image>
+                         <image  class="photo_img" src="../../static/images/images/user.png" wx:if="{{user_info.head_img==''}}"></image>
+                         <view class="name_box">
+                              <view class="name" >{{user_info.real_name}}</view>
+                              <view class="bumen">{{user_info.department_name}}</view>
+                         </view>
+                    </view>
+                    <view  class="cont_item_right">
+                          <view class="like_num" bindtap="to_detail" data-info="{{user_info.article_id}}">{{user_info.praise_count}}</view>
+                          <view class="likea" wx:if="{{user_info.is_self_release!=1 && user_info.is_praise==0}}" bindtap="to_detail" data-info="{{user_info.article_id}}">
+                                 点赞
+                          </view>
+
+                            <view class="likea" wx:if="{{user_info.is_self_release!=1 && user_info.is_praise==1}}" bindtap="to_detail" data-info="{{user_info.article_id}}">
+                                 已点赞
+                          </view>
+
+                          <view class="likeb" wx:if="{{user_info.is_self_release==1}}"  bindtap="to_detail" data-info="{{user_info.article_id}}">
+                          </view>
+                     </view>
+                 </view>
+             </view>
+
+            <view class="buluo_box_no buluo_box_no_m1" wx:if="{{request_list.length==0}}">
+                <image class="no_img" src="../../static/images/images/25no_con_03.png"></image>
+                <view class="no_tip">赞无排名</view>
+            </view>
+
+
+
+          </view>
+
+
+
+
+          <view class="like_box" wx:if="{{tap_m=='2'}}" >
+
+          
+               <view class="sports_title"   wx:for="{{can_list}}" wx:key="index" wx:for-index="idx">
+                    <view class="spo_tit_left">
+                    <view class="tit_photo">
+                    <text>{{idx + 1}}</text>
+                         
+                    </view>
+                    <view class="tit_info">
+                         {{item.department_name}}
+                    </view>
+
+                    </view>
+                    <view class="spo_tit_right">{{item.active_rate}}%</view>
+               </view>
+
+
+               <view class="buluo_box_no" wx:if="{{can_list.length==0}}">
+                    <image class="no_img" src="../../static/images/images/25no_con_03.png"></image>
+                    <view class="no_tip">赞无排名</view>
+               </view>
+
+
+          </view>
+
+
+
+
+
+
+</view>
+
+  <!-- <tabbar tabbar="{{tabbar}}"></tabbar> -->

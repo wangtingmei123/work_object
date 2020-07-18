@@ -1,0 +1,96 @@
+{
+  "pages": [
+              
+      "page/tabBar/activity_zone/activity_zone",
+      "page/tabBar/personal_center/personal_center"
+  
+  ],
+  "window": {
+      "backgroundTextStyle": "dark",
+      "navigationBarBackgroundColor": "#fff",
+      "navigationBarTitleText":"风采展示",
+      "navigationBarTextStyle": "black",
+        "enablePullDownRefresh": false,
+        "onReachBottomDistance": 100
+  },
+  "tabBar": {
+      "color": "#808080",
+      "selectedColor": "#ff5a57",
+       "backgroundColor": "#fff",
+       "borderStyle":"black",
+       
+          
+      "list": [
+        {
+          "pagePath": "page/tabBar/activity_zone/activity_zone",
+          "iconPath": "page/tabBar/images/03index_3.png",
+          "selectedIconPath": "page/tabBar/images/03index_3_select.png",
+          "text": "首页"
+        },
+      
+        {
+          "pagePath": "page/tabBar/personal_center/personal_center",
+          "iconPath": "page/tabBar/images/03index_4.png",
+          "selectedIconPath": "page/tabBar/images/03index_4_select.png",
+          "text":"我的"
+        }
+    
+      ]
+    },
+
+
+
+
+  "subPackages": [
+    {
+      "root": "page/activity_zone/",
+      "pages": [
+        "pages/active_passage/active_passage",
+        "pages/active_video/active_video",
+
+        "pages/user_detil/user_detil",
+        "pages/like_rankinglist/like_rankinglist",
+        "pages/shanghai_clock/shanghai_clock",
+        "pages/participation/participation",
+        "pages/learning/learning",
+        "pages/tribal/tribal",
+        "pages/hitcard/hitcard",
+        "pages/hitcard1/hitcard1",
+        "pages/add_adress/add_adress",
+        "pages/questions/questions",
+        "pages/scratch/scratch",
+        "pages/sports_tribe/sports_tribe",
+        "pages/winner_list/winner_list",
+        "pages/luck_draw1/luck_draw1",
+        "pages/luck_list/luck_list",
+        "pages/like_list/like_list",
+        "pages/tribe_detil/tribe_detil",
+        "pages/comments/comments",
+        "pages/active_rules/active_rules"
+      ]
+    },
+    {
+      "root": "page/personal_center/",
+      "pages": [
+          "pages/loginBycode/loginBycode",
+          "pages/loginOa/loginOa",
+          "pages/login/login",
+          "pages/userinfo/userinfo",
+          "pages/my_sports_tribe/my_sports_tribe"
+
+      ]
+    }
+  ],
+
+
+
+
+
+
+    "permission": {
+      "scope.userLocation": {
+        "desc": "您的位置将用于计步小程序获取打卡位置"
+      }
+    },
+   "sitemapLocation": "sitemap.json"
+}

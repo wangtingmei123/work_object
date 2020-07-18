@@ -1,0 +1,10 @@
+/* page/activity_zone//pages/active_video/active_video.wxss */
+
+.video_box{
+  width:100%;
+
+}
+
+.video_box>video{
+  width:100%;
+}

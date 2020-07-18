@@ -1,0 +1,49 @@
+<!--pages/active_passage/active_passage.wxml-->
+
+
+<view class="active_box">
+    <view class="active_home">
+          <view class="active_bg">
+              <image  src="https://i.xindongguoji.com/{{activity_con.index_logo}}" wx:if="{{activity_con.index_logo!=''}}"></image>
+               <image src="https://www.xindongguoji.com/static/image/images/05active_bg_02.jpg" wx:else></image>
+          </view>
+
+         <view class="act_gz" bindtap="to_rules">活动规则</view>
+
+         <!-- <view class="video_box" bindtap="to_video">视频</view> -->
+
+
+
+             
+            <view class="tabbar_box {{isIphoneX?'iphoneX-height':''}}">
+                <view class="tabbar_box_center">
+                    <block >
+
+                    <navigator  class="tabbar_nav"   hover-class="none" url="../like_rankinglist/like_rankinglist" open-type="navigate">
+                        <image class="tabbar_icon" style="width:47rpx;height:45rpx" src="../../static/images/images/mmbarbut3.png"></image>
+                        <text>排行</text>
+                    </navigator>
+                    <navigator  class="tabbar_nav"   hover-class="none" url="../sports_tribe/sports_tribe" open-type="navigate">
+                        <image class="tabbar_icon" style="width:47rpx;height:45rpx" src="../../static/images/images/mmbarbut4.png"></image>
+                        <text>作品</text>
+                    </navigator>
+
+                      <view bindtap="to_tribe"  class="tabbar_nav" >
+                        <view class='special-wrapper'><image class="tabbar_icon" src="../../static/images/images/to_write_m.png"></image></view>
+                      </view>
+                      <view bindtap="to_luck"  class="tabbar_nav" >
+                        <image class="tabbar_icon" style="width:48rpx;height:46rpx" src="../../static/images/images/mmbarbut1.png"></image>
+                        <text>抽奖</text>
+                      </view>
+                      
+                      <navigator  class="tabbar_nav" hover-class="none" url="../../../tabBar/personal_center/personal_center" open-type="switchTab">
+                        <image class="tabbar_icon" style="width:44rpx;height:43rpx" src="../../static/images/images/mmbarbut2.png"></image>
+                        <text>我的</text>
+                      </navigator>
+
+                    </block>
+                  </view>
+            </view>
+
+      </view>
+</view>

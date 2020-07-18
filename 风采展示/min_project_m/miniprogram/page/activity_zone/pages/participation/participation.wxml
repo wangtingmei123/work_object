@@ -1,0 +1,44 @@
+<!--pages/like_list/like_list.wxml-->
+<view class="like_box">
+
+  
+      <view class="sports_title"  >
+          <view class="spo_tit_left">
+              <view class="tit_photo">
+                1
+              </view>
+              <view class="tit_info">
+                   技术部
+              </view>
+
+          </view>
+          <view class="spo_tit_right">50.80%</view>
+      </view>
+
+      <view class="sports_title"  >
+          <view class="spo_tit_left">
+              <view class="tit_photo">
+                2
+              </view>
+              <view class="tit_info">
+                   技术部
+              </view>
+
+          </view>
+          <view class="spo_tit_right">50.86%</view>
+      </view>
+
+      <view class="sports_title"  >
+          <view class="spo_tit_left">
+              <view class="tit_photo">
+                3
+              </view>
+              <view class="tit_info">
+                   技术部
+              </view>
+
+          </view>
+          <view class="spo_tit_right">52.90%</view>
+      </view>
+
+  </view>

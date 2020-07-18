@@ -1,0 +1,39 @@
+<view class="passage_top">
+
+      <view class="passage_banner">
+                <image  src="https://i.xindongguoji.com/{{activity_con.cover_logo}}" wx:if="{{activity_con.cover_logo!=''}}"></image>
+                <image  class="act_bg_img" src="../../static/images/images/02active_banner_03.jpg" wx:else></image>
+      </view>
+
+         <view class="passage_taps">
+            <view class="passage_tap">
+                  <view class="passage_tap1">{{activity.articles_count}}</view>
+                  <view class="passage_tap2">作品数</view>
+            </view>
+            <view class="passage_tap">
+                  <view class="passage_tap1">{{activity.users_count}}</view>
+                  <view class="passage_tap2">参与人数</view>
+            </view>
+            <view class="passage_tap">
+                  <view class="passage_tap1">{{activity.praises_count}}</view>
+                  <view class="passage_tap2">总票数</view>
+            </view>
+         
+         </view>
+   </view>
+
+
+
+
+<view class="active_con">
+
+   <rich-text nodes="{{activity_con.attach.content}}"></rich-text>
+
+
+</view>
+
+
+
+
+
+

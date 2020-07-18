@@ -1,0 +1,82 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"enhance": true,
+		"postcss": true,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": false,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useIsolateContext": true,
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.11.0",
+	"appid": "wxbd3e8d8276d86409",
+	"projectname": "%E5%81%A5%E6%AD%A5%E8%B5%B02.0",
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "page/tabBar/activity_zone/activity_zone",
+					"pathName": "page/tabBar/activity_zone/activity_zone",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/tabBar/activity_zone/activity_zone",
+					"pathName": "page/tabBar/activity_zone/activity_zone",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "page/activity_zone/pages/user_detil/user_detil",
+					"pathName": "page/activity_zone/pages/user_detil/user_detil",
+					"query": "user_id=7665",
+					"scene": null
+				}
+			]
+		}
+	}
+}

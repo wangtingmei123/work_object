@@ -1,0 +1,7 @@
+<!--page/activity_zone//pages/active_video/active_video.wxml-->
+<view class="video_box">
+  <video src="https://i.xindongguoji.com/clubs/videos/2020/05/25/c540f796d13c68e6c61c6dca38161c92.mp4" > </video>
+
+  <video src="https://i.xindongguoji.com/clubs/videos/2020/05/26/dd5800117887406a9131bf2e1175577b.mp4" ></video>
+</view>
+

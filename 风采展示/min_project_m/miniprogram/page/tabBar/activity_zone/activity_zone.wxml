@@ -1,0 +1,41 @@
+<!--index.wxml-->
+<view class="wrapper">
+<image src='https://www.xindongguoji.com/static/image/images/03index_bg_02.png' class="img"></image>
+  <!-- <view class="banner">
+        
+  </view> -->
+  
+  <view class="wrapper_box">
+  
+        
+        <view class="fencaibanner">
+            <image src="../images/01active_libg_03.png"></image>
+        </view>
+
+        <view class="active_list_bg">
+            <view class="active_list2" wx:for="{{rank}}"   wx:key="index" >
+                  <view class="act_img" bindtap='toIcbcACtivityPage'  data-info="{{item}}">
+                        <image wx:if="{{item.cover_logo!=''}}" lazy-load='true'  src="https://i.xindongguoji.com/{{item.cover_logo}}" mode="aspectFill"></image>
+                        <image wx:if="{{item.cover_logo=='' || item.cover_logo==undefined}}"  lazy-load='true' src="https://www.xindongguoji.com/static/image/images/04active_list_03.png"></image>
+                  </view>
+                  <view class="act_name" bindtap='toIcbcACtivityPage'  data-info="{{item}}">{{item.activity_name}}</view>
+                  <view class="act_time" bindtap='toIcbcACtivityPage'  data-info="{{item}}">
+                        <view class="act_time1">{{item.start_time}} ~ {{item.end_time}}</view>
+                        <!-- <view class="act_time2">{{item.attend_num}}人参加</view> -->
+                        <view class="act_time2 act_time3" wx:if="{{item.start_status==1}}">已结束</view>
+                        <view class="act_time2" wx:if="{{item.start_status==0}}">正在进行中</view>
+
+
+                  </view>
+
+            <!-- <view class="zhezhao" wx:if="{{item.start_status==1}}">活动已过期</view> -->
+
+            </view>
+
+          </view>
+      </view>
+  </view>
+
+
+
+
